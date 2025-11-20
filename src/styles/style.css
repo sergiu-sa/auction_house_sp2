@@ -2,13 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global styles */
 :root {
-  color-scheme: light;
+  --font-sans: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Cormorant", "Times New Roman", serif;
 }
 
-html,
 body {
-  margin: 0;
-  padding: 0;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
 }
