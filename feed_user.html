@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feed User</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Cormorant", "serif"],
+              sans: ["Source Sans 3", "sans-serif"],
+            },
+            colors: {
+              "warm-white": "#F7F7F5",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Source Sans 3", sans-serif;
+        background-color: #f7f7f5;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Cormorant", serif;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <!-- ========================================
+         MAIN NAV
+    ======================================== -->
+    <nav style="background-color: #f7f7f5">
+      <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
+        <!-- Top row: brand + search + nav + credits -->
+        <div
+          class="flex items-center gap-3 pb-4"
+          style="border-bottom: 1px solid #e2e8f0"
+        >
+          <!-- Brand Logo - Compact -->
+          <a href="/" class="inline-flex items-center gap-1.5 text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
+            <svg class="h-6 w-6" width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto icon">
+              <path d="M24 108 L64 20 L104 108 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round" />
+              <line x1="40" y1="72" x2="88" y2="72" stroke="currentColor" stroke-width="14" stroke-linecap="round" />
+            </svg>
+            <span class="hidden sm:inline font-bold text-sm">Aucto</span>
+          </a>
+
+          <!-- Inline search (grows to fill available space) -->
+          <section aria-label="Global auction search" class="hidden md:flex flex-1 items-center gap-2">
+            <form class="flex-1" role="search" aria-label="Search auctions">
+              <label for="global-search-input" class="sr-only">
+                Search auctions
+              </label>
+              <div class="relative">
+                <input
+                  id="global-search-input"
+                  name="q"
+                  type="search"
+                  placeholder="Search by title, description, or lot number..."
+                  class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                  style="border: 2px solid #334155"
+                />
+                <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
+              </div>
+            </form>
+
+            <!-- Filters pill -->
+            <button
+              id="toggle-advanced-filters"
+              type="button"
+              class="flex items-center gap-2 bg-white px-3 py-2 hover:bg-slate-50"
+              style="border: 2px solid #334155"
+              aria-expanded="false"
+              aria-controls="advanced-filters-bar"
+            >
+              <i class="fa-solid fa-sliders text-sm"></i>
+              <i class="fa-solid fa-chevron-down text-xs transition-transform" id="filters-chevron"></i>
+            </button>
+          </section>
+
+          <!-- Primary nav -->
+          <div
+            class="hidden items-center gap-6 text-sm font-bold text-slate-700 lg:flex"
+          >
+            <a href="#" class="text-slate-900 inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-house text-sm"></i>
+              <span>Feed</span>
+            </a>
+            <a href="#" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-sm"></i>
+              <span>Catalog</span>
+            </a>
+            <a href="#" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-gavel text-sm"></i>
+              <span>My Bids</span>
+            </a>
+            <a href="#" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-user text-sm"></i>
+              <span>Profile</span>
+            </a>
+          </div>
+
+          <!-- Credits + profile -->
+          <div class="flex items-center gap-3">
+            <div
+              class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex"
+              style="border: 2px solid #1e293b"
+            >
+              <span
+                class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              >
+                Credits
+              </span>
+              <span class="text-base font-bold text-slate-900">1,250</span>
+            </div>
+            <button
+              class="flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
+              style="border: 2px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
+                alt="User"
+                class="h-8 w-8 object-cover"
+                style="border: 2px solid #1e293b"
+              />
+              <span class="hidden text-sm font-bold text-slate-900 md:block"
+                >Alex Johansson</span
+              >
+            </button>
+          </div>
+        </div>
+
+        <!-- Advanced filter bar (hidden by default) -->
+        <div
+          id="advanced-filters-bar"
+          class="hidden px-4 py-4 md:px-6 md:py-4"
+          style="background-color: #f7f7f5; border-bottom: 3px solid #1e293b"
+        >
+          <div
+            class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <!-- Tag filters -->
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                class="bg-slate-900 px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-white"
+                style="border: 2px solid #1e293b"
+                aria-pressed="true"
+              >
+                All
+              </button>
+              <button
+                type="button"
+                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                Tech
+              </button>
+              <button
+                type="button"
+                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                Fashion
+              </button>
+              <button
+                type="button"
+                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                Home
+              </button>
+              <button
+                type="button"
+                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                Collectibles
+              </button>
+            </div>
+
+            <!-- Status + sort -->
+            <div class="flex flex-wrap items-center gap-3">
+              <label
+                class="flex cursor-pointer items-center gap-2 bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50"
+                style="border: 2px solid #334155"
+              >
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 cursor-pointer"
+                  style="accent-color: #1e293b"
+                />
+                <span>Active only</span>
+              </label>
+
+              <div class="relative">
+                <select
+                  class="bg-white px-4 py-2 pr-8 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline-none"
+                  style="border: 2px solid #334155"
+                >
+                  <option>Ending soon</option>
+                  <option>Newest first</option>
+                  <option>Oldest first</option>
+                  <option>Highest bid</option>
+                  <option>Lowest bid</option>
+                </select>
+                <div
+                  class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+                >
+                  <div
+                    class="h-0 w-0"
+                    style="
+                      border-left: 4px solid transparent;
+                      border-right: 4px solid transparent;
+                      border-top: 6px solid #64748b;
+                    "
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Optional credits range: in the final app this will be a client-side filter on current highest bid/price of loaded listings, not an API query parameter -->
+              <div class="flex items-center gap-2 text-[11px] text-slate-600">
+                <span
+                  class="font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Credits</span
+                >
+                <input
+                  type="number"
+                  placeholder="Min"
+                  class="w-20 bg-white px-2 py-1 text-xs focus:outline-none"
+                  style="border: 1px solid #cbd5e1"
+                />
+                <span class="text-slate-400">-</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  class="w-20 bg-white px-2 py-1 text-xs focus:outline-none"
+                  style="border: 1px solid #cbd5e1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      const searchInput = $("global-search-input");
+      const toggleBtn = $("toggle-advanced-filters");
+      const filterBar = $("advanced-filters-bar");
+      const chevron = $("filters-chevron");
+
+      function openFilters() {
+        if (!filterBar || !toggleBtn) return;
+        if (!filterBar.classList.contains("hidden")) return;
+        filterBar.classList.remove("hidden");
+        if (chevron) {
+          chevron.classList.add("rotate-180");
+        }
+        toggleBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function toggleFilters() {
+        if (!filterBar || !toggleBtn) return;
+        filterBar.classList.toggle("hidden");
+        const isOpen = !filterBar.classList.contains("hidden");
+        toggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        if (chevron) {
+          chevron.classList.toggle("rotate-180", isOpen);
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener("focus", openFilters);
+      }
+      if (toggleBtn) {
+        toggleBtn.addEventListener("click", toggleFilters);
+      }
+    </script>
+
+    <main>
+      <!-- ========================================
+           FEED HERO – FEATURED LISTINGS
+      ======================================== -->
+      <section class="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-14">
+        <div
+          class="bg-white p-8 md:p-10 lg:p-12"
+          style="border: 3px solid #1e293b"
+        >
+          <div class="grid grid-cols-1 gap-10 lg:grid-cols-[3fr,2fr] lg:gap-12">
+            <!-- Left: context + CTA -->
+            <div class="flex flex-col justify-center">
+              <div class="mb-6 flex items-center gap-4">
+                <div class="h-0.5 w-20 bg-red-700"></div>
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                >
+                  Selling right now
+                </span>
+              </div>
+              <h1
+                class="mb-6 text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-900"
+              >
+                Tonight's most watched auctions
+              </h1>
+              <p
+                class="mb-8 max-w-xl text-base md:text-lg leading-relaxed text-slate-600"
+              >
+                Browse hand-picked lots that are drawing the most bids right
+                now. Rare finds, last-chance pieces and high value items from
+                verified sellers.
+              </p>
+              <div class="flex flex-wrap gap-4">
+                <button
+                  class="bg-slate-900 px-8 py-4 text-sm font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
+                  style="border: 3px solid #1e293b"
+                >
+                  <i class="fa-solid fa-broadcast text-sm"></i>
+                  View all live auctions
+                </button>
+                <button
+                  class="bg-white px-8 py-4 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50 inline-flex items-center gap-2"
+                  style="border: 3px solid #1e293b"
+                >
+                  <i class="fa-solid fa-plus text-sm"></i>
+                  Create new listing
+                </button>
+              </div>
+              <div class="mt-6 flex flex-wrap gap-6 text-xs text-slate-500">
+                <div>
+                  <div
+                    class="font-bold tracking-[0.18em] uppercase text-slate-500 text-[11px]"
+                  >
+                    Watching now
+                  </div>
+                  <div class="text-sm font-semibold text-slate-900">
+                    3,482 bidders
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="font-bold tracking-[0.18em] uppercase text-slate-500 text-[11px]"
+                  >
+                    Average time left
+                  </div>
+                  <div class="text-sm font-semibold text-slate-900">3h 27m</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: featured listings mosaic -->
+            <div class="grid h-full grid-rows-2 gap-4">
+              <!-- Main featured lot -->
+              <article
+                class="row-span-1 bg-slate-50"
+                style="border: 3px solid #1e293b"
+              >
+                <div
+                  class="relative h-40 sm:h-48 md:h-52 bg-slate-200"
+                  style="border-bottom: 3px solid #1e293b"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop"
+                    alt="Featured headphones"
+                    class="h-full w-full object-cover"
+                  />
+                  <div
+                    class="absolute left-4 top-4 bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-white inline-flex items-center gap-1.5"
+                  >
+                    <i class="fa-solid fa-fire text-amber-400"></i>
+                    <span>Rare find</span>
+                  </div>
+                  <div
+                    class="absolute right-4 bottom-4 bg-white px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-900"
+                    style="border: 2px solid #1e293b"
+                  >
+                    Ends in 1h 12m
+                  </div>
+                </div>
+                <div class="p-5 md:p-6">
+                  <h3
+                    class="mb-1 text-xl font-bold leading-tight text-slate-900"
+                  >
+                    Vintage studio headphones, 1970s
+                  </h3>
+                  <p class="mb-4 text-xs text-slate-600">
+                    Current bid
+                    <span class="font-semibold text-slate-900 inline-flex items-center gap-1"
+                    >
+                      <i class="fa-solid fa-coins text-xs"></i>
+                      <span>680 credits</span>
+                    </span>
+                    ·
+                    <span class="inline-flex items-center gap-1">
+                      <i class="fa-solid fa-gavel text-xs"></i>
+                      <span>31 bids</span>
+                    </span>
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs text-slate-500"
+                  >
+                    <span>@techdeals</span>
+                    <span>Viewed 1.2k times today</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Two secondary lots -->
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Lot A -->
+                <article class="bg-slate-50" style="border: 3px solid #1e293b">
+                  <div
+                    class="h-28 bg-slate-200"
+                    style="border-bottom: 3px solid #1e293b"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop"
+                      alt="Chronograph watch"
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div class="p-3">
+                    <h4 class="mb-1 text-sm font-bold text-slate-900">
+                      Swiss chronograph
+                    </h4>
+                    <p class="text-[11px] text-slate-600">890 credits</p>
+                  </div>
+                </article>
+
+                <!-- Lot B -->
+                <article class="bg-slate-50" style="border: 3px solid #1e293b">
+                  <div
+                    class="h-28 bg-slate-200"
+                    style="border-bottom: 3px solid #1e293b"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=400&fit=crop"
+                      alt="Designer sunglasses"
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div class="p-3">
+                    <h4 class="text-sm font-bold text-slate-900 mb-1">
+                      Designer eyewear
+                    </h4>
+                    <p class="text-[11px] text-slate-600">220 credits</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           HOME PAGE - TRENDING LISTINGS
+      ======================================== -->
+      <section class="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-14">
+        <div class="mb-12">
+          <div class="mb-8 flex items-center gap-4">
+            <div class="h-0.5 w-16 bg-red-700"></div>
+            <span
+              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              >Hot Right Now</span
+            >
+          </div>
+          <div class="mb-6 flex items-center justify-between">
+            <h2 class="text-4xl font-bold text-slate-900 md:text-5xl">
+              Trending Auctions
+            </h2>
+            <a
+              href="#listings"
+              class="font-bold text-slate-700 transition-colors hover:text-slate-900 inline-flex items-center gap-2"
+            >
+              View All
+              <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <!-- Card 1 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&h=600&fit=crop"
+                alt="Designer Sneakers"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-8">
+              <div
+                class="mb-6 flex items-center justify-between pb-6"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 247</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-fire text-red-700 text-sm"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                    >Hot</span
+                  >
+                </div>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+                Limited Edition Sneakers
+              </h3>
+              <p
+                class="mb-8 text-sm font-normal leading-relaxed text-slate-600"
+              >
+                Rare colorway. Deadstock condition. Complete with original box and accessories.
+              </p>
+              <div
+                class="mb-8 bg-slate-50 p-6"
+                style="border: 2px solid #334155"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Current Bid
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900">
+                      890 Credits
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Time Left
+                    </div>
+                    <div class="text-2xl font-bold text-slate-900">2h 15m</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mb-6 flex items-center justify-between text-xs text-slate-500"
+              >
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 28 bids</span>
+                <span>@sneakerhead</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop"
+                alt="Smart Watch"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-8">
+              <div
+                class="mb-6 flex items-center justify-between pb-6"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 248</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-arrow-trend-up text-green-700 text-sm"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                    >Leading</span
+                  >
+                </div>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+                Premium Smart Watch Series 8
+              </h3>
+              <p
+                class="mb-8 text-sm font-normal leading-relaxed text-slate-600"
+              >
+                Latest generation wearable technology. Sealed box. Full
+                manufacturer warranty active.
+              </p>
+              <div
+                class="mb-8 bg-slate-50 p-6"
+                style="border: 2px solid #334155"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Current Bid
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900">
+                      1,250 Credits
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Time Left
+                    </div>
+                    <div class="text-2xl font-bold text-slate-900">4h 32m</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mb-6 flex items-center justify-between text-xs text-slate-500"
+              >
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 47 bids</span>
+                <span>@watchcollector</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=600&fit=crop"
+                alt="Designer Sunglasses"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-8">
+              <div
+                class="mb-6 flex items-center justify-between pb-6"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 249</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-hourglass-end text-red-700 text-sm"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                    >Ending Soon</span
+                  >
+                </div>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+                Designer Sunglasses Collection
+              </h3>
+              <p
+                class="mb-8 text-sm font-normal leading-relaxed text-slate-600"
+              >
+                Premium eyewear from renowned designer. Authentic certificate.
+                Protective case included.
+              </p>
+              <div
+                class="mb-8 bg-slate-50 p-6"
+                style="border: 2px solid #334155"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Current Bid
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900">
+                      320 Credits
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Time Left
+                    </div>
+                    <div class="text-2xl font-bold text-slate-900">6h 08m</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mb-6 flex items-center justify-between text-xs text-slate-500"
+              >
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 12 bids</span>
+                <span>@fashionista</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========================================
+           HOME PAGE - NEW LISTINGS
+      ======================================== -->
+      <section class="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-14">
+        <div class="mb-12">
+          <div class="mb-8 flex items-center gap-4">
+            <div class="h-0.5 w-16 bg-red-700"></div>
+            <span
+              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              >Fresh Inventory</span
+            >
+          </div>
+          <div class="mb-6 flex items-center justify-between">
+            <h2 class="text-4xl font-bold text-slate-900 md:text-5xl">
+              New Listings
+            </h2>
+            <a
+              href="#listings"
+              class="font-bold text-slate-700 transition-colors hover:text-slate-900 inline-flex items-center gap-2"
+            >
+              View All
+              <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <!-- Card 1 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&h=600&fit=crop"
+                alt="Vintage Camera"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-8">
+              <div
+                class="mb-6 flex items-center justify-between pb-6"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 250</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-sparkles text-green-700 text-sm"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700"
+                    >New</span
+                  >
+                </div>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+                Vintage Film Camera
+              </h3>
+              <p
+                class="mb-8 text-sm font-normal leading-relaxed text-slate-600"
+              >
+                Classic 35mm camera. Fully functional. Collectors condition with original leather case.
+              </p>
+              <div
+                class="mb-8 bg-slate-50 p-6"
+                style="border: 2px solid #334155"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Current Bid
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900">
+                      450 Credits
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Time Left
+                    </div>
+                    <div class="text-2xl font-bold text-slate-900">8h 45m</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mb-6 flex items-center justify-between text-xs text-slate-500"
+              >
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 5 bids</span>
+                <span>@photographer</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1434493907317-a46b5bbe7834?w=600&h=600&fit=crop"
+                alt="Laptop"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-8">
+              <div
+                class="mb-6 flex items-center justify-between pb-6"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 251</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-sparkles text-green-700 text-sm"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700"
+                    >New</span
+                  >
+                </div>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+                MacBook Pro 16" M2 Max
+              </h3>
+              <p
+                class="mb-8 text-sm font-normal leading-relaxed text-slate-600"
+              >
+                Professional grade laptop. Lightly used. Complete with original charger and box.
+              </p>
+              <div
+                class="mb-8 bg-slate-50 p-6"
+                style="border: 2px solid #334155"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Current Bid
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900">
+                      2,100 Credits
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Time Left
+                    </div>
+                    <div class="text-2xl font-bold text-slate-900">1d 3h</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mb-6 flex items-center justify-between text-xs text-slate-500"
+              >
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 18 bids</span>
+                <span>@techseller</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=600&h=600&fit=crop"
+                alt="Mechanical Keyboard"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-8">
+              <div
+                class="mb-6 flex items-center justify-between pb-6"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 252</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-sparkles text-green-700 text-sm"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700"
+                    >New</span
+                  >
+                </div>
+              </div>
+              <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+                Custom Mechanical Keyboard
+              </h3>
+              <p
+                class="mb-8 text-sm font-normal leading-relaxed text-slate-600"
+              >
+                Hand-built with premium switches. Custom keycaps. RGB lighting included.
+              </p>
+              <div
+                class="mb-8 bg-slate-50 p-6"
+                style="border: 2px solid #334155"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Current Bid
+                    </div>
+                    <div class="text-3xl font-bold text-slate-900">
+                      275 Credits
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div
+                      class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Time Left
+                    </div>
+                    <div class="text-2xl font-bold text-slate-900">12h 20m</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mb-6 flex items-center justify-between text-xs text-slate-500"
+              >
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 9 bids</span>
+                <span>@pcbuilder</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========================================
+           ENDING SOON
+      ======================================== -->
+      <section class="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-14">
+        <div class="mb-12">
+          <div class="mb-8 flex items-center gap-4">
+            <div class="h-0.5 w-16 bg-red-700"></div>
+            <span
+              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              >Last Chance</span
+            >
+          </div>
+          <h2 class="text-4xl font-bold text-slate-900 md:text-5xl mb-4">
+            Ending Soon
+          </h2>
+          <p class="text-slate-600 max-w-2xl">
+            Don't miss out on these auctions closing in the next few hours.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <!-- Quick Card 1 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="h-48 bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1560343090-f0409e92791a?w=600&h=400&fit=crop"
+                alt="Vintage Watch"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 253</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-clock text-red-700 text-xs"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                    >45m</span
+                  >
+                </div>
+              </div>
+              <h4 class="mb-3 text-xl font-bold text-slate-900">
+                Omega Seamaster
+              </h4>
+              <div class="mb-4 text-slate-600">
+                <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Current Bid</div>
+                <div class="text-2xl font-bold text-slate-900">1,850 Credits</div>
+              </div>
+              <div class="mb-4 text-xs text-slate-500">
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 34 bids</span> · <span>@watchcollector</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Quick Card 2 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="h-48 bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&h=400&fit=crop"
+                alt="Running Shoes"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 254</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-clock text-red-700 text-xs"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                    >1h 20m</span
+                  >
+                </div>
+              </div>
+              <h4 class="mb-3 text-xl font-bold text-slate-900">
+                Nike Air Jordan 1
+              </h4>
+              <div class="mb-4 text-slate-600">
+                <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Current Bid</div>
+                <div class="text-2xl font-bold text-slate-900">680 Credits</div>
+              </div>
+              <div class="mb-4 text-xs text-slate-500">
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 21 bids</span> · <span>@sneakerhead</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Quick Card 3 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="h-48 bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&h=400&fit=crop"
+                alt="Leather Bag"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 255</span
+                >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-clock text-red-700 text-xs"></i>
+                  <span
+                    class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                    >2h 05m</span
+                  >
+                </div>
+              </div>
+              <h4 class="mb-3 text-xl font-bold text-slate-900">
+                Leather Messenger Bag
+              </h4>
+              <div class="mb-4 text-slate-600">
+                <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Current Bid</div>
+                <div class="text-2xl font-bold text-slate-900">385 Credits</div>
+              </div>
+              <div class="mb-4 text-xs text-slate-500">
+                <span class="inline-flex items-center gap-1"><i class="fa-solid fa-gavel text-xs"></i> 14 bids</span> · <span>@fashionista</span>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 3px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-sm"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Quick Card 4 - Closed Example -->
+          <div class="bg-white p-8" style="border: 3px solid #1e293b">
+            <div class="mb-6 flex items-center justify-between">
+              <span
+                class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-400"
+                >Closed</span
+              >
+              <div class="h-4 w-4 bg-slate-400"></div>
+            </div>
+            <div class="text-sm text-slate-600">Auction has ended</div>
+          </div>
+        </div>
+      </section>
+      <!-- ========================================
+           AUCTION CATALOG - COMPLETE COLLECTION
+      ======================================== -->
+      <section class="mx-auto max-w-7xl px-6 md:px-8 py-10 md:py-14">
+        <div class="mb-12">
+          <div class="mb-8 flex items-center gap-4">
+            <div class="h-0.5 w-16 bg-red-700"></div>
+            <span
+              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              >Complete Collection</span
+            >
+          </div>
+          <h2 class="text-4xl font-bold text-slate-900 md:text-5xl lg:text-6xl">
+            Auction Catalog
+          </h2>
+        </div>
+
+        <!-- Enhanced Control Bar -->
+        <div class="mb-12 bg-slate-50 p-6 lg:p-8" style="border: 3px solid #1e293b">
+          <!-- Filters Row -->
+          <div
+            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <!-- Category Filters -->
+            <div class="flex flex-wrap gap-3">
+              <button
+                type="button"
+                class="bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center gap-2"
+                style="border: 2px solid #1e293b"
+                aria-pressed="true"
+              >
+                <i class="fa-solid fa-circle-check text-xs"></i>
+                ALL
+              </button>
+              <button
+                type="button"
+                class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700 transition-colors hover:bg-slate-50 inline-flex items-center gap-2"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                <i class="fa-solid fa-microchip text-xs"></i>
+                TECH
+              </button>
+              <button
+                type="button"
+                class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700 transition-colors hover:bg-slate-50 inline-flex items-center gap-2"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                <i class="fa-solid fa-shirt text-xs"></i>
+                FASHION
+              </button>
+              <button
+                type="button"
+                class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700 transition-colors hover:bg-slate-50 inline-flex items-center gap-2"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                <i class="fa-solid fa-house text-xs"></i>
+                HOME
+              </button>
+              <button
+                type="button"
+                class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700 transition-colors hover:bg-slate-50 inline-flex items-center gap-2"
+                style="border: 2px solid #334155"
+                aria-pressed="false"
+              >
+                <i class="fa-solid fa-gem text-xs"></i>
+                COLLECTIBLES
+              </button>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Active Only Toggle -->
+              <label
+                class="flex cursor-pointer items-center gap-3 bg-white px-6 py-3 transition-colors hover:bg-slate-50"
+                style="border: 2px solid #334155"
+              >
+                <input
+                  type="checkbox"
+                  class="h-4 w-4 cursor-pointer"
+                  style="accent-color: #1e293b"
+                />
+                <span class="text-xs font-bold tracking-wide text-slate-700"
+                  >ACTIVE ONLY</span
+                >
+              </label>
+
+              <!-- Sort Dropdown -->
+              <div class="relative">
+                <select
+                  class="appearance-none bg-white px-6 py-3 pr-12 text-xs font-bold tracking-wide text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none"
+                  style="border: 2px solid #334155"
+                >
+                  <option>ENDING SOON</option>
+                  <option>NEWEST FIRST</option>
+                  <option>OLDEST FIRST</option>
+                  <option>TITLE A–Z</option>
+                  <option>TITLE Z–A</option>
+                  <option>HIGHEST BID</option>
+                  <option>LOWEST BID</option>
+                </select>
+                <div
+                  class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
+                >
+                  <div
+                    class="h-0 w-0"
+                    style="
+                      border-left: 4px solid transparent;
+                      border-right: 4px solid transparent;
+                      border-top: 6px solid #64748b;
+                    "
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results Count -->
+          <div
+            class="mt-6 pt-6 text-sm text-slate-600"
+            style="border-top: 2px solid #e2e8f0"
+          >
+            Showing
+            <span class="font-bold text-slate-900">1–12</span> of
+            <span class="font-bold text-slate-900">2,547</span> auctions
+          </div>
+        </div>
+
+        <!-- Catalog Grid (4 columns) -->
+        <div
+          class="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
+          <!-- Catalog Card 1 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop"
+                alt="Vintage Audio Equipment"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 253</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                  >3h left</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Vintage Audio Equipment
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">450</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 23 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 2 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop"
+                alt="Smart Watch"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 254</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                  >5h left</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Smart Watch Collection
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">1,250</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 47 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 3 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop"
+                alt="Designer Eyewear"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 255</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                  >7h left</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Designer Eyewear Set
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">320</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 12 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 4 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop"
+                alt="Limited Sneakers"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 256</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700"
+                  >New</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Limited Sneakers Pack
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">800</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 3 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 5 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop"
+                alt="Pro Camera System"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 257</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700"
+                  >New</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Pro Camera System
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">1,800</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 5 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 6 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop"
+                alt="Swiss Chronograph"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 258</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700"
+                  >New</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Swiss Chronograph
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">2,500</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 1 bid</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 7 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1434493907317-a46b5bbe7834?w=400&h=400&fit=crop"
+                alt="MacBook Pro"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 259</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700"
+                  >2d left</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                MacBook Pro 16"
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">2,100</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 18 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+
+          <!-- Catalog Card 8 -->
+          <article class="bg-white" style="border: 3px solid #1e293b">
+            <div
+              class="aspect-square bg-slate-100"
+              style="border-bottom: 3px solid #1e293b"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=400&fit=crop"
+                alt="Nike Air Jordan"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div
+                class="mb-4 flex items-center justify-between pb-4"
+                style="border-bottom: 2px solid #e2e8f0"
+              >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >Lot 260</span
+                >
+                <span
+                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700"
+                  >1h left</span
+                >
+              </div>
+              <h3 class="mb-3 text-xl font-bold text-slate-900">
+                Nike Air Jordan 1
+              </h3>
+              <div class="mb-4 flex items-baseline gap-2">
+                <div class="text-2xl font-bold text-slate-900">680</div>
+                <div class="text-xs text-slate-500 inline-flex items-center gap-1"><i class="fa-solid fa-coins text-xs"></i> Credits · <i class="fa-solid fa-gavel text-xs"></i> 21 bids</div>
+              </div>
+              <button
+                class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                style="border: 2px solid #1e293b"
+              >
+                <i class="fa-solid fa-hand-fist text-xs"></i>
+                Place Bid
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <!-- Pagination -->
+<div class="flex items-center justify-between">
+  <div class="text-sm text-slate-600">
+    Page <span class="font-bold text-slate-900">1</span> of <span class="font-bold text-slate-900">213</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <button
+      disabled
+      class="bg-slate-200 px-6 py-3 text-xs font-bold tracking-wide text-slate-400 cursor-not-allowed inline-flex items-center gap-2"
+      style="border: 2px solid #cbd5e1"
+    >
+      <i class="fa-solid fa-chevron-left text-xs"></i>
+      PREVIOUS
+    </button>
+    <button
+      class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-900"
+      style="border: 2px solid #1e293b"
+    >
+      1
+    </button>
+    <button
+      class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700"
+      style="border: 2px solid #334155"
+    >
+      2
+    </button>
+    <button
+      class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700"
+      style="border: 2px solid #334155"
+    >
+      3
+    </button>
+    <span class="px-3 text-slate-500">...</span>
+    <button
+      class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-700"
+      style="border: 2px solid #334155"
+    >
+      213
+    </button>
+    <button
+      class="bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white inline-flex items-center gap-2"
+      style="border: 2px solid #1e293b"
+    >
+      NEXT
+      <i class="fa-solid fa-chevron-right text-xs"></i>
+    </button>
+  </div>
+</div>
+
+      </section>
+
+    </main>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="bg-slate-900 px-6 md:px-8 pb-12 pt-20 text-slate-400">
+      <div class="mx-auto max-w-7xl">
+        
+
+        <!-- Featured Win -->
+        <div
+          class="mb-20 bg-slate-800 p-10 lg:p-12"
+          style="border: 3px solid #334155"
+        >
+          <div class="mb-6 flex items-center gap-4">
+            <div class="h-0.5 w-12 bg-red-700"></div>
+            <span
+              class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+              >Recent Closing</span
+            >
+          </div>
+          <div
+            class="mb-6 flex items-center justify-between pb-6"
+            style="border-bottom: 2px solid #475569"
+          >
+            <span
+              class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+              >Lot 242</span
+            >
+            <span
+              class="text-xs font-bold tracking-widest text-green-400 uppercase"
+              >Won</span
+            >
+          </div>
+          <h4 class="mb-4 text-3xl font-bold text-white">
+            Rolex Submariner 5513
+          </h4>
+          <div class="mb-6 flex items-baseline gap-4">
+            <div class="text-4xl font-bold text-white">12,750</div>
+            <div class="text-sm text-slate-400">Credits · 148 bids</div>
+          </div>
+          <p class="mb-6 text-sm leading-relaxed text-slate-300">
+            "Transparent bidding process. Highly recommended for serious
+            collectors."
+          </p>
+          <div
+            class="flex items-center gap-3 pt-6"
+            style="border-top: 2px solid #475569"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
+              alt="Winner"
+              class="h-10 w-10 object-cover"
+              style="border: 2px solid #475569"
+            />
+            <div>
+              <div class="text-sm font-bold text-white">@watchenthusiast</div>
+              <div class="text-xs text-slate-400">Verified Buyer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div
+            class="bg-slate-800 p-6 text-center"
+            style="border: 3px solid #334155"
+          >
+            <div class="mb-2 text-4xl font-bold text-white">2,547</div>
+            <div
+              class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Active Lots
+            </div>
+          </div>
+          <div
+            class="bg-slate-800 p-6 text-center"
+            style="border: 3px solid #334155"
+          >
+            <div class="mb-2 text-4xl font-bold text-white">$2.4M</div>
+            <div
+              class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              This Month
+            </div>
+          </div>
+          <div
+            class="bg-slate-800 p-6 text-center"
+            style="border: 3px solid #334155"
+          >
+            <div class="mb-2 text-4xl font-bold text-white">8,921</div>
+            <div
+              class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Completed
+            </div>
+          </div>
+          <div
+            class="bg-slate-800 p-6 text-center"
+            style="border: 3px solid #334155"
+          >
+            <div class="mb-2 text-4xl font-bold text-white">99.8%</div>
+            <div
+              class="text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Satisfaction
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Footer Navigation -->
+        <div
+          class="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4"
+        >
+          <!-- Brand -->
+          <div>
+            <div class="mb-6 text-3xl font-bold text-white">Aucto</div>
+            <p class="mb-6 text-sm leading-relaxed text-slate-400">
+              Professional auction infrastructure for serious collectors.
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="h-2 w-2 bg-green-500"></div>
+              <span class="text-xs text-slate-400">24/7 Support Active</span>
+            </div>
+          </div>
+
+          <!-- Platform -->
+          <div>
+            <h4
+              class="mb-6 text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Platform
+            </h4>
+            <ul class="space-y-3 text-sm">
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-list text-xs text-slate-500"></i>Browse Catalog</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2">
+                  <i class="fa-solid fa-tower-broadcast text-xs text-slate-500"></i>Live Auctions
+                </a>
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-plus text-xs text-slate-500"></i>Sell an Item</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-user text-xs text-slate-500"></i>My Account</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources -->
+          <div>
+            <h4
+              class="mb-6 text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Resources
+            </h4>
+            <ul class="space-y-3 text-sm">
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-circle-question text-xs text-slate-500"></i>How Bidding Works</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-book text-xs text-slate-500"></i>Seller's Guide</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-shield text-xs text-slate-500"></i>Authentication</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-headset text-xs text-slate-500"></i>Help Center</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Legal + Contact -->
+          <div>
+            <h4
+              class="mb-6 text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Legal
+            </h4>
+            <ul class="space-y-3 text-sm mb-6">
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-file-contract text-xs text-slate-500"></i>Terms of Service</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-lock text-xs text-slate-500"></i>Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="transition-colors hover:text-white inline-flex items-center gap-2"
+                  ><i class="fa-solid fa-cookie text-xs text-slate-500"></i>Cookie Policy</a
+                >
+              </li>
+            </ul>
+
+            <div class="mb-4">
+              <div
+                class="mb-2 text-xs font-bold tracking-widest text-slate-400 uppercase"
+              >
+                Contact
+              </div>
+              <a href="mailto:support@aucto.app" class="block text-white transition-colors hover:text-slate-300">
+                support@aucto.app
+              </a>
+              <a
+                href="tel:+4712345678"
+                class="block text-white transition-colors hover:text-slate-300"
+              >
+                +47 123 45 678
+              </a>
+              <div class="text-slate-400">Available 24/7</div>
+            </div>
+
+            <div
+              class="mb-4 text-xs font-bold tracking-widest text-slate-400 uppercase"
+            >
+              Follow
+            </div>
+            <div class="flex gap-3">
+              <a
+                href="#"
+                class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
+                style="border: 2px solid #475569"
+                title="Follow us on Twitter"
+              >
+                <i class="fa-brands fa-twitter text-sm"></i>
+              </a>
+              <a
+                href="#"
+                class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
+                style="border: 2px solid #475569"
+                title="Follow us on Instagram"
+              >
+                <i class="fa-brands fa-instagram text-sm"></i>
+              </a>
+              <a
+                href="#"
+                class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
+                style="border: 2px solid #475569"
+                title="Follow us on LinkedIn"
+              >
+                <i class="fa-brands fa-linkedin text-sm"></i>
+              </a>
+              <a
+                href="#"
+                class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
+                style="border: 2px solid #475569"
+                title="Follow us on Facebook"
+              >
+                <i class="fa-brands fa-facebook text-sm"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div
+          class="flex flex-col items-center justify-between gap-8 pt-12 md:flex-row"
+          style="border-top: 2px solid #334155"
+        >
+          <div class="text-sm text-slate-500">
+            &copy; 2025 Aucto. All rights reserved.
+          </div>
+          <div
+            class="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500"
+          >
+            <span class="hidden sm:inline">Built for Noroff Front-End Development</span>
+            <span class="hidden sm:inline">•</span>
+            <span>Oslo, Norway</span>
+            <span>•</span>
+            <a href="#" class="transition-colors hover:text-slate-300"
+              >Student Project</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
