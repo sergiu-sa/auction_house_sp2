@@ -5,6 +5,7 @@ A front-end application for an online auction platform built with Vite, vanilla 
 ## Project Setup
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - npm or yarn
 
@@ -42,69 +43,72 @@ npm run preview
 
 ## Project Structure
 
-```
-src/
-├── js/
+``` bash
+semester-project-2/
+├── public/
+│   ├── images/           # Static images
+│   └── favicon.ic
+│
+├── src/
 │   ├── api/
-│   │   ├── auth/
-│   │   │   ├── login.ts
-│   │   │   ├── register.ts
-│   │   │   └── key.ts              # API key management
-│   │   ├── listings/
-│   │   │   ├── read.ts             # GET listings
-│   │   │   ├── create.ts           # POST listing
-│   │   │   ├── update.ts           # PUT listing
-│   │   │   ├── delete.ts           # DELETE listing
-│   │   │   └── search.ts           # Search functionality
-│   │   ├── profiles/
-│   │   │   ├── read.ts             # GET profile
-│   │   │   └── update.ts           # PUT profile (avatar, banner, bio)
-│   │   └── bids/
-│   │       └── create.ts           # POST bid
+│   │   ├── auth.ts         # Login, register, logout
+│   │   ├── listings.ts     # CRUD operations for listings
+│   │   ├── bids.ts         # Place bids
+│   │   ├── profile.ts      # Update profile, get user data
+│   │   └── config.ts       # API base URL, headers
 │   │
-│   ├── ui/
-│   │   ├── auth/
-│   │   │   ├── login.ts            # Login form handler
-│   │   │   ├── register.ts         # Register form handler
-│   │   │   └── logout.ts           # Logout functionality
-│   │   ├── listings/
-│   │   │   ├── displayListings.ts  # Render listings grid
-│   │   │   ├── displaySingle.ts    # Render single listing
-│   │   │   ├── createListing.ts    # Create form handler
-│   │   │   ├── editListing.ts      # Edit form handler
-│   │   │   ├── deleteListing.ts    # Delete functionality
-│   │   │   └── placeBid.ts         # Bid form handler
-│   │   ├── profile/
-│   │   │   ├── displayProfile.ts   # Render profile
-│   │   │   └── editProfile.ts      # Edit profile handler
-│   │   ├── global/
-│   │   │   ├── nav.ts              # Navbar (shows/hides based on auth)
-│   │   │   ├── search.ts           # Search bar functionality
-│   │   │   └── credits.ts          # Credits display (logged in only)
-│   │   └── utils/
-│   │       ├── storage.ts          # localStorage helpers
-│   │       └── router.ts           # Simple routing
+│   ├── components/
+│   │   ├── Breadcrumb.ts
+│   │   ├── ListingCard.ts  # Reusable listing card
+│   │   ├── BidHistory.ts   # Bid history component
+│   │   ├── Header.ts       # Header with navigation
+│   │   ├── Footer.ts
+│   │   └── SearchBar.ts
 │   │
-│   └── main.ts                     # Entry point
+│   ├── utils/
+│   │   ├── auth.ts         # Check login, get token, etc.
+│   │   ├── storage.ts      # LocalStorage helpers
+│   │   ├── validation.ts   # Form validation
+│   │   ├── formatDate.ts   # Date formatting
+│   │   └── formatCurrency.ts
+│   │
+│   ├── types/
+│   │   ├── api.ts          # API response types
+│   │   ├── listing.ts      # Listing interface
+│   │   ├── user.ts         # User/Profile interface
+│   │   └── bid.ts          # Bid interface
+│   │
+│   ├── pages/
+│   │   ├── home.ts         # Home page logic
+│   │   ├── login.ts        # Login page logic
+│   │   ├── register.ts
+│   │   ├── profile.ts
+│   │   ├── listingDetail.ts
+│   │   ├── createListing.ts
+│   │   └── editListing.ts
+│   │
+│   ├── styles/
+│   │   ├── main.css        # Tailwind imports + custom styles
+│   │   └── components.css  # Component-specific styles
+│   │
+│   └── main.ts             # Global initialization
 │
-├── styles/
-│   └── style.css                   # Tailwind + custom styles
+├── index.html              # Home/Feed page
+├── login.html
+├── register.html
+├── profile.html
+├── listing.html            # Single listing detail
+├── create-listing.html
+├── edit-listing.html
 │
-├── pages/                          # HTML pages (from your design)
-│   ├── index.html                  # Home/Feed
-│   ├── login.html
-│   ├── register.html
-│   ├── profile.html
-│   ├── listing.html                # Single listing detail
-│   ├── create-listing.html
-│   └── edit-listing.html
-│
-└── types/
-    ├── auth.ts
-    ├── listing.ts
-    ├── profile.ts
-    └── bid.ts
-    
+├── .env                    
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+├── vite.config.ts
+└── README.md
+└── 
 ```
 
 ## Technologies

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Aucto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans antialiased bg-aucto-bg">
+    <!-- Simple Navigation -->
+    <nav class="border-b-2 border-aucto-borderLight">
+      <div class="px-6 py-5 mx-auto max-w-7xl">
+        <div class="flex items-center justify-between">
+          <a href="/" class="font-serif text-2xl font-bold">AUCTO</a>
+          <div class="flex gap-3">
+            <a
+              href="/login.html"
+              class="px-4 py-2 text-sm font-semibold hover:underline"
+              >Login</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Register Form -->
+    <main class="max-w-md px-6 py-12 mx-auto">
+      <div class="p-8 bg-white border-2 border-aucto-borderMid">
+        <h1 class="mb-6 font-serif text-3xl font-bold">Register</h1>
+
+        <!-- Info Box -->
+        <div class="p-4 mb-6 border-2 border-blue-300 bg-blue-50">
+          <p class="text-sm text-blue-900">
+            <strong>Note:</strong> Only emails ending with @stud.noroff.no can
+            register.
+          </p>
+        </div>
+
+        <!-- Error Message -->
+        <div
+          id="error-message"
+          class="hidden p-4 mb-6 border-2 border-red-600 bg-red-50"
+        >
+          <p class="text-sm font-semibold text-red-900"></p>
+        </div>
+
+        <!-- Success Message -->
+        <div
+          id="success-message"
+          class="hidden p-4 mb-6 border-2 border-green-600 bg-green-50"
+        >
+          <p class="text-sm font-semibold text-green-900"></p>
+        </div>
+
+        <form id="register-form" class="space-y-6">
+          <!-- Username -->
+          <div>
+            <label for="name" class="block mb-2 text-sm font-semibold"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              pattern="^[\w]+$"
+              placeholder="username (no spaces)"
+              class="w-full px-4 py-3 border-2 border-aucto-borderMid focus:border-aucto-borderDark focus:outline-none"
+            />
+            <p class="mt-1 text-xs text-gray-500">
+              Letters, numbers, and underscore only
+            </p>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block mb-2 text-sm font-semibold"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              pattern=".*@stud\.noroff\.no$"
+              placeholder="username@stud.noroff.no"
+              class="w-full px-4 py-3 border-2 border-aucto-borderMid focus:border-aucto-borderDark focus:outline-none"
+            />
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block mb-2 text-sm font-semibold"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="8"
+              placeholder="Minimum 8 characters"
+              class="w-full px-4 py-3 border-2 border-aucto-borderMid focus:border-aucto-borderDark focus:outline-none"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full py-3 font-bold text-white transition-colors bg-aucto-borderDark hover:bg-black"
+          >
+            Register
+          </button>
+        </form>
+
+        <p class="mt-6 text-sm text-center text-gray-600">
+          Already have an account?
+          <a
+            href="/login.html"
+            class="font-bold text-aucto-borderDark hover:underline"
+            >Login here</a
+          >
+        </p>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/pages/register.ts"></script>
+  </body>
+</html>

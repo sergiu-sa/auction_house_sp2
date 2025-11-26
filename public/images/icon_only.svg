@@ -1,0 +1,16 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto icon">
+  
+  <path
+    d="M24 108 L64 20 L104 108 Z"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="14"
+    stroke-linejoin="round"
+  />
+  <line
+    x1="40" y1="72" x2="88" y2="72"
+    stroke="currentColor"
+    stroke-width="14"
+    stroke-linecap="round"
+  />
+</svg>

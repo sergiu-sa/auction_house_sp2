@@ -1,10 +1,4 @@
-import './styles/style.css'
+import './styles/main.css';
 
-// Initialize the app
-const app = document.querySelector<HTMLDivElement>('#app')
-
-if (app) {
-  app.innerHTML = '<div class="min-h-screen bg-gray-50">Loading...</div>'
-}
-
-export {}
+// Loads on every page
+console.log('App initialized');
