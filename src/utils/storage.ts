@@ -1,31 +1,65 @@
-// LocalStorage helper functions
-export const storage = {
-  setToken: (token: string) => {
-    localStorage.setItem('accessToken', token)
-  },
+import type { User } from '../types/api';
 
-  getToken: (): string | null => {
-    return localStorage.getItem('accessToken')
-  },
+/**
+ * Get the authentication token from localStorage
+ */
+export function getToken(): string | null {
+  return localStorage.getItem('token');
+}
 
-  removeToken: () => {
-    localStorage.removeItem('accessToken')
-  },
+/**
+ * Set the authentication token in localStorage
+ */
+export function setToken(token: string): void {
+  localStorage.setItem('token', token);
+}
 
-  setUser: (user: unknown) => {
-    localStorage.setItem('user', JSON.stringify(user))
-  },
+/**
+ * Remove the authentication token from localStorage
+ */
+export function removeToken(): void {
+  localStorage.removeItem('token');
+}
 
-  getUser: () => {
-    const user = localStorage.getItem('user')
-    return user ? JSON.parse(user) : null
-  },
+/**
+ * Get the current user from localStorage
+ */
+export function getUser(): User | null {
+  const userStr = localStorage.getItem('user');
+  if (!userStr) return null;
 
-  removeUser: () => {
-    localStorage.removeItem('user')
-  },
+  try {
+    return JSON.parse(userStr) as User;
+  } catch {
+    return null;
+  }
+}
 
-  clear: () => {
-    localStorage.clear()
-  },
+/**
+ * Set the current user in localStorage
+ */
+export function setUser(user: User): void {
+  localStorage.setItem('user', JSON.stringify(user));
+}
+
+/**
+ * Remove the current user from localStorage
+ */
+export function removeUser(): void {
+  localStorage.removeItem('user');
+}
+
+/**
+ * Clear all authentication data from localStorage
+ */
+export function clearAuth(): void {
+  removeToken();
+  removeUser();
+}
+
+/**
+ * Check if user is authenticated
+ */
+export function isAuthenticated(): boolean {
+  return !!getToken();
 }
