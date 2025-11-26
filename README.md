@@ -44,7 +44,7 @@ npm run preview
 ## Project Structure
 
 ``` bash
-semester-project-2/
+auction_house_sp2
 ├── public/
 │   ├── images/           # Static images
 │   └── favicon.ic
@@ -108,7 +108,6 @@ semester-project-2/
 ├── tailwind.config.js
 ├── vite.config.ts
 └── README.md
-└── 
 ```
 
 ## Technologies
