@@ -1,5 +1,5 @@
 import { getListings } from '../api/listings';
-import { renderHeader } from '../components/Header';
+import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
 import {
   renderListingGrid,
@@ -13,6 +13,8 @@ let currentPage = 1;
 let currentSearch = '';
 let currentSort = 'created';
 let currentSortOrder: 'asc' | 'desc' = 'desc';
+let currentTag: string | null = null;
+let activeOnly = false;
 let isLoading = false;
 
 /**
@@ -40,11 +42,8 @@ export function initHomePage(): void {
   // Load initial listings
   loadListings();
 
-  // Initialize filters
-  initializeFilters();
-
-  // Initialize sort
-  initializeSort();
+  // Listen to header filter events
+  initializeHeaderFilterListeners();
 }
 
 /**
@@ -67,7 +66,11 @@ async function loadListings(): Promise<void> {
       _bids: true,
     });
 
-    const listings = response.data;
+    let listings = response.data;
+
+    // Apply client-side filters
+    listings = applyClientSideFilters(listings);
+
     renderListingGrid(listings);
 
     // Update result count
@@ -84,8 +87,8 @@ async function loadListings(): Promise<void> {
           <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
           <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Failed to Load Listings</h3>
           <p class="text-slate-600 mb-4">Something went wrong. Please try again.</p>
-          <button 
-            onclick="window.location.reload()" 
+          <button
+            onclick="window.location.reload()"
             class="bg-slate-900 text-white px-6 py-2 hover:bg-slate-800 transition-colors"
           >
             Reload Page
@@ -99,103 +102,25 @@ async function loadListings(): Promise<void> {
 }
 
 /**
- * Initialize filter functionality
+ * Apply client-side filters to listings
  */
-function initializeFilters(): void {
-  // Clear filters button
-  const clearFiltersBtn = document.getElementById('clear-filters-btn');
-  if (clearFiltersBtn) {
-    clearFiltersBtn.addEventListener('click', () => {
-      currentSearch = '';
-      currentSort = 'created';
-      currentSortOrder = 'desc';
-      currentPage = 1;
+function applyClientSideFilters(listings: Listing[]): Listing[] {
+  let filtered = [...listings];
 
-      // Clear search inputs
-      const searchInputs = document.querySelectorAll<HTMLInputElement>(
-        'input[name="q"]'
-      );
-      searchInputs.forEach((input) => {
-        input.value = '';
-      });
-
-      // Reset sort select
-      const sortSelect = document.getElementById(
-        'sort-select'
-      ) as HTMLSelectElement;
-      if (sortSelect) {
-        sortSelect.value = 'created-desc';
-      }
-
-      // Update URL
-      window.history.pushState({}, '', '/index.html');
-
-      // Reload listings
-      loadListings();
-    });
+  // Filter by tag
+  if (currentTag && currentTag !== 'all') {
+    filtered = filtered.filter(listing =>
+      listing.tags?.some(tag => tag.toLowerCase() === currentTag?.toLowerCase())
+    );
   }
 
-  // Filter by status (active/ended)
-  const statusFilters = document.querySelectorAll<HTMLButtonElement>(
-    '[data-status-filter]'
-  );
-  statusFilters.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const status = btn.dataset.statusFilter;
+  // Filter by active status
+  if (activeOnly) {
+    const now = new Date();
+    filtered = filtered.filter(listing => new Date(listing.endsAt) > now);
+  }
 
-      // Visual feedback
-      statusFilters.forEach((b) => b.classList.remove('bg-slate-900', 'text-white'));
-      btn.classList.add('bg-slate-900', 'text-white');
-
-      // Filter listings (client-side for now)
-      filterByStatus(status || 'all');
-    });
-  });
-}
-
-/**
- * Filter listings by status (client-side)
- */
-function filterByStatus(status: string): void {
-  const allCards = document.querySelectorAll('#listings-grid > article');
-
-  allCards.forEach((card) => {
-    const cardElement = card as HTMLElement;
-    const endTimeText = cardElement.querySelector('[class*="Ends In"]');
-
-    if (!endTimeText) return;
-
-    const isEnded = endTimeText.textContent?.includes('Ended');
-
-    if (status === 'all') {
-      cardElement.style.display = '';
-    } else if (status === 'active' && !isEnded) {
-      cardElement.style.display = '';
-    } else if (status === 'ended' && isEnded) {
-      cardElement.style.display = '';
-    } else {
-      cardElement.style.display = 'none';
-    }
-  });
-}
-
-/**
- * Initialize sort functionality
- */
-function initializeSort(): void {
-  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
-  if (!sortSelect) return;
-
-  sortSelect.addEventListener('change', () => {
-    const value = sortSelect.value;
-    const [sort, order] = value.split('-');
-
-    currentSort = sort;
-    currentSortOrder = order as 'asc' | 'desc';
-    currentPage = 1;
-
-    loadListings();
-  });
+  return filtered;
 }
 
 /**
@@ -210,6 +135,33 @@ function updateResultCount(shown: number, total?: number): void {
   } else {
     countElement.textContent = `Showing ${shown} listings`;
   }
+}
+
+/**
+ * Listen to filter events from Header component
+ */
+function initializeHeaderFilterListeners(): void {
+  // Tag filter change
+  document.addEventListener('filterChange', ((e: CustomEvent) => {
+    currentTag = e.detail.filter;
+    console.log('Filter changed to:', currentTag);
+    loadListings();
+  }) as EventListener);
+
+  // Active only checkbox change
+  document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
+    activeOnly = e.detail.activeOnly;
+    console.log('Active only changed to:', activeOnly);
+    loadListings();
+  }) as EventListener);
+
+  // Sort change
+  document.addEventListener('sortChange', ((e: CustomEvent) => {
+    currentSort = e.detail.sort;
+    currentSortOrder = e.detail.order;
+    console.log('Sort changed to:', currentSort, currentSortOrder);
+    loadListings();
+  }) as EventListener);
 }
 
 // Initialize when DOM is ready

@@ -17,7 +17,7 @@ export default {
       },
       fontFamily: {
         serif: ['"Cormorant"', "serif"],
-        sans: ['"Source Sans 3"',"sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", ],
+        sans: ['"Source Sans 3"', "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
       },
     },
   },

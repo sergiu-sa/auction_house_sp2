@@ -2,7 +2,7 @@ import { login } from '../api/auth';
 import { redirectIfAuthenticated } from '../utils/auth';
 import { isValidEmail, showFieldError, clearFieldError, clearFormErrors } from '../utils/validation';
 import { toast } from '../components/Toast';
-import { renderHeader } from '../components/Header';
+import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
 
