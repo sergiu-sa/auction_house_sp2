@@ -1,13 +1,28 @@
+
 # Auction House
 
 A front-end application for an online auction platform built with Vite, vanilla TypeScript, and Tailwind CSS.
+This repo is part of your semester project.
+
+## Project Resources
+
+* **Figma Design File:**
+  [https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1](https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1)
+
+* **GitHub Repository:**
+  [https://github.com/sergiu-sa/auction_house_sp2.git](https://github.com/sergiu-sa/auction_house_sp2.git)
+
+* **GitHub Project / Kanban Board:**
+  [https://github.com/users/sergiu-sa/projects/12](https://github.com/users/sergiu-sa/projects/12)
+
+---
 
 ## Project Setup
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
+* Node.js v18+
+* npm or yarn
 
 ### Installation
 
@@ -21,7 +36,7 @@ npm install
 npm run dev
 ```
 
-The application will start at `http://localhost:5173`
+Starts at `http://localhost:5173`
 
 ### Build
 
@@ -41,46 +56,50 @@ npm run type-check
 npm run preview
 ```
 
+---
+
 ## Project Structure
 
-``` bash
+### Full Overview
+
+```bash
 auction_house_sp2
 ├── public/
-│   ├── images/           # Static images
-│   └── favicon.ic
+│   ├── images/
+│  
 │
 ├── src/
 │   ├── api/
-│   │   ├── auth.ts         # Login, register, logout
-│   │   ├── listings.ts     # CRUD operations for listings
-│   │   ├── bids.ts         # Place bids
-│   │   ├── profile.ts      # Update profile, get user data
-│   │   └── config.ts       # API base URL, headers
+│   │   ├── auth.ts
+│   │   ├── listings.ts
+│   │   ├── bids.ts
+│   │   ├── profile.ts
+│   │   └── config.ts
 │   │
 │   ├── components/
 │   │   ├── Breadcrumb.ts
-│   │   ├── ListingCard.ts  # Reusable listing card
-│   │   ├── BidHistory.ts   # Bid history component
-│   │   ├── Header.ts       # Header with navigation
+│   │   ├── ListingCard.ts
+│   │   ├── BidHistory.ts
+│   │   ├── Header.ts
 │   │   ├── Footer.ts
 │   │   └── SearchBar.ts
 │   │
 │   ├── utils/
-│   │   ├── auth.ts         # Check login, get token, etc.
-│   │   ├── storage.ts      # LocalStorage helpers
-│   │   ├── validation.ts   # Form validation
-│   │   ├── formatDate.ts   # Date formatting
+│   │   ├── auth.ts
+│   │   ├── storage.ts
+│   │   ├── validation.ts
+│   │   ├── formatDate.ts
 │   │   └── formatCurrency.ts
 │   │
 │   ├── types/
-│   │   ├── api.ts          # API response types
-│   │   ├── listing.ts      # Listing interface
-│   │   ├── user.ts         # User/Profile interface
-│   │   └── bid.ts          # Bid interface
+│   │   ├── api.ts
+│   │   ├── listing.ts
+│   │   ├── user.ts
+│   │   └── bid.ts
 │   │
 │   ├── pages/
-│   │   ├── home.ts         # Home page logic
-│   │   ├── login.ts        # Login page logic
+│   │   ├── home.ts
+│   │   ├── login.ts
 │   │   ├── register.ts
 │   │   ├── profile.ts
 │   │   ├── listingDetail.ts
@@ -88,20 +107,20 @@ auction_house_sp2
 │   │   └── editListing.ts
 │   │
 │   ├── styles/
-│   │   ├── main.css        # Tailwind imports + custom styles
-│   │   └── components.css  # Component-specific styles
+│   │   ├── main.css
+│   │   └── components.css
 │   │
-│   └── main.ts             # Global initialization
+│   └── main.ts
 │
-├── index.html              # Home/Feed page
+├── index.html
 ├── login.html
 ├── register.html
 ├── profile.html
-├── listing.html            # Single listing detail
+├── listing.html
 ├── create-listing.html
 ├── edit-listing.html
 │
-├── .env                    
+├── .env
 ├── .gitignore
 ├── package.json
 ├── tsconfig.json
@@ -110,25 +129,54 @@ auction_house_sp2
 └── README.md
 ```
 
+### Simple Overview
+
+```bash
+auction_house_sp2
+├── public/
+│   ├── images/
+│   └── favicon.ico
+│
+├── src/
+│   ├── api/               
+│   ├── components/       
+│   ├── utils/            
+│   ├── types/            
+│   ├── pages/            
+│   ├── styles/           
+│   └── main.ts            
+│
+├── index.html
+├── login.html
+├── register.html
+├── profile.html
+├── listing.html
+├── create-listing.html
+├── edit-listing.html
+│
+├── .env
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+└── vite.config.ts
+```
+
+---
+
 ## Technologies
 
-- **Vite** - Build tool and dev server
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first CSS framework
-- **Vanilla JavaScript** - No frameworks, pure JS
+* Vite
+* TypeScript
+* Tailwind CSS
+* Vanilla JS
 
-## Features
-
-- User registration and authentication
-- Browse auction listings
-- Create and manage listings
-- Place bids on listings
-- User profile management
-- Credit system
+---
 
 ## API
 
-This project integrates with the Noroff Auction API v2.
+This project consumes the **Noroff Auction API v2**.
+
+---
 
 ## License
 

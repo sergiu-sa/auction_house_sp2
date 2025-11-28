@@ -8,133 +8,343 @@
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="/src/styles/main.css" />
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
-  <body class="font-sans antialiased bg-aucto-bg">
-    <!-- Simple Navigation -->
-    <nav class="border-b-2 border-aucto-borderLight">
-      <div class="px-6 py-5 mx-auto max-w-7xl">
-        <div class="flex items-center justify-between">
-          <a href="/" class="font-serif text-2xl font-bold">AUCTO</a>
-          <div class="flex gap-3">
-            <a
-              href="/login.html"
-              class="px-4 py-2 text-sm font-semibold hover:underline"
-              >Login</a
-            >
-          </div>
-        </div>
-      </div>
-    </nav>
+  <body class="antialiased bg-aucto-bg">
+    <!-- Header (rendered by JavaScript) -->
+    <div id="header"></div>
 
-    <!-- Register Form -->
-    <main class="max-w-md px-6 py-12 mx-auto">
-      <div class="p-8 bg-white border-2 border-aucto-borderMid">
-        <h1 class="mb-6 font-serif text-3xl font-bold">Register</h1>
-
-        <!-- Info Box -->
-        <div class="p-4 mb-6 border-2 border-blue-300 bg-blue-50">
-          <p class="text-sm text-blue-900">
-            <strong>Note:</strong> Only emails ending with @stud.noroff.no can
-            register.
-          </p>
-        </div>
-
-        <!-- Error Message -->
+    <main>
+      <!-- BENTO REGISTER LAYOUT -->
+      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
         <div
-          id="error-message"
-          class="hidden p-4 mb-6 border-2 border-red-600 bg-red-50"
+          class="p-6 bg-white md:p-8 lg:p-10"
+          style="border: 3px solid #1e293b"
         >
-          <p class="text-sm font-semibold text-red-900"></p>
+          <div class="grid gap-6 lg:grid-cols-[3fr,2fr] lg:gap-8 items-stretch">
+            <!-- LEFT: REGISTER TILE -->
+            <section
+              aria-label="Create Aucto account"
+              class="flex flex-col justify-between p-6 bg-slate-50 md:p-8"
+              style="border: 3px solid #1e293b"
+            >
+              <!-- Label + status -->
+              <div class="mb-6">
+                <div class="flex items-center justify-between gap-4 mb-4">
+                  <div class="flex items-center gap-3">
+                    <div class="h-0.5 w-12 bg-red-700"></div>
+                    <span
+                      class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Create your account
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 text-[10px] uppercase">
+                    <span
+                      class="px-2 py-1 font-bold tracking-[0.18em] text-slate-500"
+                      style="border: 1px solid #cbd5e1"
+                    >
+                      Guest
+                    </span>
+                    <span
+                      class="px-2 py-1 font-bold tracking-[0.18em] text-white"
+                      style="
+                        background-color: #15803d;
+                        border: 1px solid #14532d;
+                      "
+                    >
+                      Bid ready
+                    </span>
+                  </div>
+                </div>
+
+                <h1
+                  class="mb-3 font-serif text-3xl font-bold leading-tight md:text-4xl lg:text-5xl text-slate-900"
+                >
+                  Get credits and start listing.
+                </h1>
+                <p class="text-sm text-slate-600">
+                  Use your <span class="font-semibold">@stud.noroff.no</span>
+                  email. New accounts receive starter credits so you can bid on
+                  your first lot.
+                </p>
+              </div>
+
+              <!-- Form -->
+              <form id="register-form" class="space-y-5" novalidate>
+                <div>
+                  <label
+                    for="name"
+                    class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >
+                    <i class="text-xs fa-solid fa-user"></i>
+                    <span>Full name</span>
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="First name and last name"
+                    class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                    style="border: 2px solid #334155"
+                    required
+                  />
+                  <div id="name-error" class="hidden mt-2 text-xs text-red-700"></div>
+                </div>
+
+                <div>
+                  <label
+                    for="email"
+                    class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >
+                    <i class="text-xs fa-solid fa-envelope"></i>
+                    <span>Noroff email</span>
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="your.name@stud.noroff.no"
+                    class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                    style="border: 2px solid #334155"
+                    required
+                  />
+                  <p class="mt-2 text-xs text-slate-500">
+                    Registration is limited to valid @stud.noroff.no addresses.
+                  </p>
+                  <div id="email-error" class="hidden mt-2 text-xs text-red-700"></div>
+                </div>
+
+                <div class="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <label
+                      for="password"
+                      class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      <i class="text-xs fa-solid fa-lock"></i>
+                      <span>Password</span>
+                    </label>
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autocomplete="new-password"
+                      placeholder="Create a password"
+                      class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                      style="border: 2px solid #334155"
+                      required
+                    />
+                    <p class="mt-1 text-xs text-slate-500">
+                      At least 8 characters.
+                    </p>
+                    <div id="password-error" class="hidden mt-2 text-xs text-red-700"></div>
+                  </div>
+                  <div>
+                    <label
+                      for="confirm-password"
+                      class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      <i class="text-xs fa-solid fa-check-double"></i>
+                      <span>Confirm password</span>
+                    </label>
+                    <input
+                      id="confirm-password"
+                      name="confirmPassword"
+                      type="password"
+                      autocomplete="new-password"
+                      placeholder="Repeat your password"
+                      class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                      style="border: 2px solid #334155"
+                      required
+                    />
+                    <div id="confirm-password-error" class="hidden mt-2 text-xs text-red-700"></div>
+                  </div>
+                </div>
+
+                <div class="pt-2 space-y-3">
+                  <button
+                    type="submit"
+                    class="w-full bg-slate-900 py-3 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+                    style="border: 3px solid #1e293b"
+                  >
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Create account</span>
+                  </button>
+                  <a
+                    href="/login.html"
+                    class="w-full bg-white py-3 text-[11px] text-center font-bold tracking-[0.18em] uppercase text-slate-900 hover:bg-slate-50 inline-flex items-center justify-center gap-2"
+                    style="border: 2px solid #334155"
+                  >
+                    <i class="text-xs fa-solid fa-sign-in-alt"></i>
+                    Already registered? Log in
+                  </a>
+                  <button
+                    type="button"
+                    class="w-full bg-slate-50 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-600 hover:bg-slate-100 inline-flex items-center justify-center gap-2"
+                    style="border: 1px dashed #cbd5e1"
+                    onclick="window.location.href='/index.html'"
+                  >
+                    <i class="text-xs fa-solid fa-arrow-right-to-bracket"></i>
+                    Continue as guest
+                  </button>
+                </div>
+              </form>
+
+              <!-- Short 3-step strip -->
+              <div
+                class="mt-6 grid grid-cols-3 gap-3 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              >
+                <div class="flex flex-col gap-1">
+                  <span class="text-xs text-slate-900">1. Register</span>
+                  <span class="text-[10px] text-slate-500">Create account</span>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <span class="text-xs text-slate-900">2. Credits</span>
+                  <span class="text-[10px] text-slate-500"
+                    >Get starter pool</span
+                  >
+                </div>
+                <div class="flex flex-col gap-1">
+                  <span class="text-xs text-slate-900">3. Bid</span>
+                  <span class="text-[10px] text-slate-500">Join live lots</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- RIGHT: PRODUCT BENTO  -->
+            <section id="product-showcase" class="grid gap-4 lg:grid-rows-2">
+              <!-- Main listing  -->
+              <article
+                data-tile="featured"
+                class="bg-slate-50"
+                style="border: 3px solid #1e293b"
+                aria-label="Example listing creation"
+              >
+                <div
+                  class="relative h-40 sm:h-48 md:h-56 bg-slate-200"
+                  style="border-bottom: 3px solid #1e293b"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop"
+                    alt="Table with objects ready to be photographed"
+                    class="object-cover w-full h-full"
+                  />
+                  <div
+                    class="absolute left-3 top-3 bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-white"
+                  >
+                    List your item
+                  </div>
+                  <div
+                    class="absolute px-3 py-1 text-xs font-semibold bg-white right-3 bottom-3 text-slate-900"
+                    style="border: 2px solid #1e293b"
+                  >
+                    <span id="starter-credits">1000</span> starter credits
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div
+                    class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  >
+                    Seller tools
+                  </div>
+                  <h2 class="mb-1 font-serif text-xl font-bold text-slate-900">
+                    Turn your gear into credits
+                  </h2>
+                  <p class="text-xs text-slate-600">
+                    Create listings, add photos and track bids on your items.
+                  </p>
+                </div>
+              </article>
+
+              <!-- Two small tiles -->
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Tile A -->
+                <article
+                  data-tile="tile-a"
+                  class="flex flex-col bg-slate-50"
+                  style="border: 3px solid #1e293b"
+                >
+                  <div
+                    class="h-24 bg-slate-200"
+                    style="border-bottom: 3px solid #1e293b"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop"
+                      alt="Watch and product display"
+                      class="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div class="flex-1 p-3">
+                    <div
+                      class="mb-1 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Active now
+                    </div>
+                    <p class="text-xs font-semibold text-slate-900">
+                      <span id="active-users">2,744</span> members online
+                    </p>
+                    <p class="mt-1 text-[11px] text-slate-600">
+                      Join the bidding community.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Tile B -->
+                <article
+                  data-tile="tile-b"
+                  class="flex flex-col bg-slate-50"
+                  style="border: 3px solid #1e293b"
+                >
+                  <div
+                    class="h-24 bg-slate-200"
+                    style="border-bottom: 3px solid #1e293b"
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop"
+                      alt="Person using laptop"
+                      class="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div class="flex-1 p-3">
+                    <div
+                      class="mb-1 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                    >
+                      Easy start
+                    </div>
+                    <p class="text-xs font-semibold text-slate-900">
+                      Dashboard ready
+                    </p>
+                    <p class="mt-1 text-[11px] text-slate-600">
+                      List, bid, and win in minutes.
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
         </div>
-
-        <!-- Success Message -->
-        <div
-          id="success-message"
-          class="hidden p-4 mb-6 border-2 border-green-600 bg-green-50"
-        >
-          <p class="text-sm font-semibold text-green-900"></p>
-        </div>
-
-        <form id="register-form" class="space-y-6">
-          <!-- Username -->
-          <div>
-            <label for="name" class="block mb-2 text-sm font-semibold"
-              >Username</label
-            >
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              pattern="^[\w]+$"
-              placeholder="username (no spaces)"
-              class="w-full px-4 py-3 border-2 border-aucto-borderMid focus:border-aucto-borderDark focus:outline-none"
-            />
-            <p class="mt-1 text-xs text-gray-500">
-              Letters, numbers, and underscore only
-            </p>
-          </div>
-
-          <!-- Email -->
-          <div>
-            <label for="email" class="block mb-2 text-sm font-semibold"
-              >Email</label
-            >
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              pattern=".*@stud\.noroff\.no$"
-              placeholder="username@stud.noroff.no"
-              class="w-full px-4 py-3 border-2 border-aucto-borderMid focus:border-aucto-borderDark focus:outline-none"
-            />
-          </div>
-
-          <!-- Password -->
-          <div>
-            <label for="password" class="block mb-2 text-sm font-semibold"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-              minlength="8"
-              placeholder="Minimum 8 characters"
-              class="w-full px-4 py-3 border-2 border-aucto-borderMid focus:border-aucto-borderDark focus:outline-none"
-            />
-          </div>
-
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            id="submit-btn"
-            class="w-full py-3 font-bold text-white transition-colors bg-aucto-borderDark hover:bg-black"
-          >
-            Register
-          </button>
-        </form>
-
-        <p class="mt-6 text-sm text-center text-gray-600">
-          Already have an account?
-          <a
-            href="/login.html"
-            class="font-bold text-aucto-borderDark hover:underline"
-            >Login here</a
-          >
-        </p>
-      </div>
+      </section>
     </main>
 
-    <script type="module" src="/src/main.ts"></script>
+    <!-- Footer (rendered by JavaScript) -->
+    <div id="footer"></div>
+
     <script type="module" src="/src/pages/register.ts"></script>
   </body>
 </html>

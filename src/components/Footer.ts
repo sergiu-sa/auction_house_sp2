@@ -10,7 +10,6 @@ export function renderFooter(): void {
   const footer = document.getElementById("footer");
   if (!footer) return;
 
-  const currentYear = new Date().getFullYear();
   const isUserLoggedIn = isLoggedIn();
 
   footer.innerHTML = `
