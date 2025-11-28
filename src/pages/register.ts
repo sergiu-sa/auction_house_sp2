@@ -11,6 +11,8 @@ import { toast } from '../components/Toast';
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
+import { getListings } from '../api/listings';
+import type { Listing } from '../types/api';
 
 /**
  * Initialize register page
@@ -57,42 +59,178 @@ export function initRegisterPage(): void {
 
   const confirmPasswordInput = document.getElementById('confirm-password') as HTMLInputElement;
   if (confirmPasswordInput && passwordInput) {
-    confirmPasswordInput.addEventListener('blur', () => 
+    confirmPasswordInput.addEventListener('blur', () =>
       validateConfirmPasswordField(passwordInput, confirmPasswordInput)
     );
     confirmPasswordInput.addEventListener('input', () => clearFieldError('confirm-password'));
   }
 
-  // Toggle password visibility
-  const togglePassword = document.getElementById('toggle-password');
-  if (togglePassword && passwordInput) {
-    togglePassword.addEventListener('click', () => {
-      const type = passwordInput.type === 'password' ? 'text' : 'password';
-      passwordInput.type = type;
-      
-      const icon = togglePassword.querySelector('i');
-      if (icon) {
-        icon.className = type === 'password' 
-          ? 'fa-solid fa-eye' 
-          : 'fa-solid fa-eye-slash';
+  // Initialize product showcase animations
+  initProductShowcase();
+}
+
+/**
+ * Initialize product showcase with live data from API
+ */
+async function initProductShowcase(): Promise<void> {
+  // Animate starter credits counter
+  const starterCredits = document.getElementById('starter-credits');
+  if (starterCredits) {
+    let credits = 800;
+    const targetCredits = 1000;
+    const interval = setInterval(() => {
+      credits += 10;
+      starterCredits.textContent = credits.toString();
+      if (credits >= targetCredits) {
+        clearInterval(interval);
       }
-    });
+    }, 50);
   }
 
-  const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
-  if (toggleConfirmPassword && confirmPasswordInput) {
-    toggleConfirmPassword.addEventListener('click', () => {
-      const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
-      confirmPasswordInput.type = type;
-      
-      const icon = toggleConfirmPassword.querySelector('i');
-      if (icon) {
-        icon.className = type === 'password' 
-          ? 'fa-solid fa-eye' 
-          : 'fa-solid fa-eye-slash';
-      }
-    });
+  // Simulate active users count
+  const activeUsers = document.getElementById('active-users');
+  if (activeUsers) {
+    let users = 2744;
+    setInterval(() => {
+      // Random increment/decrement
+      const change = Math.random() > 0.5 ? Math.floor(Math.random() * 5) : -Math.floor(Math.random() * 3);
+      users = Math.max(2700, Math.min(2800, users + change));
+      activeUsers.textContent = users.toLocaleString();
+    }, 4000);
   }
+
+  // Fetch and display real listings
+  await loadDynamicListings();
+
+  // Refresh listings every 15 seconds
+  setInterval(() => {
+    loadDynamicListings();
+  }, 15000);
+}
+
+/**
+ * Load dynamic listings from API and update showcase
+ */
+async function loadDynamicListings(): Promise<void> {
+  try {
+    // Fetch latest listings with bids
+    const response = await getListings({
+      limit: 3,
+      _bids: true,
+      sort: 'created',
+      sortOrder: 'desc',
+    });
+
+    if (response.data && response.data.length > 0) {
+      updateProductShowcase(response.data);
+    }
+  } catch (error) {
+    console.error('Failed to load dynamic listings:', error);
+    // Silently fail - keep existing content
+  }
+}
+
+/**
+ * Update product showcase with real listings
+ */
+function updateProductShowcase(listings: Listing[]): void {
+  // Update featured listing (main tile)
+  if (listings[0]) {
+    updateFeaturedListing(listings[0]);
+  }
+
+  // Update small tiles
+  if (listings[1]) {
+    updateSmallTile(listings[1], 'tile-a');
+  }
+  if (listings[2]) {
+    updateSmallTile(listings[2], 'tile-b');
+  }
+}
+
+/**
+ * Update the featured listing showcase
+ */
+function updateFeaturedListing(listing: Listing): void {
+  const article = document.querySelector('[data-tile="featured"]') as HTMLElement;
+  if (!article) return;
+
+  // Update image
+  const img = article.querySelector('img') as HTMLImageElement;
+  if (img && listing.media && listing.media.length > 0) {
+    img.src = listing.media[0].url;
+    img.alt = listing.media[0].alt || listing.title;
+    img.onerror = () => {
+      img.src = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop';
+    };
+  }
+
+  // Update title
+  const titleElement = article.querySelector('.font-serif') as HTMLElement;
+  if (titleElement) {
+    titleElement.textContent = listing.title;
+  }
+
+  // Update description
+  const descElement = article.querySelector('.text-xs.text-slate-600') as HTMLElement;
+  if (descElement && listing.description) {
+    descElement.textContent = listing.description.substring(0, 80) + '...';
+  }
+}
+
+/**
+ * Update a small tile with listing data
+ */
+function updateSmallTile(listing: Listing, tileId: string): void {
+  const article = document.querySelector(`[data-tile="${tileId}"]`) as HTMLElement;
+  if (!article) return;
+
+  // Update image
+  const img = article.querySelector('img') as HTMLImageElement;
+  if (img && listing.media && listing.media.length > 0) {
+    img.src = listing.media[0].url;
+    img.alt = listing.media[0].alt || listing.title;
+    img.onerror = () => {
+      if (tileId === 'tile-a') {
+        img.src = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop';
+      } else {
+        img.src = 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop';
+      }
+    };
+  }
+
+  // Update title
+  const titleElement = article.querySelector('.text-xs.font-semibold') as HTMLElement;
+  if (titleElement) {
+    titleElement.textContent = listing.title.substring(0, 30) + (listing.title.length > 30 ? '...' : '');
+  }
+
+  // Update bid count and time remaining
+  const metaElement = article.querySelector('.text-\\[11px\\].text-slate-600') as HTMLElement;
+  if (metaElement && listing.bids && listing.endsAt) {
+    const bidCount = listing.bids.length;
+    const timeLeft = getTimeRemaining(listing.endsAt);
+    metaElement.textContent = `${bidCount} ${bidCount === 1 ? 'bid' : 'bids'} • ${timeLeft}`;
+  }
+}
+
+/**
+ * Calculate time remaining until listing ends
+ */
+function getTimeRemaining(endsAt: string): string {
+  const now = new Date();
+  const end = new Date(endsAt);
+  const diff = end.getTime() - now.getTime();
+
+  if (diff <= 0) return 'Ended';
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (days > 0) return `${days}d ${hours}h`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
 }
 
 /**
@@ -237,7 +375,6 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
   const name = (formData.get('name') as string).trim();
   const email = (formData.get('email') as string).trim();
   const password = formData.get('password') as string;
-  const confirmPassword = formData.get('confirm-password') as string;
 
   // Clear previous errors
   clearFormErrors('register-form');

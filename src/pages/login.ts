@@ -5,6 +5,8 @@ import { toast } from '../components/Toast';
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
+import { getListings } from '../api/listings';
+import type { Listing } from '../types/api';
 
 /**
  * Initialize login page
@@ -39,21 +41,168 @@ export function initLoginPage(): void {
     passwordInput.addEventListener('input', () => clearFieldError('password'));
   }
 
-  // Toggle password visibility
-  const togglePassword = document.getElementById('toggle-password');
-  if (togglePassword && passwordInput) {
-    togglePassword.addEventListener('click', () => {
-      const type = passwordInput.type === 'password' ? 'text' : 'password';
-      passwordInput.type = type;
-      
-      const icon = togglePassword.querySelector('i');
-      if (icon) {
-        icon.className = type === 'password' 
-          ? 'fa-solid fa-eye' 
-          : 'fa-solid fa-eye-slash';
-      }
+  // Initialize product showcase animations
+  initProductShowcase();
+}
+
+/**
+ * Initialize product showcase with live data from API
+ */
+async function initProductShowcase(): Promise<void> {
+  // Fetch and display real listings
+  await loadDynamicListings();
+
+  // Refresh listings every 15 seconds
+  setInterval(() => {
+    loadDynamicListings();
+  }, 15000);
+}
+
+/**
+ * Load dynamic listings from API and update showcase
+ */
+async function loadDynamicListings(): Promise<void> {
+  try {
+    // Fetch latest listings with bids
+    const response = await getListings({
+      limit: 3,
+      _bids: true,
+      sort: 'created',
+      sortOrder: 'desc',
     });
+
+    if (response.data && response.data.length > 0) {
+      updateProductShowcase(response.data);
+    }
+  } catch (error) {
+    console.error('Failed to load dynamic listings:', error);
+    // Silently fail - keep existing content
   }
+}
+
+/**
+ * Update product showcase with real listings
+ */
+function updateProductShowcase(listings: Listing[]): void {
+  // Update featured listing (main tile)
+  if (listings[0]) {
+    updateFeaturedListing(listings[0]);
+  }
+
+  // Update small tiles
+  if (listings[1]) {
+    updateSmallTile(listings[1], 'tile-a');
+  }
+  if (listings[2]) {
+    updateSmallTile(listings[2], 'tile-b');
+  }
+}
+
+/**
+ * Update the featured listing showcase
+ */
+function updateFeaturedListing(listing: Listing): void {
+  const article = document.querySelector('[data-tile="featured"]') as HTMLElement;
+  if (!article) return;
+
+  // Update image
+  const img = article.querySelector('img') as HTMLImageElement;
+  if (img && listing.media && listing.media.length > 0) {
+    img.src = listing.media[0].url;
+    img.alt = listing.media[0].alt || listing.title;
+    img.onerror = () => {
+      img.src = 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop';
+    };
+  }
+
+  // Update title
+  const titleElement = article.querySelector('.font-serif') as HTMLElement;
+  if (titleElement) {
+    titleElement.textContent = listing.title;
+  }
+
+  // Update description
+  const descElement = article.querySelector('.text-xs.text-slate-600') as HTMLElement;
+  if (descElement && listing.description) {
+    descElement.textContent = listing.description.substring(0, 60) + '...';
+  }
+
+  // Update current bid
+  const bidElement = article.querySelector('#featured-bid') as HTMLElement;
+  if (bidElement && listing.bids && listing.bids.length > 0) {
+    const highestBid = Math.max(...listing.bids.map(bid => bid.amount));
+    bidElement.textContent = highestBid.toString();
+  }
+}
+
+/**
+ * Update a small tile with listing data
+ */
+function updateSmallTile(listing: Listing, tileId: string): void {
+  const article = document.querySelector(`[data-tile="${tileId}"]`) as HTMLElement;
+  if (!article) return;
+
+  // Update image
+  const img = article.querySelector('img') as HTMLImageElement;
+  if (img && listing.media && listing.media.length > 0) {
+    img.src = listing.media[0].url;
+    img.alt = listing.media[0].alt || listing.title;
+    img.onerror = () => {
+      if (tileId === 'tile-a') {
+        img.src = 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop';
+      } else {
+        img.src = 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop';
+      }
+    };
+  }
+
+  // Update title
+  const titleElement = article.querySelector('.text-xs.font-semibold') as HTMLElement;
+  if (titleElement) {
+    titleElement.textContent = listing.title.substring(0, 25) + (listing.title.length > 25 ? '...' : '');
+  }
+
+  // For tile-a: Update bid count and time remaining
+  if (tileId === 'tile-a') {
+    const watchBids = article.querySelector('#watch-bids') as HTMLElement;
+    const watchTime = article.querySelector('#watch-time') as HTMLElement;
+
+    if (watchBids && listing.bids) {
+      watchBids.textContent = listing.bids.length.toString();
+    }
+
+    if (watchTime && listing.endsAt) {
+      const timeLeft = getTimeRemaining(listing.endsAt);
+      watchTime.textContent = timeLeft;
+    }
+  }
+
+  // For tile-b: Update description text
+  if (tileId === 'tile-b') {
+    const descElement = article.querySelector('.text-\\[11px\\].text-slate-600') as HTMLElement;
+    if (descElement && listing.description) {
+      descElement.textContent = listing.description.substring(0, 40) + '...';
+    }
+  }
+}
+
+/**
+ * Calculate time remaining until listing ends
+ */
+function getTimeRemaining(endsAt: string): string {
+  const now = new Date();
+  const end = new Date(endsAt);
+  const diff = end.getTime() - now.getTime();
+
+  if (diff <= 0) return 'Ended';
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (days > 0) return `${days}d ${hours}h`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
 }
 
 /**

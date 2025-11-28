@@ -2,17 +2,20 @@
 export default {
   content: [
     "./index.html",
+    "./login.html",
+    "./register.html",
     "./src/**/*.{ts,js,html}",
   ],
   theme: {
     extend: {
       colors: {
+        "warm-white": "#F7F7F5",
         aucto: {
-          bg: "#f7f7f5",          // page background
-          borderLight: "#e2e8f0", // separators
-          borderMid: "#334155",   // inputs / buttons
-          borderDark: "#1e293b",  // heavy borders
-          red: "#dc2629",         // guest banner
+          bg: "#f7f7f5",
+          borderLight: "#e2e8f0",
+          borderMid: "#334155",
+          borderDark: "#1e293b",
+          red: "#dc2629",
         },
       },
       fontFamily: {
