@@ -1,3 +1,8 @@
+import { isLoggedIn } from '../utils/auth';
+import { renderNewsletter, initNewsletter } from './newsletter';
+import { renderFeaturedWin } from './featuredWin';
+import { renderStatsBar } from './statsBar';
+
 /**
  * Render the footer component
  */
@@ -6,10 +11,22 @@ export function renderFooter(): void {
   if (!footer) return;
 
   const currentYear = new Date().getFullYear();
+  const isUserLoggedIn = isLoggedIn();
 
   footer.innerHTML = `
     <footer class="bg-slate-900 px-6 md:px-8 pb-12 pt-20 text-slate-400">
   <div class="mx-auto max-w-7xl">
+
+    ${isUserLoggedIn ? `
+      <!-- Featured Win - Logged In Users Only -->
+      ${renderFeaturedWin()}
+
+      <!-- Stats Bar - Logged In Users Only -->
+      ${renderStatsBar()}
+    ` : `
+      <!-- Newsletter - Guest Users Only -->
+      ${renderNewsletter()}
+    `}
     <!-- Main Footer Navigation -->
     <div class="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
       <!-- Brand -->
@@ -242,4 +259,12 @@ export function renderFooter(): void {
   </div>
 </footer>
   `;
+
+  // Initialize newsletter functionality for guest users
+  if (!isUserLoggedIn) {
+    // Use setTimeout to ensure DOM is ready
+    setTimeout(() => {
+      initNewsletter();
+    }, 0);
+  }
 }
