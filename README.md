@@ -15,6 +15,9 @@ This repo is part of your semester project.
 * **GitHub Project / Kanban Board:**
   [https://github.com/users/sergiu-sa/projects/12](https://github.com/users/sergiu-sa/projects/12)
 
+* **Deployment (Netlify):**
+  [https://auctohouse.netlify.app/](https://auctohouse.netlify.app/)
+
 ---
 
 ## Project Setup
