@@ -14,14 +14,14 @@ export function renderHeader(): void {
 
   header.innerHTML = `
     ${!isUserLoggedIn ? renderGuestBanner() : ''}
-    
+
     <!-- Main Navigation -->
     <nav style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
         <!-- Top row: brand + search + nav + credits -->
         <div class="flex items-center gap-3 pb-4" style="border-bottom: 1px solid #e2e8f0">
-          
-          <!-- Brand Logo - Compact -->
+
+          <!-- Brand Logo - Always visible -->
           <a href="/index.html" class="inline-flex items-center gap-1.5 text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
             <svg class="h-6 w-6" width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto icon">
               <path d="M24 108 L64 20 L104 108 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/>
@@ -30,8 +30,8 @@ export function renderHeader(): void {
             <span class="hidden sm:inline font-bold text-sm">Aucto</span>
           </a>
 
-          <!-- Inline search (grows to fill available space) -->
-          <section aria-label="Global auction search" class="hidden md:flex flex-1 items-center gap-2">
+          <!-- DESKTOP: Inline search (grows to fill available space) -->
+          <section aria-label="Global auction search" class="hidden lg:flex flex-1 items-center gap-2">
             <form class="flex-1" role="search" aria-label="Search auctions" id="header-search-form">
               <label for="global-search-input" class="sr-only">Search auctions</label>
               <div class="relative">
@@ -61,7 +61,22 @@ export function renderHeader(): void {
             </button>
           </section>
 
-          <!-- Primary nav -->
+          <!-- Spacer for mobile/tablet -->
+          <div class="flex-1 lg:hidden"></div>
+
+          <!-- MOBILE/TABLET: Search icon button (< 1024px) -->
+          <button
+            id="mobile-search-btn"
+            type="button"
+            class="lg:hidden flex items-center justify-center bg-white px-3 py-2 hover:bg-slate-50"
+            style="border: 2px solid #334155"
+            aria-label="Toggle search"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </button>
+
+          <!-- DESKTOP: Primary nav links (≥1024px) -->
           <div class="hidden items-center gap-6 text-sm font-bold text-slate-700 lg:flex">
             <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-house text-sm"></i>
@@ -107,11 +122,11 @@ export function renderHeader(): void {
                 <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
                 <span class="text-base font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
               </div>
-              
-              <!-- Profile Button -->
-              <button 
+
+              <!-- DESKTOP: Profile Button -->
+              <button
                 id="profile-menu-btn"
-                class="flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
+                class="hidden lg:flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
                 style="border: 2px solid #1e293b"
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -121,11 +136,11 @@ export function renderHeader(): void {
                     ? `<img src="${user.avatar.url}" alt="${user.name}" class="h-8 w-8 object-cover" style="border: 2px solid #1e293b" />`
                     : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b">${user.name.charAt(0).toUpperCase()}</div>`
                 }
-                <span class="hidden text-sm font-bold text-slate-900 md:block">${user.name}</span>
+                <span class="text-sm font-bold text-slate-900">${user.name}</span>
               </button>
 
-              <!-- Profile Dropdown Menu -->
-              <div 
+              <!-- DESKTOP: Profile Dropdown Menu -->
+              <div
                 id="profile-dropdown-menu"
                 class="hidden absolute right-6 mt-2 w-48 bg-white shadow-lg z-50"
                 style="border: 2px solid #1e293b; top: 60px;"
@@ -137,7 +152,7 @@ export function renderHeader(): void {
                 <a href="/create-listing.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t" style="border-color: #e2e8f0" role="menuitem">
                   <i class="fa-solid fa-plus w-5"></i> Create Listing
                 </a>
-                <button 
+                <button
                   id="logout-btn"
                   class="w-full text-left px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t"
                   style="border-color: #e2e8f0"
@@ -146,28 +161,87 @@ export function renderHeader(): void {
                   <i class="fa-solid fa-sign-out-alt w-5"></i> Logout
                 </button>
               </div>
+
+              <!-- MOBILE: Hamburger Menu Button (< 1024px) -->
+              <button
+                id="mobile-menu-btn"
+                type="button"
+                class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
+                style="border: 2px solid #1e293b"
+                aria-expanded="false"
+                aria-label="Toggle menu"
+              >
+                <i class="fa-solid fa-bars text-white text-lg"></i>
+              </button>
             `
                 : `
               <!-- Guest Navigation -->
-              <a 
-                href="/login.html" 
+              <a
+                href="/login.html"
                 class="hidden bg-white px-4 py-2 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50 md:inline-flex items-center gap-2"
                 style="border: 2px solid #1e293b"
               >
                 <i class="fa-solid fa-right-to-bracket text-sm"></i>
                 Log in
               </a>
-              <a 
-                href="/register.html" 
+              <a
+                href="/register.html"
                 class="bg-slate-900 px-4 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
                 style="border: 2px solid #1e293b"
               >
                 <i class="fa-solid fa-user-plus text-sm"></i>
                 Create account
               </a>
+
+              <!-- MOBILE: Hamburger Menu Button for guests (< 1024px) -->
+              <button
+                id="mobile-menu-btn"
+                type="button"
+                class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
+                style="border: 2px solid #1e293b"
+                aria-expanded="false"
+                aria-label="Toggle menu"
+              >
+                <i class="fa-solid fa-bars text-white text-lg"></i>
+              </button>
             `
             }
           </div>
+        </div>
+
+        <!-- MOBILE SEARCH BAR (expandable, hidden by default) -->
+        <div
+          id="mobile-search-bar"
+          class="hidden lg:hidden px-2 py-4"
+          style="border-bottom: 1px solid #e2e8f0"
+        >
+          <form role="search" aria-label="Search auctions" id="mobile-search-form">
+            <label for="mobile-search-input" class="sr-only">Search auctions</label>
+            <div class="relative">
+              <input
+                id="mobile-search-input"
+                name="q"
+                type="search"
+                placeholder="Search auctions..."
+                class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                style="border: 2px solid #334155"
+              />
+              <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
+            </div>
+          </form>
+
+          <!-- Filters button for mobile -->
+          <button
+            id="mobile-toggle-filters"
+            type="button"
+            class="mt-3 w-full flex items-center justify-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
+            style="border: 2px solid #334155"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-sliders text-sm"></i>
+            <span class="text-[11px] font-bold tracking-[0.18em] uppercase">Filters</span>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform" id="mobile-filters-chevron"></i>
+          </button>
         </div>
 
         <!-- Advanced filter bar (hidden by default) -->
@@ -261,6 +335,138 @@ export function renderHeader(): void {
         </div>
       </div>
     </nav>
+ 
+    <!-- MOBILE MENU DRAWER -->
+    <div
+      id="mobile-menu-overlay"
+      class="hidden fixed inset-0 bg-slate-900/50 z-40"
+    ></div>
+
+    <aside
+      id="mobile-menu-drawer"
+      class="fixed top-0 right-0 bottom-0 w-80 bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto"
+      style="border-left: 3px solid #1e293b"
+    >
+      ${
+        isUserLoggedIn && user
+          ? `
+      <!-- Mobile Menu Header - Logged In -->
+      <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
+        <div class="flex items-center gap-2">
+          ${
+            user.avatar?.url
+              ? `<img src="${user.avatar.url}" alt="${user.name}" class="h-10 w-10 object-cover" style="border: 2px solid #1e293b" />`
+              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b">${user.name.charAt(0).toUpperCase()}</div>`
+          }
+          <div>
+            <div class="text-sm font-bold text-slate-900">${user.name}</div>
+            <div class="text-xs text-slate-600">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
+          </div>
+        </div>
+        <button
+          id="mobile-menu-close"
+          type="button"
+          class="text-slate-600 hover:text-slate-900"
+          aria-label="Close menu"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Navigation Links -->
+      <nav class="p-4">
+        <div class="space-y-1">
+          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-house text-base w-5"></i>
+            <span>Feed</span>
+          </a>
+          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-layer-group text-base w-5"></i>
+            <span>Catalog</span>
+          </a>
+          <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-gavel text-base w-5"></i>
+            <span>My Bids</span>
+          </a>
+          <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-user text-base w-5"></i>
+            <span>My Profile</span>
+          </a>
+          <a href="/create-listing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-plus text-base w-5"></i>
+            <span>Create Listing</span>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-4" style="border-top: 2px solid #e2e8f0"></div>
+
+        <!-- Logout -->
+        <button id="mobile-logout-btn" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 rounded transition-colors">
+          <i class="fa-solid fa-sign-out-alt text-base w-5"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+      `
+          : `
+      <!-- Mobile Menu Header - Guest -->
+      <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
+        <div class="flex items-center gap-2">
+          <svg class="h-8 w-8" width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 108 L64 20 L104 108 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/>
+            <line x1="40" y1="72" x2="88" y2="72" stroke="currentColor" stroke-width="14" stroke-linecap="round"/>
+          </svg>
+          <span class="font-bold text-lg text-slate-900">Aucto</span>
+        </div>
+        <button
+          id="mobile-menu-close"
+          type="button"
+          class="text-slate-600 hover:text-slate-900"
+          aria-label="Close menu"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Navigation Links -->
+      <nav class="p-4">
+        <div class="space-y-1">
+          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-house text-base w-5"></i>
+            <span>Feed</span>
+          </a>
+          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-layer-group text-base w-5"></i>
+            <span>Catalog</span>
+          </a>
+          <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-gavel text-base w-5"></i>
+            <span>My Bids</span>
+          </a>
+          <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+            <i class="fa-solid fa-user text-base w-5"></i>
+            <span>Profile</span>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-4" style="border-top: 2px solid #e2e8f0"></div>
+
+        <!-- Auth Buttons -->
+        <div class="space-y-2">
+          <a href="/login.html" class="w-full flex items-center justify-center gap-2 bg-white px-4 py-3 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50" style="border: 2px solid #1e293b">
+            <i class="fa-solid fa-right-to-bracket text-sm"></i>
+            <span>Log in</span>
+          </a>
+          <a href="/register.html" class="w-full flex items-center justify-center gap-2 bg-slate-900 px-4 py-3 text-sm font-bold tracking-wide text-white hover:bg-slate-800" style="border: 2px solid #1e293b">
+            <i class="fa-solid fa-user-plus text-sm"></i>
+            <span>Create account</span>
+          </a>
+        </div>
+      </nav>
+      `
+      }
+    </aside>
   `;
 
   // Initialize event listeners
@@ -271,7 +477,76 @@ export function renderHeader(): void {
  * Initialize header event listeners
  */
 function initHeaderEvents(): void {
-  // Profile menu toggle
+  // Mobile menu drawer
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+  function openMobileMenu() {
+    if (mobileMenuDrawer && mobileMenuOverlay && mobileMenuBtn) {
+      mobileMenuDrawer.classList.remove('translate-x-full');
+      mobileMenuOverlay.classList.remove('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeMobileMenu() {
+    if (mobileMenuDrawer && mobileMenuOverlay && mobileMenuBtn) {
+      mobileMenuDrawer.classList.add('translate-x-full');
+      mobileMenuOverlay.classList.add('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+  }
+
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+  }
+
+  if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+  }
+
+  // Mobile search toggle
+  const mobileSearchBtn = document.getElementById('mobile-search-btn');
+  const mobileSearchBar = document.getElementById('mobile-search-bar');
+
+  if (mobileSearchBtn && mobileSearchBar) {
+    mobileSearchBtn.addEventListener('click', () => {
+      mobileSearchBar.classList.toggle('hidden');
+      const isExpanded = !mobileSearchBar.classList.contains('hidden');
+      mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
+
+      if (isExpanded) {
+        const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
+        if (mobileSearchInput) {
+          mobileSearchInput.focus();
+        }
+      }
+    });
+  }
+
+  // Mobile search form submission
+  const mobileSearchForm = document.getElementById('mobile-search-form');
+  if (mobileSearchForm) {
+    mobileSearchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = mobileSearchForm.querySelector('input[name="q"]') as HTMLInputElement;
+      const searchTerm = input.value.trim();
+
+      if (searchTerm) {
+        window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
+      }
+    });
+  }
+
+  // Desktop profile menu toggle
   const profileMenuBtn = document.getElementById('profile-menu-btn');
   const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
 
@@ -292,7 +567,7 @@ function initHeaderEvents(): void {
     });
   }
 
-  // Logout button
+  // Desktop logout button
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
@@ -300,7 +575,15 @@ function initHeaderEvents(): void {
     });
   }
 
-  // Advanced filters toggle
+  // Mobile logout button
+  const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+  if (mobileLogoutBtn) {
+    mobileLogoutBtn.addEventListener('click', () => {
+      logout();
+    });
+  }
+
+  // Desktop advanced filters toggle
   const toggleFiltersBtn = document.getElementById('toggle-advanced-filters');
   const filtersBar = document.getElementById('advanced-filters-bar');
   const filtersChevron = document.getElementById('filters-chevron');
@@ -310,9 +593,25 @@ function initHeaderEvents(): void {
       const isOpen = !filtersBar.classList.contains('hidden');
       filtersBar.classList.toggle('hidden');
       toggleFiltersBtn.setAttribute('aria-expanded', String(!isOpen));
-      
+
       if (filtersChevron) {
         filtersChevron.classList.toggle('rotate-180');
+      }
+    });
+  }
+
+  // Mobile filter toggle
+  const mobileToggleFilters = document.getElementById('mobile-toggle-filters');
+  const mobileFiltersChevron = document.getElementById('mobile-filters-chevron');
+
+  if (mobileToggleFilters && filtersBar) {
+    mobileToggleFilters.addEventListener('click', () => {
+      const isOpen = !filtersBar.classList.contains('hidden');
+      filtersBar.classList.toggle('hidden');
+      mobileToggleFilters.setAttribute('aria-expanded', String(!isOpen));
+
+      if (mobileFiltersChevron) {
+        mobileFiltersChevron.classList.toggle('rotate-180');
       }
     });
   }
@@ -336,7 +635,7 @@ function initHeaderEvents(): void {
       btn.classList.remove('bg-white', 'text-slate-700');
       btn.classList.add('bg-slate-900', 'text-white');
       btn.setAttribute('aria-pressed', 'true');
-      
+
       // Add check icon
       const icon = btn.querySelector('i');
       if (icon && !icon.classList.contains('fa-check')) {
@@ -349,7 +648,7 @@ function initHeaderEvents(): void {
     });
   });
 
-  // Search form submission
+  // Desktop search form submission
   const headerSearchForm = document.getElementById('header-search-form');
   if (headerSearchForm) {
     headerSearchForm.addEventListener('submit', (e) => {
@@ -367,9 +666,11 @@ function initHeaderEvents(): void {
   const activeOnlyCheckbox = document.getElementById('active-only-filter') as HTMLInputElement;
   if (activeOnlyCheckbox) {
     activeOnlyCheckbox.addEventListener('change', () => {
-      document.dispatchEvent(new CustomEvent('activeOnlyChange', { 
-        detail: { activeOnly: activeOnlyCheckbox.checked } 
-      }));
+      document.dispatchEvent(
+        new CustomEvent('activeOnlyChange', {
+          detail: { activeOnly: activeOnlyCheckbox.checked },
+        })
+      );
     });
   }
 
@@ -379,9 +680,7 @@ function initHeaderEvents(): void {
     sortFilterSelect.addEventListener('change', () => {
       const value = sortFilterSelect.value;
       const [sort, order] = value.split('-');
-      document.dispatchEvent(new CustomEvent('sortChange', { 
-        detail: { sort, order } 
-      }));
+      document.dispatchEvent(new CustomEvent('sortChange', { detail: { sort, order } }));
     });
   }
 }
