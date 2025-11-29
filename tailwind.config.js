@@ -4,6 +4,8 @@ export default {
     "./index.html",
     "./login.html",
     "./register.html",
+    "./listing.html",
+    "./profile.html",
     "./src/**/*.{ts,js,html}",
   ],
   theme: {
