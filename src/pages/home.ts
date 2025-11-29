@@ -2,8 +2,8 @@ import { getListings } from '../api/listings';
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
 import {
-  renderListingGrid,
-  showListingSkeletons,
+  renderProductCardGrid,
+  showProductCardSkeletons,
 } from '../components/ListingCards';
 import { toast } from '../components//Toast';
 import type { Listing } from '../types/api';
@@ -54,7 +54,7 @@ async function loadListings(): Promise<void> {
 
   try {
     isLoading = true;
-    showListingSkeletons(9);
+    showProductCardSkeletons(9, 'listings-grid');
 
     const response = await getListings({
       search: currentSearch || undefined,
@@ -71,7 +71,7 @@ async function loadListings(): Promise<void> {
     // Apply client-side filters
     listings = applyClientSideFilters(listings);
 
-    renderListingGrid(listings);
+    renderProductCardGrid(listings, 'listings-grid');
 
     // Update result count
     updateResultCount(listings.length, response.meta?.totalCount);
