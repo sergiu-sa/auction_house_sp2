@@ -1,6 +1,5 @@
 import type { Listing } from '../types/api';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
-import { formatCurrency } from '../utils/formatCurrency';
 
 /**
  * Collection Card Component
