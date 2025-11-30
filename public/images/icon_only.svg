@@ -1,16 +1,10 @@
 <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto icon">
+  <!-- Frame with background -->
+  <rect x="16" y="16" width="96" height="96" fill="#f1f5f9" stroke="#1e293b" stroke-width="10"/>
   
-  <path
-    d="M24 108 L64 20 L104 108 Z"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="14"
-    stroke-linejoin="round"
-  />
-  <line
-    x1="40" y1="72" x2="88" y2="72"
-    stroke="currentColor"
-    stroke-width="14"
-    stroke-linecap="round"
-  />
+  <!-- Triangle A - raised higher for better vertical balance -->
+  <path d="M34 96 L64 28 L94 96 L82 96 L82 76 L46 76 L46 96 Z" fill="#1e293b"/>
+  
+  <!-- Crossbar - matches background color for cohesive look -->
+  <rect x="46" y="60" width="36" height="10" fill="#f1f5f9"/>
 </svg>
