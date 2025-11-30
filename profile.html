@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - Aucto</title>
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="/src/styles/main.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/icon_only.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="antialiased bg-aucto-bg">
+    <!-- Header (rendered by JavaScript) -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="px-6 py-8 mx-auto max-w-7xl md:px-8">
+      <!-- Page content will go here -->
+      <div class="mb-8">
+        <h1 class="mb-2 font-serif text-4xl font-bold text-slate-900 md:text-5xl">
+          My Profile
+        </h1>
+        <p class="mb-6 text-slate-600">
+          Manage your account, listings, and bids
+        </p>
+      </div>
+
+      <!-- Content area -->
+      <div id="profile-content">
+        <!-- Profile information will be rendered here by JavaScript -->
+      </div>
+    </main>
+
+    <!-- Footer (rendered by JavaScript) -->
+    <div id="footer"></div>
+
+    <!-- Import main script -->
+    <script type="module" src="/src/pages/profilePage.ts"></script>
+  </body>
+</html>
