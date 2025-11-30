@@ -1,28 +1,22 @@
-<svg width="340" height="115" viewBox="0 0 340 115" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto logo">
+<svg width="450" height="115" viewBox="0 0 450 115" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto logo">
+  <!-- Frame with background -->
+  <rect x="10" y="8" width="96" height="84" fill="#f1f5f9" stroke="#1e293b" stroke-width="10"/>
   
-  <path
-    d="M18 96 L62 12 L106 96 Z"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="14"
-    stroke-linejoin="round"
-  />
-  <line
-    x1="40" y1="62" x2="84" y2="62"
-    stroke="currentColor"
-    stroke-width="14"
-    stroke-linecap="round"
-  />
-
+  <!-- Triangle A - raised higher for better vertical balance -->
+  <path d="M28 84 L58 24 L88 84 L76 84 L76 66 L40 66 L40 84 Z" fill="#1e293b"/>
   
+  <!-- Crossbar - matches background color for cohesive look -->
+  <rect x="40" y="52" width="36" height="9" fill="#f1f5f9"/>
+  
+  <!-- Wordmark -->
   <text
-    x="118" y="86"
+    x="120" y="76"
     font-family="'Source Sans 3', system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
     font-size="68"
     font-weight="800"
     letter-spacing="-0.04em"
-    fill="currentColor"
+    fill="#1e293b"
   >
-    UCTO
+    AUCTO
   </text>
 </svg>

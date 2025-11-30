@@ -30,7 +30,17 @@ export function renderFooter(): void {
     <div class="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
       <!-- Brand -->
       <div>
-        <div class="mb-6 text-3xl font-bold text-white">Aucto</div>
+        <a href="/index.html" class="mb-6 inline-block">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 bg-white flex items-center justify-center" style="border: 2px solid #475569">
+              <svg class="h-7 w-7" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto icon">
+                <path d="M34 96 L64 28 L94 96 L82 96 L82 76 L46 76 L46 96 Z" fill="#1e293b"/>
+                <rect x="46" y="60" width="36" height="10" fill="#f1f5f9"/>
+              </svg>
+            </div>
+            <span class="text-3xl font-bold text-white">AUCTO</span>
+          </div>
+        </a>
         <p class="mb-6 text-sm leading-relaxed text-slate-400">
           Professional auction infrastructure for serious collectors.
         </p>

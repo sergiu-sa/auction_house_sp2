@@ -22,12 +22,8 @@ export function renderHeader(): void {
         <div class="flex items-center gap-3 pb-4" style="border-bottom: 1px solid #e2e8f0">
 
           <!-- Brand Logo - Always visible -->
-          <a href="/index.html" class="inline-flex items-center gap-1.5 text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
-            <svg class="h-6 w-6" width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aucto icon">
-              <path d="M24 108 L64 20 L104 108 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/>
-              <line x1="40" y1="72" x2="88" y2="72" stroke="currentColor" stroke-width="14" stroke-linecap="round"/>
-            </svg>
-            <span class="hidden sm:inline font-bold text-sm">Aucto</span>
+          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
+            <img src="/images/logo.svg" alt="Aucto" class="h-9" />
           </a>
 
           <!-- DESKTOP: Inline search (grows to fill available space) -->
@@ -412,11 +408,7 @@ export function renderHeader(): void {
       <!-- Mobile Menu Header - Guest -->
       <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
         <div class="flex items-center gap-2">
-          <svg class="h-8 w-8" width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 108 L64 20 L104 108 Z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/>
-            <line x1="40" y1="72" x2="88" y2="72" stroke="currentColor" stroke-width="14" stroke-linecap="round"/>
-          </svg>
-          <span class="font-bold text-lg text-slate-900">Aucto</span>
+          <img src="/images/logo.svg" alt="Aucto" class="h-8" />
         </div>
         <button
           id="mobile-menu-close"
