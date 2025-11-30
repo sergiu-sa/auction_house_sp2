@@ -50,7 +50,7 @@ export function renderFooter(): void {
         <ul class="space-y-3 text-sm">
           <li>
             <a
-              href="#"
+              href="/collection.html"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-list text-xs text-slate-500"></i>Browse
@@ -59,7 +59,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              href="#"
+              href="/collection.html"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-tower-broadcast text-xs text-slate-500"></i
@@ -68,7 +68,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              href="#"
+              href="/create-listing.html"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-plus text-xs text-slate-500"></i>Sell an
@@ -77,7 +77,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              href="#"
+              href="/profile.html"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-user text-xs text-slate-500"></i>My Account

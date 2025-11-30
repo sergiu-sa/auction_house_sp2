@@ -19,9 +19,6 @@ export function createProductCard(listing: Listing): string {
   const imageUrl = listing.media?.[0]?.url || 'https://via.placeholder.com/600x600?text=No+Image';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
 
-  // Extract tag for badge 
-  const tag = listing.tags?.[0] || 'General';
-
   // Get seller username
   const sellerName = listing.seller?.name || 'Unknown';
 
@@ -117,11 +114,10 @@ export function createProductCard(listing: Listing): string {
 
 /**
  * CARD TYPE 2: Quick Card (Compact)
- * Smaller card for "Ending Soon" sections 
+ * Smaller card for "Ending Soon" sections
  * Features: Rectangular image, lot number, time badge, compact bid info
  */
 export function createQuickCard(listing: Listing): string {
-  const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
   const bids = listing.bids || [];

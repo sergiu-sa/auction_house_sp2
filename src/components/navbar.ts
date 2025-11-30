@@ -82,7 +82,7 @@ export function renderHeader(): void {
               <i class="fa-solid fa-house text-sm"></i>
               <span>Feed</span>
             </a>
-            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-layer-group text-sm"></i>
               <span>Catalog</span>
             </a>
@@ -380,7 +380,7 @@ export function renderHeader(): void {
             <i class="fa-solid fa-house text-base w-5"></i>
             <span>Feed</span>
           </a>
-          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-layer-group text-base w-5"></i>
             <span>Catalog</span>
           </a>
@@ -435,7 +435,7 @@ export function renderHeader(): void {
             <i class="fa-solid fa-house text-base w-5"></i>
             <span>Feed</span>
           </a>
-          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-layer-group text-base w-5"></i>
             <span>Catalog</span>
           </a>

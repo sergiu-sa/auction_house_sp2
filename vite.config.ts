@@ -8,5 +8,17 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        collection: './collection.html',
+        listing: './listing.html',
+        login: './login.html',
+        register: './register.html',
+        profile: './profile.html',
+        'listing-create': './listing-create.html',
+        'listing-edit': './listing-edit.html',
+      },
+    },
   },
 })
