@@ -6,17 +6,13 @@ This repo is part of your semester project.
 
 ## Project Resources
 
-* **Figma Design File:**
-  [https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1](https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1)
+* [Figma Design File](https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1)
 
-* **GitHub Repository:**
-  [https://github.com/sergiu-sa/auction_house_sp2.git](https://github.com/sergiu-sa/auction_house_sp2.git)
+* [GitHub Repository](https://github.com/sergiu-sa/auction_house_sp2.git)
 
-* **GitHub Project / Kanban Board:**
-  [https://github.com/users/sergiu-sa/projects/12](https://github.com/users/sergiu-sa/projects/12)
+* [GitHub Project / Kanban Board](https://github.com/users/sergiu-sa/projects/12)
 
-* **Deployment (Netlify):**
-  [https://auctohouse.netlify.app/](https://auctohouse.netlify.app/)
+* [Deployment - AUCTO](https://auctohouse.netlify.app/)
 
 ---
 
