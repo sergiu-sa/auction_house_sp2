@@ -64,6 +64,11 @@ export interface User {
   };
 }
 
+export interface Profile extends User {
+  listings?: Listing[];
+  wins?: Listing[];
+}
+
 // Listing Types
 export interface Listing {
   id: string;

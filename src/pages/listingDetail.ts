@@ -715,7 +715,7 @@ function renderSellerProfile(listing: Listing) {
       <div>
         <div class="text-base font-bold text-slate-900 mb-1 inline-flex items-center gap-1.5">
           <i class="fa-solid fa-user text-sm"></i>
-          <a href="/profile.html?name=${seller.name}" class="hover:text-slate-700 transition-colors">@${seller.name}</a>
+          <a href="/profile.html?user=${seller.name}" class="hover:text-slate-700 transition-colors">@${seller.name}</a>
         </div>
         ${seller._count ? `
           <div class="text-xs text-slate-500 inline-flex items-center gap-1">
@@ -734,7 +734,7 @@ function renderSellerProfile(listing: Listing) {
 
     <div class="pt-6" style="border-top: 2px solid #e2e8f0">
       <a
-        href="/profile.html?name=${seller.name}"
+        href="/profile.html?user=${seller.name}"
         class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-slate-700 transition-colors"
       >
         <i class="fa-solid fa-arrow-right text-xs"></i>
