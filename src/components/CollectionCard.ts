@@ -1,5 +1,7 @@
 import type { Listing } from '../types/api';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
+import { isLoggedIn } from '../utils/auth';
+import { toast } from './Toast';
 
 /**
  * Collection Card Component
@@ -224,9 +226,23 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
     button.addEventListener('click', (event) => {
       event.preventDefault();
       const listingId = button.getAttribute('data-listing-id');
-      if (listingId) {
-        window.location.href = `/listing.html?id=${listingId}`;
+
+      if (!listingId) {
+        console.error('No listing ID found on button');
+        return;
       }
+
+      // Check if user is logged in
+      if (!isLoggedIn()) {
+        toast.error('Please log in to place a bid');
+        setTimeout(() => {
+          window.location.href = `/login.html?redirect=/listing.html?id=${listingId}`;
+        }, 1500);
+        return;
+      }
+
+      // Redirect to listing detail page where user can place bid
+      window.location.href = `/listing.html?id=${listingId}`;
     });
   });
 
@@ -237,9 +253,23 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
       event.preventDefault();
       event.stopPropagation();
       const listingId = button.getAttribute('data-listing-id');
-      if (listingId) {
-        window.location.href = `/listing.html?id=${listingId}`;
+
+      if (!listingId) {
+        console.error('No listing ID found on button');
+        return;
       }
+
+      // Check if user is logged in
+      if (!isLoggedIn()) {
+        toast.error('Please log in to view listing details');
+        setTimeout(() => {
+          window.location.href = `/login.html?redirect=/listing.html?id=${listingId}`;
+        }, 1500);
+        return;
+      }
+
+      // Redirect to listing detail page
+      window.location.href = `/listing.html?id=${listingId}`;
     });
   });
 

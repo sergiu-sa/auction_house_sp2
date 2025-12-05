@@ -1,6 +1,8 @@
 import type { Listing } from '../types/api';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { formatCurrency } from '../utils/formatCurrency';
+import { isLoggedIn } from '../utils/auth';
+import { toast } from './Toast';
 
 /**
  * Quick Card Component
@@ -148,7 +150,16 @@ export function attachQuickCardEvents(containerId: string = 'quick-cards-grid'):
         return;
       }
 
-      // Redirect to listing detail page
+      // Check if user is logged in
+      if (!isLoggedIn()) {
+        toast.error('Please log in to place a bid');
+        setTimeout(() => {
+          window.location.href = `/login.html?redirect=/listing.html?id=${listingId}`;
+        }, 1500);
+        return;
+      }
+
+      // Redirect to listing detail page where user can place bid
       window.location.href = `/listing.html?id=${listingId}`;
     });
   });
