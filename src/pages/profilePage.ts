@@ -1,6 +1,6 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
-import { getCurrentUser } from '../utils/auth';
+import { getCurrentUser, protectedRoute } from '../utils/auth';
 
 /**
  * Initialize profile page
@@ -10,11 +10,8 @@ export function initProfilePage(): void {
   renderHeader();
   renderFooter();
 
-  // Get current user
-  const user = getCurrentUser();
-
-  if (!user) {
-    showError('You must be logged in to view this page');
+  // Check authentication and redirect to login if not authenticated
+  if (!protectedRoute()) {
     return;
   }
 
