@@ -1,22 +1,21 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
 import { createListing } from '../api/listings';
-import { isLoggedIn } from '../utils/auth';
+import { protectedRoute } from '../utils/auth';
 import type { CreateListingData } from '../types/api';
 
 /**
  * Initialize listing create page
  */
 export function initListingCreatePage(): void {
-  // Check if user is logged in
-  if (!isLoggedIn()) {
-    window.location.href = '/login.html?redirect=/listing-create.html';
-    return;
-  }
-
   // Render header and footer
   renderHeader();
   renderFooter();
+
+  // Check if user is logged in and redirect if not
+  if (!protectedRoute()) {
+    return;
+  }
 
   // Render the create listing form
   renderCreateForm();

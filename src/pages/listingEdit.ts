@@ -1,5 +1,7 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
+import { protectedRoute, requireOwnership } from '../utils/auth';
+import { getListing } from '../api/listings';
 
 /**
  * Initialize listing edit page
@@ -8,6 +10,11 @@ export function initListingEditPage(): void {
   // Render header and footer
   renderHeader();
   renderFooter();
+
+  // Check authentication first
+  if (!protectedRoute()) {
+    return;
+  }
 
   // Get listing ID from URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -40,19 +47,31 @@ async function loadListingData(listingId: string): Promise<void> {
   `;
 
   try {
-    // TODO: Implement API call to fetch listing data
-    // const listing = await getListing(listingId);
-    // renderEditForm(listing);
+    // Fetch listing data from API
+    const response = await getListing(listingId);
+    const listing = response.data;
 
-    // Placeholder for now
+    // Check ownership before allowing edit
+    if (listing.seller && !requireOwnership(listing.seller.name)) {
+      return;
+    }
+
+    // TODO: Implement edit form rendering
+    // For now, show placeholder with listing info
     container.innerHTML = `
       <div class="bg-white p-8" style="border: 3px solid #1e293b">
-        <p class="text-slate-600">Edit form will be implemented here for listing ID: ${listingId}</p>
+        <h2 class="font-serif font-bold text-2xl text-slate-900 mb-4">Edit Listing</h2>
+        <div class="space-y-2 text-slate-600">
+          <p><strong>ID:</strong> ${listing.id}</p>
+          <p><strong>Title:</strong> ${listing.title}</p>
+          <p><strong>Description:</strong> ${listing.description || 'No description'}</p>
+          <p class="text-sm text-slate-500 mt-4">Edit form will be implemented here</p>
+        </div>
       </div>
     `;
   } catch (error) {
     console.error('Error loading listing:', error);
-    showError('Failed to load listing data');
+    showError('Failed to load listing data. The listing may not exist or you may not have permission to edit it.');
   }
 }
 

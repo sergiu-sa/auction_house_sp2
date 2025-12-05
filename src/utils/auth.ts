@@ -55,3 +55,62 @@ export function isOwner(ownerName: string): boolean {
   const user = getCurrentUser();
   return user?.name === ownerName;
 }
+
+/**
+ * Route guard for protected pages
+ * Checks authentication and redirects to login with return URL if not authenticated
+ * @param options - Configuration options
+ * @returns boolean - true if authenticated, false if redirected
+ */
+export function protectedRoute(options?: {
+  redirectUrl?: string;
+  showError?: boolean;
+}): boolean {
+  if (!isAuthenticated()) {
+    const redirect = options?.redirectUrl || window.location.pathname + window.location.search;
+
+    if (options?.showError) {
+      console.error('Authentication required to access this page');
+    }
+
+    window.location.href = `/login.html?redirect=${encodeURIComponent(redirect)}`;
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Route guard for pages that require ownership validation
+ * Must be called after protectedRoute() to ensure user is logged in
+ * @param ownerName - Resource owner's username
+ * @param fallbackUrl - URL to redirect if user is not owner (default: home)
+ * @returns boolean - true if user is owner, false if redirected
+ */
+export function requireOwnership(
+  ownerName: string,
+  fallbackUrl: string = '/index.html'
+): boolean {
+  const user = getCurrentUser();
+
+  if (!user || user.name !== ownerName) {
+    console.error('You do not have permission to access this resource');
+    window.location.href = fallbackUrl;
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Combined route guard for edit pages
+ * Checks both authentication and ownership
+ * @param ownerName - Resource owner's username
+ * @returns boolean - true if authenticated and is owner, false if redirected
+ */
+export function protectedOwnerRoute(ownerName: string): boolean {
+  if (!protectedRoute()) {
+    return false;
+  }
+
+  return requireOwnership(ownerName, '/profile.html');
+}
