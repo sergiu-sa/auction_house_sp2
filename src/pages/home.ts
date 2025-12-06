@@ -242,7 +242,7 @@ function renderHeroSection(): void {
           </span>
         </p>
         <div class="flex items-center justify-between text-xs text-slate-500">
-          <span>@${main.seller?.name || 'Unknown'}</span>
+          ${main.seller?.name ? `<a href="/profile.html?user=${main.seller.name}" class="hover:text-slate-900 transition-colors">@${main.seller.name}</a>` : '<span>@Unknown</span>'}
         </div>
       </div>
     </article>

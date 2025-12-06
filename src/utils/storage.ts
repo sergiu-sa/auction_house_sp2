@@ -9,9 +9,11 @@ export function getToken(): string | null {
 
 /**
  * Set the authentication token in localStorage
+ * Also stores the timestamp when the token was set
  */
 export function setToken(token: string): void {
   localStorage.setItem('token', token);
+  localStorage.setItem('tokenTimestamp', Date.now().toString());
 }
 
 /**
@@ -19,6 +21,7 @@ export function setToken(token: string): void {
  */
 export function removeToken(): void {
   localStorage.removeItem('token');
+  localStorage.removeItem('tokenTimestamp');
 }
 
 /**
@@ -58,8 +61,40 @@ export function clearAuth(): void {
 }
 
 /**
- * Check if user is authenticated
+ * Get the token timestamp from localStorage
+ */
+export function getTokenTimestamp(): number | null {
+  const timestamp = localStorage.getItem('tokenTimestamp');
+  return timestamp ? parseInt(timestamp, 10) : null;
+}
+
+/**
+ * Check if the token has expired
+ * Tokens are considered expired after 7 days
+ */
+export function isTokenExpired(): boolean {
+  const timestamp = getTokenTimestamp();
+  if (!timestamp) return true;
+
+  const now = Date.now();
+  const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
+
+  return now - timestamp > sevenDaysInMs;
+}
+
+/**
+ * Check if user is authenticated and token is not expired
  */
 export function isAuthenticated(): boolean {
-  return !!getToken();
+  const hasToken = !!getToken();
+
+  if (!hasToken) return false;
+
+  // Check if token is expired
+  if (isTokenExpired()) {
+    clearAuth();
+    return false;
+  }
+
+  return true;
 }

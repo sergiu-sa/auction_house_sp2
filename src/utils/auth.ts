@@ -1,4 +1,5 @@
-import { getToken, getUser, isAuthenticated } from './storage';
+import { getToken, getUser, isAuthenticated, isTokenExpired } from './storage';
+import { showSessionExpiredMessage } from './authLoader';
 import type { User } from '../types/api';
 
 /**
@@ -68,6 +69,11 @@ export function protectedRoute(options?: {
 }): boolean {
   if (!isAuthenticated()) {
     const redirect = options?.redirectUrl || window.location.pathname + window.location.search;
+
+    // Show session expired message if token was expired
+    if (isTokenExpired()) {
+      showSessionExpiredMessage();
+    }
 
     if (options?.showError) {
       console.error('Authentication required to access this page');

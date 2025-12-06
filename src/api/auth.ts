@@ -1,4 +1,5 @@
 import { api } from './config';
+import { setToken, setUser, clearAuth } from '../utils/storage';
 import type {
   LoginResponse,
   RegisterData,
@@ -25,10 +26,10 @@ export async function register(
 export async function login(credentials: LoginData): Promise<LoginResponse> {
   const response = await api.post<LoginResponse>('/auth/login', credentials);
 
-  // Store token and user data in localStorage
+  // Store token and user data in localStorage with proper timestamp
   if (response.data.accessToken) {
-    localStorage.setItem('token', response.data.accessToken);
-    localStorage.setItem('user', JSON.stringify(response.data));
+    setToken(response.data.accessToken);
+    setUser(response.data);
   }
 
   return response;
@@ -38,7 +39,7 @@ export async function login(credentials: LoginData): Promise<LoginResponse> {
  * Logout user (clear local storage)
  */
 export function logout(): void {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
+  // Use clearAuth to properly remove all auth data including timestamp
+  clearAuth();
   window.location.href = '/index.html';
 }
