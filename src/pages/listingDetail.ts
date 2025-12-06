@@ -16,7 +16,7 @@ let countdownInterval: number | null = null;
  */
 async function init() {
   // Render header and footer
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Get listing ID from URL

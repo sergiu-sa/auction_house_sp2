@@ -1,7 +1,5 @@
 import type { Listing } from '../types/api';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
-import { isLoggedIn } from '../utils/auth';
-import { toast } from './Toast';
 
 /**
  * Collection Card Component
@@ -32,14 +30,14 @@ export function createCollectionCard(listing: Listing): string {
   const getStatusBadge = (): string => {
     if (!isActive) {
       return `
-        <div class="absolute top-3 right-3 bg-slate-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #475569">
+        <div class="absolute top-3 left-3 bg-slate-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #475569">
           ENDED
         </div>`;
     }
 
     if (bids.length === 0) {
       return `
-        <div class="absolute top-3 right-3 bg-blue-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #1e40af">
+        <div class="absolute top-3 left-3 bg-blue-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #1e40af">
           NEW
         </div>`;
     }
@@ -57,7 +55,7 @@ export function createCollectionCard(listing: Listing): string {
     } else {
       // More than 6 hours - normal (green)
       return `
-        <div class="absolute top-3 right-3 bg-green-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #15803d">
+        <div class="absolute top-3 left-3 bg-green-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #15803d">
           ${timeRemaining}
         </div>`;
     }
@@ -232,16 +230,7 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
         return;
       }
 
-      // Check if user is logged in
-      if (!isLoggedIn()) {
-        toast.error('Please log in to place a bid');
-        setTimeout(() => {
-          window.location.href = `/login.html?redirect=/listing.html?id=${listingId}`;
-        }, 1500);
-        return;
-      }
-
-      // Redirect to listing detail page where user can place bid
+      // Redirect to listing detail page (it will handle authentication if needed)
       window.location.href = `/listing.html?id=${listingId}`;
     });
   });
@@ -256,15 +245,6 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
 
       if (!listingId) {
         console.error('No listing ID found on button');
-        return;
-      }
-
-      // Check if user is logged in
-      if (!isLoggedIn()) {
-        toast.error('Please log in to view listing details');
-        setTimeout(() => {
-          window.location.href = `/login.html?redirect=/listing.html?id=${listingId}`;
-        }, 1500);
         return;
       }
 

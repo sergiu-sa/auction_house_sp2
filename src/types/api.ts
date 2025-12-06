@@ -29,6 +29,7 @@ export interface LoginResponse {
     bio: string | null;
     avatar: MediaObject | null;
     banner: MediaObject | null;
+    credits: number;
     accessToken: string;
   };
 }

@@ -25,25 +25,50 @@ let currentFilters: FilterState = {
   status: '_active=true',
   search: '',
   page: 1,
-  limit: 12,
+  limit: 24,
 };
 
 let allListings: Listing[] = [];
 let filteredListings: Listing[] = [];
 
 /**
- * Initialize collection page
+ * Initialize scroll-triggered filter bar
  */
-export function initCollectionPage(): void {
-  // Render header and footer
-  renderHeader();
-  renderFooter();
+function initializeScrollTrigger(): void {
+  const filterBar = document.getElementById('filter-bar');
+  if (!filterBar) return;
 
-  // Initialize filters
-  initializeFilters();
+  // Hide filter bar initially
+  filterBar.style.maxHeight = '0';
+  filterBar.style.overflow = 'hidden';
+  filterBar.style.padding = '0';
+  filterBar.style.marginBottom = '0';
+  filterBar.style.opacity = '0';
 
-  // Load listings
-  loadListings();
+  let isFilterBarOpen = false;
+  const scrollThreshold = 200; // Pixels to scroll before showing filter bar
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY > scrollThreshold && !isFilterBarOpen) {
+      // Open filter bar
+      filterBar.style.maxHeight = '2000px';
+      filterBar.style.padding = window.innerWidth < 768 ? '24px' : '32px';
+      filterBar.style.overflow = 'visible';
+      filterBar.style.marginBottom = '24px';
+      filterBar.style.opacity = '1';
+      isFilterBarOpen = true;
+    } else if (scrollY <= scrollThreshold && isFilterBarOpen) {
+      // Close filter bar
+      filterBar.style.maxHeight = '0';
+      filterBar.style.padding = '0';
+      filterBar.style.overflow = 'hidden';
+      filterBar.style.marginBottom = '0';
+      filterBar.style.opacity = '0';
+      isFilterBarOpen = false;
+    }
+  });
 }
 
 /**
@@ -56,25 +81,22 @@ function initializeFilters(): void {
   const filterToggleIcon = document.getElementById('filter-toggle-icon');
 
   if (mobileFilterToggle && filterBar && filterToggleIcon) {
-    // Hide filters by default on mobile
-    if (window.innerWidth < 768) {
-      filterBar.style.maxHeight = '0';
-      filterBar.style.overflow = 'hidden';
-      filterBar.style.padding = '0';
-    }
-
     mobileFilterToggle.addEventListener('click', () => {
       const isHidden = filterBar.style.maxHeight === '0px' || filterBar.style.maxHeight === '';
 
       if (isHidden) {
         filterBar.style.maxHeight = '2000px';
-        filterBar.style.padding = '24px';
+        filterBar.style.padding = window.innerWidth < 768 ? '24px' : '32px';
         filterBar.style.overflow = 'visible';
+        filterBar.style.marginBottom = '24px';
+        filterBar.style.opacity = '1';
         filterToggleIcon.classList.add('fa-rotate-180');
       } else {
         filterBar.style.maxHeight = '0';
         filterBar.style.padding = '0';
         filterBar.style.overflow = 'hidden';
+        filterBar.style.marginBottom = '0';
+        filterBar.style.opacity = '0';
         filterToggleIcon.classList.remove('fa-rotate-180');
       }
     });
@@ -191,12 +213,30 @@ function initializeFilters(): void {
 }
 
 /**
+ * Initialize collection page
+ */
+export async function initCollectionPage(): Promise<void> {
+  // Render header and footer
+  await renderHeader();
+  renderFooter();
+
+  // Initialize filters
+  initializeFilters();
+
+  // Initialize scroll-triggered filter bar
+  initializeScrollTrigger();
+
+  // Load listings
+  loadListings();
+}
+
+/**
  * Load listings from API
  */
 async function loadListings(): Promise<void> {
   try {
     // Show loading skeletons
-    showCollectionCardSkeletons(12, 'collection-cards-grid');
+    showCollectionCardSkeletons(24, 'collection-cards-grid');
 
     // Fetch listings with filters
     const response = await getListings({
@@ -490,7 +530,7 @@ function clearFilters(): void {
     status: '_active=true',
     search: '',
     page: 1,
-    limit: 12,
+    limit: 24,
   };
 
   // Reset UI

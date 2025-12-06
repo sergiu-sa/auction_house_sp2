@@ -34,7 +34,7 @@ let catalogState: CatalogState = {
  */
 async function initHomePage(): Promise<void> {
   // Render header and footer (header includes guest banner)
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Show login required message for create listing button if not logged in

@@ -1,16 +1,43 @@
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
 import { renderGuestBanner } from './guestBanner';
+import { getProfile } from '../api/profile';
+import { setUser } from '../utils/storage';
 
 /**
  * Render the header/navigation component
+ * Fetches fresh user data to ensure credits are up to date
  */
-export function renderHeader(): void {
+export async function renderHeader(): Promise<void> {
   const header = document.getElementById('header');
   if (!header) return;
 
   const isUserLoggedIn = isLoggedIn();
-  const user = getCurrentUser();
+  let user = getCurrentUser();
+
+  // Fetch fresh user data if logged in to get updated credits
+  if (isUserLoggedIn && user) {
+    try {
+      const profileResponse = await getProfile(user.name);
+      if (profileResponse.data) {
+        // Update stored user data with fresh profile data
+        const updatedUser = {
+          name: profileResponse.data.name,
+          email: profileResponse.data.email,
+          bio: profileResponse.data.bio,
+          avatar: profileResponse.data.avatar,
+          banner: profileResponse.data.banner,
+          credits: profileResponse.data.credits,
+          _count: profileResponse.data._count,
+        };
+        setUser(updatedUser);
+        user = updatedUser;
+      }
+    } catch (error) {
+      // If fetch fails, continue with cached user data
+      console.error('Failed to fetch fresh user data:', error);
+    }
+  }
 
   header.innerHTML = `
     ${!isUserLoggedIn ? renderGuestBanner() : ''}
