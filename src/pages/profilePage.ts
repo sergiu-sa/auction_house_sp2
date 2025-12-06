@@ -16,9 +16,9 @@ import { showToast } from '../components/Toast';
 /**
  * Initialize profile page
  */
-export function initProfilePage(): void {
+export async function initProfilePage(): Promise<void> {
   // Render header and footer
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Get username from URL parameter (e.g., profile.html?user=johndoe)
@@ -750,27 +750,98 @@ async function handleProfileUpdate(username: string): Promise<void> {
 
   if (!bioInput || !avatarInput || !bannerInput) return;
 
-  const updateData: UpdateProfileData = {
-    bio: bioInput.value.trim() || undefined,
-    avatar: avatarInput.value.trim()
-      ? { url: avatarInput.value.trim() }
-      : undefined,
-    banner: bannerInput.value.trim()
-      ? { url: bannerInput.value.trim() }
-      : undefined,
-  };
+  // Get the submit button to show loading state
+  const submitBtn = document.querySelector('#profile-form button[type="submit"]') as HTMLButtonElement;
+  if (!submitBtn) return;
+
+  // Validate URLs if provided
+  const avatarUrl = avatarInput.value.trim();
+  const bannerUrl = bannerInput.value.trim();
+
+  if (avatarUrl && !isValidUrl(avatarUrl)) {
+    showToast('Please enter a valid avatar URL', 'error');
+    avatarInput.focus();
+    return;
+  }
+
+  if (bannerUrl && !isValidUrl(bannerUrl)) {
+    showToast('Please enter a valid banner URL', 'error');
+    bannerInput.focus();
+    return;
+  }
+
+  // Build update data - only include fields that have values
+  const updateData: UpdateProfileData = {};
+
+  // Always include bio (can be empty string to clear it)
+  updateData.bio = bioInput.value.trim();
+
+  // Only include avatar if URL is provided and valid
+  if (avatarUrl) {
+    updateData.avatar = { url: avatarUrl };
+  }
+
+  // Only include banner if URL is provided and valid
+  if (bannerUrl) {
+    updateData.banner = { url: bannerUrl };
+  }
+
+  // Disable button and show loading state
+  const originalBtnContent = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-base"></i> <span>Saving...</span>';
 
   try {
-    await updateProfile(username, updateData);
+    const response = await updateProfile(username, updateData);
+
+    // Update stored user data if this is the current user
+    const currentUser = getCurrentUser();
+    if (currentUser && currentUser.name === username && response.data) {
+      const updatedUser = {
+        ...currentUser,
+        bio: response.data.bio,
+        avatar: response.data.avatar,
+        banner: response.data.banner,
+      };
+      // Import setUser at the top if not already imported
+      const { setUser } = await import('../utils/storage');
+      setUser(updatedUser);
+    }
+
     showToast('Profile updated successfully!', 'success');
 
-    // Reload profile after a short delay
-    setTimeout(() => {
-      loadProfileData(username, true);
+    // Reload profile and header after a short delay
+    setTimeout(async () => {
+      await loadProfileData(username, true);
+      // Refresh the header to show updated avatar/banner in navbar
+      await renderHeader();
     }, 1000);
   } catch (error) {
     console.error('Error updating profile:', error);
-    showToast('Failed to update profile', 'error');
+
+    // Show specific error message if available
+    let errorMessage = 'Failed to update profile';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
+    showToast(errorMessage, 'error');
+
+    // Re-enable button
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnContent;
+  }
+}
+
+/**
+ * Validate URL format
+ */
+function isValidUrl(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+  } catch {
+    return false;
   }
 }
 

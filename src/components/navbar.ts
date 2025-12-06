@@ -1,21 +1,160 @@
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
 import { renderGuestBanner } from './guestBanner';
+import { getProfile } from '../api/profile';
+import { setUser } from '../utils/storage';
 
 /**
  * Render the header/navigation component
+ * Fetches fresh user data to ensure credits are up to date
+ * Renders different navbar variants based on data-page-type attribute
  */
-export function renderHeader(): void {
+export async function renderHeader(): Promise<void> {
   const header = document.getElementById('header');
   if (!header) return;
 
+  // Detect page type from body attribute
+  const pageType = document.body.getAttribute('data-page-type') || 'browse';
+
   const isUserLoggedIn = isLoggedIn();
-  const user = getCurrentUser();
+  let user = getCurrentUser();
+
+  // Fetch fresh user data if logged in to get updated credits
+  if (isUserLoggedIn && user) {
+    try {
+      const profileResponse = await getProfile(user.name);
+      if (profileResponse.data) {
+        // Update stored user data with fresh profile data
+        const updatedUser = {
+          name: profileResponse.data.name,
+          email: profileResponse.data.email,
+          bio: profileResponse.data.bio,
+          avatar: profileResponse.data.avatar,
+          banner: profileResponse.data.banner,
+          credits: profileResponse.data.credits,
+          _count: profileResponse.data._count,
+        };
+        setUser(updatedUser);
+        user = updatedUser;
+      }
+    } catch (error) {
+      // If fetch fails, continue with cached user data
+      console.error('Failed to fetch fresh user data:', error);
+    }
+  }
+
+  // Render appropriate navbar variant based on page type
+  let navbarHTML = '';
+
+  if (pageType === 'auth') {
+    navbarHTML = renderMinimalNavbar();
+  } else if (pageType === 'user-content') {
+    navbarHTML = renderSimpleNavbar(isUserLoggedIn, user);
+  } else {
+    // Default: browse pages (index, collection, listing)
+    navbarHTML = renderFullNavbar(isUserLoggedIn, user);
+  }
 
   header.innerHTML = `
-    ${!isUserLoggedIn ? renderGuestBanner() : ''}
+    ${!isUserLoggedIn && pageType !== 'auth' ? renderGuestBanner() : ''}
+    ${navbarHTML}
+  `;
 
-    <!-- Main Navigation -->
+  // Initialize event listeners
+  initHeaderEvents(pageType);
+}
+
+/**
+ * Render minimal navbar for auth pages (login, register)
+ */
+function renderMinimalNavbar(): string {
+  return `
+    <nav style="background-color: #f7f7f5">
+      <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
+        <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
+          <!-- Brand Logo -->
+          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
+            <img src="/images/logo.svg" alt="Aucto" class="h-9" />
+          </a>
+
+          <!-- Browse as Guest link -->
+          <a
+            href="/index.html"
+            class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors bg-white"
+            style="border: 2px solid #cbd5e1"
+          >
+            <span>Browse as Guest</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  `;
+}
+
+/**
+ * Render simple navbar for user content pages (profile, create/edit listing)
+ */
+function renderSimpleNavbar(isUserLoggedIn: boolean, user: any): string {
+  return `
+    <nav style="background-color: #f7f7f5">
+      <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
+        <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
+
+          <!-- Brand Logo -->
+          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
+            <img src="/images/logo.svg" alt="Aucto" class="h-9" />
+          </a>
+
+          <!-- DESKTOP: Primary nav links (≥1024px) -->
+          <div class="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-700">
+            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-house text-sm"></i>
+              <span>Feed</span>
+            </a>
+            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-sm"></i>
+              <span>Catalog</span>
+            </a>
+            ${
+              isUserLoggedIn
+                ? `
+            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-gavel text-sm"></i>
+              <span>My Bids</span>
+            </a>
+            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-user text-sm"></i>
+              <span>Profile</span>
+            </a>
+            `
+                : `
+            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-gavel text-sm"></i>
+              <span>My Bids</span>
+            </a>
+            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-user text-sm"></i>
+              <span>Profile</span>
+            </a>
+            `
+            }
+          </div>
+
+          ${renderUserSection(isUserLoggedIn, user)}
+        </div>
+      </div>
+    </nav>
+
+    ${renderMobileMenu(isUserLoggedIn, user)}
+  `;
+}
+
+/**
+ * Render full navbar for browse pages (index, collection, listing details)
+ */
+function renderFullNavbar(isUserLoggedIn: boolean, user: any): string {
+  return `
     <nav style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
         <!-- Top row: brand + search + nav + credits -->
@@ -107,102 +246,7 @@ export function renderHeader(): void {
             }
           </div>
 
-          <!-- Credits + profile OR Auth buttons -->
-          <div class="flex items-center gap-3">
-            ${
-              isUserLoggedIn && user
-                ? `
-              <!-- Logged In User -->
-              <!-- Credits Box -->
-              <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 2px solid #1e293b">
-                <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
-                <span class="text-base font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
-              </div>
-
-              <!-- DESKTOP: Profile Button -->
-              <button
-                id="profile-menu-btn"
-                class="hidden lg:flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
-                style="border: 2px solid #1e293b"
-                aria-expanded="false"
-                aria-haspopup="true"
-              >
-                ${
-                  user.avatar?.url
-                    ? `<img src="${user.avatar.url}" alt="${user.name}" class="h-8 w-8 object-cover" style="border: 2px solid #1e293b" />`
-                    : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b">${user.name.charAt(0).toUpperCase()}</div>`
-                }
-                <span class="text-sm font-bold text-slate-900">${user.name}</span>
-              </button>
-
-              <!-- DESKTOP: Profile Dropdown Menu -->
-              <div
-                id="profile-dropdown-menu"
-                class="hidden absolute right-6 mt-2 w-48 bg-white shadow-lg z-50"
-                style="border: 2px solid #1e293b; top: 60px;"
-                role="menu"
-              >
-                <a href="/profile.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50" role="menuitem">
-                  <i class="fa-solid fa-user w-5"></i> My Profile
-                </a>
-                <a href="/create-listing.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t" style="border-color: #e2e8f0" role="menuitem">
-                  <i class="fa-solid fa-plus w-5"></i> Create Listing
-                </a>
-                <button
-                  id="logout-btn"
-                  class="w-full text-left px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t"
-                  style="border-color: #e2e8f0"
-                  role="menuitem"
-                >
-                  <i class="fa-solid fa-sign-out-alt w-5"></i> Logout
-                </button>
-              </div>
-
-              <!-- MOBILE: Hamburger Menu Button (< 1024px) -->
-              <button
-                id="mobile-menu-btn"
-                type="button"
-                class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
-                style="border: 2px solid #1e293b"
-                aria-expanded="false"
-                aria-label="Toggle menu"
-              >
-                <i class="fa-solid fa-bars text-white text-lg"></i>
-              </button>
-            `
-                : `
-              <!-- Guest Navigation -->
-              <a
-                href="/login.html"
-                class="hidden bg-white px-4 py-2 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50 md:inline-flex items-center gap-2"
-                style="border: 2px solid #1e293b"
-              >
-                <i class="fa-solid fa-right-to-bracket text-sm"></i>
-                Log in
-              </a>
-              <a
-                href="/register.html"
-                class="bg-slate-900 px-4 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
-                style="border: 2px solid #1e293b"
-              >
-                <i class="fa-solid fa-user-plus text-sm"></i>
-                Create account
-              </a>
-
-              <!-- MOBILE: Hamburger Menu Button for guests (< 1024px) -->
-              <button
-                id="mobile-menu-btn"
-                type="button"
-                class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
-                style="border: 2px solid #1e293b"
-                aria-expanded="false"
-                aria-label="Toggle menu"
-              >
-                <i class="fa-solid fa-bars text-white text-lg"></i>
-              </button>
-            `
-            }
-          </div>
+          ${renderUserSection(isUserLoggedIn, user)}
         </div>
 
         <!-- MOBILE SEARCH BAR (expandable, hidden by default) -->
@@ -331,7 +375,119 @@ export function renderHeader(): void {
         </div>
       </div>
     </nav>
- 
+
+    ${renderMobileMenu(isUserLoggedIn, user)}
+  `;
+}
+
+/**
+ * Render user section (credits + profile dropdown OR auth buttons)
+ */
+function renderUserSection(isUserLoggedIn: boolean, user: any): string {
+  return `
+    <div class="flex items-center gap-3">
+      ${
+        isUserLoggedIn && user
+          ? `
+        <!-- Logged In User -->
+        <!-- Credits Box -->
+        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 2px solid #1e293b">
+          <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
+          <span class="text-base font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
+        </div>
+
+        <!-- DESKTOP: Profile Button -->
+        <button
+          id="profile-menu-btn"
+          class="hidden lg:flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
+          style="border: 2px solid #1e293b"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          ${
+            user.avatar?.url
+              ? `<img src="${user.avatar.url}" alt="${user.name}" class="h-8 w-8 object-cover" style="border: 2px solid #1e293b" />`
+              : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b">${user.name.charAt(0).toUpperCase()}</div>`
+          }
+          <span class="text-sm font-bold text-slate-900">${user.name}</span>
+        </button>
+
+        <!-- DESKTOP: Profile Dropdown Menu -->
+        <div
+          id="profile-dropdown-menu"
+          class="hidden absolute right-6 mt-2 w-48 bg-white shadow-lg z-50"
+          style="border: 2px solid #1e293b; top: 60px;"
+          role="menu"
+        >
+          <a href="/profile.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50" role="menuitem">
+            <i class="fa-solid fa-user w-5"></i> My Profile
+          </a>
+          <a href="/listing-create.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t" style="border-color: #e2e8f0" role="menuitem">
+            <i class="fa-solid fa-plus w-5"></i> Create Listing
+          </a>
+          <button
+            id="logout-btn"
+            class="w-full text-left px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t"
+            style="border-color: #e2e8f0"
+            role="menuitem"
+          >
+            <i class="fa-solid fa-sign-out-alt w-5"></i> Logout
+          </button>
+        </div>
+
+        <!-- MOBILE: Hamburger Menu Button (< 1024px) -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
+          style="border: 2px solid #1e293b"
+          aria-expanded="false"
+          aria-label="Toggle menu"
+        >
+          <i class="fa-solid fa-bars text-white text-lg"></i>
+        </button>
+      `
+          : `
+        <!-- Guest Navigation -->
+        <a
+          href="/login.html"
+          class="hidden bg-white px-4 py-2 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50 md:inline-flex items-center gap-2"
+          style="border: 2px solid #1e293b"
+        >
+          <i class="fa-solid fa-right-to-bracket text-sm"></i>
+          Log in
+        </a>
+        <a
+          href="/register.html"
+          class="bg-slate-900 px-4 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
+          style="border: 2px solid #1e293b"
+        >
+          <i class="fa-solid fa-user-plus text-sm"></i>
+          Create account
+        </a>
+
+        <!-- MOBILE: Hamburger Menu Button for guests (< 1024px) -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
+          style="border: 2px solid #1e293b"
+          aria-expanded="false"
+          aria-label="Toggle menu"
+        >
+          <i class="fa-solid fa-bars text-white text-lg"></i>
+        </button>
+      `
+      }
+    </div>
+  `;
+}
+
+/**
+ * Render mobile menu drawer
+ */
+function renderMobileMenu(isUserLoggedIn: boolean, user: any): string {
+  return `
     <!-- MOBILE MENU DRAWER -->
     <div
       id="mobile-menu-overlay"
@@ -388,7 +544,7 @@ export function renderHeader(): void {
             <i class="fa-solid fa-user text-base w-5"></i>
             <span>My Profile</span>
           </a>
-          <a href="/create-listing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+          <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-plus text-base w-5"></i>
             <span>Create Listing</span>
           </a>
@@ -460,15 +616,12 @@ export function renderHeader(): void {
       }
     </aside>
   `;
-
-  // Initialize event listeners
-  initHeaderEvents();
 }
 
 /**
- * Initialize header event listeners
+ * Initialize header event listeners based on page type
  */
-function initHeaderEvents(): void {
+function initHeaderEvents(pageType: string): void {
   // Mobile menu drawer
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
@@ -503,39 +656,6 @@ function initHeaderEvents(): void {
 
   if (mobileMenuOverlay) {
     mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-  }
-
-  // Mobile search toggle
-  const mobileSearchBtn = document.getElementById('mobile-search-btn');
-  const mobileSearchBar = document.getElementById('mobile-search-bar');
-
-  if (mobileSearchBtn && mobileSearchBar) {
-    mobileSearchBtn.addEventListener('click', () => {
-      mobileSearchBar.classList.toggle('hidden');
-      const isExpanded = !mobileSearchBar.classList.contains('hidden');
-      mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
-
-      if (isExpanded) {
-        const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
-        if (mobileSearchInput) {
-          mobileSearchInput.focus();
-        }
-      }
-    });
-  }
-
-  // Mobile search form submission
-  const mobileSearchForm = document.getElementById('mobile-search-form');
-  if (mobileSearchForm) {
-    mobileSearchForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = mobileSearchForm.querySelector('input[name="q"]') as HTMLInputElement;
-      const searchTerm = input.value.trim();
-
-      if (searchTerm) {
-        window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
-      }
-    });
   }
 
   // Desktop profile menu toggle
@@ -575,6 +695,49 @@ function initHeaderEvents(): void {
     });
   }
 
+  // Only attach search/filter events on browse pages
+  if (pageType === 'browse') {
+    initBrowsePageEvents();
+  }
+}
+
+/**
+ * Initialize events specific to browse pages (search, filters)
+ */
+function initBrowsePageEvents(): void {
+  // Mobile search toggle
+  const mobileSearchBtn = document.getElementById('mobile-search-btn');
+  const mobileSearchBar = document.getElementById('mobile-search-bar');
+
+  if (mobileSearchBtn && mobileSearchBar) {
+    mobileSearchBtn.addEventListener('click', () => {
+      mobileSearchBar.classList.toggle('hidden');
+      const isExpanded = !mobileSearchBar.classList.contains('hidden');
+      mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
+
+      if (isExpanded) {
+        const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
+        if (mobileSearchInput) {
+          mobileSearchInput.focus();
+        }
+      }
+    });
+  }
+
+  // Mobile search form submission
+  const mobileSearchForm = document.getElementById('mobile-search-form');
+  if (mobileSearchForm) {
+    mobileSearchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = mobileSearchForm.querySelector('input[name="q"]') as HTMLInputElement;
+      const searchTerm = input.value.trim();
+
+      if (searchTerm) {
+        window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
+      }
+    });
+  }
+
   // Desktop advanced filters toggle
   const toggleFiltersBtn = document.getElementById('toggle-advanced-filters');
   const filtersBar = document.getElementById('advanced-filters-bar');
@@ -608,7 +771,7 @@ function initHeaderEvents(): void {
     });
   }
 
-  // Filter buttons (tag filtering)
+  // Filter buttons (tag filtering) - category filtering
   const filterButtons = document.querySelectorAll('[data-filter]');
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -620,7 +783,7 @@ function initHeaderEvents(): void {
         // Remove check icon
         const icon = b.querySelector('i');
         if (icon) {
-          icon.className = icon.className.replace('fa-check', '').trim();
+          icon.classList.remove('fa-check');
         }
       });
 
@@ -628,29 +791,48 @@ function initHeaderEvents(): void {
       btn.classList.add('bg-slate-900', 'text-white');
       btn.setAttribute('aria-pressed', 'true');
 
-      // Add check icon
-      const icon = btn.querySelector('i');
+      // Add check icon to first icon
+      const icon = btn.querySelector('i:first-child');
       if (icon && !icon.classList.contains('fa-check')) {
         icon.classList.add('fa-check');
       }
 
       // Dispatch custom event for filtering
       const filterValue = btn.getAttribute('data-filter');
-      document.dispatchEvent(new CustomEvent('filterChange', { detail: { filter: filterValue } }));
+      document.dispatchEvent(new CustomEvent('categoryFilterChange', { detail: { category: filterValue } }));
     });
   });
 
   // Desktop search form submission
   const headerSearchForm = document.getElementById('header-search-form');
+  const globalSearchInput = document.getElementById('global-search-input') as HTMLInputElement;
+
   if (headerSearchForm) {
     headerSearchForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const input = headerSearchForm.querySelector('input[name="q"]') as HTMLInputElement;
       const searchTerm = input.value.trim();
 
-      if (searchTerm) {
+      // Dispatch search event for same-page filtering
+      document.dispatchEvent(new CustomEvent('globalSearchSubmit', { detail: { query: searchTerm } }));
+
+      // For cross-page navigation, only navigate if not on index or collection pages
+      const currentPath = window.location.pathname;
+      if (searchTerm && !currentPath.includes('index.html') && !currentPath.includes('collection.html')) {
         window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
       }
+    });
+  }
+
+  // Real-time search input for instant filtering
+  if (globalSearchInput) {
+    let searchTimeout: ReturnType<typeof setTimeout>;
+    globalSearchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const searchTerm = globalSearchInput.value.trim();
+        document.dispatchEvent(new CustomEvent('globalSearchInput', { detail: { query: searchTerm } }));
+      }, 300); // Debounce
     });
   }
 

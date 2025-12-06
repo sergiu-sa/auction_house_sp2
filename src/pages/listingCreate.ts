@@ -7,9 +7,9 @@ import type { CreateListingData } from '../types/api';
 /**
  * Initialize listing create page
  */
-export function initListingCreatePage(): void {
+export async function initListingCreatePage(): Promise<void> {
   // Render header and footer
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Check if user is logged in and redirect if not

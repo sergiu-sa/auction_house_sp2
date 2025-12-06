@@ -17,9 +17,9 @@ import type { Listing } from '../types/api';
 /**
  * Initialize register page
  */
-export function initRegisterPage(): void {
+export async function initRegisterPage(): Promise<void> {
   // Render header and footer
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Redirect if already authenticated

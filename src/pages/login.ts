@@ -11,9 +11,9 @@ import type { Listing } from '../types/api';
 /**
  * Initialize login page
  */
-export function initLoginPage(): void {
+export async function initLoginPage(): Promise<void> {
   // Render header and footer
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Redirect if already authenticated

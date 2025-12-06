@@ -15,6 +15,7 @@ interface CatalogState {
   sort: string;
   sortOrder: 'asc' | 'desc';
   activeOnly: boolean;
+  search: string;
   page: number;
   limit: number;
 }
@@ -25,26 +26,61 @@ let catalogState: CatalogState = {
   sort: 'endsAt',
   sortOrder: 'asc',
   activeOnly: false,
+  search: '',
   page: 1,
   limit: 12,
 };
+
+/**
+ * Listen to navbar filter events
+ */
+function listenToNavbarFilters(): void {
+  // Category filter from navbar
+  document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
+    catalogState.category = e.detail.category;
+    catalogState.page = 1;
+    applyCatalogFilters();
+  }) as EventListener);
+
+  // Search from navbar
+  document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
+    catalogState.search = e.detail.query;
+    catalogState.page = 1;
+    applyCatalogFilters();
+  }) as EventListener);
+
+  // Active only checkbox from navbar
+  document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
+    catalogState.activeOnly = e.detail.activeOnly;
+    catalogState.page = 1;
+    applyCatalogFilters();
+  }) as EventListener);
+
+  // Sort from navbar
+  document.addEventListener('sortChange', ((e: CustomEvent) => {
+    catalogState.sort = e.detail.sort;
+    catalogState.sortOrder = e.detail.order;
+    catalogState.page = 1;
+    applyCatalogFilters();
+  }) as EventListener);
+}
 
 /**
  * Initialize home page
  */
 async function initHomePage(): Promise<void> {
   // Render header and footer (header includes guest banner)
-  renderHeader();
+  await renderHeader();
   renderFooter();
 
   // Show login required message for create listing button if not logged in
   setupCreateListingButton();
 
+  // Listen to navbar filter events
+  listenToNavbarFilters();
+
   // Load all data
   await loadAllData();
-
-  // Initialize catalog section filters
-  initializeCatalogFilters();
 }
 
 /**
@@ -367,6 +403,16 @@ function applyCatalogFilters(): void {
     );
   }
 
+  // Filter by search
+  if (catalogState.search) {
+    const searchLower = catalogState.search.toLowerCase();
+    filtered = filtered.filter(
+      (listing) =>
+        listing.title.toLowerCase().includes(searchLower) ||
+        listing.description?.toLowerCase().includes(searchLower)
+    );
+  }
+
   // Filter by active only
   if (catalogState.activeOnly) {
     const now = new Date();
@@ -519,60 +565,6 @@ function renderCatalogPagination(total: number): void {
   });
 }
 
-/**
- * Initialize catalog filters
- */
-function initializeCatalogFilters(): void {
-  // Category buttons
-  const categoryButtons = document.querySelectorAll<HTMLButtonElement>('[data-catalog-category]');
-  categoryButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // Update active state
-      categoryButtons.forEach(btn => {
-        btn.classList.remove('bg-slate-900', 'text-white');
-        btn.classList.add('bg-white', 'text-slate-700');
-        btn.setAttribute('style', 'border: 2px solid #334155');
-        const icon = btn.querySelector('i');
-        if (icon) icon.className = icon.className.replace('fa-circle-check', 'fa-circle');
-      });
-
-      button.classList.remove('bg-white', 'text-slate-700');
-      button.classList.add('bg-slate-900', 'text-white');
-      button.setAttribute('style', 'border: 2px solid #1e293b');
-      const icon = button.querySelector('i');
-      if (icon && !icon.classList.contains('fa-circle-check')) {
-        icon.classList.add('fa-circle-check');
-      }
-
-      catalogState.category = button.getAttribute('data-catalog-category') || 'all';
-      catalogState.page = 1;
-      applyCatalogFilters();
-    });
-  });
-
-  // Active only checkbox
-  const activeOnlyCheckbox = document.getElementById('catalog-active-only') as HTMLInputElement;
-  if (activeOnlyCheckbox) {
-    activeOnlyCheckbox.addEventListener('change', () => {
-      catalogState.activeOnly = activeOnlyCheckbox.checked;
-      catalogState.page = 1;
-      applyCatalogFilters();
-    });
-  }
-
-  // Sort select
-  const sortSelect = document.getElementById('catalog-sort') as HTMLSelectElement;
-  if (sortSelect) {
-    sortSelect.addEventListener('change', () => {
-      const value = sortSelect.value;
-      const [sort, order] = value.split('-');
-      catalogState.sort = sort;
-      catalogState.sortOrder = order as 'asc' | 'desc';
-      catalogState.page = 1;
-      applyCatalogFilters();
-    });
-  }
-}
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {

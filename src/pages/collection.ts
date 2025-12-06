@@ -25,148 +25,52 @@ let currentFilters: FilterState = {
   status: '_active=true',
   search: '',
   page: 1,
-  limit: 12,
+  limit: 24,
 };
 
 let allListings: Listing[] = [];
 let filteredListings: Listing[] = [];
 
 /**
- * Initialize collection page
+ * Listen to navbar filter events
  */
-export function initCollectionPage(): void {
-  // Render header and footer
-  renderHeader();
-  renderFooter();
+function listenToNavbarFilters(): void {
+  // Category filter from navbar
+  document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
+    currentFilters.category = e.detail.category;
+    currentFilters.page = 1;
+    applyFilters();
+  }) as EventListener);
 
-  // Initialize filters
-  initializeFilters();
+  // Search from navbar
+  document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
+    currentFilters.search = e.detail.query;
+    currentFilters.page = 1;
+    applyFilters();
+  }) as EventListener);
 
-  // Load listings
-  loadListings();
+  // Active only checkbox from navbar
+  document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
+    // Filter active listings
+    currentFilters.status = e.detail.activeOnly ? '_active=true' : '';
+    currentFilters.page = 1;
+    applyFilters();
+  }) as EventListener);
+
+  // Sort from navbar
+  document.addEventListener('sortChange', ((e: CustomEvent) => {
+    currentFilters.sort = e.detail.sort;
+    currentFilters.sortOrder = e.detail.order;
+    currentFilters.page = 1;
+    applyFilters();
+  }) as EventListener);
 }
 
 /**
  * Initialize filter event listeners
  */
 function initializeFilters(): void {
-  // Mobile filter toggle
-  const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
-  const filterBar = document.getElementById('filter-bar');
-  const filterToggleIcon = document.getElementById('filter-toggle-icon');
-
-  if (mobileFilterToggle && filterBar && filterToggleIcon) {
-    // Hide filters by default on mobile
-    if (window.innerWidth < 768) {
-      filterBar.style.maxHeight = '0';
-      filterBar.style.overflow = 'hidden';
-      filterBar.style.padding = '0';
-    }
-
-    mobileFilterToggle.addEventListener('click', () => {
-      const isHidden = filterBar.style.maxHeight === '0px' || filterBar.style.maxHeight === '';
-
-      if (isHidden) {
-        filterBar.style.maxHeight = '2000px';
-        filterBar.style.padding = '24px';
-        filterBar.style.overflow = 'visible';
-        filterToggleIcon.classList.add('fa-rotate-180');
-      } else {
-        filterBar.style.maxHeight = '0';
-        filterBar.style.padding = '0';
-        filterBar.style.overflow = 'hidden';
-        filterToggleIcon.classList.remove('fa-rotate-180');
-      }
-    });
-  }
-
-  // Category buttons
-  const categoryButtons = document.querySelectorAll<HTMLButtonElement>('[data-category]');
-  categoryButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      // Remove active state from all
-      categoryButtons.forEach((b) => {
-        b.classList.remove('bg-slate-900', 'text-white');
-        b.classList.add('bg-white', 'text-slate-700');
-        b.setAttribute('style', 'border: 2px solid #334155');
-        // Remove check icon
-        const icon = b.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-check');
-        }
-      });
-
-      // Add active state to clicked
-      btn.classList.remove('bg-white', 'text-slate-700');
-      btn.classList.add('bg-slate-900', 'text-white');
-      btn.setAttribute('style', 'border: 2px solid #1e293b');
-
-      // Add check icon
-      const icon = btn.querySelector('i');
-      if (icon && !icon.classList.contains('fa-check')) {
-        icon.classList.add('fa-check');
-      }
-
-      currentFilters.category = btn.getAttribute('data-category') || 'all';
-      currentFilters.page = 1; // Reset to first page
-      applyFilters();
-    });
-  });
-
-  // Sort select
-  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
-  if (sortSelect) {
-    sortSelect.addEventListener('change', () => {
-      const value = sortSelect.value;
-      const [sort, order] = value.split('-');
-      currentFilters.sort = sort;
-      currentFilters.sortOrder = order as 'asc' | 'desc';
-      currentFilters.page = 1;
-      applyFilters();
-    });
-  }
-
-  // Status select
-  const statusSelect = document.getElementById('status-select') as HTMLSelectElement;
-  if (statusSelect) {
-    statusSelect.addEventListener('change', () => {
-      currentFilters.status = statusSelect.value;
-      currentFilters.page = 1;
-      applyFilters();
-    });
-  }
-
-  // Search input
-  const searchInput = document.getElementById('search-input') as HTMLInputElement;
-  if (searchInput) {
-    let searchTimeout: ReturnType<typeof setTimeout>;
-    searchInput.addEventListener('input', () => {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        currentFilters.search = searchInput.value.trim();
-        currentFilters.page = 1;
-        applyFilters();
-      }, 500); // Debounce search
-    });
-  }
-
-  // Apply filters button
-  const applyButton = document.getElementById('apply-filters');
-  if (applyButton) {
-    applyButton.addEventListener('click', () => {
-      applyFilters();
-    });
-  }
-
-  // Clear filters button
-  const clearButton = document.getElementById('clear-filters');
-  if (clearButton) {
-    clearButton.addEventListener('click', () => {
-      clearFilters();
-    });
-  }
-
-  // View toggle
+  // View toggle (grid vs list)
   const gridViewBtn = document.getElementById('grid-view-btn');
   const listViewBtn = document.getElementById('list-view-btn');
   const listingsGrid = document.getElementById('collection-cards-grid');
@@ -191,12 +95,30 @@ function initializeFilters(): void {
 }
 
 /**
+ * Initialize collection page
+ */
+export async function initCollectionPage(): Promise<void> {
+  // Render header and footer
+  await renderHeader();
+  renderFooter();
+
+  // Initialize view toggle filters
+  initializeFilters();
+
+  // Listen to navbar filter events
+  listenToNavbarFilters();
+
+  // Load listings
+  loadListings();
+}
+
+/**
  * Load listings from API
  */
 async function loadListings(): Promise<void> {
   try {
     // Show loading skeletons
-    showCollectionCardSkeletons(12, 'collection-cards-grid');
+    showCollectionCardSkeletons(24, 'collection-cards-grid');
 
     // Fetch listings with filters
     const response = await getListings({
@@ -479,53 +401,6 @@ function updateStats(): void {
   }
 }
 
-/**
- * Clear all filters
- */
-function clearFilters(): void {
-  currentFilters = {
-    category: 'all',
-    sort: 'created',
-    sortOrder: 'desc',
-    status: '_active=true',
-    search: '',
-    page: 1,
-    limit: 12,
-  };
-
-  // Reset UI
-  const categoryButtons = document.querySelectorAll<HTMLButtonElement>('[data-category]');
-  categoryButtons.forEach((btn, index) => {
-    if (index === 0) {
-      btn.classList.remove('bg-white', 'text-slate-700');
-      btn.classList.add('bg-slate-900', 'text-white');
-      btn.setAttribute('style', 'border: 2px solid #1e293b');
-      const icon = btn.querySelector('i');
-      if (icon && !icon.classList.contains('fa-check')) {
-        icon.classList.add('fa-check');
-      }
-    } else {
-      btn.classList.remove('bg-slate-900', 'text-white');
-      btn.classList.add('bg-white', 'text-slate-700');
-      btn.setAttribute('style', 'border: 2px solid #334155');
-      const icon = btn.querySelector('i');
-      if (icon) {
-        icon.classList.remove('fa-check');
-      }
-    }
-  });
-
-  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
-  if (sortSelect) sortSelect.value = 'created-desc';
-
-  const statusSelect = document.getElementById('status-select') as HTMLSelectElement;
-  if (statusSelect) statusSelect.value = '_active=true';
-
-  const searchInput = document.getElementById('search-input') as HTMLInputElement;
-  if (searchInput) searchInput.value = '';
-
-  applyFilters();
-}
 
 /**
  * Show error message

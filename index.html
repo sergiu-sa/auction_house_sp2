@@ -27,7 +27,7 @@
       referrerpolicy="no-referrer"
     />
   </head>
-  <body class="antialiased bg-aucto-bg">
+  <body class="antialiased bg-aucto-bg" data-page-type="browse">
     <!-- Header (rendered by JavaScript) -->
     <div id="header"></div>
 
@@ -215,118 +215,21 @@
               >Complete Collection</span
             >
           </div>
-          <h2 class="text-4xl font-bold text-slate-900 md:text-5xl lg:text-6xl">
-            Auction Catalog
-          </h2>
-        </div>
-
-        <!-- Enhanced Control Bar -->
-        <div
-          class="p-6 mb-12 bg-slate-50 lg:p-8"
-          style="border: 3px solid #1e293b"
-        >
-          <!-- Filters Row -->
-          <div
-            class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
-          >
-            <!-- Category Filters -->
-            <div class="flex flex-wrap gap-3">
-              <button
-                type="button"
-                class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide text-white transition-colors bg-slate-900 hover:bg-slate-800"
-                style="border: 2px solid #1e293b"
-                data-catalog-category="all"
-              >
-                <i class="text-xs fa-solid fa-circle-check"></i>
-                ALL
-              </button>
-              <button
-                type="button"
-                class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide transition-colors bg-white text-slate-700 hover:bg-slate-50"
-                style="border: 2px solid #334155"
-                data-catalog-category="tech"
-              >
-                <i class="text-xs fa-solid fa-microchip"></i>
-                TECH
-              </button>
-              <button
-                type="button"
-                class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide transition-colors bg-white text-slate-700 hover:bg-slate-50"
-                style="border: 2px solid #334155"
-                data-catalog-category="fashion"
-              >
-                <i class="text-xs fa-solid fa-shirt"></i>
-                FASHION
-              </button>
-              <button
-                type="button"
-                class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide transition-colors bg-white text-slate-700 hover:bg-slate-50"
-                style="border: 2px solid #334155"
-                data-catalog-category="home"
-              >
-                <i class="text-xs fa-solid fa-house"></i>
-                HOME
-              </button>
-              <button
-                type="button"
-                class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide transition-colors bg-white text-slate-700 hover:bg-slate-50"
-                style="border: 2px solid #334155"
-                data-catalog-category="collectibles"
-              >
-                <i class="text-xs fa-solid fa-gem"></i>
-                COLLECTIBLES
-              </button>
-            </div>
-
-            <!-- Controls -->
-            <div class="flex flex-wrap items-center gap-3">
-              <!-- Active Only Toggle -->
-              <label
-                class="flex items-center gap-3 px-6 py-3 transition-colors bg-white cursor-pointer hover:bg-slate-50"
-                style="border: 2px solid #334155"
-              >
-                <input
-                  type="checkbox"
-                  id="catalog-active-only"
-                  class="w-4 h-4 cursor-pointer"
-                  style="accent-color: #1e293b"
-                />
-                <span class="text-xs font-bold tracking-wide text-slate-700"
-                  >ACTIVE ONLY</span
-                >
-              </label>
-
-              <!-- Sort Dropdown -->
-              <div class="relative">
-                <select
-                  id="catalog-sort"
-                  class="px-6 py-3 pr-12 text-xs font-bold tracking-wide transition-colors bg-white appearance-none text-slate-700 hover:bg-slate-50 focus:outline-none"
-                  style="border: 2px solid #334155"
-                >
-                  <option value="endsAt-asc">ENDING SOON</option>
-                  <option value="created-desc">NEWEST FIRST</option>
-                  <option value="created-asc">OLDEST FIRST</option>
-                  <option value="title-asc">TITLE A–Z</option>
-                  <option value="title-desc">TITLE Z–A</option>
-                </select>
-                <div
-                  class="absolute -translate-y-1/2 pointer-events-none right-4 top-1/2"
-                >
-                  <i class="text-xs fa-solid fa-chevron-down text-slate-500"></i>
-                </div>
-              </div>
-            </div>
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-4xl font-bold text-slate-900 md:text-5xl lg:text-6xl">
+              Auction Catalog
+            </h2>
+            <a
+              href="/collection.html"
+              class="inline-flex items-center gap-2 font-bold transition-colors text-slate-700 hover:text-slate-900"
+            >
+              View Full Catalog
+              <i class="text-sm fa-solid fa-arrow-right"></i>
+            </a>
           </div>
-
-          <!-- Results Count -->
-          <div
-            class="pt-6 mt-6 text-sm text-slate-600"
-            style="border-top: 2px solid #e2e8f0"
-          >
-            Showing
-            <span class="font-bold text-slate-900" id="catalog-showing-start">1</span>–<span class="font-bold text-slate-900" id="catalog-showing-end">12</span> of
-            <span class="font-bold text-slate-900" id="catalog-total">---</span> auctions
-          </div>
+          <p class="max-w-2xl text-slate-600">
+            Browse all active listings. Use the search and filters above to find exactly what you're looking for.
+          </p>
         </div>
 
         <!-- Catalog Grid (4 columns) -->
