@@ -1,5 +1,6 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
+import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
 import { getListing } from '../api/listings';
 import { placeBid } from '../api/bids';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
@@ -82,10 +83,10 @@ function showError(message: string) {
  * Render breadcrumb navigation
  */
 function renderBreadcrumb(listing: Listing) {
-  const breadcrumbTitle = document.getElementById('breadcrumb-title');
-  if (breadcrumbTitle) {
-    breadcrumbTitle.textContent = listing.title;
-  }
+  renderBreadcrumbInContainer({
+    containerId: 'breadcrumb-nav',
+    items: BREADCRUMB_PRESETS.listingDetail(listing.title),
+  });
 }
 
 /**

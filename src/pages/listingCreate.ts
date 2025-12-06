@@ -1,5 +1,6 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
+import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
 import { createListing } from '../api/listings';
 import { protectedRoute } from '../utils/auth';
 import type { CreateListingData } from '../types/api';
@@ -16,6 +17,12 @@ export async function initListingCreatePage(): Promise<void> {
   if (!protectedRoute()) {
     return;
   }
+
+  // Render breadcrumb
+  renderBreadcrumbInContainer({
+    containerId: 'breadcrumb-nav',
+    items: BREADCRUMB_PRESETS.listingCreate(),
+  });
 
   // Render the create listing form
   renderCreateForm();

@@ -8,6 +8,20 @@ import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
 import type { Listing } from '../types/api';
+import {
+  renderSearchField,
+  renderCategoryFilters,
+  renderActiveOnlyCheckbox,
+  renderSortDropdown,
+  initSearchField,
+  initCategoryFilters,
+  initActiveOnlyCheckbox,
+  initSortDropdown,
+  setSearchFieldValue,
+  setActiveCategory,
+  setActiveOnlyState,
+  setSortValue,
+} from '../components/filters';
 
 // State management for catalog section
 interface CatalogState {
@@ -40,6 +54,7 @@ function listenToNavbarFilters(): void {
     catalogState.category = e.detail.category;
     catalogState.page = 1;
     applyCatalogFilters();
+    syncStickyFiltersWithState();
   }) as EventListener);
 
   // Search from navbar
@@ -47,6 +62,7 @@ function listenToNavbarFilters(): void {
     catalogState.search = e.detail.query;
     catalogState.page = 1;
     applyCatalogFilters();
+    syncStickyFiltersWithState();
   }) as EventListener);
 
   // Active only checkbox from navbar
@@ -54,6 +70,7 @@ function listenToNavbarFilters(): void {
     catalogState.activeOnly = e.detail.activeOnly;
     catalogState.page = 1;
     applyCatalogFilters();
+    syncStickyFiltersWithState();
   }) as EventListener);
 
   // Sort from navbar
@@ -62,7 +79,147 @@ function listenToNavbarFilters(): void {
     catalogState.sortOrder = e.detail.order;
     catalogState.page = 1;
     applyCatalogFilters();
+    syncStickyFiltersWithState();
   }) as EventListener);
+}
+
+/**
+ * Initialize sticky filter bar with scroll detection and event handlers
+ */
+function initStickyFilterBar(): void {
+  const stickyBar = document.getElementById('sticky-catalog-filters');
+  const catalogSection = document.querySelector('#catalog-cards')?.parentElement;
+
+  if (!stickyBar || !catalogSection) return;
+
+  // Render sticky filter bar content using components
+  stickyBar.innerHTML = `
+    <div class="mx-auto max-w-7xl px-6 py-4 md:px-8">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <!-- Left: Label + Search -->
+        <div class="flex items-center gap-3 flex-1">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-slate-700"></i>
+            <span class="text-sm font-bold text-slate-900">Catalog Filters</span>
+          </div>
+          <div class="max-w-md">
+            ${renderSearchField({ id: 'sticky-search-input', placeholder: 'Search catalog...', variant: 'compact' })}
+          </div>
+        </div>
+
+        <!-- Right: Category Filters + Active Only + Sort -->
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
+          ${renderCategoryFilters({ dataAttribute: 'data-sticky-filter', variant: 'compact' })}
+
+          <div class="flex flex-wrap items-center gap-3 text-sm">
+            ${renderActiveOnlyCheckbox({ id: 'sticky-active-only', variant: 'compact' })}
+            ${renderSortDropdown({ id: 'sticky-sort-select', variant: 'compact' })}
+
+            <!-- Close button -->
+            <button
+              id="sticky-close-btn"
+              type="button"
+              class="lg:hidden text-slate-500 hover:text-slate-900 px-2"
+              aria-label="Close filters"
+            >
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  let isSticky = false;
+
+  // Scroll handler to show/hide sticky bar
+  function handleScroll() {
+    if (!stickyBar || !catalogSection) return;
+
+    const catalogRect = catalogSection.getBoundingClientRect();
+    const shouldShow = catalogRect.top <= 100; // Show when catalog section is near top
+
+    if (shouldShow && !isSticky) {
+      // Show sticky bar
+      stickyBar.classList.remove('-translate-y-full');
+      stickyBar.classList.add('translate-y-0');
+      isSticky = true;
+    } else if (!shouldShow && isSticky) {
+      // Hide sticky bar
+      stickyBar.classList.remove('translate-y-0');
+      stickyBar.classList.add('-translate-y-full');
+      isSticky = false;
+    }
+  }
+
+  // Throttle scroll event for better performance
+  let scrollTimeout: ReturnType<typeof setTimeout>;
+  window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+      window.cancelAnimationFrame(scrollTimeout as unknown as number);
+    }
+    scrollTimeout = setTimeout(() => {
+      window.requestAnimationFrame(handleScroll);
+    }, 10);
+  });
+
+  // Initialize sticky filter event listeners using components
+  initStickyFilterEvents();
+}
+
+/**
+ * Initialize event listeners for sticky filter bar
+ */
+function initStickyFilterEvents(): void {
+  // Initialize search field using component
+  initSearchField('sticky-search-input', 300);
+
+  // Also sync with navbar search when user types in sticky search
+  const stickySearchInput = document.getElementById('sticky-search-input') as HTMLInputElement;
+  if (stickySearchInput) {
+    stickySearchInput.addEventListener('input', () => {
+      const navbarSearch = document.getElementById('global-search-input') as HTMLInputElement;
+      if (navbarSearch) navbarSearch.value = stickySearchInput.value;
+    });
+  }
+
+  // Initialize category filters using component
+  initCategoryFilters('data-sticky-filter');
+
+  // Initialize active-only checkbox using component
+  initActiveOnlyCheckbox('sticky-active-only');
+
+  // Initialize sort dropdown using component
+  initSortDropdown('sticky-sort-select');
+
+  // Sticky close button
+  const stickyCloseBtn = document.getElementById('sticky-close-btn');
+  if (stickyCloseBtn) {
+    stickyCloseBtn.addEventListener('click', () => {
+      const stickyBar = document.getElementById('sticky-catalog-filters');
+      if (stickyBar) {
+        stickyBar.classList.remove('translate-y-0');
+        stickyBar.classList.add('-translate-y-full');
+      }
+    });
+  }
+}
+
+/**
+ * Sync sticky filter bar with current state
+ */
+function syncStickyFiltersWithState(): void {
+  // Sync search input using component
+  setSearchFieldValue('sticky-search-input', catalogState.search);
+
+  // Sync category buttons using component
+  setActiveCategory('data-sticky-filter', catalogState.category);
+
+  // Sync active only checkbox using component
+  setActiveOnlyState('sticky-active-only', catalogState.activeOnly);
+
+  // Sync sort select using component
+  setSortValue('sticky-sort-select', catalogState.sort, catalogState.sortOrder);
 }
 
 /**
@@ -78,6 +235,9 @@ async function initHomePage(): Promise<void> {
 
   // Listen to navbar filter events
   listenToNavbarFilters();
+
+  // Initialize sticky catalog filters
+  initStickyFilterBar();
 
   // Load all data
   await loadAllData();
