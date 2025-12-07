@@ -456,7 +456,7 @@ function renderHeroSection(): void {
 
       mosaicHTML += `
         <article class="bg-slate-50" style="border: 3px solid #1e293b">
-          <div class="h-28 bg-slate-200" style="border-bottom: 3px solid #1e293b">
+          <div class="h-48 sm:h-52 md:h-56 bg-slate-200" style="border-bottom: 3px solid #1e293b">
             <a href="/listing.html?id=${listing.id}" class="block h-full">
               <img
                 src="${image}"
@@ -465,10 +465,10 @@ function renderHeroSection(): void {
               />
             </a>
           </div>
-          <div class="p-3">
-            <h4 class="mb-1 text-sm font-bold text-slate-900">
+          <div class="p-2.5 sm:p-3">
+            <h4 class="mb-1 text-sm font-bold text-slate-900 line-clamp-2">
               <a href="/listing.html?id=${listing.id}" class="hover:underline">
-                ${listing.title.length > 25 ? listing.title.substring(0, 25) + '...' : listing.title}
+                ${listing.title.length > 30 ? listing.title.substring(0, 30) + '...' : listing.title}
               </a>
             </h4>
             <p class="text-[11px] text-slate-600">${highestBid} credits</p>

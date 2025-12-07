@@ -1,66 +1,72 @@
 /**
  * Stats Bar component for logged-in users
- * Displays platform statistics in the footer
+ * Displays user-specific and platform statistics in the footer
  */
 
+import { getCurrentUser } from '../utils/auth';
+import { getProfileListings, getProfileBids, getProfileWins } from '../api/profile';
+import type { Bid } from '../types/api';
+
 export interface StatsData {
-  activeLots: number;
-  monthlyVolume: string;
-  completedAuctions: number;
-  satisfaction: number;
+  myListings: number;
+  myBids: number;
+  winRate: number; 
+  activeBidsValue: number;
+}
+
+/**
+ * Format currency for display
+ */
+function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
 }
 
 /**
  * Render the stats bar component
- * @param data - Optional stats data. If not provided, fetches from API
+ * @param data - Stats data to display
  * @returns HTML string for the stats bar section
  */
-export function renderStatsBar(data?: StatsData): string {
-  // Default data if none provided
-  const defaultData: StatsData = {
-    activeLots: 2547,
-    monthlyVolume: '$2.4M',
-    completedAuctions: 8921,
-    satisfaction: 99.8
-  };
-
-  const stats = data || defaultData;
-
+export function renderStatsBar(data: StatsData): string {
   return `
     <div class="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4">
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
-        <div class="mb-2 text-4xl font-bold text-white" data-stat="activeLots">
-          ${new Intl.NumberFormat('en-US').format(stats.activeLots)}
+        <div class="mb-2 text-4xl font-bold text-white" data-stat="myListings">
+          ${new Intl.NumberFormat('en-US').format(data.myListings)}
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
-          Active Lots
+          My Listings
         </div>
       </div>
 
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
-        <div class="mb-2 text-4xl font-bold text-white" data-stat="monthlyVolume">
-          ${stats.monthlyVolume}
+        <div class="mb-2 text-4xl font-bold text-white" data-stat="myBids">
+          ${new Intl.NumberFormat('en-US').format(data.myBids)}
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
-          This Month
+          My Bids
         </div>
       </div>
 
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
-        <div class="mb-2 text-4xl font-bold text-white" data-stat="completedAuctions">
-          ${new Intl.NumberFormat('en-US').format(stats.completedAuctions)}
+        <div class="mb-2 text-4xl font-bold text-white" data-stat="winRate">
+          ${data.winRate.toFixed(1)}%
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
-          Completed
+          Win Rate
         </div>
       </div>
 
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
-        <div class="mb-2 text-4xl font-bold text-white" data-stat="satisfaction">
-          ${stats.satisfaction}%
+        <div class="mb-2 text-4xl font-bold text-white" data-stat="activeBidsValue">
+          ${formatCurrency(data.activeBidsValue)}
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
-          Satisfaction
+          Active Bids
         </div>
       </div>
     </div>
@@ -68,17 +74,60 @@ export function renderStatsBar(data?: StatsData): string {
 }
 
 /**
- * Fetch stats data from API
- * @returns Promise with stats data
+ * Calculate win rate percentage
+ * @param totalBids - Total number of bids placed
+ * @param totalWins - Total number of auctions won
+ * @returns Win rate as a percentage (0-100)
+ */
+function calculateWinRate(totalBids: number, totalWins: number): number {
+  if (totalBids === 0) return 0;
+  return (totalWins / totalBids) * 100;
+}
+
+/**
+ * Calculate total value of active bids
+ * @param bids - Array of user's bids with listing details
+ * @returns Total value of bids on auctions that haven't ended yet
+ */
+function calculateActiveBidsValue(bids: Bid[]): number {
+  const now = new Date();
+  return bids
+    .filter(bid => bid.listing && new Date(bid.listing.endsAt) > now)
+    .reduce((total, bid) => total + bid.amount, 0);
+}
+
+/**
+ * Fetch real stats data from API for logged-in user
+ * @returns Promise with stats data or null if error
  */
 export async function fetchStats(): Promise<StatsData | null> {
   try {
-    // In a real application, this would fetch from API
-    
-    // Simulated API call
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const user = getCurrentUser();
+    if (!user) {
+      return null;
+    }
 
-    return null; // Use default data
+    // Fetch data in parallel for better performance
+    const [listingsResponse, bidsResponse, winsResponse] =
+      await Promise.all([
+        getProfileListings(user.name),
+        getProfileBids(user.name), 
+        getProfileWins(user.name)
+      ]);
+
+    // Calculate stats
+    const myListings = listingsResponse.data.length;
+    const myBids = bidsResponse.data.length;
+    const totalWins = winsResponse.data?.length || 0;
+    const winRate = calculateWinRate(myBids, totalWins);
+    const activeBidsValue = calculateActiveBidsValue(bidsResponse.data);
+
+    return {
+      myListings,
+      myBids,
+      winRate,
+      activeBidsValue
+    };
   } catch (error) {
     console.error('Error fetching stats:', error);
     return null;
@@ -89,9 +138,15 @@ export async function fetchStats(): Promise<StatsData | null> {
  * Animate number counting effect
  * @param element - The element to animate
  * @param target - The target number
+ * @param isCurrency - Whether to format as currency
  * @param duration - Animation duration in milliseconds
  */
-function animateNumber(element: HTMLElement, target: number, duration: number = 1000): void {
+function animateNumber(
+  element: HTMLElement,
+  target: number,
+  isCurrency: boolean = false,
+  duration: number = 1000
+): void {
   const start = 0;
   const increment = target / (duration / 16); // 60fps
   let current = start;
@@ -103,14 +158,37 @@ function animateNumber(element: HTMLElement, target: number, duration: number = 
       clearInterval(timer);
     }
 
-    if (element.dataset.stat === 'satisfaction') {
-      element.textContent = `${current.toFixed(1)}%`;
-    } else if (element.dataset.stat === 'monthlyVolume') {
-      // Skip animation for currency values
-      element.textContent = element.textContent || '';
+    if (isCurrency) {
+      element.textContent = formatCurrency(Math.floor(current));
     } else {
       element.textContent = new Intl.NumberFormat('en-US').format(Math.floor(current));
     }
+  }, 16);
+}
+
+/**
+ * Animate win rate percentage
+ * @param element - The element to animate
+ * @param target - The target percentage
+ * @param duration - Animation duration in milliseconds
+ */
+function animateWinRate(
+  element: HTMLElement,
+  target: number,
+  duration: number = 1000
+): void {
+  const start = 0;
+  const increment = target / (duration / 16); // 60fps
+  let current = start;
+
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+
+    element.textContent = `${current.toFixed(1)}%`;
   }, 16);
 }
 
@@ -121,6 +199,13 @@ function animateNumber(element: HTMLElement, target: number, duration: number = 
 export async function initStatsBar(): Promise<void> {
   const container = document.getElementById('stats-bar-container');
   if (!container) return;
+
+  // Check if user is logged in
+  const user = getCurrentUser();
+  if (!user) {
+    container.innerHTML = ''; // Don't show stats for guests
+    return;
+  }
 
   // Show loading state
   container.innerHTML = `
@@ -146,8 +231,13 @@ export async function initStatsBar(): Promise<void> {
   // Fetch data
   const data = await fetchStats();
 
+  if (!data) {
+    container.innerHTML = ''; // Hide on error
+    return;
+  }
+
   // Render component
-  container.innerHTML = renderStatsBar(data || undefined);
+  container.innerHTML = renderStatsBar(data);
 
   // Animate numbers if IntersectionObserver is available
   if ('IntersectionObserver' in window) {
@@ -155,21 +245,24 @@ export async function initStatsBar(): Promise<void> {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const stats = data || {
-              activeLots: 2547,
-              monthlyVolume: '$2.4M',
-              completedAuctions: 8921,
-              satisfaction: 99.8
-            };
-
             // Animate each stat
-            const activeLotsEl = container.querySelector('[data-stat="activeLots"]') as HTMLElement;
-            const completedEl = container.querySelector('[data-stat="completedAuctions"]') as HTMLElement;
-            const satisfactionEl = container.querySelector('[data-stat="satisfaction"]') as HTMLElement;
+            const myListingsEl = container.querySelector(
+              '[data-stat="myListings"]'
+            ) as HTMLElement;
+            const myBidsEl = container.querySelector(
+              '[data-stat="myBids"]'
+            ) as HTMLElement;
+            const winRateEl = container.querySelector(
+              '[data-stat="winRate"]'
+            ) as HTMLElement;
+            const activeBidsValueEl = container.querySelector(
+              '[data-stat="activeBidsValue"]'
+            ) as HTMLElement;
 
-            if (activeLotsEl) animateNumber(activeLotsEl, stats.activeLots);
-            if (completedEl) animateNumber(completedEl, stats.completedAuctions);
-            if (satisfactionEl) animateNumber(satisfactionEl, stats.satisfaction);
+            if (myListingsEl) animateNumber(myListingsEl, data.myListings);
+            if (myBidsEl) animateNumber(myBidsEl, data.myBids);
+            if (winRateEl) animateWinRate(winRateEl, data.winRate);
+            if (activeBidsValueEl) animateNumber(activeBidsValueEl, data.activeBidsValue, true);
 
             observer.disconnect();
           }
@@ -184,40 +277,56 @@ export async function initStatsBar(): Promise<void> {
 
 /**
  * Update stats bar with new data
- * Useful for real-time updates
+ * Useful for real-time updates or after user actions
  * @param data - New stats data
  */
 export function updateStatsBar(data: StatsData): void {
   const container = document.getElementById('stats-bar-container');
   if (!container) return;
 
-  const activeLotsEl = container.querySelector('[data-stat="activeLots"]') as HTMLElement;
-  const monthlyVolumeEl = container.querySelector('[data-stat="monthlyVolume"]') as HTMLElement;
-  const completedEl = container.querySelector('[data-stat="completedAuctions"]') as HTMLElement;
-  const satisfactionEl = container.querySelector('[data-stat="satisfaction"]') as HTMLElement;
+  const myListingsEl = container.querySelector('[data-stat="myListings"]') as HTMLElement;
+  const myBidsEl = container.querySelector('[data-stat="myBids"]') as HTMLElement;
+  const winRateEl = container.querySelector('[data-stat="winRate"]') as HTMLElement;
+  const activeBidsValueEl = container.querySelector('[data-stat="activeBidsValue"]') as HTMLElement;
 
-  if (activeLotsEl) {
-    const currentValue = parseInt(activeLotsEl.textContent?.replace(/,/g, '') || '0');
-    if (currentValue !== data.activeLots) {
-      animateNumber(activeLotsEl, data.activeLots, 500);
+  if (myListingsEl) {
+    const currentValue = parseInt(myListingsEl.textContent?.replace(/,/g, '') || '0');
+    if (currentValue !== data.myListings) {
+      animateNumber(myListingsEl, data.myListings, false, 500);
     }
   }
 
-  if (monthlyVolumeEl) {
-    monthlyVolumeEl.textContent = data.monthlyVolume;
-  }
-
-  if (completedEl) {
-    const currentValue = parseInt(completedEl.textContent?.replace(/,/g, '') || '0');
-    if (currentValue !== data.completedAuctions) {
-      animateNumber(completedEl, data.completedAuctions, 500);
+  if (myBidsEl) {
+    const currentValue = parseInt(myBidsEl.textContent?.replace(/,/g, '') || '0');
+    if (currentValue !== data.myBids) {
+      animateNumber(myBidsEl, data.myBids, false, 500);
     }
   }
 
-  if (satisfactionEl) {
-    const currentValue = parseFloat(satisfactionEl.textContent?.replace('%', '') || '0');
-    if (currentValue !== data.satisfaction) {
-      animateNumber(satisfactionEl, data.satisfaction, 500);
+  if (winRateEl) {
+    const currentValue = parseFloat(winRateEl.textContent?.replace('%', '') || '0');
+    if (currentValue !== data.winRate) {
+      animateWinRate(winRateEl, data.winRate, 500);
     }
+  }
+
+  if (activeBidsValueEl) {
+    const currentValue = parseInt(
+      activeBidsValueEl.textContent?.replace(/[$,]/g, '') || '0'
+    );
+    if (currentValue !== data.activeBidsValue) {
+      animateNumber(activeBidsValueEl, data.activeBidsValue, true, 500);
+    }
+  }
+}
+
+/**
+ * Refresh stats bar - fetches and updates with latest data
+ * Useful after creating a listing, placing a bid, etc.
+ */
+export async function refreshStatsBar(): Promise<void> {
+  const data = await fetchStats();
+  if (data) {
+    updateStatsBar(data);
   }
 }
