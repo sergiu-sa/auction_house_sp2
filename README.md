@@ -59,7 +59,7 @@ npm run preview
 
 ## Project Structure
 
-```
+```bash
 auction_house_sp2/
 ├── public/
 │   └── images/
@@ -126,37 +126,42 @@ auction_house_sp2/
 ## Features
 
 ### User Authentication
-- Register with @stud.noroff.no email
-- Secure login/logout
-- Route protection for authenticated features
+
+* Register with @stud.noroff.no email
+* Secure login/logout
+* Route protection for authenticated features
 
 ### Profile Management
-- Edit profile (avatar, banner, bio)
-- View user credits
-- Track created listings
-- View bid history
+
+* Edit profile (avatar, banner, bio)
+* View user credits
+* Track created listings
+* View bid history
 
 ### Listings
-- Browse all listings (guest and registered users)
-- Search and filter functionality
-- Create new listings with images, title, description, and deadline
-- Edit and delete own listings
-- View detailed listing information
-- Responsive card layouts
+
+* Browse all listings 
+* Search and filter functionality
+* Create new listings with images, title, description, and deadline
+* Edit and delete own listings
+* View detailed listing information
+* Responsive card layouts
 
 ### Bidding
-- Place bids on other users' listings
-- View bid history
-- Real-time bid tracking
-- Credit-based bidding system
+
+* Place bids on other users listings
+* View bid history
+* Real-time bid tracking
+* Credit-based bidding system;
 
 ### User Experience
-- Responsive design (mobile and desktop)
-- Sticky navigation with filters
-- Toast notifications for user feedback
-- Breadcrumb navigation
-- Floating action buttons
-- Smooth animations and transitions
+
+* Responsive design (mobile and desktop)
+* Sticky navigation with filters
+* Toast notifications for user feedback
+* Breadcrumb navigation
+* Floating action buttons
+* Smooth animations and transitions
 
 ---
 

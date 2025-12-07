@@ -91,6 +91,48 @@ function initializeFilters(): void {
       gridViewBtn.classList.add('bg-white', 'text-slate-700');
     });
   }
+
+  // Refresh listings button
+  const refreshBtn = document.getElementById('refresh-listings-btn');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => {
+      // Add spinning animation
+      const icon = refreshBtn.querySelector('i');
+      if (icon) {
+        icon.classList.add('fa-spin');
+      }
+
+      // Reload listings
+      loadListings().finally(() => {
+        if (icon) {
+          icon.classList.remove('fa-spin');
+        }
+      });
+    });
+  }
+
+  // Clear filters button
+  const clearFiltersBtn = document.getElementById('clear-filters-btn');
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', () => {
+      // Reset filters to default
+      currentFilters = {
+        category: 'all',
+        sort: 'created',
+        sortOrder: 'desc',
+        activeOnly: false,
+        search: '',
+        page: 1,
+        limit: 24,
+      };
+
+      // Dispatch events to update navbar UI
+      document.dispatchEvent(new CustomEvent('clearAllFilters'));
+
+      // Reapply filters
+      applyFilters();
+    });
+  }
 }
 
 /**
