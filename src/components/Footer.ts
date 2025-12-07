@@ -1,7 +1,7 @@
 import { isLoggedIn } from '../utils/auth';
 import { renderNewsletter, initNewsletter } from './newsletter';
-import { renderFeaturedWin } from './featuredWin';
-import { renderStatsBar } from './statsBar';
+import { initFeaturedWin } from './featuredWin';
+import { initStatsBar } from './statsBar';
 
 /**
  * Render the footer component
@@ -18,10 +18,10 @@ export function renderFooter(): void {
 
     ${isUserLoggedIn ? `
       <!-- Featured Win - Logged In Users Only -->
-      ${renderFeaturedWin()}
+      <div id="featured-win-container"></div>
 
       <!-- Stats Bar - Logged In Users Only -->
-      ${renderStatsBar()}
+      <div id="stats-bar-container"></div>
     ` : `
       <!-- Newsletter - Guest Users Only -->
       ${renderNewsletter()}
@@ -78,7 +78,8 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              href="/create-listing.html"
+              href="${isUserLoggedIn ? '/listing-create.html' : '/login.html?redirect=/listing-create.html'}"
+              id="footer-sell-item-link"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-plus text-xs text-slate-500"></i>Sell an
@@ -87,7 +88,8 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              href="/profile.html"
+              href="${isUserLoggedIn ? '/profile.html' : '/login.html?redirect=/profile.html'}"
+              id="footer-my-account-link"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-user text-xs text-slate-500"></i>My Account
@@ -269,11 +271,15 @@ export function renderFooter(): void {
 </footer>
   `;
 
-  // Initialize newsletter functionality for guest users
-  if (!isUserLoggedIn) {
-    // Use setTimeout to ensure DOM is ready
-    setTimeout(() => {
+  // Initialize dynamic components based on user state
+  setTimeout(() => {
+    if (isUserLoggedIn) {
+      // Initialize featured win and stats bar with real data for logged-in users
+      initFeaturedWin();
+      initStatsBar();
+    } else {
+      // Initialize newsletter functionality for guest users
       initNewsletter();
-    }, 0);
-  }
+    }
+  }, 0);
 }

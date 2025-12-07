@@ -108,6 +108,7 @@ export interface Bid {
   amount: number;
   bidder?: User;
   created: string;
+  listing?: Listing; 
 }
 
 export interface CreateBidData {
