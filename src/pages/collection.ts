@@ -12,7 +12,7 @@ interface FilterState {
   category: string;
   sort: string;
   sortOrder: 'asc' | 'desc';
-  status: string;
+  activeOnly: boolean;
   search: string;
   page: number;
   limit: number;
@@ -22,7 +22,7 @@ let currentFilters: FilterState = {
   category: 'all',
   sort: 'created',
   sortOrder: 'desc',
-  status: '_active=true',
+  activeOnly: false,
   search: '',
   page: 1,
   limit: 24,
@@ -51,8 +51,7 @@ function listenToNavbarFilters(): void {
 
   // Active only checkbox from navbar
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
-    // Filter active listings
-    currentFilters.status = e.detail.activeOnly ? '_active=true' : '';
+    currentFilters.activeOnly = e.detail.activeOnly;
     currentFilters.page = 1;
     applyFilters();
   }) as EventListener);
@@ -165,34 +164,23 @@ function applyFilters(): void {
     );
   }
 
-  // Filter by status
-  if (currentFilters.status === 'ending-today') {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    filtered = filtered.filter((listing) => {
-      const endsAt = new Date(listing.endsAt);
-      return endsAt >= today && endsAt <= tomorrow;
-    });
-  } else if (currentFilters.status === 'ending-week') {
-    const today = new Date();
-    const nextWeek = new Date(today);
-    nextWeek.setDate(nextWeek.getDate() + 7);
-
-    filtered = filtered.filter((listing) => {
-      const endsAt = new Date(listing.endsAt);
-      return endsAt >= today && endsAt <= nextWeek;
-    });
-  } else if (currentFilters.status === 'new') {
-    const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-
-    filtered = filtered.filter((listing) => {
-      const created = new Date(listing.created);
-      return created >= threeDaysAgo;
-    });
+  // Filter by active only
+  if (currentFilters.activeOnly) {
+    const now = new Date();
+    filtered = filtered.filter((listing) => new Date(listing.endsAt) > now);
   }
+
+  // Sort listings
+  filtered.sort((a, b) => {
+    const aValue = a[currentFilters.sort as keyof Listing] as string;
+    const bValue = b[currentFilters.sort as keyof Listing] as string;
+
+    if (currentFilters.sortOrder === 'asc') {
+      return aValue > bValue ? 1 : -1;
+    } else {
+      return aValue < bValue ? 1 : -1;
+    }
+  });
 
   filteredListings = filtered;
 

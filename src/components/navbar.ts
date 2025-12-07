@@ -3,6 +3,14 @@ import { logout } from '../api/auth';
 import { renderGuestBanner } from './guestBanner';
 import { getProfile } from '../api/profile';
 import { setUser } from '../utils/storage';
+import {
+  renderCategoryFilters,
+  renderActiveOnlyCheckbox,
+  renderSortDropdown,
+  initCategoryFilters,
+  initActiveOnlyCheckbox,
+  initSortDropdown,
+} from './filters';
 
 /**
  * Render the header/navigation component
@@ -119,9 +127,9 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: any): string {
             ${
               isUserLoggedIn
                 ? `
-            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-gavel text-sm"></i>
-              <span>My Bids</span>
+              <span>Create</span>
             </a>
             <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-user text-sm"></i>
@@ -129,9 +137,9 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: any): string {
             </a>
             `
                 : `
-            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-gavel text-sm"></i>
-              <span>My Bids</span>
+              <span>Create</span>
             </a>
             <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-user text-sm"></i>
@@ -224,9 +232,9 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: any): string {
             ${
               isUserLoggedIn
                 ? `
-            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-gavel text-sm"></i>
-              <span>My Bids</span>
+              <span>Create</span>
             </a>
             <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-user text-sm"></i>
@@ -234,9 +242,9 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: any): string {
             </a>
             `
                 : `
-            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
+            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-gavel text-sm"></i>
-              <span>My Bids</span>
+              <span>Create</span>
             </a>
             <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
               <i class="fa-solid fa-user text-sm"></i>
@@ -292,84 +300,12 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: any): string {
         >
           <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <!-- Tag filters -->
-            <div class="flex flex-wrap gap-2">
-              <button
-                type="button"
-                data-filter="all"
-                class="bg-slate-900 px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-white inline-flex items-center gap-2"
-                style="border: 2px solid #1e293b"
-                aria-pressed="true"
-              >
-                <i class="fa-solid fa-check text-xs"></i>
-                All Items
-              </button>
-              <button
-                type="button"
-                data-filter="tech"
-                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
-                style="border: 2px solid #334155"
-                aria-pressed="false"
-              >
-                <i class="fa-solid fa-microchip text-xs"></i>
-                Tech
-              </button>
-              <button
-                type="button"
-                data-filter="fashion"
-                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
-                style="border: 2px solid #334155"
-                aria-pressed="false"
-              >
-                <i class="fa-solid fa-shirt text-xs"></i>
-                Fashion
-              </button>
-              <button
-                type="button"
-                data-filter="home"
-                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
-                style="border: 2px solid #334155"
-                aria-pressed="false"
-              >
-                <i class="fa-solid fa-house text-xs"></i>
-                Home
-              </button>
-              <button
-                type="button"
-                data-filter="art"
-                class="bg-white px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
-                style="border: 2px solid #334155"
-                aria-pressed="false"
-              >
-                <i class="fa-solid fa-palette text-xs"></i>
-                Art
-              </button>
-            </div>
+            ${renderCategoryFilters({ dataAttribute: 'data-filter', variant: 'normal' })}
 
             <!-- Filters + Sort -->
             <div class="flex flex-wrap items-center gap-3 text-sm">
-              <!-- Active only checkbox -->
-              <label class="inline-flex items-center gap-2 text-slate-700 cursor-pointer">
-                <input type="checkbox" id="active-only-filter" class="h-4 w-4 cursor-pointer" style="accent-color: #1e293b" />
-                <span>Active only</span>
-              </label>
-
-              <!-- Sort dropdown -->
-              <div class="relative">
-                <select
-                  id="sort-filter-select"
-                  class="bg-white px-4 py-2 pr-8 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline-none appearance-none"
-                  style="border: 2px solid #334155"
-                >
-                  <option value="created-desc">Newest first</option>
-                  <option value="created-asc">Oldest first</option>
-                  <option value="endsAt-asc">Ending soon</option>
-                  <option value="title-asc">Title (A-Z)</option>
-                  <option value="title-desc">Title (Z-A)</option>
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-                  <div class="h-0 w-0" style="border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid #64748b;"></div>
-                </div>
-              </div>
+              ${renderActiveOnlyCheckbox({ id: 'active-only-filter', variant: 'normal' })}
+              ${renderSortDropdown({ id: 'sort-filter-select', variant: 'normal' })}
             </div>
           </div>
         </div>
@@ -536,17 +472,13 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: any): string {
             <i class="fa-solid fa-layer-group text-base w-5"></i>
             <span>Catalog</span>
           </a>
-          <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+          <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-gavel text-base w-5"></i>
-            <span>My Bids</span>
+            <span>Create</span>
           </a>
           <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-user text-base w-5"></i>
             <span>My Profile</span>
-          </a>
-          <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-plus text-base w-5"></i>
-            <span>Create Listing</span>
           </a>
         </div>
 
@@ -587,9 +519,9 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: any): string {
             <i class="fa-solid fa-layer-group text-base w-5"></i>
             <span>Catalog</span>
           </a>
-          <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
+          <a href="/login.html?redirect=/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-gavel text-base w-5"></i>
-            <span>My Bids</span>
+            <span>Create</span>
           </a>
           <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
             <i class="fa-solid fa-user text-base w-5"></i>
@@ -771,37 +703,8 @@ function initBrowsePageEvents(): void {
     });
   }
 
-  // Filter buttons (tag filtering) - category filtering
-  const filterButtons = document.querySelectorAll('[data-filter]');
-  filterButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      // Update active state
-      filterButtons.forEach((b) => {
-        b.classList.remove('bg-slate-900', 'text-white');
-        b.classList.add('bg-white', 'text-slate-700');
-        b.setAttribute('aria-pressed', 'false');
-        // Remove check icon
-        const icon = b.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-check');
-        }
-      });
-
-      btn.classList.remove('bg-white', 'text-slate-700');
-      btn.classList.add('bg-slate-900', 'text-white');
-      btn.setAttribute('aria-pressed', 'true');
-
-      // Add check icon to first icon
-      const icon = btn.querySelector('i:first-child');
-      if (icon && !icon.classList.contains('fa-check')) {
-        icon.classList.add('fa-check');
-      }
-
-      // Dispatch custom event for filtering
-      const filterValue = btn.getAttribute('data-filter');
-      document.dispatchEvent(new CustomEvent('categoryFilterChange', { detail: { category: filterValue } }));
-    });
-  });
+  // Initialize category filters using component
+  initCategoryFilters('data-filter');
 
   // Desktop search form submission
   const headerSearchForm = document.getElementById('header-search-form');
@@ -836,25 +739,9 @@ function initBrowsePageEvents(): void {
     });
   }
 
-  // Active only checkbox
-  const activeOnlyCheckbox = document.getElementById('active-only-filter') as HTMLInputElement;
-  if (activeOnlyCheckbox) {
-    activeOnlyCheckbox.addEventListener('change', () => {
-      document.dispatchEvent(
-        new CustomEvent('activeOnlyChange', {
-          detail: { activeOnly: activeOnlyCheckbox.checked },
-        })
-      );
-    });
-  }
+  // Initialize active-only checkbox using component
+  initActiveOnlyCheckbox('active-only-filter');
 
-  // Sort filter
-  const sortFilterSelect = document.getElementById('sort-filter-select') as HTMLSelectElement;
-  if (sortFilterSelect) {
-    sortFilterSelect.addEventListener('change', () => {
-      const value = sortFilterSelect.value;
-      const [sort, order] = value.split('-');
-      document.dispatchEvent(new CustomEvent('sortChange', { detail: { sort, order } }));
-    });
-  }
+  // Initialize sort dropdown using component
+  initSortDropdown('sort-filter-select');
 }

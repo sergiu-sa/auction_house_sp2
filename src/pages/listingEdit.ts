@@ -1,5 +1,6 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
+import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
 import { protectedRoute, requireOwnership } from '../utils/auth';
 import { getListing, updateListing, deleteListing } from '../api/listings';
 import { toast } from '../components/Toast';
@@ -52,6 +53,12 @@ async function loadListingData(listingId: string): Promise<void> {
 
     // Check if listing has bids
     const hasBids = !!(currentListing._count && currentListing._count.bids > 0);
+
+    // Render breadcrumb
+    renderBreadcrumbInContainer({
+      containerId: 'breadcrumb-nav',
+      items: BREADCRUMB_PRESETS.listingEdit(currentListing.title),
+    });
 
     // Render the edit form
     renderEditForm(currentListing, hasBids);
