@@ -11,6 +11,7 @@ import {
   initActiveOnlyCheckbox,
   initSortDropdown,
 } from './filters';
+import type { User } from '../types/api';
 
 /**
  * Render the header/navigation component
@@ -103,7 +104,7 @@ function renderMinimalNavbar(): string {
 /**
  * Render simple navbar for user content pages (profile, create/edit listing)
  */
-function renderSimpleNavbar(isUserLoggedIn: boolean, user: any): string {
+function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <nav style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
@@ -161,7 +162,7 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: any): string {
 /**
  * Render full navbar for browse pages (index, collection, listing details)
  */
-function renderFullNavbar(isUserLoggedIn: boolean, user: any): string {
+function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <nav style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
@@ -319,7 +320,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: any): string {
 /**
  * Render user section (credits + profile dropdown OR auth buttons)
  */
-function renderUserSection(isUserLoggedIn: boolean, user: any): string {
+function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <div class="flex items-center gap-3">
       ${
@@ -422,7 +423,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: any): string {
 /**
  * Render mobile menu drawer
  */
-function renderMobileMenu(isUserLoggedIn: boolean, user: any): string {
+function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <!-- MOBILE MENU DRAWER -->
     <div

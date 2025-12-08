@@ -6,6 +6,9 @@ export default {
     "./register.html",
     "./listing.html",
     "./profile.html",
+    "./listing-create.html",
+    "./listing-edit.html",
+    "./collection.html",
     "./src/**/*.{ts,js,html}",
   ],
   theme: {
@@ -23,6 +26,9 @@ export default {
       fontFamily: {
         serif: ['"Cormorant"', "serif"],
         sans: ['"Source Sans 3"', "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+      },
+      borderWidth: {
+        '3': '3px',
       },
     },
   },
