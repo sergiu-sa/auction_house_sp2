@@ -6,6 +6,17 @@ import { placeBid } from '../api/bids';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { formatTimeRemaining, formatDate, formatDateShort, isAuctionActive, getTimeRemaining } from '../utils/formatDate';
 import { showToast } from '../components/Toast';
+import {
+  updatePageTitle,
+  updatePageDescription,
+  updateOgImage,
+  updateCanonicalUrl,
+  addStructuredData,
+  generateListingStructuredData,
+} from '../utils/seo';
+import { APP_BASE_URL } from '../utils/constants';
+import { logError } from '../utils/logger';
+import { getErrorMessage } from '../utils/errorHandling';
 import type { Listing } from '../types/api';
 
 // Current listing data
@@ -34,6 +45,9 @@ async function init() {
     const response = await getListing(listingId);
     currentListing = response.data;
 
+    // Update SEO meta tags dynamically
+    updateDynamicSEO(currentListing);
+
     // Render all sections
     renderBreadcrumb(currentListing);
     renderListingHeader(currentListing);
@@ -51,9 +65,35 @@ async function init() {
       startCountdown(currentListing.endsAt);
     }
   } catch (error) {
-    console.error('Error loading listing:', error);
+    logError('Failed to load listing', error, { listingId });
     showError('Failed to load listing. Please try again later.');
   }
+}
+
+/**
+ * Update dynamic SEO meta tags for the listing
+ */
+function updateDynamicSEO(listing: Listing) {
+  // Update page title
+  const title = `${listing.title} - Auction Listing | Aucto`;
+  updatePageTitle(title);
+
+  // Update description
+  const description = listing.description
+    ? `${listing.description.substring(0, 155)}...`
+    : `Bid on ${listing.title} on Aucto. View details, bid history, and place your bid before the auction ends.`;
+  updatePageDescription(description);
+
+  // Update OG image
+  if (listing.media && listing.media.length > 0) {
+    updateOgImage(listing.media[0].url);
+  }
+
+  // Update canonical URL
+  updateCanonicalUrl(`${APP_BASE_URL}/listing.html?id=${listing.id}`);
+
+  // Add structured data
+  addStructuredData(generateListingStructuredData(listing));
 }
 
 /**
@@ -451,9 +491,9 @@ function initBidForm() {
       renderBidPanel(currentListing);
       renderBidHistory(currentListing);
       renderListingMeta(currentListing);
-    } catch (error: any) {
-      console.error('Error placing bid:', error);
-      const errorMessage = error?.errors?.[0]?.message || 'Failed to place bid. Please try again.';
+    } catch (error: unknown) {
+      logError('Error placing bid', error, { listingId });
+      const errorMessage = getErrorMessage(error, 'Failed to place bid. Please try again.');
       showToast(errorMessage, 'error');
 
       // Re-enable button

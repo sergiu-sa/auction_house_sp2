@@ -1,6 +1,5 @@
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
-import { renderCreateListingFAB } from '../components/FAB';
 import { getCurrentUser, protectedRoute } from '../utils/auth';
 import {
   getProfile,
@@ -38,21 +37,16 @@ export async function initProfilePage(): Promise<void> {
     // Update page title and description for own profile
     updatePageHeader('My Profile', 'Manage your account, listings, and bids');
 
-    // Render floating action button for current user's profile
-    renderCreateListingFAB();
-
     // Load current user's profile data
     loadProfileData(currentUser.name, true);
   } else {
     // Viewing another user's profile (no login required)
-    // Only show FAB if current user is logged in
     const currentUser = getCurrentUser();
     const isOwnProfile = currentUser?.name === username;
 
     // Update page title and description
     if (isOwnProfile) {
       updatePageHeader('My Profile', 'Manage your account, listings, and bids');
-      renderCreateListingFAB();
     } else {
       updatePageHeader(`${username}'s Profile`, `View ${username}'s listings, bids, and auction activity`);
     }

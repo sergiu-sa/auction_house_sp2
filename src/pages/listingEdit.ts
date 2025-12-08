@@ -4,6 +4,8 @@ import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/B
 import { protectedRoute, requireOwnership } from '../utils/auth';
 import { getListing, updateListing, deleteListing } from '../api/listings';
 import { toast } from '../components/Toast';
+import { logError } from '../utils/logger';
+import { getErrorMessage } from '../utils/errorHandling';
 import type { Listing, UpdateListingData } from '../types/api';
 
 let currentListing: Listing | null = null;
@@ -412,7 +414,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       setTimeout(() => {
         window.location.href = `/listing.html?id=${listingId}`;
       }, 1500);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating listing:', error);
 
       // Restore button state
@@ -421,7 +423,8 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       submitButton.innerHTML = '<i class="fa-solid fa-floppy-disk text-base"></i><span>Save changes</span>';
 
       // Show error message
-      const errorMessage = error?.errors?.[0]?.message || 'Failed to update listing. Please try again.';
+      logError('Failed to update listing', error, { listingId });
+      const errorMessage = getErrorMessage(error, 'Failed to update listing. Please try again.');
       toast.error(errorMessage);
     }
   });
@@ -557,7 +560,7 @@ function initializeDeleteModal(listingId: string): void {
       setTimeout(() => {
         window.location.href = '/profile.html';
       }, 1500);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting listing:', error);
 
       // Restore button state
@@ -566,7 +569,8 @@ function initializeDeleteModal(listingId: string): void {
       deleteBtn.innerHTML = 'Delete Forever';
 
       // Show error message
-      const errorMessage = error?.errors?.[0]?.message || 'Failed to delete listing. Please try again.';
+      logError('Failed to delete listing', error, { listingId });
+      const errorMessage = getErrorMessage(error, 'Failed to delete listing. Please try again.');
       toast.error(errorMessage);
 
       // Close modal

@@ -1,0 +1,21 @@
+# robots.txt for Aucto - Online Auction Platform
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /collection.html
+Allow: /listing.html
+
+# Disallow user-specific and admin pages
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /profile.html
+Disallow: /listing-create.html
+Disallow: /listing-edit.html
+
+# Disallow API and private directories
+Disallow: /src/
+Disallow: /node_modules/
+
+# Sitemap location
+Sitemap: https://auctohouse.netlify.app/sitemap.xml
