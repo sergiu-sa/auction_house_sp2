@@ -348,7 +348,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         >
           ${
             user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" style="border: 2px solid #1e293b" />`
+              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
               : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
           }
           <span class="text-sm font-bold text-slate-900">${user.name}</span>
@@ -455,7 +455,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         <div class="flex items-center gap-2">
           ${
             user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" style="border: 2px solid #1e293b" />`
+              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
               : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
           }
           <div>
