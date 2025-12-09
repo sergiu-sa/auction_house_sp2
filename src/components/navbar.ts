@@ -78,12 +78,12 @@ export async function renderHeader(): Promise<void> {
  */
 function renderMinimalNavbar(): string {
   return `
-    <nav style="background-color: #f7f7f5">
+    <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
         <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
           <!-- Brand Logo -->
-          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
-            <img src="/images/logo.svg" alt="Aucto" class="h-9" />
+          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
+            <img src="/images/logo.svg" alt="Aucto logo" class="h-9" />
           </a>
 
           <!-- Browse as Guest link -->
@@ -91,9 +91,10 @@ function renderMinimalNavbar(): string {
             href="/index.html"
             class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors bg-white"
             style="border: 2px solid #cbd5e1"
+            aria-label="Browse auction listings as guest"
           >
             <span>Browse as Guest</span>
-            <i class="fa-solid fa-arrow-right text-xs"></i>
+            <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -106,44 +107,44 @@ function renderMinimalNavbar(): string {
  */
 function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
-    <nav style="background-color: #f7f7f5">
+    <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
         <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
 
           <!-- Brand Logo -->
-          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
-            <img src="/images/logo.svg" alt="Aucto" class="h-9" />
+          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
+            <img src="/images/logo.svg" alt="Aucto logo" class="h-9" />
           </a>
 
           <!-- DESKTOP: Primary nav links (≥1024px) -->
           <div class="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-700">
-            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-house text-sm"></i>
+            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Feed">
+              <i class="fa-solid fa-house text-sm" aria-hidden="true"></i>
               <span>Feed</span>
             </a>
-            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-layer-group text-sm"></i>
+            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Catalog">
+              <i class="fa-solid fa-layer-group text-sm" aria-hidden="true"></i>
               <span>Catalog</span>
             </a>
             ${
               isUserLoggedIn
                 ? `
-            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-gavel text-sm"></i>
+            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing">
+              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
               <span>Create</span>
             </a>
-            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-user text-sm"></i>
+            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile">
+              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
               <span>Profile</span>
             </a>
             `
                 : `
-            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-gavel text-sm"></i>
+            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing (login required)">
+              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
               <span>Create</span>
             </a>
-            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-user text-sm"></i>
+            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile (login required)">
+              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
               <span>Profile</span>
             </a>
             `
@@ -164,14 +165,14 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string 
  */
 function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
-    <nav style="background-color: #f7f7f5">
+    <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
         <!-- Top row: brand + search + nav + credits -->
         <div class="flex items-center gap-3 pb-4" style="border-bottom: 1px solid #e2e8f0">
 
           <!-- Brand Logo - Always visible -->
-          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0">
-            <img src="/images/logo.svg" alt="Aucto" class="h-9" />
+          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
+            <img src="/images/logo.svg" alt="Aucto logo" class="h-9" />
           </a>
 
           <!-- DESKTOP: Inline search (grows to fill available space) -->
@@ -187,7 +188,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
                   class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                   style="border: 2px solid #334155"
                 />
-                <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
+                <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
               </div>
             </form>
 
@@ -199,9 +200,10 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
               style="border: 2px solid #334155"
               aria-expanded="false"
               aria-controls="advanced-filters-bar"
+              aria-label="Toggle advanced filters"
             >
-              <i class="fa-solid fa-sliders text-sm"></i>
-              <i class="fa-solid fa-chevron-down text-xs transition-transform" id="filters-chevron"></i>
+              <i class="fa-solid fa-sliders text-sm" aria-hidden="true"></i>
+              <i class="fa-solid fa-chevron-down text-xs transition-transform" id="filters-chevron" aria-hidden="true"></i>
             </button>
           </section>
 
@@ -222,33 +224,33 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
 
           <!-- DESKTOP: Primary nav links (≥1024px) -->
           <div class="hidden items-center gap-6 text-sm font-bold text-slate-700 lg:flex">
-            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-house text-sm"></i>
+            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Feed">
+              <i class="fa-solid fa-house text-sm" aria-hidden="true"></i>
               <span>Feed</span>
             </a>
-            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-layer-group text-sm"></i>
+            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Catalog">
+              <i class="fa-solid fa-layer-group text-sm" aria-hidden="true"></i>
               <span>Catalog</span>
             </a>
             ${
               isUserLoggedIn
                 ? `
-            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-gavel text-sm"></i>
+            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing">
+              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
               <span>Create</span>
             </a>
-            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-user text-sm"></i>
+            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile">
+              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
               <span>Profile</span>
             </a>
             `
                 : `
-            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-gavel text-sm"></i>
+            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing (login required)">
+              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
               <span>Create</span>
             </a>
-            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5">
-              <i class="fa-solid fa-user text-sm"></i>
+            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile (login required)">
+              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
               <span>Profile</span>
             </a>
             `
@@ -275,7 +277,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
                 class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                 style="border: 2px solid #334155"
               />
-              <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
+              <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
             </div>
           </form>
 
@@ -286,10 +288,12 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
             class="mt-3 w-full flex items-center justify-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
             style="border: 2px solid #334155"
             aria-expanded="false"
+            aria-controls="advanced-filters-bar"
+            aria-label="Toggle filters"
           >
-            <i class="fa-solid fa-sliders text-sm"></i>
+            <i class="fa-solid fa-sliders text-sm" aria-hidden="true"></i>
             <span class="text-[11px] font-bold tracking-[0.18em] uppercase">Filters</span>
-            <i class="fa-solid fa-chevron-down text-xs transition-transform" id="mobile-filters-chevron"></i>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform" id="mobile-filters-chevron" aria-hidden="true"></i>
           </button>
         </div>
 
@@ -328,9 +332,9 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           ? `
         <!-- Logged In User -->
         <!-- Credits Box -->
-        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 2px solid #1e293b">
+        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 2px solid #1e293b" aria-label="User credits">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
-          <span class="text-base font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
+          <span class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
         </div>
 
         <!-- DESKTOP: Profile Button -->
@@ -340,11 +344,12 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           style="border: 2px solid #1e293b"
           aria-expanded="false"
           aria-haspopup="true"
+          aria-label="Open profile menu"
         >
           ${
             user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name}" class="h-8 w-8 object-cover" style="border: 2px solid #1e293b" />`
-              : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b">${user.name.charAt(0).toUpperCase()}</div>`
+              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" style="border: 2px solid #1e293b" />`
+              : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
           }
           <span class="text-sm font-bold text-slate-900">${user.name}</span>
         </button>
@@ -355,12 +360,13 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           class="hidden absolute right-6 mt-2 w-48 bg-white shadow-lg z-50"
           style="border: 2px solid #1e293b; top: 60px;"
           role="menu"
+          aria-label="Profile menu"
         >
           <a href="/profile.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50" role="menuitem">
-            <i class="fa-solid fa-user w-5"></i> My Profile
+            <i class="fa-solid fa-user w-5" aria-hidden="true"></i> My Profile
           </a>
           <a href="/listing-create.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t" style="border-color: #e2e8f0" role="menuitem">
-            <i class="fa-solid fa-plus w-5"></i> Create Listing
+            <i class="fa-solid fa-plus w-5" aria-hidden="true"></i> Create Listing
           </a>
           <button
             id="logout-btn"
@@ -368,7 +374,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
             style="border-color: #e2e8f0"
             role="menuitem"
           >
-            <i class="fa-solid fa-sign-out-alt w-5"></i> Logout
+            <i class="fa-solid fa-sign-out-alt w-5" aria-hidden="true"></i> Logout
           </button>
         </div>
 
@@ -390,16 +396,18 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           href="/login.html"
           class="hidden bg-white px-4 py-2 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50 md:inline-flex items-center gap-2"
           style="border: 2px solid #1e293b"
+          aria-label="Log in to your account"
         >
-          <i class="fa-solid fa-right-to-bracket text-sm"></i>
+          <i class="fa-solid fa-right-to-bracket text-sm" aria-hidden="true"></i>
           Log in
         </a>
         <a
           href="/register.html"
           class="bg-slate-900 px-4 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
           style="border: 2px solid #1e293b"
+          aria-label="Create new account"
         >
-          <i class="fa-solid fa-user-plus text-sm"></i>
+          <i class="fa-solid fa-user-plus text-sm" aria-hidden="true"></i>
           Create account
         </a>
 
@@ -435,6 +443,9 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       id="mobile-menu-drawer"
       class="fixed top-0 right-0 bottom-0 w-80 bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto"
       style="border-left: 3px solid #1e293b"
+      role="dialog"
+      aria-label="Mobile menu"
+      aria-modal="true"
     >
       ${
         isUserLoggedIn && user
@@ -444,12 +455,12 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         <div class="flex items-center gap-2">
           ${
             user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name}" class="h-10 w-10 object-cover" style="border: 2px solid #1e293b" />`
-              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b">${user.name.charAt(0).toUpperCase()}</div>`
+              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" style="border: 2px solid #1e293b" />`
+              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
           }
           <div>
             <div class="text-sm font-bold text-slate-900">${user.name}</div>
-            <div class="text-xs text-slate-600">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
+            <div class="text-xs text-slate-600" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
           </div>
         </div>
         <button
@@ -463,22 +474,22 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       </div>
 
       <!-- Mobile Menu Navigation Links -->
-      <nav class="p-4">
+      <nav class="p-4" aria-label="Mobile navigation">
         <div class="space-y-1">
-          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-house text-base w-5"></i>
+          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Feed">
+            <i class="fa-solid fa-house text-base w-5" aria-hidden="true"></i>
             <span>Feed</span>
           </a>
-          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-layer-group text-base w-5"></i>
+          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Catalog">
+            <i class="fa-solid fa-layer-group text-base w-5" aria-hidden="true"></i>
             <span>Catalog</span>
           </a>
-          <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-gavel text-base w-5"></i>
+          <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Create listing">
+            <i class="fa-solid fa-gavel text-base w-5" aria-hidden="true"></i>
             <span>Create</span>
           </a>
-          <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-user text-base w-5"></i>
+          <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="My profile">
+            <i class="fa-solid fa-user text-base w-5" aria-hidden="true"></i>
             <span>My Profile</span>
           </a>
         </div>
@@ -487,8 +498,8 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         <div class="my-4" style="border-top: 2px solid #e2e8f0"></div>
 
         <!-- Logout -->
-        <button id="mobile-logout-btn" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 rounded transition-colors">
-          <i class="fa-solid fa-sign-out-alt text-base w-5"></i>
+        <button id="mobile-logout-btn" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 rounded transition-colors" aria-label="Logout">
+          <i class="fa-solid fa-sign-out-alt text-base w-5" aria-hidden="true"></i>
           <span>Logout</span>
         </button>
       </nav>
@@ -497,7 +508,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       <!-- Mobile Menu Header - Guest -->
       <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
         <div class="flex items-center gap-2">
-          <img src="/images/logo.svg" alt="Aucto" class="h-8" />
+          <img src="/images/logo.svg" alt="Aucto logo" class="h-8" />
         </div>
         <button
           id="mobile-menu-close"
@@ -510,22 +521,22 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       </div>
 
       <!-- Mobile Menu Navigation Links -->
-      <nav class="p-4">
+      <nav class="p-4" aria-label="Mobile navigation">
         <div class="space-y-1">
-          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-house text-base w-5"></i>
+          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Feed">
+            <i class="fa-solid fa-house text-base w-5" aria-hidden="true"></i>
             <span>Feed</span>
           </a>
-          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-layer-group text-base w-5"></i>
+          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Catalog">
+            <i class="fa-solid fa-layer-group text-base w-5" aria-hidden="true"></i>
             <span>Catalog</span>
           </a>
-          <a href="/login.html?redirect=/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-gavel text-base w-5"></i>
+          <a href="/login.html?redirect=/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Create listing (login required)">
+            <i class="fa-solid fa-gavel text-base w-5" aria-hidden="true"></i>
             <span>Create</span>
           </a>
-          <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors">
-            <i class="fa-solid fa-user text-base w-5"></i>
+          <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Profile (login required)">
+            <i class="fa-solid fa-user text-base w-5" aria-hidden="true"></i>
             <span>Profile</span>
           </a>
         </div>
@@ -535,12 +546,12 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
 
         <!-- Auth Buttons -->
         <div class="space-y-2">
-          <a href="/login.html" class="w-full flex items-center justify-center gap-2 bg-white px-4 py-3 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50" style="border: 2px solid #1e293b">
-            <i class="fa-solid fa-right-to-bracket text-sm"></i>
+          <a href="/login.html" class="w-full flex items-center justify-center gap-2 bg-white px-4 py-3 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50" style="border: 2px solid #1e293b" aria-label="Log in to your account">
+            <i class="fa-solid fa-right-to-bracket text-sm" aria-hidden="true"></i>
             <span>Log in</span>
           </a>
-          <a href="/register.html" class="w-full flex items-center justify-center gap-2 bg-slate-900 px-4 py-3 text-sm font-bold tracking-wide text-white hover:bg-slate-800" style="border: 2px solid #1e293b">
-            <i class="fa-solid fa-user-plus text-sm"></i>
+          <a href="/register.html" class="w-full flex items-center justify-center gap-2 bg-slate-900 px-4 py-3 text-sm font-bold tracking-wide text-white hover:bg-slate-800" style="border: 2px solid #1e293b" aria-label="Create new account">
+            <i class="fa-solid fa-user-plus text-sm" aria-hidden="true"></i>
             <span>Create account</span>
           </a>
         </div>
