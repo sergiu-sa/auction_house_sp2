@@ -187,6 +187,8 @@ function renderProfileHero(
               src="${bannerUrl}"
               alt="Profile banner"
               class="h-full w-full object-cover"
+              loading="lazy"
+              referrerpolicy="no-referrer"
             />`
               : ''
           }
@@ -219,6 +221,10 @@ function renderProfileHero(
                 src="${avatarUrl}"
                 alt="Profile avatar"
                 class="h-full w-full object-cover"
+                width="112"
+                height="112"
+                loading="lazy"
+                referrerpolicy="no-referrer"
               />`
                 : `<div class="h-full w-full bg-slate-900 text-white flex items-center justify-center font-bold text-4xl">
                 ${profile.name.charAt(0).toUpperCase()}
@@ -561,6 +567,8 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           src="${imageUrl}"
           alt="${listing.title}"
           class="h-full w-full object-cover"
+          loading="lazy"
+          referrerpolicy="no-referrer"
         />`
             : `<div class="h-full w-full flex items-center justify-center">
           <i class="fa-solid fa-image text-6xl text-slate-300"></i>

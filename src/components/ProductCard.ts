@@ -68,6 +68,7 @@ export function createProductCard(listing: Listing): string {
             alt="${imageAlt}"
             class="h-full w-full object-cover"
             loading="lazy"
+            referrerpolicy="no-referrer"
           />
         </a>
       </div>
