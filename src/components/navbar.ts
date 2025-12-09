@@ -83,7 +83,7 @@ function renderMinimalNavbar(): string {
         <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
           <!-- Brand Logo -->
           <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
-            <img src="/images/logo.svg" alt="Aucto logo" class="h-9" />
+            <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-9" />
           </a>
 
           <!-- Browse as Guest link -->
@@ -113,7 +113,7 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string 
 
           <!-- Brand Logo -->
           <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
-            <img src="/images/logo.svg" alt="Aucto logo" class="h-9" />
+            <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-9" />
           </a>
 
           <!-- DESKTOP: Primary nav links (≥1024px) -->
@@ -172,7 +172,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
 
           <!-- Brand Logo - Always visible -->
           <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
-            <img src="/images/logo.svg" alt="Aucto logo" class="h-9" />
+            <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-9" />
           </a>
 
           <!-- DESKTOP: Inline search (grows to fill available space) -->
@@ -508,7 +508,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       <!-- Mobile Menu Header - Guest -->
       <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
         <div class="flex items-center gap-2">
-          <img src="/images/logo.svg" alt="Aucto logo" class="h-8" />
+          <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-8" />
         </div>
         <button
           id="mobile-menu-close"
