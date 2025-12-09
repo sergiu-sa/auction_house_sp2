@@ -180,6 +180,42 @@ This project integrates with the [Noroff Auction API v2](https://docs.noroff.dev
 
 ---
 
+## Testing
+
+### Automated Tests
+
+This project includes comprehensive unit tests using Vitest.
+
+**Test Coverage:**
+
+* **76 tests** across 3 test suites
+* **100% pass rate**
+
+**Test Files:**
+
+* `src/utils/validation.test.ts` - Email, URL, password, bid, and form validation (30 tests)
+* `src/utils/formatDate.test.ts` - Date formatting and time calculations (29 tests)
+* `src/utils/formatCurrency.test.ts` - Currency and number formatting (17 tests)
+
+**Run Tests:**
+
+```bash
+# Run all tests
+npm test
+
+# Run in watch mode
+npm run test:watch
+
+# Run with UI
+npm run test:ui
+
+# Run with coverage
+npm run test:coverage
+```
+
+
+---
+
 ## License
 
 Noroff School of Technology and Digital Media
