@@ -73,8 +73,14 @@ export function getTokenTimestamp(): number | null {
  * Tokens are considered expired after 7 days
  */
 export function isTokenExpired(): boolean {
+  const token = getToken();
   const timestamp = getTokenTimestamp();
-  if (!timestamp) return true;
+
+  
+  // This handles race conditions during login
+  if (token && !timestamp) return false;
+
+  if (!token || !timestamp) return true;
 
   const now = Date.now();
   const sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
