@@ -99,7 +99,7 @@ export function generateListingStructuredData(listing: {
   const listingUrl = `${APP_BASE_URL}/listing.html?id=${listing.id}`;
   const imageUrl = listing.media && listing.media.length > 0
     ? listing.media[0].url
-    : `${APP_BASE_URL}/images/logo.svg`;
+    : `${APP_BASE_URL}/images/logo_v2.svg`;
 
   return {
     '@context': 'https://schema.org/',
@@ -134,7 +134,7 @@ export function generateOrganizationStructuredData(): object {
     '@type': 'Organization',
     name: APP_META.name,
     url: APP_BASE_URL,
-    logo: `${APP_BASE_URL}/images/logo.svg`,
+    logo: `${APP_BASE_URL}/images/logo_v2.svg`,
     description: APP_META.description,
     sameAs: [],
   };
