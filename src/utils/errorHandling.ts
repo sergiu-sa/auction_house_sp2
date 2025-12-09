@@ -2,7 +2,6 @@
  * Type-safe error handling utilities
  */
 
-import type { ApiError } from '../types/api';
 import { ApiErrorClass } from '../api/config';
 
 /**
