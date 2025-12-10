@@ -77,6 +77,7 @@ export function createCollectionCard(listing: Listing): string {
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
               src="${imgAttrs.src}"
+              ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
               alt="${imgAttrs.alt}"
               width="${imgAttrs.width}"
               height="${imgAttrs.height}"
@@ -84,6 +85,7 @@ export function createCollectionCard(listing: Listing): string {
               loading="${imgAttrs.loading}"
               decoding="${imgAttrs.decoding}"
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              referrerpolicy="no-referrer"
             />
           </a>
 

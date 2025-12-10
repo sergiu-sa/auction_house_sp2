@@ -180,7 +180,7 @@ function renderProfileHero(
         <!-- Banner -->
         <div
           class="relative h-40 md:h-48 bg-slate-200"
-          style="border-bottom: 3px solid #1e293b"
+          style="border-bottom: 3px solid #1e293b; min-height: 10rem;"
         >
           ${
             bannerUrl
@@ -188,7 +188,10 @@ function renderProfileHero(
               src="${bannerUrl}"
               alt="Profile banner"
               class="h-full w-full object-cover"
+              width="1200"
+              height="192"
               fetchpriority="high"
+              decoding="async"
               referrerpolicy="no-referrer"
             />`
               : ''
@@ -210,7 +213,8 @@ function renderProfileHero(
                 class="h-full w-full object-cover"
                 width="112"
                 height="112"
-                loading="lazy"
+                loading="eager"
+                decoding="async"
                 referrerpolicy="no-referrer"
               />`
                 : `<div class="h-full w-full bg-slate-900 text-white flex items-center justify-center font-bold text-4xl">
