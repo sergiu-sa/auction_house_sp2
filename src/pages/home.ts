@@ -267,8 +267,6 @@ function setupCreateListingButton(): void {
  */
 async function loadAllData(): Promise<void> {
   try {
-    console.log('Fetching listings...');
-
     // Fetch all listings
     const response = await getListings({
       limit: 100,
@@ -278,11 +276,8 @@ async function loadAllData(): Promise<void> {
       sortOrder: 'desc',
     });
 
-    console.log('API Response:', response);
-
     if (response.data && response.data.length > 0) {
       allListings = response.data;
-      console.log(`Loaded ${allListings.length} listings`);
 
       // Render all sections
       renderHeroSection();
@@ -291,7 +286,6 @@ async function loadAllData(): Promise<void> {
       renderEndingSoonSection();
       renderCatalogSection();
     } else {
-      console.warn('No listings found in API response');
       showNoListingsMessage();
     }
   } catch (error) {

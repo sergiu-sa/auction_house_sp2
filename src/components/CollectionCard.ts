@@ -287,9 +287,8 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
         }
       }
 
-      // Here you would typically call an API to save the favorite state
-      const listingId = button.getAttribute('data-listing-id');
-      console.log('Toggle favorite for listing:', listingId);
+      // In the future, save favorite state to API
+      // const listingId = button.getAttribute('data-listing-id');
     });
   });
 }
