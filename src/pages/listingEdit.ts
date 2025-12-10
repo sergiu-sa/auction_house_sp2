@@ -313,7 +313,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
         </div>
 
         <div class="bg-red-50 border-2 border-red-300 p-6">
-          <div class="flex items-start justify-between gap-6">
+          <div class="flex flex-col md:flex-row items-start md:justify-between gap-6">
             <div class="flex-1">
               <h3 class="text-lg font-bold text-red-900 mb-2">
                 Delete this listing
@@ -336,7 +336,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
             <button
               type="button"
               id="deleteButton"
-              class="inline-flex items-center gap-2 bg-red-700 text-white px-6 py-3 font-bold tracking-[0.18em] uppercase border-2 border-red-700 hover:bg-red-800 transition-colors whitespace-nowrap"
+              class="inline-flex items-center justify-center gap-2 bg-red-700 text-white px-6 py-3 font-bold tracking-[0.18em] uppercase border-2 border-red-700 hover:bg-red-800 transition-colors w-full md:w-auto md:whitespace-nowrap md:flex-shrink-0"
             >
               <i class="fa-solid fa-trash text-base"></i>
               <span>Delete listing</span>

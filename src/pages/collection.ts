@@ -4,6 +4,7 @@ import {
   renderCollectionCards,
   showCollectionCardSkeletons,
 } from '../components/CollectionCard';
+import { renderPagination } from '../components/PaginationComponent';
 import { getListings } from '../api/listings';
 import type { Listing } from '../types/api';
 
@@ -15,7 +16,7 @@ interface FilterState {
   activeOnly: boolean;
   search: string;
   page: number;
-  limit: number;
+  itemsPerPage: number;
 }
 
 let currentFilters: FilterState = {
@@ -25,7 +26,7 @@ let currentFilters: FilterState = {
   activeOnly: false,
   search: '',
   page: 1,
-  limit: 24,
+  itemsPerPage: 24,
 };
 
 let allListings: Listing[] = [];
@@ -38,21 +39,21 @@ function listenToNavbarFilters(): void {
   // Category filter from navbar
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
     currentFilters.category = e.detail.category;
-    currentFilters.page = 1;
+    currentFilters.page = 1; 
     applyFilters();
   }) as EventListener);
 
   // Search from navbar
   document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
     currentFilters.search = e.detail.query;
-    currentFilters.page = 1;
+    currentFilters.page = 1; 
     applyFilters();
   }) as EventListener);
 
   // Active only checkbox from navbar
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     currentFilters.activeOnly = e.detail.activeOnly;
-    currentFilters.page = 1;
+    currentFilters.page = 1; 
     applyFilters();
   }) as EventListener);
 
@@ -60,7 +61,7 @@ function listenToNavbarFilters(): void {
   document.addEventListener('sortChange', ((e: CustomEvent) => {
     currentFilters.sort = e.detail.sort;
     currentFilters.sortOrder = e.detail.order;
-    currentFilters.page = 1;
+    currentFilters.page = 1; 
     applyFilters();
   }) as EventListener);
 }
@@ -76,7 +77,7 @@ function initializeFilters(): void {
 
   if (gridViewBtn && listViewBtn && listingsGrid) {
     gridViewBtn.addEventListener('click', () => {
-      listingsGrid.className = 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-12 transition-all';
+      listingsGrid.className = 'grid gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
       gridViewBtn.classList.remove('bg-white', 'text-slate-700');
       gridViewBtn.classList.add('bg-slate-900', 'text-white');
       listViewBtn.classList.remove('bg-slate-900', 'text-white');
@@ -84,7 +85,7 @@ function initializeFilters(): void {
     });
 
     listViewBtn.addEventListener('click', () => {
-      listingsGrid.className = 'grid gap-6 grid-cols-1 mb-12 transition-all';
+      listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all';
       listViewBtn.classList.remove('bg-white', 'text-slate-700');
       listViewBtn.classList.add('bg-slate-900', 'text-white');
       gridViewBtn.classList.remove('bg-slate-900', 'text-white');
@@ -123,7 +124,7 @@ function initializeFilters(): void {
         activeOnly: false,
         search: '',
         page: 1,
-        limit: 24,
+        itemsPerPage: 24,
       };
 
       // Dispatch events to update navbar UI
@@ -226,145 +227,33 @@ function applyFilters(): void {
 
   filteredListings = filtered;
 
-  // Render paginated results
-  renderPaginatedResults();
-  updateResultsInfo();
-}
+  // Paginate results
+  const startIndex = (currentFilters.page - 1) * currentFilters.itemsPerPage;
+  const endIndex = startIndex + currentFilters.itemsPerPage;
+  const paginatedListings = filteredListings.slice(startIndex, endIndex);
 
-/**
- * Render paginated results
- */
-function renderPaginatedResults(): void {
-  const start = (currentFilters.page - 1) * currentFilters.limit;
-  const end = start + currentFilters.limit;
-  const paginatedListings = filteredListings.slice(start, end);
-
+  // Render paginated cards
   renderCollectionCards(paginatedListings, 'collection-cards-grid');
-  renderPagination();
 
-  // Scroll to top of results
-  const resultsHeader = document.querySelector('#collection-cards-grid');
-  if (resultsHeader && currentFilters.page > 1) {
-    resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
+  // Render pagination
+  const totalPages = Math.ceil(filteredListings.length / currentFilters.itemsPerPage);
+  renderPagination({
+    containerId: 'pagination',
+    currentPage: currentFilters.page,
+    totalPages,
+    onPageChange: (page: number) => {
+      currentFilters.page = page;
+      applyFilters();
 
-/**
- * Render pagination controls
- */
-function renderPagination(): void {
-  const paginationContainer = document.getElementById('pagination');
-  if (!paginationContainer) return;
-
-  const totalPages = Math.ceil(filteredListings.length / currentFilters.limit);
-
-  if (totalPages <= 1) {
-    paginationContainer.innerHTML = '';
-    return;
-  }
-
-  const currentPage = currentFilters.page;
-
-  let paginationHTML = `
-    <div class="text-sm text-slate-600">
-      Page <span class="font-bold text-slate-900">${currentPage}</span> of
-      <span class="font-bold text-slate-900">${totalPages}</span>
-    </div>
-    <div class="flex items-center gap-2">
-  `;
-
-  // Previous button
-  paginationHTML += `
-    <button
-      class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide ${currentPage === 1 ? 'cursor-not-allowed bg-slate-200 text-slate-400' : 'bg-white text-slate-900 hover:bg-slate-50'}"
-      style="border: 2px solid ${currentPage === 1 ? '#cbd5e1' : '#334155'}"
-      ${currentPage === 1 ? 'disabled' : ''}
-      data-page="${currentPage - 1}"
-    >
-      <i class="text-xs fa-solid fa-chevron-left"></i>
-      PREVIOUS
-    </button>
-  `;
-
-  // Page numbers
-  const maxVisiblePages = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-  if (endPage - startPage < maxVisiblePages - 1) {
-    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-  }
-
-  if (startPage > 1) {
-    paginationHTML += `
-      <button
-        class="px-6 py-3 text-xs font-bold tracking-wide bg-white text-slate-700 hover:bg-slate-50"
-        style="border: 2px solid #334155"
-        data-page="1"
-      >
-        1
-      </button>
-    `;
-    if (startPage > 2) {
-      paginationHTML += `<span class="px-3 text-slate-500">...</span>`;
-    }
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    paginationHTML += `
-      <button
-        class="px-6 py-3 text-xs font-bold tracking-wide ${i === currentPage ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 hover:bg-slate-50'}"
-        style="border: 2px solid ${i === currentPage ? '#1e293b' : '#334155'}"
-        data-page="${i}"
-      >
-        ${i}
-      </button>
-    `;
-  }
-
-  if (endPage < totalPages) {
-    if (endPage < totalPages - 1) {
-      paginationHTML += `<span class="px-3 text-slate-500">...</span>`;
-    }
-    paginationHTML += `
-      <button
-        class="px-6 py-3 text-xs font-bold tracking-wide bg-white text-slate-700 hover:bg-slate-50"
-        style="border: 2px solid #334155"
-        data-page="${totalPages}"
-      >
-        ${totalPages}
-      </button>
-    `;
-  }
-
-  // Next button
-  paginationHTML += `
-    <button
-      class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide ${currentPage === totalPages ? 'cursor-not-allowed bg-slate-200 text-slate-400' : 'bg-slate-900 text-white hover:bg-slate-800'}"
-      style="border: 2px solid ${currentPage === totalPages ? '#cbd5e1' : '#1e293b'}"
-      ${currentPage === totalPages ? 'disabled' : ''}
-      data-page="${currentPage + 1}"
-    >
-      NEXT
-      <i class="text-xs fa-solid fa-chevron-right"></i>
-    </button>
-  `;
-
-  paginationHTML += `</div>`;
-
-  paginationContainer.innerHTML = paginationHTML;
-
-  // Add event listeners to pagination buttons
-  const pageButtons = paginationContainer.querySelectorAll<HTMLButtonElement>('button[data-page]');
-  pageButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const page = parseInt(button.getAttribute('data-page') || '1', 10);
-      if (page >= 1 && page <= totalPages) {
-        currentFilters.page = page;
-        renderPaginatedResults();
+      // Scroll to top of results
+      const resultsHeader = document.querySelector('#collection-cards-grid');
+      if (resultsHeader) {
+        resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    });
+    },
   });
+
+  updateResultsInfo();
 }
 
 /**
@@ -388,11 +277,8 @@ function updateResultsInfo(): void {
   }
 
   if (resultsRange) {
-    const start = (currentFilters.page - 1) * currentFilters.limit + 1;
-    const end = Math.min(
-      currentFilters.page * currentFilters.limit,
-      filteredListings.length
-    );
+    const start = (currentFilters.page - 1) * currentFilters.itemsPerPage + 1;
+    const end = Math.min(currentFilters.page * currentFilters.itemsPerPage, filteredListings.length);
 
     if (filteredListings.length === 0) {
       resultsRange.textContent = '0-0';

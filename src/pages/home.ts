@@ -4,6 +4,7 @@ import { renderFooter } from '../components/Footer';
 import { renderProductCards, showProductCardSkeletons } from '../components/ProductCard';
 import { renderQuickCards, showQuickCardSkeletons } from '../components/QuickCard';
 import { renderCollectionCards } from '../components/CollectionCard';
+import { renderPagination } from '../components/PaginationComponent';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
@@ -31,7 +32,7 @@ interface CatalogState {
   activeOnly: boolean;
   search: string;
   page: number;
-  limit: number;
+  itemsPerPage: number;
 }
 
 let allListings: Listing[] = [];
@@ -42,7 +43,7 @@ let catalogState: CatalogState = {
   activeOnly: false,
   search: '',
   page: 1,
-  limit: 12,
+  itemsPerPage: 12,
 };
 
 /**
@@ -52,7 +53,7 @@ function listenToNavbarFilters(): void {
   // Category filter from navbar
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
     catalogState.category = e.detail.category;
-    catalogState.page = 1;
+    catalogState.page = 1; // Reset to first page
     applyCatalogFilters();
     syncStickyFiltersWithState();
   }) as EventListener);
@@ -60,7 +61,7 @@ function listenToNavbarFilters(): void {
   // Search from navbar
   document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
     catalogState.search = e.detail.query;
-    catalogState.page = 1;
+    catalogState.page = 1; // Reset to first page
     applyCatalogFilters();
     syncStickyFiltersWithState();
   }) as EventListener);
@@ -68,7 +69,7 @@ function listenToNavbarFilters(): void {
   // Active only checkbox from navbar
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     catalogState.activeOnly = e.detail.activeOnly;
-    catalogState.page = 1;
+    catalogState.page = 1; // Reset to first page
     applyCatalogFilters();
     syncStickyFiltersWithState();
   }) as EventListener);
@@ -77,7 +78,7 @@ function listenToNavbarFilters(): void {
   document.addEventListener('sortChange', ((e: CustomEvent) => {
     catalogState.sort = e.detail.sort;
     catalogState.sortOrder = e.detail.order;
-    catalogState.page = 1;
+    catalogState.page = 1; // Reset to first page
     applyCatalogFilters();
     syncStickyFiltersWithState();
   }) as EventListener);
@@ -544,7 +545,7 @@ function renderEndingSoonSection(): void {
 }
 
 /**
- * Render Catalog Section with filters and pagination
+ * Render Catalog Section with filters
  */
 function renderCatalogSection(): void {
   applyCatalogFilters();
@@ -591,137 +592,30 @@ function applyCatalogFilters(): void {
     }
   });
 
-  // Paginate
-  const start = (catalogState.page - 1) * catalogState.limit;
-  const end = start + catalogState.limit;
-  const paginated = filtered.slice(start, end);
+  // Paginate results
+  const startIndex = (catalogState.page - 1) * catalogState.itemsPerPage;
+  const endIndex = startIndex + catalogState.itemsPerPage;
+  const paginatedListings = filtered.slice(startIndex, endIndex);
 
-  // Render cards
-  renderCollectionCards(paginated, 'catalog-cards');
-
-  // Update counts
-  updateCatalogCounts(filtered.length, start, end);
+  // Render paginated cards
+  renderCollectionCards(paginatedListings, 'catalog-cards');
 
   // Render pagination
-  renderCatalogPagination(filtered.length);
-}
+  const totalPages = Math.ceil(filtered.length / catalogState.itemsPerPage);
+  renderPagination({
+    containerId: 'catalog-pagination',
+    currentPage: catalogState.page,
+    totalPages,
+    onPageChange: (page: number) => {
+      catalogState.page = page;
+      applyCatalogFilters();
 
-/**
- * Update catalog counts
- */
-function updateCatalogCounts(total: number, start: number, end: number): void {
-  const catalogTotal = document.getElementById('catalog-total');
-  const catalogShowingStart = document.getElementById('catalog-showing-start');
-  const catalogShowingEnd = document.getElementById('catalog-showing-end');
-
-  if (catalogTotal) catalogTotal.textContent = total.toLocaleString();
-  if (catalogShowingStart) catalogShowingStart.textContent = total > 0 ? (start + 1).toString() : '0';
-  if (catalogShowingEnd) catalogShowingEnd.textContent = Math.min(end, total).toString();
-}
-
-/**
- * Render catalog pagination
- */
-function renderCatalogPagination(total: number): void {
-  const paginationContainer = document.getElementById('catalog-pagination');
-  if (!paginationContainer) return;
-
-  const totalPages = Math.ceil(total / catalogState.limit);
-
-  if (totalPages <= 1) {
-    paginationContainer.innerHTML = '';
-    return;
-  }
-
-  const currentPage = catalogState.page;
-
-  let html = `
-    <div class="text-sm text-slate-600">
-      Page <span class="font-bold text-slate-900">${currentPage}</span> of
-      <span class="font-bold text-slate-900">${totalPages}</span>
-    </div>
-    <div class="flex items-center gap-2">
-  `;
-
-  // Previous button
-  html += `
-    <button
-      class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide ${currentPage === 1 ? 'cursor-not-allowed bg-slate-200 text-slate-400' : 'bg-white text-slate-900 hover:bg-slate-50'}"
-      style="border: 2px solid ${currentPage === 1 ? '#cbd5e1' : '#334155'}"
-      ${currentPage === 1 ? 'disabled' : ''}
-      data-catalog-page="${currentPage - 1}"
-    >
-      <i class="text-xs fa-solid fa-chevron-left"></i>
-      PREVIOUS
-    </button>
-  `;
-
-  // Page numbers
-  const maxVisible = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-  let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-
-  if (endPage - startPage < maxVisible - 1) {
-    startPage = Math.max(1, endPage - maxVisible + 1);
-  }
-
-  if (startPage > 1) {
-    html += `
-      <button class="px-6 py-3 text-xs font-bold tracking-wide bg-white text-slate-700 hover:bg-slate-50" style="border: 2px solid #334155" data-catalog-page="1">1</button>
-    `;
-    if (startPage > 2) {
-      html += `<span class="px-3 text-slate-500">...</span>`;
-    }
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    html += `
-      <button class="px-6 py-3 text-xs font-bold tracking-wide ${i === currentPage ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 hover:bg-slate-50'}" style="border: 2px solid ${i === currentPage ? '#1e293b' : '#334155'}" data-catalog-page="${i}">${i}</button>
-    `;
-  }
-
-  if (endPage < totalPages) {
-    if (endPage < totalPages - 1) {
-      html += `<span class="px-3 text-slate-500">...</span>`;
-    }
-    html += `
-      <button class="px-6 py-3 text-xs font-bold tracking-wide bg-white text-slate-700 hover:bg-slate-50" style="border: 2px solid #334155" data-catalog-page="${totalPages}">${totalPages}</button>
-    `;
-  }
-
-  // Next button
-  html += `
-    <button
-      class="inline-flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-wide ${currentPage === totalPages ? 'cursor-not-allowed bg-slate-200 text-slate-400' : 'bg-slate-900 text-white hover:bg-slate-800'}"
-      style="border: 2px solid ${currentPage === totalPages ? '#cbd5e1' : '#1e293b'}"
-      ${currentPage === totalPages ? 'disabled' : ''}
-      data-catalog-page="${currentPage + 1}"
-    >
-      NEXT
-      <i class="text-xs fa-solid fa-chevron-right"></i>
-    </button>
-  `;
-
-  html += `</div>`;
-
-  paginationContainer.innerHTML = html;
-
-  // Add event listeners
-  const pageButtons = paginationContainer.querySelectorAll<HTMLButtonElement>('button[data-catalog-page]');
-  pageButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const page = parseInt(button.getAttribute('data-catalog-page') || '1', 10);
-      if (page >= 1 && page <= totalPages) {
-        catalogState.page = page;
-        applyCatalogFilters();
-
-        // Scroll to catalog section
-        const catalogSection = document.getElementById('catalog-cards');
-        if (catalogSection) {
-          catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+      // Scroll to catalog section
+      const catalogSection = document.getElementById('catalog-cards');
+      if (catalogSection) {
+        catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    });
+    },
   });
 }
 

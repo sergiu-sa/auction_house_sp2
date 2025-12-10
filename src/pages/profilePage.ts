@@ -187,7 +187,7 @@ function renderProfileHero(
               src="${bannerUrl}"
               alt="Profile banner"
               class="h-full w-full object-cover"
-              loading="lazy"
+              fetchpriority="high"
               referrerpolicy="no-referrer"
             />`
               : ''
