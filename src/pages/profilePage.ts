@@ -10,6 +10,7 @@ import {
 } from '../api/profile';
 import type { Profile, Listing, Bid, UpdateProfileData } from '../types/api';
 import { formatDate, formatTimeRemaining } from '../utils/formatDate';
+import { isValidUrl } from '../utils/validation';
 import { showToast } from '../components/Toast';
 
 /**
@@ -821,17 +822,6 @@ async function handleProfileUpdate(username: string): Promise<void> {
   }
 }
 
-/**
- * Validate URL format
- */
-function isValidUrl(url: string): boolean {
-  try {
-    const urlObj = new URL(url);
-    return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
-  } catch {
-    return false;
-  }
-}
 
 /**
  * Show error message

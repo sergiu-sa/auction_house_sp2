@@ -1,4 +1,4 @@
-import { getToken, getUser, isAuthenticated, isTokenExpired } from './storage';
+import { getUser, isAuthenticated, isTokenExpired } from './storage';
 import { showSessionExpiredMessage } from './authLoader';
 import type { User } from '../types/api';
 
@@ -17,17 +17,6 @@ export function getCurrentUser(): User | null {
 }
 
 /**
- * Require authentication - redirect to login if not authenticated
- * @param redirectUrl - URL to redirect after login
- */
-export function requireAuth(redirectUrl?: string): void {
-  if (!isAuthenticated()) {
-    const redirect = redirectUrl || window.location.pathname;
-    window.location.href = `/login.html?redirect=${encodeURIComponent(redirect)}`;
-  }
-}
-
-/**
  * Redirect if already authenticated
  * @param defaultUrl - Default URL to redirect to
  */
@@ -39,22 +28,6 @@ export function redirectIfAuthenticated(
     const redirect = urlParams.get('redirect') || defaultUrl;
     window.location.href = redirect;
   }
-}
-
-/**
- * Get authentication token for API requests
- */
-export function getAuthToken(): string | null {
-  return getToken();
-}
-
-/**
- * Check if current user owns a resource
- * @param ownerName - Resource owner's username
- */
-export function isOwner(ownerName: string): boolean {
-  const user = getCurrentUser();
-  return user?.name === ownerName;
 }
 
 /**
@@ -107,16 +80,3 @@ export function requireOwnership(
   return true;
 }
 
-/**
- * Combined route guard for edit pages
- * Checks both authentication and ownership
- * @param ownerName - Resource owner's username
- * @returns boolean - true if authenticated and is owner, false if redirected
- */
-export function protectedOwnerRoute(ownerName: string): boolean {
-  if (!protectedRoute()) {
-    return false;
-  }
-
-  return requireOwnership(ownerName, '/profile.html');
-}

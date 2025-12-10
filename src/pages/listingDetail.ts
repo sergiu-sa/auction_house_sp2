@@ -5,6 +5,7 @@ import { getListing } from '../api/listings';
 import { placeBid } from '../api/bids';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { formatTimeRemaining, formatDate, formatDateShort, isAuctionActive, getTimeRemaining } from '../utils/formatDate';
+import { isValidBidAmount } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import {
   updatePageTitle,
@@ -69,6 +70,14 @@ async function init() {
     logError('Failed to load listing', error, { listingId });
     showError('Failed to load listing. Please try again later.');
   }
+
+  // Cleanup countdown interval when user navigates away
+  window.addEventListener('beforeunload', () => {
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+  });
 }
 
 /**
@@ -471,18 +480,17 @@ function initBidForm() {
     const user = getCurrentUser();
 
     // Validation
-    if (!bidAmount || bidAmount <= 0) {
-      showToast('Please enter a valid bid amount', 'error');
-      return;
-    }
-
     const currentBids = currentListing.bids || [];
     const highestBid = currentBids.length > 0
       ? Math.max(...currentBids.map(b => b.amount))
       : 0;
 
-    if (bidAmount <= highestBid) {
-      showToast(`Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(highestBid)} credits)`, 'error');
+    if (!isValidBidAmount(bidAmount, highestBid)) {
+      if (!bidAmount || bidAmount <= 0) {
+        showToast('Please enter a valid bid amount', 'error');
+      } else {
+        showToast(`Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(highestBid)} credits)`, 'error');
+      }
       return;
     }
 

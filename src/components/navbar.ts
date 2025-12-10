@@ -13,9 +13,13 @@ import {
 } from './filters';
 import type { User } from '../types/api';
 
+// Cache for user profile data with 30-second TTL
+let profileCache: { data: User; timestamp: number } | null = null;
+const CACHE_TTL = 30000; // 30 seconds
+
 /**
  * Render the header/navigation component
- * Fetches fresh user data to ensure credits are up to date
+ * Fetches fresh user data to ensure credits are up to date (with 30s cache)
  * Renders different navbar variants based on data-page-type attribute
  */
 export async function renderHeader(): Promise<void> {
@@ -28,27 +32,39 @@ export async function renderHeader(): Promise<void> {
   const isUserLoggedIn = isLoggedIn();
   let user = getCurrentUser();
 
-  // Fetch fresh user data if logged in to get updated credits
+  // Fetch fresh user data if logged in to get updated credits (with cache)
   if (isUserLoggedIn && user) {
-    try {
-      const profileResponse = await getProfile(user.name);
-      if (profileResponse.data) {
-        // Update stored user data with fresh profile data
-        const updatedUser = {
-          name: profileResponse.data.name,
-          email: profileResponse.data.email,
-          bio: profileResponse.data.bio,
-          avatar: profileResponse.data.avatar,
-          banner: profileResponse.data.banner,
-          credits: profileResponse.data.credits,
-          _count: profileResponse.data._count,
-        };
-        setUser(updatedUser);
-        user = updatedUser;
+    const now = Date.now();
+    const cacheValid = profileCache && (now - profileCache.timestamp) < CACHE_TTL;
+
+    if (cacheValid) {
+      // Use cached data
+      user = profileCache!.data;
+    } else {
+      // Fetch fresh data
+      try {
+        const profileResponse = await getProfile(user.name);
+        if (profileResponse.data) {
+          // Update stored user data with fresh profile data
+          const updatedUser = {
+            name: profileResponse.data.name,
+            email: profileResponse.data.email,
+            bio: profileResponse.data.bio,
+            avatar: profileResponse.data.avatar,
+            banner: profileResponse.data.banner,
+            credits: profileResponse.data.credits,
+            _count: profileResponse.data._count,
+          };
+          setUser(updatedUser);
+          user = updatedUser;
+
+          // Update cache
+          profileCache = { data: updatedUser, timestamp: now };
+        }
+      } catch (error) {
+        // If fetch fails, continue with cached user data
+        console.error('Failed to fetch fresh user data:', error);
       }
-    } catch (error) {
-      // If fetch fails, continue with cached user data
-      console.error('Failed to fetch fresh user data:', error);
     }
   }
 
