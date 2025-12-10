@@ -176,24 +176,17 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
     const user = getCurrentUser();
     if (!user) return null;
 
-    console.log('Featured win: Fetching user wins for', user.name);
-
     // Try to get user's most recent win first
     const winsResponse = await getProfileWins(user.name);
-
-    console.log('Featured win: User wins count:', winsResponse.data?.length || 0);
 
     if (winsResponse.data && winsResponse.data.length > 0) {
       // Get the most recent win
       const mostRecentWin = winsResponse.data[0];
       const winData = convertListingToFeaturedWin(mostRecentWin, user.name);
       if (winData) {
-        console.log('Featured win: Showing user win');
         return winData;
       }
     }
-
-    console.log('Featured win: No user wins, fetching platform auctions');
 
     // If user has no wins, fetch recently ended auctions from the platform
     const listingsResponse = await getListings({
@@ -204,10 +197,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
       _seller: true
     });
 
-    console.log('Featured win: Platform listings count:', listingsResponse.data?.length || 0);
-
     if (!listingsResponse.data || listingsResponse.data.length === 0) {
-      console.log('Featured win: No platform listings');
       return null;
     }
 
@@ -219,11 +209,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
       return hasEnded && hasBids;
     });
 
-    console.log('Featured win: Ended auctions with bids:', endedAuctions.length);
-
     if (endedAuctions.length === 0) {
-      console.log('Featured win: No ended auctions, trying active auctions with bids');
-
       // Fallback: Find active auctions with bids as a showcase
       const activeAuctions = listingsResponse.data.filter(listing => {
         const isActive = new Date(listing.endsAt) > now;
@@ -231,10 +217,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
         return isActive && hasBids;
       });
 
-      console.log('Featured win: Active auctions with bids:', activeAuctions.length);
-
       if (activeAuctions.length === 0) {
-        console.log('Featured win: No auctions with bids found');
         return null;
       }
 
@@ -243,13 +226,11 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
         (b.bids?.length || 0) - (a.bids?.length || 0)
       )[0];
 
-      console.log('Featured win: Showing active auction:', mostPopular.title);
       return convertListingToFeaturedWin(mostPopular, user.name);
     }
 
     // Get the most recent ended auction
     const featuredListing = endedAuctions[0];
-    console.log('Featured win: Showing platform auction:', featuredListing.title);
     return convertListingToFeaturedWin(featuredListing, user.name);
 
   } catch (error) {
@@ -265,19 +246,15 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
 export async function initFeaturedWin(): Promise<void> {
   const container = document.getElementById('featured-win-container');
   if (!container) {
-    console.warn('Featured win container not found');
     return;
   }
 
   // Check if user is logged in
   const user = getCurrentUser();
   if (!user) {
-    console.log('Featured win: User not logged in, hiding component');
     container.innerHTML = ''; // Don't show for guests
     return;
   }
-
-  console.log('Featured win: Initializing for user:', user.name);
 
   // Show loading state
   container.innerHTML = `
@@ -291,15 +268,11 @@ export async function initFeaturedWin(): Promise<void> {
   // Fetch data
   const data = await fetchFeaturedWin();
 
-  console.log('Featured win: Data fetched:', data);
-
   if (!data) {
-    console.log('Featured win: No data available, hiding component');
     container.innerHTML = ''; // Hide if no data
     return;
   }
 
   // Render component
-  console.log('Featured win: Rendering with data');
   container.innerHTML = renderFeaturedWin(data);
 }

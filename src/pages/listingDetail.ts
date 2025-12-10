@@ -647,10 +647,6 @@ function renderTags(listing: Listing) {
     return;
   }
 
-  // Debug: Log tags to console
-  console.log('Listing tags:', listing.tags);
-  console.log('Tags section element:', tagsSection);
-
   // Check if tags exist and have items
   if (!listing.tags || listing.tags.length === 0) {
     // Show "No tags" message instead of hiding
@@ -663,7 +659,6 @@ function renderTags(listing: Listing) {
         No tags for this listing
       </div>
     `;
-    console.log('No tags found - showing empty state');
     return;
   }
 
@@ -684,7 +679,6 @@ function renderTags(listing: Listing) {
       `).join('')}
     </div>
   `;
-  console.log('Tags rendered successfully!');
 }
 
 /**
