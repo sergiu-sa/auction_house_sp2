@@ -82,9 +82,9 @@ export function createProductCard(listing: Listing): string {
       </div>
 
       <!-- Content -->
-      <div class="p-8">
+      <div class="p-4 sm:p-5">
         <!-- Header: Lot Number + Status Badge -->
-        <div class="mb-6 flex items-center justify-between pb-6" style="border-bottom: 2px solid #e2e8f0">
+        <div class="mb-3 flex items-center justify-between pb-3" style="border-bottom: 2px solid #e2e8f0">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">
             Lot ${listing.id.slice(-3)}
           </span>
@@ -94,33 +94,33 @@ export function createProductCard(listing: Listing): string {
         </div>
 
         <!-- Title -->
-        <h3 class="mb-4 text-3xl font-bold leading-tight text-slate-900">
+        <h3 class="mb-2 text-xl sm:text-2xl font-bold leading-tight text-slate-900 line-clamp-2">
           <a href="/listing.html?id=${listing.id}" class="hover:underline">
             ${listing.title}
           </a>
         </h3>
 
         <!-- Description -->
-        <p class="mb-8 text-sm font-normal leading-relaxed text-slate-600">
+        <p class="mb-4 text-xs sm:text-sm font-normal leading-relaxed text-slate-600 line-clamp-2">
           ${listing.description || 'No description provided.'}
         </p>
 
         <!-- Bid Info Box -->
-        <div class="mb-8 bg-slate-50 p-6" style="border: 2px solid #334155">
-          <div class="flex items-center justify-between">
+        <div class="mb-4 bg-slate-50 p-3 sm:p-4" style="border: 2px solid #334155">
+          <div class="flex items-center justify-between gap-2">
             <div>
-              <div class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">
+              <div class="mb-1 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500">
                 ${highestBid > 0 ? 'Current Bid' : 'Starting Bid'}
               </div>
-              <div class="text-3xl font-bold text-slate-900">
+              <div class="text-lg sm:text-xl font-bold text-slate-900">
                 ${formatCurrency(highestBid)}
               </div>
             </div>
             <div class="text-right">
-              <div class="mb-2 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">
+              <div class="mb-1 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500">
                 ${isActive ? 'Time Left' : 'Status'}
               </div>
-              <div class="text-2xl font-bold text-slate-900">
+              <div class="text-base sm:text-lg font-bold text-slate-900">
                 ${timeRemaining}
               </div>
             </div>
@@ -128,7 +128,7 @@ export function createProductCard(listing: Listing): string {
         </div>
 
         <!-- Footer: Bid count + Seller -->
-        <div class="mb-6 flex items-center justify-between text-xs text-slate-500">
+        <div class="mb-3 flex items-center justify-between text-xs text-slate-500">
           <span class="inline-flex items-center gap-1">
             <i class="fa-solid fa-gavel text-xs"></i>
             ${listing._count?.bids || 0} bid${(listing._count?.bids || 0) !== 1 ? 's' : ''}
@@ -138,7 +138,7 @@ export function createProductCard(listing: Listing): string {
 
         <!-- CTA Button -->
         <button
-          class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
+          class="w-full bg-slate-900 py-3 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
           style="border: 3px solid #1e293b"
           data-action="place-bid"
           data-listing-id="${listing.id}"
@@ -228,25 +228,24 @@ export function createProductCardSkeleton(): string {
   return `
     <div class="bg-white animate-pulse" style="border: 3px solid #1e293b">
       <div class="aspect-square bg-slate-200" style="border-bottom: 3px solid #1e293b"></div>
-      <div class="p-8">
-        <div class="mb-6 flex items-center justify-between pb-6" style="border-bottom: 2px solid #e2e8f0">
+      <div class="p-4 sm:p-5">
+        <div class="mb-3 flex items-center justify-between pb-3" style="border-bottom: 2px solid #e2e8f0">
           <div class="h-3 bg-slate-200 rounded w-16"></div>
           <div class="h-3 bg-slate-200 rounded w-12"></div>
         </div>
-        <div class="h-8 bg-slate-200 rounded mb-4"></div>
-        <div class="h-4 bg-slate-200 rounded mb-2"></div>
-        <div class="h-4 bg-slate-200 rounded mb-8 w-3/4"></div>
-        <div class="mb-8 bg-slate-50 p-6" style="border: 2px solid #334155">
+        <div class="h-6 bg-slate-200 rounded mb-2"></div>
+        <div class="h-4 bg-slate-200 rounded mb-4 w-3/4"></div>
+        <div class="mb-4 bg-slate-50 p-3 sm:p-4" style="border: 2px solid #334155">
           <div class="flex justify-between">
-            <div class="h-12 bg-slate-200 rounded w-24"></div>
-            <div class="h-12 bg-slate-200 rounded w-24"></div>
+            <div class="h-10 bg-slate-200 rounded w-24"></div>
+            <div class="h-10 bg-slate-200 rounded w-24"></div>
           </div>
         </div>
-        <div class="mb-6 flex justify-between">
+        <div class="mb-3 flex justify-between">
           <div class="h-3 bg-slate-200 rounded w-16"></div>
           <div class="h-3 bg-slate-200 rounded w-20"></div>
         </div>
-        <div class="h-12 bg-slate-200 rounded"></div>
+        <div class="h-10 bg-slate-200 rounded"></div>
       </div>
     </div>
   `;

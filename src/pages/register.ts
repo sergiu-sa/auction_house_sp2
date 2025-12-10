@@ -7,6 +7,7 @@ import {
   clearFieldError,
   clearFormErrors,
 } from '../utils/validation';
+import { formatTimeRemaining } from '../utils/formatDate';
 import { toast } from '../components/Toast';
 import { renderHeader } from '../components/navbar';
 import { renderFooter } from '../components/Footer';
@@ -209,29 +210,11 @@ function updateSmallTile(listing: Listing, tileId: string): void {
   const metaElement = article.querySelector('.text-\\[11px\\].text-slate-600') as HTMLElement;
   if (metaElement && listing.bids && listing.endsAt) {
     const bidCount = listing.bids.length;
-    const timeLeft = getTimeRemaining(listing.endsAt);
+    const timeLeft = formatTimeRemaining(listing.endsAt);
     metaElement.textContent = `${bidCount} ${bidCount === 1 ? 'bid' : 'bids'} • ${timeLeft}`;
   }
 }
 
-/**
- * Calculate time remaining until listing ends
- */
-function getTimeRemaining(endsAt: string): string {
-  const now = new Date();
-  const end = new Date(endsAt);
-  const diff = end.getTime() - now.getTime();
-
-  if (diff <= 0) return 'Ended';
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-  if (days > 0) return `${days}d ${hours}h`;
-  if (hours > 0) return `${hours}h ${minutes}m`;
-  return `${minutes}m`;
-}
 
 /**
  * Validate name field

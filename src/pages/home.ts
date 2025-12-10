@@ -8,6 +8,7 @@ import { renderPagination } from '../components/PaginationComponent';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
+import { addStructuredData, generateWebsiteStructuredData, generateOrganizationStructuredData } from '../utils/seo';
 import type { Listing } from '../types/api';
 import {
   renderSearchField,
@@ -231,6 +232,10 @@ async function initHomePage(): Promise<void> {
   await renderHeader();
   renderFooter();
 
+  // Add structured data for SEO
+  addStructuredData(generateWebsiteStructuredData());
+  addStructuredData(generateOrganizationStructuredData());
+
   // Show login required message for create listing button if not logged in
   setupCreateListingButton();
 
@@ -267,9 +272,9 @@ function setupCreateListingButton(): void {
  */
 async function loadAllData(): Promise<void> {
   try {
-    // Fetch all listings
+    // Fetch listings (reduced from 100 to 50 for better initial load performance)
     const response = await getListings({
-      limit: 100,
+      limit: 50,
       _seller: true,
       _bids: true,
       sort: 'created',

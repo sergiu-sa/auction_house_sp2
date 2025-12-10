@@ -162,9 +162,9 @@ async function loadListings(): Promise<void> {
     // Show loading skeletons
     showCollectionCardSkeletons(24, 'collection-cards-grid');
 
-    // Fetch listings with filters
+    // Fetch listings with filters (reduced from 100 to 50 for better performance)
     const response = await getListings({
-      limit: 100, // Get more listings for client-side filtering
+      limit: 50,
       _seller: true,
       _bids: true,
       sort: currentFilters.sort,

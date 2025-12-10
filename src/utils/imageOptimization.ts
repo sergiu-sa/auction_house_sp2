@@ -50,27 +50,3 @@ export function generateResponsiveImageAttrs(
   };
 }
 
-/**
- * Convert image attributes object to HTML string
- *
- * @param attrs - Image attributes object
- * @returns HTML attribute string
- */
-export function imageAttrsToString(attrs: ReturnType<typeof generateResponsiveImageAttrs>): string {
-  return Object.entries(attrs)
-    .filter(([_, value]) => value !== undefined)
-    .map(([key, value]) => `${key}="${value}"`)
-    .join(' ');
-}
-
-/**
- * Check if an image URL is from a placeholder service
- *
- * @param url - Image URL
- * @returns True if placeholder
- */
-export function isPlaceholderImage(url: string): boolean {
-  return url.includes('placeholder.com') ||
-         url.includes('via.placeholder') ||
-         url.includes('placehold');
-}

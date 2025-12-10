@@ -78,12 +78,3 @@ export async function deleteListing(id: string): Promise<void> {
   return api.delete<void>(`/auction/listings/${id}`);
 }
 
-/**
- * Search listings by title or description
- * @param searchTerm - Search term
- */
-export async function searchListings(
-  searchTerm: string
-): Promise<ApiResponse<Listing[]>> {
-  return getListings({ search: searchTerm, _seller: true, _bids: true });
-}
