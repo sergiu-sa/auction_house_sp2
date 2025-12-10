@@ -140,7 +140,7 @@ auction_house_sp2/
 
 ### Listings
 
-* Browse all listings 
+* Browse all listings
 * Search and filter functionality
 * Create new listings with images, title, description, and deadline
 * Edit and delete own listings
@@ -190,6 +190,7 @@ This project includes comprehensive unit tests using Vitest.
 
 * **76 tests** across 3 test suites
 * **100% pass rate**
+* **100% coverage** on tested utility functions
 
 **Test Files:**
 
@@ -209,13 +210,25 @@ npm run test:watch
 # Run with UI
 npm run test:ui
 
-# Run with coverage
+# Run with coverage report
 npm run test:coverage
 ```
 
+**View Coverage Report:**
+
+After running `npm run test:coverage`, open `coverage/index.html` in your browser for a detailed HTML report, or see [TEST_COVERAGE.md](./TEST_COVERAGE.md) for a summary.
 
 ---
 
 ## License
 
 Noroff School of Technology and Digital Media
+
+## Browser Compatibility
+
+This application is optimized for modern browsers and has been tested to work seamlessly on:
+
+**Desktop:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+  
+**Mobile:** iOS Safari 14+, Chrome Mobile 90+, Samsung Internet 15+
+
+**Note:** Internet Explorer 11 and other legacy browsers are not supported.

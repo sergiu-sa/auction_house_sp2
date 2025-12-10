@@ -8,6 +8,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    target: 'es2020', // Support for all modern browsers (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
+    minify: 'esbuild', // Use esbuild for faster builds with browser compatibility
+    cssMinify: true,
     rollupOptions: {
       input: {
         main: './index.html',
