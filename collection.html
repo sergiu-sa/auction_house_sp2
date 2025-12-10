@@ -32,6 +32,7 @@
     <meta name="theme-color" content="#1e293b" />
 
     <!-- Tailwind CSS -->
+    <link rel="preload" href="/src/styles/main.css" as="style" />
     <link rel="stylesheet" href="/src/styles/main.css" />
 
     <!-- Favicon -->
@@ -40,6 +41,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -54,6 +56,13 @@
     </noscript>
 
     <!-- Font Awesome -->
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -70,6 +79,14 @@
         referrerpolicy="no-referrer"
       />
     </noscript>
+    <style>
+      @font-face {
+        font-family: "Font Awesome 6 Free";
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+      }
+    </style>
   </head>
   <body class="antialiased bg-aucto-bg" data-page-type="browse">
     <!-- Skip Navigation Link -->

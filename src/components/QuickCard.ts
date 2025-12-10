@@ -3,6 +3,7 @@ import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { formatCurrency } from '../utils/formatCurrency';
 import { isLoggedIn } from '../utils/auth';
 import { toast } from './Toast';
+import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
 /**
  * Quick Card Component
@@ -26,6 +27,9 @@ export function createQuickCard(listing: Listing): string {
   const imageUrl = listing.media?.[0]?.url || 'https://via.placeholder.com/600x400?text=No+Image';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
 
+  // Generate responsive image attributes
+  const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'compact');
+
   // Get seller username
   const sellerName = listing.seller?.name || 'Unknown';
 
@@ -35,10 +39,14 @@ export function createQuickCard(listing: Listing): string {
       <div class="h-48 bg-slate-100" style="border-bottom: 3px solid #1e293b">
         <a href="/listing.html?id=${listing.id}" class="block h-full">
           <img
-            src="${imageUrl}"
-            alt="${imageAlt}"
+            src="${imgAttrs.src}"
+            alt="${imgAttrs.alt}"
+            width="${imgAttrs.width}"
+            height="${imgAttrs.height}"
+            sizes="${imgAttrs.sizes}"
+            loading="${imgAttrs.loading}"
+            decoding="${imgAttrs.decoding}"
             class="h-full w-full object-cover"
-            loading="lazy"
             referrerpolicy="no-referrer"
           />
         </a>

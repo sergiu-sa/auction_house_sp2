@@ -18,6 +18,7 @@ import { APP_BASE_URL } from '../utils/constants';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
 import type { Listing } from '../types/api';
+import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
 // Current listing data
 let currentListing: Listing | null = null;
@@ -191,20 +192,34 @@ function renderMediaGallery(listing: Listing) {
   const mainImage = media[0];
   const thumbnails = media.slice(0, 4);
 
+  // Generate responsive attributes for main image
+  const mainImgAttrs = generateResponsiveImageAttrs(
+    mainImage.url,
+    mainImage.alt || listing.title,
+    'landscape'
+  );
+
   gallery.innerHTML = `
     <!-- Main image -->
     <div class="aspect-[4/3] bg-slate-100 mb-4 md:mb-6" style="border: 3px solid #1e293b">
       <img
         id="main-image"
-        src="${mainImage.url}"
-        alt="${mainImage.alt || listing.title}"
+        src="${mainImgAttrs.src}"
+        alt="${mainImgAttrs.alt}"
+        width="${mainImgAttrs.width}"
+        height="${mainImgAttrs.height}"
+        sizes="${mainImgAttrs.sizes}"
+        loading="eager"
+        decoding="${mainImgAttrs.decoding}"
         class="h-full w-full object-cover"
       />
     </div>
 
     <!-- Thumbnails -->
     <div class="grid grid-cols-4 gap-3">
-      ${thumbnails.map((img, index) => `
+      ${thumbnails.map((img, index) => {
+        const thumbAttrs = generateResponsiveImageAttrs(img.url, img.alt || `View ${index + 1}`, 'square');
+        return `
         <button
           class="aspect-square bg-slate-100 thumbnail-btn ${index === 0 ? 'opacity-100' : 'opacity-75'} hover:opacity-100 transition"
           style="border: ${index === 0 ? '3px' : '2px'} solid ${index === 0 ? '#1e293b' : '#475569'}"
@@ -213,12 +228,17 @@ function renderMediaGallery(listing: Listing) {
           data-index="${index}"
         >
           <img
-            src="${img.url}"
-            alt="${img.alt || `View ${index + 1}`}"
+            src="${thumbAttrs.src}"
+            alt="${thumbAttrs.alt}"
+            width="${thumbAttrs.width}"
+            height="${thumbAttrs.height}"
+            loading="lazy"
+            decoding="${thumbAttrs.decoding}"
             class="h-full w-full object-cover"
           />
         </button>
-      `).join('')}
+      `;
+      }).join('')}
       ${media.length > 4 ? `
         <button
           class="aspect-square bg-slate-100 opacity-75 hover:opacity-100 transition"
@@ -738,13 +758,22 @@ function renderSellerProfile(listing: Listing) {
     return;
   }
 
+  // Generate avatar image attributes if avatar exists
+  const avatarAttrs = seller.avatar?.url
+    ? generateResponsiveImageAttrs(seller.avatar.url, seller.name, 'square')
+    : null;
+
   profile.innerHTML = `
     <div class="mb-6 flex items-center gap-4 pb-6" style="border-bottom: 2px solid #e2e8f0">
       <div class="h-16 w-16 bg-slate-100 flex-shrink-0" style="border: 2px solid #1e293b">
-        ${seller.avatar?.url ? `
+        ${avatarAttrs ? `
           <img
-            src="${seller.avatar.url}"
-            alt="${seller.name}"
+            src="${avatarAttrs.src}"
+            alt="${avatarAttrs.alt}"
+            width="64"
+            height="64"
+            loading="lazy"
+            decoding="${avatarAttrs.decoding}"
             class="h-full w-full object-cover"
           />
         ` : `

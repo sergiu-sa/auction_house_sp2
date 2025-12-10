@@ -1,5 +1,6 @@
 import type { Listing } from '../types/api';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
+import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
 /**
  * Collection Card Component
@@ -22,6 +23,9 @@ export function createCollectionCard(listing: Listing): string {
 
   const imageUrl = listing.media?.[0]?.url || 'https://via.placeholder.com/500x500?text=No+Image';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
+
+  // Generate responsive image attributes
+  const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'square');
 
   // Extract tag for category badge (use first tag or default)
   const tag = listing.tags?.[0] || 'General';
@@ -72,10 +76,14 @@ export function createCollectionCard(listing: Listing): string {
         <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 2px solid #1e293b">
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
-              src="${imageUrl}"
-              alt="${imageAlt}"
+              src="${imgAttrs.src}"
+              alt="${imgAttrs.alt}"
+              width="${imgAttrs.width}"
+              height="${imgAttrs.height}"
+              sizes="${imgAttrs.sizes}"
+              loading="${imgAttrs.loading}"
+              decoding="${imgAttrs.decoding}"
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-              loading="lazy"
             />
           </a>
 
