@@ -192,20 +192,6 @@ function renderProfileHero(
             />`
               : ''
           }
-
-          <!-- Follow button (only show for other users' profiles) -->
-          ${
-            !isOwnProfile
-              ? `<button
-            id="follow-btn"
-            class="absolute left-6 bottom-4 bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2 transition-all hover:scale-105"
-            style="border: 2px solid #1e293b"
-          >
-            <i class="fa-solid fa-user-plus text-sm"></i>
-            <span>Follow</span>
-          </button>`
-              : ''
-          }
         </div>
 
         <!-- Content row with avatar, info, and buttons -->
