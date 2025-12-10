@@ -69,6 +69,7 @@ export function createProductCard(listing: Listing): string {
         <a href="/listing.html?id=${listing.id}" class="block h-full">
           <img
             src="${imgAttrs.src}"
+            ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
             alt="${imgAttrs.alt}"
             width="${imgAttrs.width}"
             height="${imgAttrs.height}"
