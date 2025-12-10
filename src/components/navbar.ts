@@ -382,12 +382,12 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         <button
           id="mobile-menu-btn"
           type="button"
-          class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
+          class="lg:hidden flex items-center justify-center bg-slate-900 px-2.5 py-2 hover:bg-slate-800"
           style="border: 2px solid #1e293b"
           aria-expanded="false"
           aria-label="Toggle menu"
         >
-          <i class="fa-solid fa-bars text-white text-lg"></i>
+          <i class="fa-solid fa-bars text-white text-base"></i>
         </button>
       `
           : `
@@ -401,9 +401,11 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           <i class="fa-solid fa-right-to-bracket text-sm" aria-hidden="true"></i>
           Log in
         </a>
+
+        <!-- DESKTOP: Create Account Button -->
         <a
           href="/register.html"
-          class="bg-slate-900 px-4 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
+          class="hidden lg:inline-flex items-center gap-2 bg-slate-900 px-5 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800"
           style="border: 2px solid #1e293b"
           aria-label="Create new account"
         >
@@ -411,16 +413,27 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           Create account
         </a>
 
+        <!-- TABLET: Create Account Button -->
+        <a
+          href="/register.html"
+          class="hidden sm:inline-flex lg:hidden items-center gap-1.5 bg-slate-900 px-3 py-2 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
+          style="border: 2px solid #1e293b"
+          aria-label="Create new account"
+        >
+          <i class="fa-solid fa-user-plus text-xs" aria-hidden="true"></i>
+          <span>Sign up</span>
+        </a>
+
         <!-- MOBILE: Hamburger Menu Button for guests (< 1024px) -->
         <button
           id="mobile-menu-btn"
           type="button"
-          class="lg:hidden flex items-center justify-center bg-slate-900 px-3 py-2 hover:bg-slate-800"
+          class="lg:hidden flex items-center justify-center bg-slate-900 px-2.5 py-2 hover:bg-slate-800"
           style="border: 2px solid #1e293b"
           aria-expanded="false"
           aria-label="Toggle menu"
         >
-          <i class="fa-solid fa-bars text-white text-lg"></i>
+          <i class="fa-solid fa-bars text-white text-base"></i>
         </button>
       `
       }
@@ -649,6 +662,11 @@ function initHeaderEvents(pageType: string): void {
  * Initialize events specific to browse pages (search, filters)
  */
 function initBrowsePageEvents(): void {
+  // Get filter elements
+  const filtersBar = document.getElementById('advanced-filters-bar');
+  const mobileToggleFilters = document.getElementById('mobile-toggle-filters');
+  const mobileFiltersChevron = document.getElementById('mobile-filters-chevron');
+
   // Mobile search toggle
   const mobileSearchBtn = document.getElementById('mobile-search-btn');
   const mobileSearchBar = document.getElementById('mobile-search-bar');
@@ -658,6 +676,17 @@ function initBrowsePageEvents(): void {
       mobileSearchBar.classList.toggle('hidden');
       const isExpanded = !mobileSearchBar.classList.contains('hidden');
       mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
+
+      // Close filters when closing search bar
+      if (!isExpanded && filtersBar && !filtersBar.classList.contains('hidden')) {
+        filtersBar.classList.add('hidden');
+        if (mobileToggleFilters) {
+          mobileToggleFilters.setAttribute('aria-expanded', 'false');
+        }
+        if (mobileFiltersChevron) {
+          mobileFiltersChevron.classList.remove('rotate-180');
+        }
+      }
 
       if (isExpanded) {
         const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
@@ -684,7 +713,6 @@ function initBrowsePageEvents(): void {
 
   // Desktop advanced filters toggle
   const toggleFiltersBtn = document.getElementById('toggle-advanced-filters');
-  const filtersBar = document.getElementById('advanced-filters-bar');
   const filtersChevron = document.getElementById('filters-chevron');
 
   if (toggleFiltersBtn && filtersBar) {
@@ -700,9 +728,6 @@ function initBrowsePageEvents(): void {
   }
 
   // Mobile filter toggle
-  const mobileToggleFilters = document.getElementById('mobile-toggle-filters');
-  const mobileFiltersChevron = document.getElementById('mobile-filters-chevron');
-
   if (mobileToggleFilters && filtersBar) {
     mobileToggleFilters.addEventListener('click', () => {
       const isOpen = !filtersBar.classList.contains('hidden');
