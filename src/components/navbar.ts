@@ -348,7 +348,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           ? `
         <!-- Logged In User -->
         <!-- Credits Box -->
-        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 2px solid #1e293b" aria-label="User credits">
+        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 3px solid #1e293b" aria-label="User credits">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
           <span class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
         </div>
