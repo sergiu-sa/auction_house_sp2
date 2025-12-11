@@ -353,45 +353,74 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           <span class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
         </div>
 
-        <!-- DESKTOP: Profile Button -->
-        <button
-          id="profile-menu-btn"
-          class="hidden lg:flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
-          style="border: 2px solid #1e293b"
-          aria-expanded="false"
-          aria-haspopup="true"
-          aria-label="Open profile menu"
-        >
-          ${
-            user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
-              : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
-          }
-          <span class="text-sm font-bold text-slate-900">${user.name}</span>
-        </button>
-
-        <!-- DESKTOP: Profile Dropdown Menu -->
-        <div
-          id="profile-dropdown-menu"
-          class="hidden absolute right-6 mt-2 w-48 bg-white shadow-lg z-50"
-          style="border: 2px solid #1e293b; top: 60px;"
-          role="menu"
-          aria-label="Profile menu"
-        >
-          <a href="/profile.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50" role="menuitem">
-            <i class="fa-solid fa-user w-5" aria-hidden="true"></i> My Profile
-          </a>
-          <a href="/listing-create.html" class="block px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t" style="border-color: #e2e8f0" role="menuitem">
-            <i class="fa-solid fa-plus w-5" aria-hidden="true"></i> Create Listing
-          </a>
+        <!-- DESKTOP: Profile Button  -->
+        <div class="hidden lg:block relative">
           <button
-            id="logout-btn"
-            class="w-full text-left px-4 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50 border-t"
-            style="border-color: #e2e8f0"
-            role="menuitem"
+            id="profile-menu-btn"
+            class="flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50 transition-colors"
+            style="border: 3px solid #1e293b"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-label="Open profile menu"
           >
-            <i class="fa-solid fa-sign-out-alt w-5" aria-hidden="true"></i> Logout
+            ${
+              user.avatar?.url
+                ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
+                : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
+            }
+            <span class="text-sm font-bold text-slate-900">${user.name}</span>
+            <i class="fa-solid fa-chevron-down text-xs text-slate-500 transition-transform" id="profile-menu-chevron" aria-hidden="true"></i>
           </button>
+
+          <!-- DESKTOP: Profile Dropdown Menu (positioned relative to button) -->
+          <div
+            id="profile-dropdown-menu"
+            class="hidden absolute right-0 mt-2 w-56 bg-white shadow-2xl z-50 transform origin-top-right transition-all"
+            style="border: 3px solid #1e293b"
+            role="menu"
+            aria-label="Profile menu"
+          >
+            <!-- User info header -->
+            <div class="px-4 py-3 bg-slate-50" style="border-bottom: 2px solid #e2e8f0">
+              <div class="flex items-center gap-3">
+                ${
+                  user.avatar?.url
+                    ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
+                    : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
+                }
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-bold text-slate-900 truncate">${user.name}</p>
+                  <p class="text-[11px] text-slate-500 truncate">${user.email || ''}</p>
+                </div>
+              </div>
+              <!-- Credits display -->
+              <div class="mt-2 flex items-center justify-between px-2 py-1.5 bg-white" style="border: 2px solid #cbd5e1">
+                <span class="text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
+                <span class="text-sm font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
+              </div>
+            </div>
+
+            <!-- Menu items -->
+            <div class="py-1">
+              <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors" role="menuitem">
+                <i class="fa-solid fa-user w-5 text-slate-600" aria-hidden="true"></i>
+                <span>My Profile</span>
+              </a>
+              <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors border-t" style="border-color: #e2e8f0" role="menuitem">
+                <i class="fa-solid fa-plus w-5 text-slate-600" aria-hidden="true"></i>
+                <span>Create Listing</span>
+              </a>
+              <button
+                id="logout-btn"
+                class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 transition-colors border-t"
+                style="border-color: #e2e8f0"
+                role="menuitem"
+              >
+                <i class="fa-solid fa-sign-out-alt w-5" aria-hidden="true"></i>
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- MOBILE: Hamburger Menu Button (< 1024px) -->
@@ -634,6 +663,7 @@ function initHeaderEvents(pageType: string): void {
   // Desktop profile menu toggle
   const profileMenuBtn = document.getElementById('profile-menu-btn');
   const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
+  const profileMenuChevron = document.getElementById('profile-menu-chevron');
 
   if (profileMenuBtn && profileDropdownMenu) {
     profileMenuBtn.addEventListener('click', (e) => {
@@ -641,6 +671,15 @@ function initHeaderEvents(pageType: string): void {
       const isOpen = !profileDropdownMenu.classList.contains('hidden');
       profileDropdownMenu.classList.toggle('hidden');
       profileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+
+      // Rotate chevron icon
+      if (profileMenuChevron) {
+        if (isOpen) {
+          profileMenuChevron.classList.remove('rotate-180');
+        } else {
+          profileMenuChevron.classList.add('rotate-180');
+        }
+      }
     });
 
     // Close dropdown when clicking outside
@@ -648,6 +687,11 @@ function initHeaderEvents(pageType: string): void {
       if (!profileDropdownMenu.classList.contains('hidden')) {
         profileDropdownMenu.classList.add('hidden');
         profileMenuBtn.setAttribute('aria-expanded', 'false');
+
+        // Reset chevron rotation
+        if (profileMenuChevron) {
+          profileMenuChevron.classList.remove('rotate-180');
+        }
       }
     });
   }
