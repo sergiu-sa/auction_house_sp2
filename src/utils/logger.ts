@@ -60,10 +60,7 @@ export function logError(message: string, error?: Error | unknown, context?: Rec
   if (config.environment === 'development') {
     console.error(formatMessage(LogLevel.ERROR, message, fullContext));
   } else {
-    // In production, send to error tracking service
     console.error(formatMessage(LogLevel.ERROR, message, fullContext));
-    // TODO: Integrate with error tracking service (e.g., Sentry)
-    // Sentry.captureException(error, { extra: context });
   }
 }
 
