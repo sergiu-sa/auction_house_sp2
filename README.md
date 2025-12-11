@@ -1,46 +1,109 @@
+# Aucto - Auction Platform
 
-# Auction House
+![Aucto Banner](https://img.shields.io/badge/Noroff-Semester_Project_2-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=fff) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)
 
-A modern front-end application for an online auction platform built with Vite, vanilla TypeScript, and Tailwind CSS. This project is part of the Semester Project 2 for Front-end Development 2 at Noroff.
-
-## About
-
-AUCTO is an auction house platform where users can list items for auction, place bids, and manage their profiles. Built using vanilla TypeScript and modern web development practices, the application integrates with the Noroff Auction API v2.
-
-## Project Resources
-
-* [Figma Design File](https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1)
-* [GitHub Repository](https://github.com/sergiu-sa/auction_house_sp2.git)
-* [GitHub Project / Kanban Board](https://github.com/users/sergiu-sa/projects/12)
-* [Live Deployment - AUCTO](https://auctohouse.netlify.app/)
+This project is part of the Semester Project 2 for Front-end Development 2 at Noroff School of Technology and Digital Media.
 
 ---
 
-## Project Setup
+## About
+
+**Aucto** is a feature-rich online auction platform where users can list items for bidding, place bids on other users' listings, and manage their auction activities. The platform features a distinctive brutalist design aesthetic with bold typography, strong borders, and a focus on functionality.
+
+### Key Highlights
+
+- **Restricted Registration**: Only users with `@stud.noroff.no` email addresses can register
+- **Credit System**: Users receive starter credits (1000) upon registration for bidding
+- **Real-time Bidding**: Place bids on active listings with instant updates
+- **Profile Management**: Customize avatar, banner, and bio
+- **Responsive Design**: Optimized for all devices (mobile, tablet, desktop)
+- **Accessibility**: Built with WCAG guidelines and universal design principles
+
+### Project Resources
+
+- **Live Site**: [https://auctohouse.netlify.app/](https://auctohouse.netlify.app/)
+- **GitHub Repository**: [https://github.com/sergiu-sa/auction_house_sp2.git](https://github.com/sergiu-sa/auction_house_sp2.git)
+- **Figma Design**: [View Design](https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1)
+- **Project Board**: [GitHub Projects](https://github.com/users/sergiu-sa/projects/12)
+
+---
+
+## Built With
+
+### Core Technologies
+
+- **[Vite](https://vitejs.dev/)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Tailwind CSS](https://tailwindcss.com/)**
+- **[Noroff API v2](https://docs.noroff.dev/docs/v2)**
+
+### Development Tools
+
+- **ESLint** (v9.39.1) - Code linting and quality
+- **Prettier** (v3.6.2) - Code formatting
+- **PostCSS** (v8.5.6) - CSS processing
+- **Vitest** (v4.0.13) - Unit testing framework
+
+### Hosting & Deployment
+
+- **[Netlify](https://www.netlify.com/)**
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-* Node.js v18+
-* npm or yarn
+- **Node.js** v18 or higher
+- **npm** or **yarn** package manager
+- **Git** for version control
 
 ### Installation
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/sergiu-sa/auction_house_sp2.git
+cd auction_house_sp2
+```
+
+2 **Install dependencies**
 
 ```bash
 npm install
 ```
 
+3 **Set up environment variables**
+
+Create a `.env` file in the root directory (use `.env.example` as template):
+
+```bash
+VITE_API_BASE_URL=https://v2.api.noroff.dev
+VITE_API_KEY=your_api_key_here
+```
+
 ### Development
+
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Starts at `http://localhost:5173`
+The application will be available at `http://localhost:5173`
 
-### Build
+### Build for Production
 
 ```bash
 npm run build
+```
+
+This creates an optimized production build in the `dist/` directory.
+
+### Preview Production Build
+
+```bash
+npm run preview
 ```
 
 ### Type Checking
@@ -49,156 +112,163 @@ npm run build
 npm run type-check
 ```
 
-### Preview Build
-
-```bash
-npm run preview
-```
-
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```bash
 auction_house_sp2/
-├── public/
-│   └── images/
+├── public/                      # Static assets
+│   └── images/                  # Image assets
 │
-├── src/
-│   ├── api/
-│   │   ├── auth.ts
-│   │   ├── listings.ts
-│   │   ├── bids.ts
-│   │   ├── profile.ts
-│   │   └── config.ts
+├── src/                         # Source code
+│   ├── api/                     # API client modules
+│   │   ├── auth.ts              # Authentication endpoints
+│   │   ├── bids.ts              # Bidding endpoints
+│   │   ├── config.ts            # API configuration & client
+│   │   ├── listings.ts          # Listing endpoints
+│   │   └── profile.ts           # Profile endpoints
 │   │
-│   ├── components/
-│   │   ├── cards/
-│   │   ├── layout/
-│   │   └── ui/
+│   ├── components/              # Reusable UI components
+│   │   ├── Breadcrumb.ts        # Navigation breadcrumbs
+│   │   ├── CollectionCard.ts    # Listing card
+│   │   ├── Footer.ts            # Footer component
+│   │   ├── ProductCard.ts       # Featured product card
+│   │   ├── QuickCard.ts         # Quick action cards
+│   │   ├── Toast.ts             # Toast notifications
+│   │   ├── featuredWin.ts       # Featured winner display
+│   │   ├── filters/             # Filter components
+│   │   │   ├── ActiveOnlyCheckbox.ts
+│   │   │   ├── CategoryFilters.ts
+│   │   │   └── SortDropdown.ts
+│   │   ├── guestBanner.ts       # Guest user banner
+│   │   ├── navbar.ts            # Navigation bar
+│   │   ├── newsletter.ts        # Newsletter signup
+│   │   ├── PaginationComponent.ts # Pagination
+│   │   └── statsBar.ts          # Statistics display
 │   │
-│   ├── pages/
-│   │   ├── home.ts
-│   │   ├── login.ts
-│   │   ├── register.ts
-│   │   ├── profile.ts
-│   │   ├── collection.ts
-│   │   ├── listing.ts
-│   │   ├── create.ts
-│   │   └── edit.ts
+│   ├── pages/                   # Page-level components
+│   │   ├── collection.ts        # Browse all listings page
+│   │   ├── home.ts              # Homepage
+│   │   ├── listingCreate.ts     # Create listing page
+│   │   ├── listingDetail.ts     # Single listing page
+│   │   ├── listingEdit.ts       # Edit listing page
+│   │   ├── login.ts             # Login page
+│   │   ├── profilePage.ts       # User profile page
+│   │   └── register.ts          # Registration page
 │   │
-│   ├── utils/
-│   │   ├── auth.ts
-│   │   ├── storage.ts
-│   │   ├── validation.ts
-│   │   └── formatters.ts
+│   ├── styles/                  # Stylesheets
+│   │   └── main.css             # Main Tailwind CSS file
 │   │
-│   ├── types/
-│   │   ├── api.ts
-│   │   ├── listing.ts
-│   │   └── user.ts
+│   ├── types/                   # TypeScript type definitions
+│   │   └── api.ts               # API response types
 │   │
-│   ├── styles/
-│   │   └── main.css
+│   ├── utils/                   # Utility functions
+│   │   ├── auth.ts              # Auth helpers & route guards
+│   │   ├── authLoader.ts        # Auth loading states
+│   │   ├── errorHandling.ts     # Error handling utilities
+│   │   ├── formatDate.ts        # Date formatting
+│   │   ├── imageOptimization.ts # Image loading optimization
+│   │   ├── logger.ts            # Logging utility
+│   │   ├── seo.ts               # SEO meta tag utilities
+│   │   ├── storage.ts           # LocalStorage management
+│   │   └── validation.ts        # Form validation
 │   │
-│   └── main.ts
+│   └── main.ts                  # Application entry point
 │
-├── index.html
-├── login.html
-├── register.html
-├── profile.html
-├── collection.html
-├── listing.html
-├── create.html
-├── edit.html
+├── index.html                   # Homepage
+├── collection.html              # Browse listings page
+├── login.html                   # Login page
+├── register.html                # Registration page
+├── profile.html                 # User profile page
+├── listing.html                 # Single listing page
+├── listing-create.html          # Create listing page
+├── listing-edit.html            # Edit listing page
 │
-├── .env
-├── .gitignore
-├── package.json
-├── tsconfig.json
-├── tailwind.config.js
-├── vite.config.ts
-└── README.md
+├── .env                         # Environment variables (not in repo)
+├── .env.example                 # Environment variables template
+├── .gitignore                   # Git ignore rules
+├── netlify.toml                 # Netlify configuration
+├── package.json                 # Project dependencies
+├── tailwind.config.js           # Tailwind CSS configuration
+├── tsconfig.json                # TypeScript configuration
+├── vite.config.ts               # Vite configuration
+└── README.md                    # Project documentation
 ```
 
 ---
 
-## Features
+## User Guide
 
-### User Authentication
+### For Guest Users (Not Logged In)
 
-* Register with @stud.noroff.no email
-* Secure login/logout
-* Route protection for authenticated features
+ **You can**:
 
-### Profile Management
+- Browse all active listings
+- Search and filter listings
+- View detailed listing information
+- See bid history on listings
 
-* Edit profile (avatar, banner, bio)
-* View user credits
-* Track created listings
-* View bid history
+**You cannot**:
 
-### Listings
+- Place bids
+- Create listings
+- Manage profile
 
-* Browse all listings
-* Search and filter functionality
-* Create new listings with images, title, description, and deadline
-* Edit and delete own listings
-* View detailed listing information
-* Responsive card layouts
+### For Registered Users
 
-### Bidding
+#### Registration
 
-* Place bids on other users listings
-* View bid history
-* Real-time bid tracking
-* Credit-based bidding system;
+1. Navigate to the [Register page](https://auctohouse.netlify.app/register.html)
+2. Enter your full name
+3. Use your `@stud.noroff.no` email address
+4. Create a password (minimum 8 characters)
+5. Receive 1000 starter credits automatically
 
-### User Experience
+#### Creating a Listing
 
-* Responsive design (mobile and desktop)
-* Sticky navigation with filters
-* Toast notifications for user feedback
-* Breadcrumb navigation
-* Floating action buttons
-* Smooth animations and transitions
+1. Click **"Create Listing"** in the navigation
+2. Fill in the listing details:
+   - **Title**: Clear, descriptive title
+   - **Description**: Detailed item description
+   - **Images**: Add image URLs (one per line)
+   - **Tags**: Optional categories (comma-separated)
+   - **End Date**: Set auction deadline
+3. Click **"Create Listing"** to publish
 
----
+#### Placing a Bid
 
-## Technologies
+1. Browse to a listing detail page
+2. Enter your bid amount (must exceed current highest bid)
+3. Click **"Place Bid"**
+4. Credits are held until auction ends or you're outbid
 
-* **Vite** - Build tool and dev server
-* **TypeScript** - Type-safe JavaScript
-* **Tailwind CSS** - Utility-first CSS framework
-* **Noroff Auction API v2** - Backend API
+#### Managing Your Profile
 
----
-
-## API
-
-This project integrates with the [Noroff Auction API v2](https://docs.noroff.dev/docs/v2).
+1. Click your profile avatar in the navigation
+2. Select **"My Profile"** from dropdown
+3. Click **"Edit Profile"** to update:
+   - Avatar image URL
+   - Banner image URL
+   - Bio/description
 
 ---
 
 ## Testing
 
-### Automated Tests
+### Test Coverage
 
-This project includes comprehensive unit tests using Vitest.
+- **76 tests** across 3 test suites
+- **100% pass rate**
+- **100% coverage** on tested utility functions
 
-**Test Coverage:**
+### Test Files
 
-* **76 tests** across 3 test suites
-* **100% pass rate**
-* **100% coverage** on tested utility functions
+- `src/utils/validation.test.ts` - Email, URL, password, bid, and form validation (30 tests)
+- `src/utils/formatDate.test.ts` - Date formatting and time calculations (29 tests)
+- `src/utils/formatCurrency.test.ts` - Currency and number formatting (17 tests)
 
-**Test Files:**
-
-* `src/utils/validation.test.ts` - Email, URL, password, bid, and form validation (30 tests)
-* `src/utils/formatDate.test.ts` - Date formatting and time calculations (29 tests)
-* `src/utils/formatCurrency.test.ts` - Currency and number formatting (17 tests)
-
-**Run Tests:**
+### Running Tests
 
 ```bash
 # Run all tests
@@ -210,25 +280,76 @@ npm run test:watch
 # Run with UI
 npm run test:ui
 
-# Run with coverage report
+# Generate coverage report
 npm run test:coverage
 ```
 
-**View Coverage Report:**
-
-After running `npm run test:coverage`, open `coverage/index.html` in your browser for a detailed HTML report, or see [TEST_COVERAGE.md](./TEST_COVERAGE.md) for a summary.
+After running `npm run test:coverage`, open `coverage/index.html` in your browser for a detailed HTML report.
 
 ---
 
-## License
+## API Documentation
 
-Noroff School of Technology and Digital Media
+This project integrates with the [Noroff API v2](https://docs.noroff.dev/docs/v2).
+
+### API Endpoints Used
+
+**Authentication**:
+
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - Login user
+- `POST /auth/create-api-key` - Create API key
+
+**Auction Listings**:
+
+- `GET /auction/listings` - Get all listings
+- `GET /auction/listings/:id` - Get single listing
+- `POST /auction/listings` - Create listing
+- `PUT /auction/listings/:id` - Update listing
+- `DELETE /auction/listings/:id` - Delete listing
+
+**Bidding**:
+
+- `POST /auction/listings/:id/bids` - Place bid on listing
+
+**User Profiles**:
+
+- `GET /auction/profiles/:name` - Get user profile
+- `PUT /auction/profiles/:name` - Update profile
+- `GET /auction/profiles/:name/listings` - Get user's listings
+- `GET /auction/profiles/:name/bids` - Get user's bids
+
+### API Features Implemented
+
+- ✅ JWT token authentication
+- ✅ API key authorization
+- ✅ Error handling and user feedback
+- ✅ Request retry on failure
+- ✅ Session management
+- ✅ Token expiration handling
+
+---
 
 ## Browser Compatibility
 
-This application is optimized for modern browsers and has been tested to work seamlessly on:
+**Tested and optimized for**:
 
-**Desktop:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+  
-**Mobile:** iOS Safari 14+, Chrome Mobile 90+, Samsung Internet 15+
+- **Desktop**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- **Mobile**: iOS Safari 14+, Chrome Mobile 90+, Samsung Internet 15+
 
-**Note:** Internet Explorer 11 and other legacy browsers are not supported.
+**Note**: Internet Explorer and legacy browsers are not supported.
+
+---
+
+## Author
+
+**Sergiu D Sarbu**
+Front-end Development Student, Noroff
+
+## License
+
+© 2024 Noroff School of Technology and Digital Media
+
+This project is part of the Front-end Development 2 course curriculum.
+
+---
