@@ -372,7 +372,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
             <i class="fa-solid fa-chevron-down text-xs text-slate-500 transition-transform" id="profile-menu-chevron" aria-hidden="true"></i>
           </button>
 
-          <!-- DESKTOP: Profile Dropdown Menu (positioned relative to button) -->
+          <!-- DESKTOP: Profile Dropdown Menu  -->
           <div
             id="profile-dropdown-menu"
             class="hidden absolute right-0 mt-2 w-56 bg-white shadow-2xl z-50 transform origin-top-right transition-all"
@@ -380,26 +380,6 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
             role="menu"
             aria-label="Profile menu"
           >
-            <!-- User info header -->
-            <div class="px-4 py-3 bg-slate-50" style="border-bottom: 2px solid #e2e8f0">
-              <div class="flex items-center gap-3">
-                ${
-                  user.avatar?.url
-                    ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
-                    : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
-                }
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm font-bold text-slate-900 truncate">${user.name}</p>
-                  <p class="text-[11px] text-slate-500 truncate">${user.email || ''}</p>
-                </div>
-              </div>
-              <!-- Credits display -->
-              <div class="mt-2 flex items-center justify-between px-2 py-1.5 bg-white" style="border: 2px solid #cbd5e1">
-                <span class="text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
-                <span class="text-sm font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
-              </div>
-            </div>
-
             <!-- Menu items -->
             <div class="py-1">
               <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors" role="menuitem">
