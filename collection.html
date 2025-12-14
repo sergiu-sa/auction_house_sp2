@@ -79,14 +79,6 @@
         referrerpolicy="no-referrer"
       />
     </noscript>
-    <style>
-      @font-face {
-        font-family: "Font Awesome 6 Free";
-        font-style: normal;
-        font-weight: 900;
-        font-display: swap;
-      }
-    </style>
   </head>
   <body class="antialiased bg-aucto-bg" data-page-type="browse">
     <!-- Skip Navigation Link -->
@@ -199,9 +191,9 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
-            <!-- View Toggle -->
-            <div class="flex items-center gap-2">
-              <span class="hidden text-xs font-bold tracking-wider uppercase text-slate-500 sm:inline">
+            <!-- View Toggle (Hidden on mobile since grid/list look the same) -->
+            <div class="hidden sm:flex items-center gap-2">
+              <span class="hidden text-xs font-bold tracking-wider uppercase text-slate-500 md:inline">
                 View:
               </span>
               <button
@@ -218,7 +210,7 @@
                     d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                   />
                 </svg>
-                <span class="hidden sm:inline">Grid</span>
+                <span class="hidden md:inline">Grid</span>
               </button>
               <button
                 id="list-view-btn"
@@ -234,7 +226,7 @@
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
-                <span class="hidden sm:inline">List</span>
+                <span class="hidden md:inline">List</span>
               </button>
             </div>
           </div>
@@ -348,6 +340,6 @@
     <div id="footer"></div>
 
     <!-- Import main script -->
-    <script type="module" src="/src/pages/collection.ts"></script>
+    <script type="module" src="/src/pages/Collection.ts"></script>
   </body>
 </html>
