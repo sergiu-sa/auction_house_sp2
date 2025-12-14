@@ -1,7 +1,7 @@
 import { isLoggedIn } from '../utils/auth';
-import { renderNewsletter, initNewsletter } from './newsletter';
-import { initFeaturedWin } from './featuredWin';
-import { initStatsBar } from './statsBar';
+import { renderNewsletter, initNewsletter } from './Newsletter';
+import { initFeaturedWin } from './FeaturedWin';
+import { initStatsBar } from './StatsBar';
 
 /**
  * Render the footer component

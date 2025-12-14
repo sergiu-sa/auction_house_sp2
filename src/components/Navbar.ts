@@ -1,6 +1,6 @@
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
-import { renderGuestBanner } from './guestBanner';
+import { renderGuestBanner } from './GuestBanner';
 import { getProfile } from '../api/profile';
 import { setUser } from '../utils/storage';
 import {

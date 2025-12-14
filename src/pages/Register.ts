@@ -9,7 +9,7 @@ import {
 } from '../utils/validation';
 import { formatTimeRemaining } from '../utils/formatDate';
 import { toast } from '../components/Toast';
-import { renderHeader } from '../components/navbar';
+import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
 import { getListings } from '../api/listings';

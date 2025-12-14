@@ -10,9 +10,10 @@ import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 /**
  * Create a single Collection Card
  * @param listing - The listing data
+ * @param viewMode - 'grid' or 'list' view mode
  * @returns HTML string for the collection card
  */
-export function createCollectionCard(listing: Listing): string {
+export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list' = 'grid'): string {
   const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
@@ -65,15 +66,134 @@ export function createCollectionCard(listing: Listing): string {
     }
   };
 
+  // List view layout
+  if (viewMode === 'list') {
+    return `
+      <article
+        class="bg-white transition-all duration-300 hover:shadow-xl group relative flex flex-col sm:flex-row"
+        style="border: 3px solid #1e293b"
+        data-listing-id="${listing.id}"
+      >
+        <!-- Image Section (Fixed width in list view) -->
+        <div class="relative overflow-hidden sm:w-64 flex-shrink-0">
+          <div class="aspect-square sm:h-full bg-slate-100 overflow-hidden" style="border-bottom: 3px solid #1e293b; border-right: 0; sm:border-right: 3px solid #1e293b; sm:border-bottom: 0;">
+            <a href="/listing.html?id=${listing.id}" class="block h-full">
+              <img
+                src="${imgAttrs.src}"
+                ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
+                alt="${imgAttrs.alt}"
+                width="${imgAttrs.width}"
+                height="${imgAttrs.height}"
+                sizes="${imgAttrs.sizes}"
+                loading="${imgAttrs.loading}"
+                decoding="${imgAttrs.decoding}"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                referrerpolicy="no-referrer"
+              />
+            </a>
+
+            <!-- Status Badge -->
+            ${getStatusBadge()}
+
+            <!-- Favorite Button -->
+            <button
+              class="absolute top-3 right-3 bg-white p-2 hover:bg-slate-900 group/fav transition-all"
+              style="border: 2px solid #1e293b"
+              title="Add to watchlist"
+              data-action="toggle-favorite"
+              data-listing-id="${listing.id}"
+            >
+              <svg
+                class="w-5 h-5 text-slate-700 group-hover/fav:text-white transition-colors"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Content Section (Flex grow to fill space) -->
+        <div class="flex-1 p-6 flex flex-col justify-between">
+          <div>
+            <!-- Lot Number + Category Badge -->
+            <div class="mb-3 flex items-center gap-3 text-[11px] font-bold tracking-[0.18em] uppercase">
+              <span class="text-slate-500">Lot ${listing.id.slice(-3)}</span>
+              <span class="bg-blue-100 text-blue-800 px-2 py-1" style="border: 1px solid #3b82f6">
+                ${tag}
+              </span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+              <a href="/listing.html?id=${listing.id}" class="hover:underline">
+                ${listing.title}
+              </a>
+            </h3>
+
+            <!-- Description (truncated for list view) -->
+            ${listing.description ? `
+              <p class="mb-4 text-sm text-slate-600 line-clamp-2">
+                ${listing.description}
+              </p>
+            ` : ''}
+
+            <!-- Bid Count -->
+            <div class="mb-4 flex items-center gap-2 text-xs text-slate-600">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              <span class="font-bold">${listing._count?.bids || 0} bids</span>
+            </div>
+          </div>
+
+          <!-- Bottom Section: Price + CTA -->
+          <div class="flex items-center justify-between gap-4 mt-4">
+            <!-- Price -->
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-slate-900">${highestBid}</span>
+              <span class="text-sm text-slate-500 uppercase tracking-wider">Credits</span>
+            </div>
+
+            <!-- CTA Button -->
+            <button
+              class="bg-slate-900 px-8 py-3 text-xs font-bold tracking-wide text-white hover:bg-blue-600 transition-all inline-flex items-center justify-center gap-2"
+              style="border: 3px solid #1e293b"
+              data-action="view-bid"
+              data-listing-id="${listing.id}"
+              ${!isActive ? 'disabled' : ''}
+            >
+              <i class="fa-solid fa-eye text-xs"></i>
+              ${isActive ? 'View & Bid' : 'Auction Ended'}
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  // Grid view layout (default)
   return `
     <article
       class="bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group relative"
-      style="border: 2px solid #1e293b"
+      style="border: 3px solid #1e293b"
       data-listing-id="${listing.id}"
     >
       <div class="relative overflow-hidden">
         <!-- Image with hover effect -->
-        <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 2px solid #1e293b">
+        <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid #1e293b">
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
               src="${imgAttrs.src}"
@@ -93,7 +213,7 @@ export function createCollectionCard(listing: Listing): string {
           <div class="absolute inset-0 bg-slate-900 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
             <button
               class="bg-white px-6 py-3 text-xs font-bold text-slate-900 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-              style="border: 2px solid #1e293b"
+              style="border: 3px solid #1e293b"
               data-action="quick-view"
               data-listing-id="${listing.id}"
             >
@@ -108,7 +228,7 @@ export function createCollectionCard(listing: Listing): string {
         <!-- Favorite Button -->
         <button
           class="absolute top-3 right-3 bg-white p-2 hover:bg-slate-900 group/fav transition-all"
-          style="border: 2px solid #1e293b"
+          style="border: 3px solid #1e293b"
           title="Add to watchlist"
           data-action="toggle-favorite"
           data-listing-id="${listing.id}"
@@ -168,7 +288,7 @@ export function createCollectionCard(listing: Listing): string {
         <!-- CTA Button -->
         <button
           class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-blue-600 transition-all transform hover:scale-105 inline-flex items-center justify-center gap-2"
-          style="border: 2px solid #1e293b"
+          style="border: 3px solid #1e293b"
           data-action="view-bid"
           data-listing-id="${listing.id}"
           ${!isActive ? 'disabled' : ''}
@@ -185,10 +305,12 @@ export function createCollectionCard(listing: Listing): string {
  * Render Collection Cards in a grid container
  * @param listings - Array of listing data
  * @param containerId - ID of the container element
+ * @param viewMode - 'grid' or 'list' view mode
  */
 export function renderCollectionCards(
   listings: Listing[],
-  containerId: string = 'collection-cards-grid'
+  containerId: string = 'collection-cards-grid',
+  viewMode: 'grid' | 'list' = 'grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
@@ -214,7 +336,7 @@ export function renderCollectionCards(
   }
 
   // Render all cards
-  container.innerHTML = listings.map(listing => createCollectionCard(listing)).join('');
+  container.innerHTML = listings.map(listing => createCollectionCard(listing, viewMode)).join('');
 
   // Attach event listeners for interactive elements
   attachCollectionCardEvents(containerId);

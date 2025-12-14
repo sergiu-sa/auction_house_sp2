@@ -1,4 +1,4 @@
-import { renderHeader } from '../components/navbar';
+import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
   renderCollectionCards,
@@ -17,6 +17,7 @@ interface FilterState {
   search: string;
   page: number;
   itemsPerPage: number;
+  viewMode: 'grid' | 'list';
 }
 
 let currentFilters: FilterState = {
@@ -27,6 +28,7 @@ let currentFilters: FilterState = {
   search: '',
   page: 1,
   itemsPerPage: 24,
+  viewMode: 'grid',
 };
 
 let allListings: Listing[] = [];
@@ -77,19 +79,27 @@ function initializeFilters(): void {
 
   if (gridViewBtn && listViewBtn && listingsGrid) {
     gridViewBtn.addEventListener('click', () => {
+      currentFilters.viewMode = 'grid';
       listingsGrid.className = 'grid gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
-      gridViewBtn.classList.remove('bg-white', 'text-slate-700');
+      gridViewBtn.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50');
       gridViewBtn.classList.add('bg-slate-900', 'text-white');
       listViewBtn.classList.remove('bg-slate-900', 'text-white');
-      listViewBtn.classList.add('bg-white', 'text-slate-700');
+      listViewBtn.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+
+      // Re-render cards in grid mode
+      applyFilters();
     });
 
     listViewBtn.addEventListener('click', () => {
+      currentFilters.viewMode = 'list';
       listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all';
-      listViewBtn.classList.remove('bg-white', 'text-slate-700');
+      listViewBtn.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50');
       listViewBtn.classList.add('bg-slate-900', 'text-white');
       gridViewBtn.classList.remove('bg-slate-900', 'text-white');
-      gridViewBtn.classList.add('bg-white', 'text-slate-700');
+      gridViewBtn.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+
+      // Re-render cards in list mode
+      applyFilters();
     });
   }
 
@@ -125,6 +135,7 @@ function initializeFilters(): void {
         search: '',
         page: 1,
         itemsPerPage: 24,
+        viewMode: 'grid',
       };
 
       // Dispatch events to update navbar UI
@@ -232,8 +243,8 @@ function applyFilters(): void {
   const endIndex = startIndex + currentFilters.itemsPerPage;
   const paginatedListings = filteredListings.slice(startIndex, endIndex);
 
-  // Render paginated cards
-  renderCollectionCards(paginatedListings, 'collection-cards-grid');
+  // Render paginated cards with current view mode
+  renderCollectionCards(paginatedListings, 'collection-cards-grid', currentFilters.viewMode);
 
   // Render pagination
   const totalPages = Math.ceil(filteredListings.length / currentFilters.itemsPerPage);

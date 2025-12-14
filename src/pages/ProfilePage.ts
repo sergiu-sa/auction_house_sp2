@@ -1,4 +1,4 @@
-import { renderHeader } from '../components/navbar';
+import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { getCurrentUser, protectedRoute } from '../utils/auth';
 import {

@@ -1,5 +1,5 @@
 import { getListings } from '../api/listings';
-import { renderHeader } from '../components/navbar';
+import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { renderProductCards, showProductCardSkeletons } from '../components/ProductCard';
 import { renderQuickCards, showQuickCardSkeletons } from '../components/QuickCard';
