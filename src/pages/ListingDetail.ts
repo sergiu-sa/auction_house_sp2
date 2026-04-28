@@ -523,7 +523,7 @@ function copyToClipboard(text: string) {
     try {
       document.execCommand('copy');
       showToast('Link copied to clipboard!', 'success');
-    } catch (error) {
+    } catch {
       showToast('Failed to copy link', 'error');
     }
     document.body.removeChild(textArea);

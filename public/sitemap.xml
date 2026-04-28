@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://auctohouse.netlify.app/</loc>
-    <lastmod>2025-01-08</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Collection/Browse Page -->
   <url>
     <loc>https://auctohouse.netlify.app/collection.html</loc>
-    <lastmod>2025-01-08</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
@@ -23,7 +23,7 @@
   <!-- Listing Detail Page (template) -->
   <url>
     <loc>https://auctohouse.netlify.app/listing.html</loc>
-    <lastmod>2025-01-08</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>

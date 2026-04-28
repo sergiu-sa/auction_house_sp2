@@ -67,13 +67,13 @@ git clone https://github.com/sergiu-sa/auction_house_sp2.git
 cd auction_house_sp2
 ```
 
-2 **Install dependencies**
+2. **Install dependencies**
 
 ```bash
 npm install
 ```
 
-3 **Set up environment variables**
+3. **Set up environment variables**
 
 Create a `.env` file in the root directory (use `.env.example` as template):
 
@@ -323,10 +323,9 @@ This project integrates with the [Noroff API v2](https://docs.noroff.dev/docs/v2
 
 - ✅ JWT token authentication
 - ✅ API key authorization
-- ✅ Error handling and user feedback
-- ✅ Request retry on failure
-- ✅ Session management
-- ✅ Token expiration handling
+- ✅ Centralised error handling and user feedback (toast + structured logging)
+- ✅ Session management with client-side 7-day token expiry
+- ✅ Automatic redirect on 401 with return-URL preservation
 
 ---
 

@@ -18,7 +18,7 @@
     <meta property="og:url" content="https://auctohouse.netlify.app/listing.html" />
     <meta property="og:title" content="Auction Listing | Aucto" />
     <meta property="og:description" content="View this auction listing and place your bid before it ends." />
-    <meta property="og:image" content="https://auctohouse.netlify.app/images/logo_v2.svg" />
+    <meta property="og:image" content="https://auctohouse.netlify.app/images/og-cover.svg" />
     <meta property="og:site_name" content="Aucto" />
 
     <!-- Twitter -->
@@ -26,7 +26,7 @@
     <meta property="twitter:url" content="https://auctohouse.netlify.app/listing.html" />
     <meta property="twitter:title" content="Auction Listing | Aucto" />
     <meta property="twitter:description" content="View this auction listing and place your bid before it ends." />
-    <meta property="twitter:image" content="https://auctohouse.netlify.app/images/logo_v2.svg" />
+    <meta property="twitter:image" content="https://auctohouse.netlify.app/images/og-cover.svg" />
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1e293b" />
@@ -41,18 +41,44 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Font Awesome -->
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
   </head>
   <body class="antialiased bg-aucto-bg" data-page-type="browse">
     <!-- Skip Navigation Link -->

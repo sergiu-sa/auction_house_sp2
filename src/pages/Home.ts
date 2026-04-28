@@ -38,7 +38,7 @@ interface CatalogState {
 }
 
 let allListings: Listing[] = [];
-let catalogState: CatalogState = {
+const catalogState: CatalogState = {
   category: 'all',
   sort: 'endsAt',
   sortOrder: 'asc',
@@ -365,7 +365,7 @@ function renderHeroSection(): void {
 
   // Main featured listing
   const main = featured[0];
-  const mainImage = main.media?.[0]?.url || 'https://via.placeholder.com/900x600?text=No+Image';
+  const mainImage = main.media?.[0]?.url || '/images/placeholder.svg';
   const mainBids = main.bids || [];
   const mainHighestBid = mainBids.length > 0 ? Math.max(...mainBids.map(b => b.amount)) : 0;
   const mainTimeRemaining = formatTimeRemaining(main.endsAt);
@@ -420,7 +420,7 @@ function renderHeroSection(): void {
 
     for (let i = 1; i < Math.min(featured.length, 3); i++) {
       const listing = featured[i];
-      const image = listing.media?.[0]?.url || 'https://via.placeholder.com/600x400?text=No+Image';
+      const image = listing.media?.[0]?.url || '/images/placeholder.svg';
       const bids = listing.bids || [];
       const highestBid = bids.length > 0 ? Math.max(...bids.map(b => b.amount)) : 0;
 

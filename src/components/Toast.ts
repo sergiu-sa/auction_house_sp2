@@ -123,12 +123,12 @@ function getToastIcon(type: ToastType): string {
  * Convenience methods for different toast types
  */
 export const toast = {
-  success: (message: string, duration?: number) =>
+  success: (message: string, duration?: number): void =>
     showToast(message, 'success', duration),
-  error: (message: string, duration?: number) =>
+  error: (message: string, duration?: number): void =>
     showToast(message, 'error', duration),
-  info: (message: string, duration?: number) =>
+  info: (message: string, duration?: number): void =>
     showToast(message, 'info', duration),
-  warning: (message: string, duration?: number) =>
+  warning: (message: string, duration?: number): void =>
     showToast(message, 'warning', duration),
 };

@@ -84,23 +84,23 @@ export async function apiClient<T>(
 }
 
 export const api = {
-  get: <T>(endpoint: string, options?: RequestInit) =>
+  get: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
     apiClient<T>(endpoint, { ...options, method: 'GET' }),
 
-  post: <T>(endpoint: string, body?: unknown, options?: RequestInit) =>
+  post: <T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'POST',
       body: body ? JSON.stringify(body) : undefined,
     }),
 
-  put: <T>(endpoint: string, body?: unknown, options?: RequestInit) =>
+  put: <T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'PUT',
       body: body ? JSON.stringify(body) : undefined,
     }),
 
-  delete: <T>(endpoint: string, options?: RequestInit) =>
+  delete: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
     apiClient<T>(endpoint, { ...options, method: 'DELETE' }),
 };

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Aucto — brutalist auction platform">
+  <rect width="1200" height="630" fill="#F7F7F5"/>
+  <rect x="9" y="9" width="1182" height="612" fill="none" stroke="#1e293b" stroke-width="9"/>
+  <g font-family="'Source Sans 3', system-ui, sans-serif" fill="#475569" font-weight="700" letter-spacing="6">
+    <line x1="80" y1="120" x2="160" y2="120" stroke="#dc2629" stroke-width="3"/>
+    <text x="180" y="126" font-size="16">AUCTION HOUSE · EST 2024</text>
+    <text x="80" y="540" font-size="14" letter-spacing="4">BID · WIN · COLLECT</text>
+    <text x="1120" y="540" font-size="14" text-anchor="end" letter-spacing="4">AUCTOHOUSE.NETLIFY.APP</text>
+  </g>
+  <text x="80" y="350" font-family="'Cormorant', serif" font-size="200" font-weight="700" fill="#1e293b" letter-spacing="-4">Aucto</text>
+  <text x="80" y="430" font-family="'Source Sans 3', system-ui, sans-serif" font-size="28" fill="#334155" font-weight="400">A minimal, brutalist platform where design serves the lot.</text>
+  <g transform="translate(900 220)" stroke="#1e293b" stroke-width="9" fill="none">
+    <rect width="220" height="220"/>
+    <line x1="0" y1="0" x2="220" y2="220"/>
+    <line x1="220" y1="0" x2="0" y2="220"/>
+  </g>
+</svg>

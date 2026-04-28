@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found · Aucto</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" type="image/svg+xml" href="/images/icon_only_v2.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <style>
+      *,
+      *::before,
+      *::after { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: #f7f7f5;
+        color: #1e293b;
+        font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+      main {
+        max-width: 640px;
+        width: 100%;
+        background: #ffffff;
+        border: 3px solid #1e293b;
+        padding: 3rem 2.5rem;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .eyebrow .rule {
+        display: block;
+        width: 3.5rem;
+        height: 2px;
+        background: #dc2629;
+      }
+      .eyebrow span {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #475569;
+      }
+      h1 {
+        font-family: 'Cormorant', serif;
+        font-weight: 700;
+        font-size: clamp(3rem, 10vw, 5rem);
+        line-height: 1;
+        margin: 0 0 1rem;
+        color: #1e293b;
+      }
+      p {
+        margin: 0 0 1.75rem;
+        line-height: 1.6;
+        color: #334155;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      a.btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 3px solid #1e293b;
+        transition: background-color 120ms ease, color 120ms ease;
+      }
+      a.btn-primary {
+        background: #1e293b;
+        color: #ffffff;
+      }
+      a.btn-primary:hover { background: #334155; }
+      a.btn-secondary {
+        background: #ffffff;
+        color: #1e293b;
+      }
+      a.btn-secondary:hover { background: #f1f5f9; }
+      a.btn:focus-visible {
+        outline: 3px solid #dc2629;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="eyebrow">
+        <span class="rule" aria-hidden="true"></span>
+        <span>Error · 404</span>
+      </div>
+      <h1>Lot not found.</h1>
+      <p>
+        The page you were looking for has been outbid, withdrawn, or never existed.
+        Head back to the catalog or return home.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/">Back to home</a>
+        <a class="btn btn-secondary" href="/collection.html">Browse catalog</a>
+      </div>
+    </main>
+  </body>
+</html>

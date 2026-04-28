@@ -16,7 +16,7 @@ export function createProductCard(listing: Listing): string {
     ? Math.max(...bids.map(bid => bid.amount))
     : 0;
 
-  const imageUrl = listing.media?.[0]?.url || 'https://via.placeholder.com/600x600?text=No+Image';
+  const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
 
   // Generate responsive image attributes
