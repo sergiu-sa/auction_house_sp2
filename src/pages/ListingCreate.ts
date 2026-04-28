@@ -1,6 +1,7 @@
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
+import { initListingFormPreview } from '../components/ListingFormPreview';
 import { createListing } from '../api/listings';
 import { protectedRoute } from '../utils/auth';
 import { toast } from '../components/Toast';
@@ -219,114 +220,17 @@ function renderCreateForm(): void {
 
 function initFormHandlers(): void {
   const form = document.getElementById('create-listing-form') as HTMLFormElement;
-  const titleInput = document.getElementById('title') as HTMLInputElement;
-  const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
-  const mediaInput = document.getElementById('media') as HTMLTextAreaElement;
   const endDateInput = document.getElementById('endsAt') as HTMLInputElement;
 
-  const previewTitle = document.getElementById('previewTitle');
-  const previewDescription = document.getElementById('previewDescription');
-  const previewEndDate = document.getElementById('previewEndDate');
-  const mainPreview = document.getElementById('mainPreview');
-  const additionalImages = document.getElementById('additionalImages');
-
-  // Set minimum date to current time + 1 hour
-  const minDate = new Date();
-  minDate.setHours(minDate.getHours() + 1);
-  endDateInput.min = minDate.toISOString().slice(0, 16);
-
-  // Live preview: Title
-  if (titleInput && previewTitle) {
-    titleInput.addEventListener('input', () => {
-      previewTitle.textContent = titleInput.value || 'Your listing title';
-    });
+  // Earliest allowed end date is one hour from now.
+  if (endDateInput) {
+    const minDate = new Date();
+    minDate.setHours(minDate.getHours() + 1);
+    endDateInput.min = minDate.toISOString().slice(0, 16);
   }
 
-  // Live preview: Description
-  if (descriptionInput && previewDescription) {
-    descriptionInput.addEventListener('input', () => {
-      previewDescription.textContent =
-        descriptionInput.value || 'Your description will appear here…';
-    });
-  }
+  initListingFormPreview({ mediaInputId: 'media', endDateInputId: 'endsAt' });
 
-  // Live preview: End Date
-  if (endDateInput && previewEndDate) {
-    endDateInput.addEventListener('input', () => {
-      if (endDateInput.value) {
-        const date = new Date(endDateInput.value);
-        previewEndDate.textContent = date.toLocaleString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: '2-digit',
-        });
-      } else {
-        previewEndDate.textContent = 'No end date set';
-      }
-    });
-  }
-
-  // Live preview: Images
-  if (mediaInput && mainPreview && additionalImages) {
-    mediaInput.addEventListener('input', () => {
-      const urls = mediaInput.value
-        .split('\n')
-        .map((url) => url.trim())
-        .filter((url) => url !== '');
-
-      if (urls.length > 0) {
-        // Show main image
-        mainPreview.innerHTML = `
-          <img
-            src="${urls[0]}"
-            class="w-full h-full object-cover"
-            alt="Preview"
-            onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-slate-400\\'><div class=\\'text-center\\'><i class=\\'fa-solid fa-circle-xmark text-6xl mb-2 block text-red-500\\'></i><p class=\\'text-sm\\'>Invalid image URL</p></div></div>'"
-          />
-        `;
-
-        // Show additional images
-        if (urls.length > 1) {
-          additionalImages.classList.remove('hidden');
-          additionalImages.classList.add('grid', 'grid-cols-3', 'gap-4');
-          additionalImages.innerHTML = urls
-            .slice(1, 4)
-            .map(
-              (url, index) => `
-                <div class="bg-white border-2 border-slate-900 overflow-hidden">
-                  <img
-                    src="${url}"
-                    class="w-full h-24 object-cover"
-                    alt="Additional preview ${index + 1}"
-                    onerror="this.parentElement.innerHTML='<div class=\\'w-full h-24 flex items-center justify-center bg-slate-200 text-slate-400\\'><i class=\\'fa-solid fa-circle-xmark text-red-500\\'></i></div>'"
-                  />
-                </div>
-              `
-            )
-            .join('');
-        } else {
-          additionalImages.classList.add('hidden');
-          additionalImages.classList.remove('grid', 'grid-cols-3', 'gap-4');
-        }
-      } else {
-        // Reset to default
-        mainPreview.innerHTML = `
-          <div class="w-full h-full flex items-center justify-center text-slate-400">
-            <div class="text-center">
-              <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400"></i>
-              <p class="text-sm">No image added yet</p>
-            </div>
-          </div>
-        `;
-        additionalImages.classList.add('hidden');
-        additionalImages.classList.remove('grid', 'grid-cols-3', 'gap-4');
-      }
-    });
-  }
-
-  // Form submission
   if (form) {
     form.addEventListener('submit', handleFormSubmit);
   }

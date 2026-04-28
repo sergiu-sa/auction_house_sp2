@@ -18,6 +18,59 @@ import type { User } from '../types/api';
 let profileCache: { data: User; timestamp: number } | null = null;
 const CACHE_TTL = 30000;
 
+interface NavLink {
+  href: string;
+  label: string;
+  icon: string;
+  ariaLabel: string;
+}
+
+/**
+ * Build the four primary nav links (Feed, Catalog, Create, Profile).
+ * Guest users get rerouted to /login.html for Create and Profile, with
+ * the original destination preserved via a `redirect` query param.
+ */
+function getNavLinks(isLoggedIn: boolean, profileLabel: 'Profile' | 'My Profile' = 'Profile'): NavLink[] {
+  return [
+    { href: '/index.html', label: 'Feed', icon: 'fa-house', ariaLabel: 'Feed' },
+    { href: '/collection.html', label: 'Catalog', icon: 'fa-layer-group', ariaLabel: 'Catalog' },
+    isLoggedIn
+      ? { href: '/listing-create.html', label: 'Create', icon: 'fa-gavel', ariaLabel: 'Create listing' }
+      : { href: '/login.html?redirect=/listing-create.html', label: 'Create', icon: 'fa-gavel', ariaLabel: 'Create listing (login required)' },
+    isLoggedIn
+      ? { href: '/profile.html', label: profileLabel, icon: 'fa-user', ariaLabel: profileLabel === 'My Profile' ? 'My profile' : 'Profile' }
+      : { href: '/login.html', label: 'Profile', icon: 'fa-user', ariaLabel: 'Profile (login required)' },
+  ];
+}
+
+/** Desktop nav-link row used inside both `renderSimpleNavbar` and `renderFullNavbar`. */
+function renderDesktopNavLinks(isLoggedIn: boolean): string {
+  return getNavLinks(isLoggedIn)
+    .map(
+      (link) => `
+        <a href="${link.href}" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="${link.ariaLabel}">
+          <i class="fa-solid ${link.icon} text-sm" aria-hidden="true"></i>
+          <span>${link.label}</span>
+        </a>
+      `
+    )
+    .join('');
+}
+
+/** Mobile drawer nav-link list — wider hit targets, slightly different chrome. */
+function renderMobileNavLinks(isLoggedIn: boolean): string {
+  return getNavLinks(isLoggedIn, isLoggedIn ? 'My Profile' : 'Profile')
+    .map(
+      (link) => `
+        <a href="${link.href}" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="${link.ariaLabel}">
+          <i class="fa-solid ${link.icon} text-base w-5" aria-hidden="true"></i>
+          <span>${link.label}</span>
+        </a>
+      `
+    )
+    .join('');
+}
+
 export async function renderHeader(): Promise<void> {
   const header = document.getElementById('header');
   if (!header) return;
@@ -126,37 +179,7 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string 
 
           <!-- DESKTOP: Primary nav links (≥1024px) -->
           <div class="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-700">
-            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Feed">
-              <i class="fa-solid fa-house text-sm" aria-hidden="true"></i>
-              <span>Feed</span>
-            </a>
-            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Catalog">
-              <i class="fa-solid fa-layer-group text-sm" aria-hidden="true"></i>
-              <span>Catalog</span>
-            </a>
-            ${
-              isUserLoggedIn
-                ? `
-            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing">
-              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
-              <span>Create</span>
-            </a>
-            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile">
-              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
-              <span>Profile</span>
-            </a>
-            `
-                : `
-            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing (login required)">
-              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
-              <span>Create</span>
-            </a>
-            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile (login required)">
-              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
-              <span>Profile</span>
-            </a>
-            `
-            }
+            ${renderDesktopNavLinks(isUserLoggedIn)}
           </div>
 
           ${renderUserSection(isUserLoggedIn, user)}
@@ -230,37 +253,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
 
           <!-- DESKTOP: Primary nav links (≥1024px) -->
           <div class="hidden items-center gap-6 text-sm font-bold text-slate-700 lg:flex">
-            <a href="/index.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Feed">
-              <i class="fa-solid fa-house text-sm" aria-hidden="true"></i>
-              <span>Feed</span>
-            </a>
-            <a href="/collection.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Catalog">
-              <i class="fa-solid fa-layer-group text-sm" aria-hidden="true"></i>
-              <span>Catalog</span>
-            </a>
-            ${
-              isUserLoggedIn
-                ? `
-            <a href="/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing">
-              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
-              <span>Create</span>
-            </a>
-            <a href="/profile.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile">
-              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
-              <span>Profile</span>
-            </a>
-            `
-                : `
-            <a href="/login.html?redirect=/listing-create.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Create listing (login required)">
-              <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
-              <span>Create</span>
-            </a>
-            <a href="/login.html" class="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5" aria-label="Profile (login required)">
-              <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
-              <span>Profile</span>
-            </a>
-            `
-            }
+            ${renderDesktopNavLinks(isUserLoggedIn)}
           </div>
 
           ${renderUserSection(isUserLoggedIn, user)}
@@ -499,22 +492,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       <!-- Mobile Menu Navigation Links -->
       <nav class="p-4" aria-label="Mobile navigation">
         <div class="space-y-1">
-          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Feed">
-            <i class="fa-solid fa-house text-base w-5" aria-hidden="true"></i>
-            <span>Feed</span>
-          </a>
-          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Catalog">
-            <i class="fa-solid fa-layer-group text-base w-5" aria-hidden="true"></i>
-            <span>Catalog</span>
-          </a>
-          <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Create listing">
-            <i class="fa-solid fa-gavel text-base w-5" aria-hidden="true"></i>
-            <span>Create</span>
-          </a>
-          <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="My profile">
-            <i class="fa-solid fa-user text-base w-5" aria-hidden="true"></i>
-            <span>My Profile</span>
-          </a>
+          ${renderMobileNavLinks(true)}
         </div>
 
         <!-- Divider -->
@@ -546,22 +524,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       <!-- Mobile Menu Navigation Links -->
       <nav class="p-4" aria-label="Mobile navigation">
         <div class="space-y-1">
-          <a href="/index.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Feed">
-            <i class="fa-solid fa-house text-base w-5" aria-hidden="true"></i>
-            <span>Feed</span>
-          </a>
-          <a href="/collection.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Catalog">
-            <i class="fa-solid fa-layer-group text-base w-5" aria-hidden="true"></i>
-            <span>Catalog</span>
-          </a>
-          <a href="/login.html?redirect=/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Create listing (login required)">
-            <i class="fa-solid fa-gavel text-base w-5" aria-hidden="true"></i>
-            <span>Create</span>
-          </a>
-          <a href="/login.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 rounded transition-colors" aria-label="Profile (login required)">
-            <i class="fa-solid fa-user text-base w-5" aria-hidden="true"></i>
-            <span>Profile</span>
-          </a>
+          ${renderMobileNavLinks(false)}
         </div>
 
         <!-- Divider -->

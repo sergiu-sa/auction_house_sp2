@@ -1,354 +1,173 @@
-# Aucto - Auction Platform
+# Aucto
 
-![Aucto Banner](https://img.shields.io/badge/Noroff-Semester_Project_2-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=fff) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=fff) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff) ![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=fff)
 
-This project is part of the Semester Project 2 for Front-end Development 2 at Noroff School of Technology and Digital Media.
+A minimal, brutalist online auction platform. Browse live lots, place bids, list items, manage your collection — built around the idea that the products themselves should drive the visual hierarchy, with the interface staying out of the way.
 
----
+**Live**: [auctohouse.netlify.app](https://auctohouse.netlify.app/) · **Stack**: vanilla TypeScript + Tailwind v3 + Vite (multi-page app) → Netlify
 
-## About
-
-**Aucto** is a feature-rich online auction platform where users can list items for bidding, place bids on other users' listings, and manage their auction activities. The platform features a distinctive brutalist design aesthetic with bold typography, strong borders, and a focus on functionality.
-
-### Key Highlights
-
-- **Restricted Registration**: Only users with `@stud.noroff.no` email addresses can register
-- **Credit System**: Users receive starter credits (1000) upon registration for bidding
-- **Real-time Bidding**: Place bids on active listings with instant updates
-- **Profile Management**: Customize avatar, banner, and bio
-- **Responsive Design**: Optimized for all devices (mobile, tablet, desktop)
-- **Accessibility**: Built with WCAG guidelines and universal design principles
-
-### Project Resources
-
-- **Live Site**: [https://auctohouse.netlify.app/](https://auctohouse.netlify.app/)
-- **GitHub Repository**: [https://github.com/sergiu-sa/auction_house_sp2.git](https://github.com/sergiu-sa/auction_house_sp2.git)
-- **Figma Design**: [View Design](https://www.figma.com/design/6b7xOMQl4yOkBZMJXQ9kNo/Auction-House?node-id=61-31591&t=eYdNBDJRg9wBBVGZ-1)
-- **Project Board**: [GitHub Projects](https://github.com/users/sergiu-sa/projects/12)
+![Aucto homepage](screenshots/home.png)
 
 ---
 
-## Built With
+## Why I built this
 
-### Core Technologies
+I wanted a project where design served function rather than decoration. Auction items have strong visual identity on their own, the temptation is to wrap them in chrome, but in practice that just dilutes them. Aucto leans into the content: bento-style grids, a neutral palette, 3px borders, Cormorant headings against Source Sans 3 body, and zero radii except on a single Toast component. The result is a tool-like, mechanical interface that supports browsing without competing with the lots.
 
-- **[Vite](https://vitejs.dev/)**
-- **[TypeScript](https://www.typescriptlang.org/)**
-- **[Tailwind CSS](https://tailwindcss.com/)**
-- **[Noroff API v2](https://docs.noroff.dev/docs/v2)**
+The other goal was to ship a real-world front-end without leaning on a framework. No React, no router, no SPA. Each HTML file is its own Vite entry, each page module owns its own DOM mounting, and navigation is just real navigation. It's a constraint that forces you to think hard about what state actually needs to persist and what abstractions actually carry their weight.
 
-### Development Tools
+## Engineering decisions
 
-- **ESLint** (v9.39.1) - Code linting and quality
-- **Prettier** (v3.6.2) - Code formatting
-- **PostCSS** (v8.5.6) - CSS processing
-- **Vitest** (v4.0.13) - Unit testing framework
+**Multi-page app, no router.** Eight HTML files, eight Vite entries declared in `vite.config.ts`. Page modules in `src/pages/<Name>.ts` orchestrate their page, importing `renderHeader` / `renderFooter` from shared components. Auction listings are content, not application state — there's nothing here that wouldn't be served better by a fresh page load.
 
-### Hosting & Deployment
+**Single API client, centralised auth.** Every network call goes through `apiClient<T>` in `src/api/config.ts`. It injects the API key and bearer token from localStorage, parses JSON, throws a typed `ApiErrorClass` on non-2xx responses, and handles 401 in one place — clearing auth, showing a toast, and redirecting to login with the original URL preserved. Domain modules (`auth.ts`, `bids.ts`, `listings.ts`, `profile.ts`) are thin wrappers over `api.get/post/put/delete`. Pages never call `fetch` directly.
 
-- **[Netlify](https://www.netlify.com/)**
+**Storage as the auth contract.** `src/utils/storage.ts` owns every localStorage key the app uses (`token`, `tokenTimestamp`, `user`, `watchedListings`). Pages and components access auth state and the watchlist exclusively through its exported helpers. Token expiry is checked client-side at 7 days; the server's actual lifetime is independent and a real 401 still wins.
+
+**Componentisation drove the refactor.** Filter logic originally lived in three places — the navbar, the sticky filter bar, and the catalog page script. Cross-component drift was inevitable. Extracting `CategoryFilters`, `SortDropdown`, `ActiveOnlyCheckbox`, and `SearchField` into self-contained components that dispatch CustomEvents (`categoryFilterChange`, `sortChange`, etc.) collapsed three implementations into one and made the catalog state synchronisation trivial. The auth-page product showcases (`ProductShowcase`) and the listing-form preview widgets (`ListingFormPreview`) followed the same pattern.
+
+**Iterative, not waterfall.** I built a high-fidelity Figma prototype but treated it as a starting point. Reproducing layouts in code against real API data exposed limitations the static mockups couldn't predict — descriptions were often shorter than expected, leaving awkward space; the bento layout on the listing-detail page was a direct response. The brand identity, including the logo, evolved alongside the implementation rather than being locked first.
+
+## Features
+
+- **Browse without an account.** Listings, search, filters, listing detail, bid history.
+- **Restricted registration** to `@stud.noroff.no` emails (the platform is built against the Noroff student API). New users get 1000 starter credits.
+- **Live bidding** with client-side validation (must exceed current highest bid).
+- **Listing management.** Create, edit, delete your own auctions. Live preview while you type.
+- **Persistent watchlist** stored in localStorage, surfaced both on the listing-detail page and via the heart icon on each catalog card.
+- **Profile management.** Avatar, banner, bio.
+- **Accessibility groundwork.** Skip-to-content link, aria-live toasts, semantic landmarks, keyboard focus rings on every input, alt text on images.
+- **SEO.** Per-page title/description/canonical, Open Graph + Twitter cards, JSON-LD structured data for listings (Product schema), homepage (WebSite + Organization), sitemap, robots.
+
+### Listing Detail Page
+
+![Listing detail](screenshots/listing-detail.png)
+
+### Profile Page
+
+![Profile](screenshots/profile.png)
 
 ---
 
-## Getting Started
+## Stack
 
-### Prerequisites
+| Layer | Choice | Why |
+| --- | --- | --- |
+| Language | TypeScript (strict) | `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`. Build runs `tsc` before Vite. |
+| Bundler | Vite v7 | Multi-page entries via `rollupOptions.input`; ES2020 target, no legacy polyfills. |
+| Styling | Tailwind v3 | Custom palette (`aucto.*`, `warm-white`), 3px border utility, Cormorant + Source Sans 3 fonts. |
+| API | [Noroff API v2](https://docs.noroff.dev/docs/v2) | JWT auth + API-key authorisation. |
+| Testing | Vitest + jsdom | 53 unit tests across the three pure utility modules. |
+| Linting | ESLint v9 (flat config) + Prettier | `npm run lint` enforced in CI. |
+| CI | GitHub Actions | Type-check + lint + test + build on every PR and push to `main`. |
+| Hosting | Netlify | Catch-all 404 redirect, security headers, asset caching. |
 
-- **Node.js** v18 or higher
-- **npm** or **yarn** package manager
-- **Git** for version control
+---
 
-### Installation
-
-1. **Clone the repository**
+## Getting started
 
 ```bash
 git clone https://github.com/sergiu-sa/auction_house_sp2.git
 cd auction_house_sp2
-```
-
-2. **Install dependencies**
-
-```bash
 npm install
+cp .env.example .env   # then fill in VITE_API_KEY (see .env.example)
+npm run dev            # http://localhost:5173
 ```
 
-3. **Set up environment variables**
+### Scripts
 
-Create a `.env` file in the root directory (use `.env.example` as template):
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Vite dev server with HMR. |
+| `npm run build` | `tsc` (typecheck) + `vite build` → `dist/`. |
+| `npm run preview` | Serve the production build locally. |
+| `npm run type-check` | TypeScript only, no emit. |
+| `npm run lint` / `npm run lint:fix` | ESLint v9 flat config across `src/`. |
+| `npm run format` / `npm run format:check` | Prettier write / dry-run. |
+| `npm test` | One-shot Vitest run. |
+| `npm run test:watch` / `:ui` / `:coverage` | Watch mode / UI / coverage report. |
 
-```bash
-VITE_API_BASE_URL=https://v2.api.noroff.dev
-VITE_API_KEY=your_api_key_here
-```
-
-### Development
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-The application will be available at `http://localhost:5173`
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-This creates an optimized production build in the `dist/` directory.
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-### Type Checking
-
-```bash
-npm run type-check
-```
+`.env` (gitignored) needs `VITE_API_BASE_URL` and `VITE_API_KEY`. See `.env.example`.
 
 ---
 
-## 📁 Project Structure
+## Project structure
 
-```bash
-auction_house_sp2/
-├── public/                      # Static assets
-│   └── images/                  # Image assets
+``` bash
+src/
+├── api/                # Single typed fetch wrapper + domain modules
+│   ├── auth.ts         # /auth endpoints (register, login, create-api-key)
+│   ├── bids.ts         # /auction/listings/:id/bids
+│   ├── config.ts       # apiClient<T>, ApiErrorClass, handleUnauthorized
+│   ├── listings.ts     # /auction/listings CRUD
+│   └── profile.ts      # /auction/profiles
 │
-├── src/                         # Source code
-│   ├── api/                     # API client modules
-│   │   ├── auth.ts              # Authentication endpoints
-│   │   ├── bids.ts              # Bidding endpoints
-│   │   ├── config.ts            # API configuration & client
-│   │   ├── listings.ts          # Listing endpoints
-│   │   └── profile.ts           # Profile endpoints
-│   │
-│   ├── components/              # Reusable UI components
-│   │   ├── Breadcrumb.ts        # Navigation breadcrumbs
-│   │   ├── CollectionCard.ts    # Listing card
-│   │   ├── Footer.ts            # Footer component
-│   │   ├── ProductCard.ts       # Featured product card
-│   │   ├── QuickCard.ts         # Quick action cards
-│   │   ├── Toast.ts             # Toast notifications
-│   │   ├── featuredWin.ts       # Featured winner display
-│   │   ├── filters/             # Filter components
-│   │   │   ├── ActiveOnlyCheckbox.ts
-│   │   │   ├── CategoryFilters.ts
-│   │   │   └── SortDropdown.ts
-│   │   ├── guestBanner.ts       # Guest user banner
-│   │   ├── navbar.ts            # Navigation bar
-│   │   ├── newsletter.ts        # Newsletter signup
-│   │   ├── PaginationComponent.ts # Pagination
-│   │   └── statsBar.ts          # Statistics display
-│   │
-│   ├── pages/                   # Page-level components
-│   │   ├── collection.ts        # Browse all listings page
-│   │   ├── home.ts              # Homepage
-│   │   ├── listingCreate.ts     # Create listing page
-│   │   ├── listingDetail.ts     # Single listing page
-│   │   ├── listingEdit.ts       # Edit listing page
-│   │   ├── login.ts             # Login page
-│   │   ├── profilePage.ts       # User profile page
-│   │   └── register.ts          # Registration page
-│   │
-│   ├── styles/                  # Stylesheets
-│   │   └── main.css             # Main Tailwind CSS file
-│   │
-│   ├── types/                   # TypeScript type definitions
-│   │   └── api.ts               # API response types
-│   │
-│   ├── utils/                   # Utility functions
-│   │   ├── auth.ts              # Auth helpers & route guards
-│   │   ├── authLoader.ts        # Auth loading states
-│   │   ├── errorHandling.ts     # Error handling utilities
-│   │   ├── formatDate.ts        # Date formatting
-│   │   ├── imageOptimization.ts # Image loading optimization
-│   │   ├── logger.ts            # Logging utility
-│   │   ├── seo.ts               # SEO meta tag utilities
-│   │   ├── storage.ts           # LocalStorage management
-│   │   └── validation.ts        # Form validation
-│   │
-│   └── main.ts                  # Application entry point
+├── components/         # renderX / initX functions returning HTML strings
+│   ├── Breadcrumb.ts
+│   ├── CollectionCard.ts ProductCard.ts QuickCard.ts
+│   ├── Navbar.ts Footer.ts
+│   ├── Newsletter.ts StatsBar.ts FeaturedWin.ts
+│   ├── ProductShowcase.ts        # auth-page tile polling
+│   ├── ListingFormPreview.ts     # live preview for create/edit
+│   ├── PaginationComponent.ts Toast.ts GuestBanner.ts
+│   └── filters/                  # SearchField, CategoryFilters, SortDropdown, …
 │
-├── index.html                   # Homepage
-├── collection.html              # Browse listings page
-├── login.html                   # Login page
-├── register.html                # Registration page
-├── profile.html                 # User profile page
-├── listing.html                 # Single listing page
-├── listing-create.html          # Create listing page
-├── listing-edit.html            # Edit listing page
+├── pages/              # One module per HTML entry
+│   ├── Home.ts Collection.ts ListingDetail.ts
+│   ├── ListingCreate.ts ListingEdit.ts
+│   ├── Login.ts Register.ts ProfilePage.ts
 │
-├── .env                         # Environment variables (not in repo)
-├── .env.example                 # Environment variables template
-├── .gitignore                   # Git ignore rules
-├── netlify.toml                 # Netlify configuration
-├── package.json                 # Project dependencies
-├── tailwind.config.js           # Tailwind CSS configuration
-├── tsconfig.json                # TypeScript configuration
-├── vite.config.ts               # Vite configuration
-└── README.md                    # Project documentation
+├── styles/main.css     # Tailwind imports + design-token CSS variables
+├── types/api.ts        # Noroff response types
+└── utils/              # Pure helpers (auth guards, storage, validation, dates,
+                        # logger, SEO, error handling, image optimisation, …)
 ```
-
----
-
-## User Guide
-
-### For Guest Users (Not Logged In)
-
- **You can**:
-
-- Browse all active listings
-- Search and filter listings
-- View detailed listing information
-- See bid history on listings
-
-**You cannot**:
-
-- Place bids
-- Create listings
-- Manage profile
-
-### For Registered Users
-
-#### Registration
-
-1. Navigate to the [Register page](https://auctohouse.netlify.app/register.html)
-2. Enter your full name
-3. Use your `@stud.noroff.no` email address
-4. Create a password (minimum 8 characters)
-5. Receive 1000 starter credits automatically
-
-#### Creating a Listing
-
-1. Click **"Create Listing"** in the navigation
-2. Fill in the listing details:
-   - **Title**: Clear, descriptive title
-   - **Description**: Detailed item description
-   - **Images**: Add image URLs (one per line)
-   - **Tags**: Optional categories (comma-separated)
-   - **End Date**: Set auction deadline
-3. Click **"Create Listing"** to publish
-
-#### Placing a Bid
-
-1. Browse to a listing detail page
-2. Enter your bid amount (must exceed current highest bid)
-3. Click **"Place Bid"**
-4. Credits are held until auction ends or you're outbid
-
-#### Managing Your Profile
-
-1. Click your profile avatar in the navigation
-2. Select **"My Profile"** from dropdown
-3. Click **"Edit Profile"** to update:
-   - Avatar image URL
-   - Banner image URL
-   - Bio/description
 
 ---
 
 ## Testing
 
-### Test Coverage
+The test suite covers the three pure utility modules — the parts of the codebase where bugs would silently corrupt user-visible behaviour:
 
-- **76 tests** across 3 test suites
-- **100% pass rate**
-- **100% coverage** on tested utility functions
+- `src/utils/validation.test.ts` — 30 tests (email format, Noroff-domain check, URL/image-URL, password, bid amounts, future-date guard, listing title/description bounds).
+- `src/utils/formatDate.test.ts` — 17 tests (auction time-remaining strings, "Ended" boundary, formatting variants).
+- `src/utils/formatCurrency.test.ts` — 6 tests (credits formatting, both verbose and short notation).
 
-### Test Files
+**53 tests, 100% pass rate.**
 
-- `src/utils/validation.test.ts` - Email, URL, password, bid, and form validation (30 tests)
-- `src/utils/formatDate.test.ts` - Date formatting and time calculations (29 tests)
-- `src/utils/formatCurrency.test.ts` - Currency and number formatting (17 tests)
-
-### Running Tests
+**Pages and components are intentionally untested** — they're DOM-driven orchestration with no logic worth asserting. Coverage thresholds explicitly exclude `src/pages/**`, `src/types/**`, and `src/main.ts`. Any logic worth testing belongs in `src/utils/` and is tested next to its source.
 
 ```bash
-# Run all tests
-npm test
-
-# Run in watch mode
-npm run test:watch
-
-# Run with UI
-npm run test:ui
-
-# Generate coverage report
-npm run test:coverage
+npm test                 # one-shot run
+npm run test:watch       # watch mode
+npm run test:coverage    # v8 coverage → coverage/index.html
 ```
 
-After running `npm run test:coverage`, open `coverage/index.html` in your browser for a detailed HTML report.
+---
+
+## Deployment
+
+Netlify, configured in `netlify.toml`:
+
+- Build command `npm run build`, publish `dist/`.
+- Catch-all `[[redirects]]` rule serves the branded `/404.html` on unknown URLs.
+- Security headers: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, immutable cache for `/*.js`, `/*.css`, `/images/*`, `/*.svg`.
+- HTML responses set to `must-revalidate` so deploys land instantly.
+
+CI (`.github/workflows/ci.yml`) runs type-check, lint, test, and build on every PR and push to `main`. Production deploys are triggered by Netlify on merges to `main`.
 
 ---
 
-## API Documentation
+## Browser support
 
-This project integrates with the [Noroff API v2](https://docs.noroff.dev/docs/v2).
-
-### API Endpoints Used
-
-**Authentication**:
-
-- `POST /auth/register` - Register new user
-- `POST /auth/login` - Login user
-- `POST /auth/create-api-key` - Create API key
-
-**Auction Listings**:
-
-- `GET /auction/listings` - Get all listings
-- `GET /auction/listings/:id` - Get single listing
-- `POST /auction/listings` - Create listing
-- `PUT /auction/listings/:id` - Update listing
-- `DELETE /auction/listings/:id` - Delete listing
-
-**Bidding**:
-
-- `POST /auction/listings/:id/bids` - Place bid on listing
-
-**User Profiles**:
-
-- `GET /auction/profiles/:name` - Get user profile
-- `PUT /auction/profiles/:name` - Update profile
-- `GET /auction/profiles/:name/listings` - Get user's listings
-- `GET /auction/profiles/:name/bids` - Get user's bids
-
-### API Features Implemented
-
-- ✅ JWT token authentication
-- ✅ API key authorization
-- ✅ Centralised error handling and user feedback (toast + structured logging)
-- ✅ Session management with client-side 7-day token expiry
-- ✅ Automatic redirect on 401 with return-URL preservation
-
----
-
-## Browser Compatibility
-
-**Tested and optimized for**:
-
-- **Desktop**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **Mobile**: iOS Safari 14+, Chrome Mobile 90+, Samsung Internet 15+
-
-**Note**: Internet Explorer and legacy browsers are not supported.
+ES2020 target. Tested on Chrome 90+, Firefox 88+, Safari 14+, Edge 90+. iOS Safari 14+, Chrome Mobile 90+, Samsung Internet 15+. No IE.
 
 ---
 
 ## Author
 
-**Sergiu D Sarbu**
-Front-end Development Student, Noroff
+**Sergiu Sarbu** · [GitHub](https://github.com/sergiu-sa)
 
 ## License
 
-© 2024 Noroff School of Technology and Digital Media
-
-This project is part of the Front-end Development 2 course curriculum.
-
----
+MIT © 2026 Sergiu Sarbu. See [LICENSE](LICENSE).

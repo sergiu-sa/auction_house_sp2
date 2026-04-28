@@ -1,6 +1,7 @@
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
+import { initListingFormPreview } from '../components/ListingFormPreview';
 import { protectedRoute, requireOwnership } from '../utils/auth';
 import { getListing, updateListing, deleteListing } from '../api/listings';
 import { toast } from '../components/Toast';
@@ -416,91 +417,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
 }
 
 function initializePreview(): void {
-  const titleInput = document.getElementById('title') as HTMLInputElement;
-  const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
-  const imageUrlsInput = document.getElementById('imageUrls') as HTMLTextAreaElement;
-  const endDateInput = document.getElementById('endDate') as HTMLInputElement;
-
-  const previewTitle = document.getElementById('previewTitle');
-  const previewDescription = document.getElementById('previewDescription');
-  const previewEndDate = document.getElementById('previewEndDate');
-  const mainPreview = document.getElementById('mainPreview');
-  const additionalImages = document.getElementById('additionalImages');
-
-  if (!titleInput || !descriptionInput || !imageUrlsInput || !endDateInput) return;
-
-  // Update title preview
-  titleInput.addEventListener('input', (e) => {
-    if (previewTitle) {
-      previewTitle.textContent = (e.target as HTMLInputElement).value || 'Your listing title';
-    }
-  });
-
-  // Update description preview
-  descriptionInput.addEventListener('input', (e) => {
-    if (previewDescription) {
-      previewDescription.textContent = (e.target as HTMLTextAreaElement).value || 'Your description will appear here…';
-    }
-  });
-
-  // Update end date preview
-  endDateInput.addEventListener('input', (e) => {
-    if (previewEndDate && (e.target as HTMLInputElement).value) {
-      const date = new Date((e.target as HTMLInputElement).value);
-      previewEndDate.textContent = date.toLocaleString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-      });
-    } else if (previewEndDate) {
-      previewEndDate.textContent = 'No end date set';
-    }
-  });
-
-  // Update image previews
-  function updateImagePreviews() {
-    if (!mainPreview || !additionalImages) return;
-
-    const urls = imageUrlsInput.value
-      .split('\n')
-      .map(url => url.trim())
-      .filter(url => url !== '');
-
-    if (urls.length > 0) {
-      // Main image
-      mainPreview.innerHTML = `<img src="${urls[0]}" class="w-full h-full object-cover" alt="Preview" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-slate-400\\'><div class=\\'text-center\\'><i class=\\'fa-solid fa-circle-xmark text-6xl mb-2 block text-red-500\\'></i><p class=\\'text-sm\\'>Invalid image URL</p></div></div>'">`;
-
-      // Additional images
-      if (urls.length > 1) {
-        additionalImages.classList.remove('hidden');
-        additionalImages.innerHTML = urls
-          .slice(1, 4)
-          .map((url, index) => `
-            <div class="bg-white border-2 border-slate-900 overflow-hidden">
-              <img src="${url}" class="w-full h-24 object-cover" alt="Additional preview ${index + 1}" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-24 flex items-center justify-center bg-slate-200 text-slate-400\\'><i class=\\'fa-solid fa-circle-xmark text-red-500\\'></i></div>'">
-            </div>
-          `)
-          .join('');
-      } else {
-        additionalImages.classList.add('hidden');
-      }
-    } else {
-      // Reset to default
-      mainPreview.innerHTML = `
-        <div class="w-full h-full flex items-center justify-center text-slate-400">
-          <div class="text-center">
-            <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400"></i>
-            <p class="text-sm">No image added yet</p>
-          </div>
-        </div>
-      `;
-      additionalImages.classList.add('hidden');
-    }
-  }
-
-  imageUrlsInput.addEventListener('input', updateImagePreviews);
+  initListingFormPreview({ mediaInputId: 'imageUrls', endDateInputId: 'endDate' });
 }
 
 function initializeDeleteModal(listingId: string): void {
