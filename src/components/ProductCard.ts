@@ -4,17 +4,9 @@ import { formatCurrency } from '../utils/formatCurrency';
 import { isLoggedIn } from '../utils/auth';
 import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
+import { logError } from '../utils/logger';
 
-/**
- * Product Card Component
- * Use for: Featured sections, trending auctions, highlighted items
- */
-
-/**
- * Create a single Product Card
- * @param listing - The listing data
- * @returns HTML string for the product card
- */
+// Product Card — use for featured sections, trending auctions, highlighted items.
 export function createProductCard(listing: Listing): string {
   const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
@@ -153,18 +145,13 @@ export function createProductCard(listing: Listing): string {
   `;
 }
 
-/**
- * Render Product Cards in a grid container
- * @param listings - Array of listing data
- * @param containerId - ID of the container element
- */
 export function renderProductCards(
   listings: Listing[],
   containerId: string = 'product-cards-grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Container with id "${containerId}" not found`);
+    logError(`Container with id "${containerId}" not found`);
     return;
   }
 
@@ -186,15 +173,11 @@ export function renderProductCards(
   attachProductCardEvents(containerId);
 }
 
-/**
- * Attach event listeners to Product Card buttons
- * @param containerId - ID of the container element
- */
 export function attachProductCardEvents(containerId: string = 'product-cards-grid'): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Handle "Place Bid" button clicks
+  // Place Bid buttons
   const bidButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="place-bid"]');
 
   bidButtons.forEach(button => {
@@ -203,11 +186,10 @@ export function attachProductCardEvents(containerId: string = 'product-cards-gri
       const listingId = button.getAttribute('data-listing-id');
 
       if (!listingId) {
-        console.error('No listing ID found on button');
+        logError('Product card button missing data-listing-id');
         return;
       }
 
-      // Check if user is logged in
       if (!isLoggedIn()) {
         toast.error('Please log in to place a bid');
         setTimeout(() => {
@@ -216,15 +198,11 @@ export function attachProductCardEvents(containerId: string = 'product-cards-gri
         return;
       }
 
-      // Redirect to listing detail page where user can place bid
       window.location.href = `/listing.html?id=${listingId}`;
     });
   });
 }
 
-/**
- * Create loading skeleton for Product Card
- */
 export function createProductCardSkeleton(): string {
   return `
     <div class="bg-white animate-pulse" style="border: 3px solid #1e293b">
@@ -252,18 +230,13 @@ export function createProductCardSkeleton(): string {
   `;
 }
 
-/**
- * Show loading skeletons in the container
- * @param count - Number of skeletons to show
- * @param containerId - ID of the container element
- */
 export function showProductCardSkeletons(
   count: number = 3,
   containerId: string = 'product-cards-grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Container with id "${containerId}" not found`);
+    logError(`Container with id "${containerId}" not found`);
     return;
   }
 

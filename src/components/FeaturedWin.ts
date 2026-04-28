@@ -1,11 +1,7 @@
-/**
- * Featured Win component for logged-in users
- * Displays a recent winning auction in the footer
- */
-
 import { getCurrentUser } from '../utils/auth';
 import { getProfileWins } from '../api/profile';
 import { getListings } from '../api/listings';
+import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 
 export interface FeaturedWinData {
@@ -23,17 +19,11 @@ export interface FeaturedWinData {
   isEnded: boolean; 
 }
 
-/**
- * Get the highest bid amount from a listing
- */
 function getHighestBid(listing: Listing): number {
   if (!listing.bids || listing.bids.length === 0) return 0;
   return Math.max(...listing.bids.map(bid => bid.amount));
 }
 
-/**
- * Get winning bidder information
- */
 function getWinner(listing: Listing) {
   if (!listing.bids || listing.bids.length === 0) return null;
 
@@ -43,21 +33,12 @@ function getWinner(listing: Listing) {
   return winningBid.bidder;
 }
 
-/**
- * Generate a lot number from listing ID
- */
 function getLotNumber(listingId: string): string {
-  // Use last 3 characters of ID as lot number
   return listingId.slice(-3).toUpperCase();
 }
 
-/**
- * Render the featured win component
- * @param data - Featured win data to display
- * @returns HTML string for the featured win section
- */
 export function renderFeaturedWin(data: FeaturedWinData): string {
-  // Determine label and status based on auction state
+  // Label and status based on auction state
   let labelText: string;
   let statusText: string;
   let statusColor: string;
@@ -139,9 +120,6 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
   `;
 }
 
-/**
- * Convert listing to FeaturedWinData
- */
 function convertListingToFeaturedWin(listing: Listing, currentUserName?: string): FeaturedWinData | null {
   const winner = getWinner(listing);
   if (!winner) return null;
@@ -166,11 +144,7 @@ function convertListingToFeaturedWin(listing: Listing, currentUserName?: string)
   };
 }
 
-/**
- * Fetch featured win data from API
- * Priority: User's most recent win > Recently ended auction with bids
- * @returns Promise with featured win data or null if none found
- */
+// Priority: user's most recent win > recently ended auction with bids > active auction with most bids.
 export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
   try {
     const user = getCurrentUser();
@@ -234,29 +208,25 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
     return convertListingToFeaturedWin(featuredListing, user.name);
 
   } catch (error) {
-    console.error('Error fetching featured win:', error);
+    logError('Failed to fetch featured win', error);
     return null;
   }
 }
 
-/**
- * Initialize featured win component with dynamic data
- * Fetches data from API and renders the component
- */
 export async function initFeaturedWin(): Promise<void> {
   const container = document.getElementById('featured-win-container');
   if (!container) {
     return;
   }
 
-  // Check if user is logged in
+  // Hide for guests
   const user = getCurrentUser();
   if (!user) {
-    container.innerHTML = ''; // Don't show for guests
+    container.innerHTML = '';
     return;
   }
 
-  // Show loading state
+  // Loading state
   container.innerHTML = `
     <div class="mb-20 bg-slate-800 p-10 lg:p-12 flex items-center justify-center" style="border: 3px solid #334155">
       <div class="text-slate-400">
@@ -265,14 +235,12 @@ export async function initFeaturedWin(): Promise<void> {
     </div>
   `;
 
-  // Fetch data
   const data = await fetchFeaturedWin();
 
   if (!data) {
-    container.innerHTML = ''; // Hide if no data
+    container.innerHTML = '';
     return;
   }
 
-  // Render component
   container.innerHTML = renderFeaturedWin(data);
 }

@@ -13,23 +13,22 @@ import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
 import { getListings } from '../api/listings';
+import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 
-/**
- * Initialize register page
- */
+
 export async function initRegisterPage(): Promise<void> {
   // Render header and footer
   await renderHeader();
   renderFooter();
 
-  // Redirect if already authenticated
+
   redirectIfAuthenticated();
 
   // Get form element
   const form = document.getElementById('register-form') as HTMLFormElement;
   if (!form) {
-    console.error('Register form not found');
+    logError('Register form not found');
     return;
   }
 
@@ -70,9 +69,6 @@ export async function initRegisterPage(): Promise<void> {
   initProductShowcase();
 }
 
-/**
- * Initialize product showcase with live data from API
- */
 async function initProductShowcase(): Promise<void> {
   // Animate starter credits counter
   const starterCredits = document.getElementById('starter-credits');
@@ -109,9 +105,6 @@ async function initProductShowcase(): Promise<void> {
   }, 15000);
 }
 
-/**
- * Load dynamic listings from API and update showcase
- */
 async function loadDynamicListings(): Promise<void> {
   try {
     // Fetch latest listings with bids
@@ -126,14 +119,12 @@ async function loadDynamicListings(): Promise<void> {
       updateProductShowcase(response.data);
     }
   } catch (error) {
-    console.error('Failed to load dynamic listings:', error);
+    logError('Failed to load dynamic listings on register page', error);
     // Silently fail - keep existing content
   }
 }
 
-/**
- * Update product showcase with real listings
- */
+
 function updateProductShowcase(listings: Listing[]): void {
   // Update featured listing (main tile)
   if (listings[0]) {
@@ -149,9 +140,7 @@ function updateProductShowcase(listings: Listing[]): void {
   }
 }
 
-/**
- * Update the featured listing showcase
- */
+
 function updateFeaturedListing(listing: Listing): void {
   const article = document.querySelector('[data-tile="featured"]') as HTMLElement;
   if (!article) return;
@@ -179,14 +168,12 @@ function updateFeaturedListing(listing: Listing): void {
   }
 }
 
-/**
- * Update a small tile with listing data
- */
+
 function updateSmallTile(listing: Listing, tileId: string): void {
   const article = document.querySelector(`[data-tile="${tileId}"]`) as HTMLElement;
   if (!article) return;
 
-  // Update image
+
   const img = article.querySelector('img') as HTMLImageElement;
   if (img && listing.media && listing.media.length > 0) {
     img.src = listing.media[0].url;
@@ -216,9 +203,7 @@ function updateSmallTile(listing: Listing, tileId: string): void {
 }
 
 
-/**
- * Validate name field
- */
+
 function validateNameField(input: HTMLInputElement): boolean {
   const name = input.value.trim();
 
@@ -232,7 +217,7 @@ function validateNameField(input: HTMLInputElement): boolean {
     return false;
   }
 
-  // Only alphanumeric and underscore
+
   if (!/^[a-zA-Z0-9_]+$/.test(name)) {
     showFieldError('name', 'Name can only contain letters, numbers, and underscores');
     return false;
@@ -242,9 +227,7 @@ function validateNameField(input: HTMLInputElement): boolean {
   return true;
 }
 
-/**
- * Validate email field
- */
+
 function validateEmailField(input: HTMLInputElement): boolean {
   const email = input.value.trim();
 
@@ -262,9 +245,7 @@ function validateEmailField(input: HTMLInputElement): boolean {
   return true;
 }
 
-/**
- * Validate password field
- */
+
 function validatePasswordField(input: HTMLInputElement): boolean {
   const password = input.value;
 
@@ -282,9 +263,7 @@ function validatePasswordField(input: HTMLInputElement): boolean {
   return true;
 }
 
-/**
- * Validate confirm password field
- */
+
 function validateConfirmPasswordField(
   passwordInput: HTMLInputElement,
   confirmInput: HTMLInputElement
@@ -306,9 +285,7 @@ function validateConfirmPasswordField(
   return true;
 }
 
-/**
- * Update password strength indicator
- */
+
 function updatePasswordStrength(password: string): void {
   const strengthIndicator = document.getElementById('password-strength');
   if (!strengthIndicator) return;
@@ -346,9 +323,7 @@ function updatePasswordStrength(password: string): void {
   strengthIndicator.textContent = `Password strength: ${message}`;
 }
 
-/**
- * Handle register form submission
- */
+
 async function handleRegisterSubmit(e: Event): Promise<void> {
   e.preventDefault();
 
@@ -359,10 +334,10 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
   const email = (formData.get('email') as string).trim();
   const password = formData.get('password') as string;
 
-  // Clear previous errors
+
   clearFormErrors('register-form');
 
-  // Validate all fields
+
   const nameInput = document.getElementById('name') as HTMLInputElement;
   const emailInput = document.getElementById('email') as HTMLInputElement;
   const passwordInput = document.getElementById('password') as HTMLInputElement;
@@ -377,20 +352,20 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
 
   if (!isValid) return;
 
-  // Get submit button
+
   const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
   if (!submitBtn) return;
 
-  // Disable button and show loading state
+
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
 
   try {
-    // Call register API
+ 
     await register({ name, email, password });
 
-    // Show success message
+  
     toast.success('Account created successfully! Redirecting to login...');
 
     // Redirect to login after short delay
@@ -399,7 +374,7 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
     }, 2000);
 
   } catch (error) {
-    console.error('Registration error:', error);
+    logError('Registration failed', error);
 
     // Handle API errors
     if (error instanceof ApiErrorClass) {

@@ -4,17 +4,9 @@ import { formatCurrency } from '../utils/formatCurrency';
 import { isLoggedIn } from '../utils/auth';
 import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
+import { logError } from '../utils/logger';
 
-/**
- * Quick Card Component
- * Use for: Ending soon sections, urgent listings, compact displays
- */
-
-/**
- * Create a single Quick Card
- * @param listing - The listing data
- * @returns HTML string for the quick card
- */
+// Quick Card — use for ending-soon sections, urgent listings, compact displays.
 export function createQuickCard(listing: Listing): string {
   const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
@@ -106,18 +98,13 @@ export function createQuickCard(listing: Listing): string {
   `;
 }
 
-/**
- * Render Quick Cards in a grid container
- * @param listings - Array of listing data
- * @param containerId - ID of the container element
- */
 export function renderQuickCards(
   listings: Listing[],
   containerId: string = 'quick-cards-grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Container with id "${containerId}" not found`);
+    logError(`Container with id "${containerId}" not found`);
     return;
   }
 
@@ -139,15 +126,11 @@ export function renderQuickCards(
   attachQuickCardEvents(containerId);
 }
 
-/**
- * Attach event listeners to Quick Card buttons
- * @param containerId - ID of the container element
- */
 export function attachQuickCardEvents(containerId: string = 'quick-cards-grid'): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Handle "Place Bid" button clicks
+  // Place Bid buttons
   const bidButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="place-bid"]');
 
   bidButtons.forEach(button => {
@@ -156,11 +139,10 @@ export function attachQuickCardEvents(containerId: string = 'quick-cards-grid'):
       const listingId = button.getAttribute('data-listing-id');
 
       if (!listingId) {
-        console.error('No listing ID found on button');
+        logError('Quick card button missing data-listing-id');
         return;
       }
 
-      // Check if user is logged in
       if (!isLoggedIn()) {
         toast.error('Please log in to place a bid');
         setTimeout(() => {
@@ -169,15 +151,11 @@ export function attachQuickCardEvents(containerId: string = 'quick-cards-grid'):
         return;
       }
 
-      // Redirect to listing detail page where user can place bid
       window.location.href = `/listing.html?id=${listingId}`;
     });
   });
 }
 
-/**
- * Create loading skeleton for Quick Card
- */
 export function createQuickCardSkeleton(): string {
   return `
     <div class="bg-white animate-pulse" style="border: 3px solid #1e293b">
@@ -196,18 +174,13 @@ export function createQuickCardSkeleton(): string {
   `;
 }
 
-/**
- * Show loading skeletons in the container
- * @param count - Number of skeletons to show
- * @param containerId - ID of the container element
- */
 export function showQuickCardSkeletons(
   count: number = 4,
   containerId: string = 'quick-cards-grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Container with id "${containerId}" not found`);
+    logError(`Container with id "${containerId}" not found`);
     return;
   }
 

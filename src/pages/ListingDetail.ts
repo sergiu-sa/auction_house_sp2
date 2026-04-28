@@ -18,6 +18,7 @@ import {
 import { APP_BASE_URL } from '../utils/constants';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
+import { isWatched, toggleWatched } from '../utils/storage';
 import type { Listing } from '../types/api';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
@@ -25,9 +26,6 @@ import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 let currentListing: Listing | null = null;
 let countdownInterval: number | null = null;
 
-/**
- * Initialize the listing detail page
- */
 async function init() {
   // Render header and footer
   await renderHeader();
@@ -80,9 +78,6 @@ async function init() {
   });
 }
 
-/**
- * Update dynamic SEO meta tags for the listing
- */
 function updateDynamicSEO(listing: Listing) {
   // Update page title
   const title = `${listing.title} - Auction Listing | Aucto`;
@@ -106,9 +101,6 @@ function updateDynamicSEO(listing: Listing) {
   addStructuredData(generateListingStructuredData(listing));
 }
 
-/**
- * Show error message
- */
 function showError(message: string) {
   const main = document.querySelector('main');
   if (main) {
@@ -129,9 +121,6 @@ function showError(message: string) {
   }
 }
 
-/**
- * Render breadcrumb navigation
- */
 function renderBreadcrumb(listing: Listing) {
   renderBreadcrumbInContainer({
     containerId: 'breadcrumb-nav',
@@ -139,9 +128,6 @@ function renderBreadcrumb(listing: Listing) {
   });
 }
 
-/**
- * Render listing header
- */
 function renderListingHeader(listing: Listing) {
   const header = document.getElementById('listing-header');
   if (!header) return;
@@ -187,9 +173,6 @@ function renderListingHeader(listing: Listing) {
   `;
 }
 
-/**
- * Render media gallery
- */
 function renderMediaGallery(listing: Listing) {
   const gallery = document.getElementById('media-gallery');
   if (!gallery) return;
@@ -265,9 +248,6 @@ function renderMediaGallery(listing: Listing) {
   initGallery();
 }
 
-/**
- * Initialize gallery interactions
- */
 function initGallery() {
   const thumbnails = document.querySelectorAll('.thumbnail-btn');
   const mainImage = document.getElementById('main-image') as HTMLImageElement;
@@ -295,9 +275,6 @@ function initGallery() {
   });
 }
 
-/**
- * Render listing details
- */
 function renderListingDetails(listing: Listing) {
   const details = document.getElementById('listing-details');
   if (!details) return;
@@ -343,9 +320,6 @@ function renderListingDetails(listing: Listing) {
   `;
 }
 
-/**
- * Render bid panel
- */
 function renderBidPanel(listing: Listing) {
   const panel = document.getElementById('bid-panel');
   if (!panel) return;
@@ -457,9 +431,6 @@ function renderBidPanel(listing: Listing) {
   }
 }
 
-/**
- * Initialize bid form
- */
 function initBidForm() {
   const form = document.getElementById('bid-form') as HTMLFormElement;
   if (!form || !currentListing) return;
@@ -534,9 +505,6 @@ function initBidForm() {
   });
 }
 
-/**
- * Copy text to clipboard
- */
 function copyToClipboard(text: string) {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => {
@@ -562,56 +530,47 @@ function copyToClipboard(text: string) {
   }
 }
 
-/**
- * Initialize quick action buttons (Watch & Share)
- */
 function initQuickActions(listing: Listing) {
   const watchBtn = document.getElementById('watch-btn');
   const shareBtn = document.getElementById('share-btn');
 
   // Watch button functionality
   if (watchBtn) {
-    // Check if listing is already watched (using localStorage)
-    const watchedListings = JSON.parse(localStorage.getItem('watchedListings') || '[]');
-    const isWatched = watchedListings.includes(listing.id);
-
-    // Update button state
-    if (isWatched) {
+    const renderWatching = (): void => {
       watchBtn.innerHTML = `
         <i class="fa-solid fa-bookmark text-sm"></i>
         <span>Watching</span>
       `;
       watchBtn.classList.add('bg-slate-900', 'text-white');
       watchBtn.classList.remove('bg-white', 'text-slate-700');
+      watchBtn.setAttribute('aria-pressed', 'true');
+    };
+
+    const renderUnwatched = (): void => {
+      watchBtn.innerHTML = `
+        <i class="fa-solid fa-bookmark text-sm"></i>
+        <span>Watch</span>
+      `;
+      watchBtn.classList.remove('bg-slate-900', 'text-white');
+      watchBtn.classList.add('bg-white', 'text-slate-700');
+      watchBtn.setAttribute('aria-pressed', 'false');
+    };
+
+    if (isWatched(listing.id)) {
+      renderWatching();
+    } else {
+      renderUnwatched();
     }
 
     watchBtn.addEventListener('click', () => {
-      const watchedListings = JSON.parse(localStorage.getItem('watchedListings') || '[]');
-      const index = watchedListings.indexOf(listing.id);
-
-      if (index > -1) {
-        // Remove from watchlist
-        watchedListings.splice(index, 1);
-        watchBtn.innerHTML = `
-          <i class="fa-solid fa-bookmark text-sm"></i>
-          <span>Watch</span>
-        `;
-        watchBtn.classList.remove('bg-slate-900', 'text-white');
-        watchBtn.classList.add('bg-white', 'text-slate-700');
-        showToast('Removed from watchlist', 'info');
-      } else {
-        // Add to watchlist
-        watchedListings.push(listing.id);
-        watchBtn.innerHTML = `
-          <i class="fa-solid fa-bookmark text-sm"></i>
-          <span>Watching</span>
-        `;
-        watchBtn.classList.add('bg-slate-900', 'text-white');
-        watchBtn.classList.remove('bg-white', 'text-slate-700');
+      const nowWatched = toggleWatched(listing.id);
+      if (nowWatched) {
+        renderWatching();
         showToast('Added to watchlist', 'success');
+      } else {
+        renderUnwatched();
+        showToast('Removed from watchlist', 'info');
       }
-
-      localStorage.setItem('watchedListings', JSON.stringify(watchedListings));
     });
   }
 
@@ -645,13 +604,10 @@ function initQuickActions(listing: Listing) {
   }
 }
 
-/**
- * Render tags section
- */
 function renderTags(listing: Listing) {
   const tagsSection = document.getElementById('tags-section');
   if (!tagsSection) {
-    console.error('Tags section element not found!');
+    logError('Tags section element not found');
     return;
   }
 
@@ -689,9 +645,6 @@ function renderTags(listing: Listing) {
   `;
 }
 
-/**
- * Render bid history
- */
 function renderBidHistory(listing: Listing) {
   const history = document.getElementById('bid-history');
   if (!history) return;
@@ -745,9 +698,6 @@ function renderBidHistory(listing: Listing) {
   `;
 }
 
-/**
- * Render seller profile
- */
 function renderSellerProfile(listing: Listing) {
   const profile = document.getElementById('seller-profile');
   if (!profile) return;
@@ -816,9 +766,6 @@ function renderSellerProfile(listing: Listing) {
   `;
 }
 
-/**
- * Render listing meta
- */
 function renderListingMeta(listing: Listing) {
   const meta = document.getElementById('listing-meta');
   if (!meta) return;
@@ -876,9 +823,6 @@ function renderListingMeta(listing: Listing) {
   `;
 }
 
-/**
- * Start countdown timer
- */
 function startCountdown(endDate: string) {
   const updateCountdown = () => {
     const countdownDisplay = document.getElementById('countdown-display');

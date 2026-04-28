@@ -1,32 +1,20 @@
 import type { User } from '../types/api';
 
-/**
- * Get the authentication token from localStorage
- */
 export function getToken(): string | null {
   return localStorage.getItem('token');
 }
 
-/**
- * Set the authentication token in localStorage
- * Also stores the timestamp when the token was set
- */
+// Stores the token plus a timestamp used by isTokenExpired (client-side 7-day expiry).
 export function setToken(token: string): void {
   localStorage.setItem('token', token);
   localStorage.setItem('tokenTimestamp', Date.now().toString());
 }
 
-/**
- * Remove the authentication token from localStorage
- */
 export function removeToken(): void {
   localStorage.removeItem('token');
   localStorage.removeItem('tokenTimestamp');
 }
 
-/**
- * Get the current user from localStorage
- */
 export function getUser(): User | null {
   const userStr = localStorage.getItem('user');
   if (!userStr) return null;
@@ -38,46 +26,30 @@ export function getUser(): User | null {
   }
 }
 
-/**
- * Set the current user in localStorage
- */
 export function setUser(user: User): void {
   localStorage.setItem('user', JSON.stringify(user));
 }
 
-/**
- * Remove the current user from localStorage
- */
 export function removeUser(): void {
   localStorage.removeItem('user');
 }
 
-/**
- * Clear all authentication data from localStorage
- */
 export function clearAuth(): void {
   removeToken();
   removeUser();
 }
 
-/**
- * Get the token timestamp from localStorage
- */
 export function getTokenTimestamp(): number | null {
   const timestamp = localStorage.getItem('tokenTimestamp');
   return timestamp ? parseInt(timestamp, 10) : null;
 }
 
-/**
- * Check if the token has expired
- * Tokens are considered expired after 7 days
- */
+// Client-side expiry: tokens go stale after 7 days.
 export function isTokenExpired(): boolean {
   const token = getToken();
   const timestamp = getTokenTimestamp();
 
-  
-  // This handles race conditions during login
+  // Token written but timestamp not yet flushed (login race) — treat as fresh.
   if (token && !timestamp) return false;
 
   if (!token || !timestamp) return true;
@@ -88,19 +60,47 @@ export function isTokenExpired(): boolean {
   return now - timestamp > sevenDaysInMs;
 }
 
-/**
- * Check if user is authenticated and token is not expired
- */
 export function isAuthenticated(): boolean {
   const hasToken = !!getToken();
 
   if (!hasToken) return false;
-
-  // Check if token is expired
   if (isTokenExpired()) {
     clearAuth();
     return false;
   }
 
+  return true;
+}
+
+const WATCHLIST_KEY = 'watchedListings';
+
+export function getWatchedListings(): string[] {
+  try {
+    const raw = localStorage.getItem(WATCHLIST_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.filter((id): id is string => typeof id === 'string')
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+export function isWatched(listingId: string): boolean {
+  return getWatchedListings().includes(listingId);
+}
+
+// Returns the new watched state (true = now in watchlist).
+export function toggleWatched(listingId: string): boolean {
+  const list = getWatchedListings();
+  const index = list.indexOf(listingId);
+  if (index >= 0) {
+    list.splice(index, 1);
+    localStorage.setItem(WATCHLIST_KEY, JSON.stringify(list));
+    return false;
+  }
+  list.push(listingId);
+  localStorage.setItem(WATCHLIST_KEY, JSON.stringify(list));
   return true;
 }
