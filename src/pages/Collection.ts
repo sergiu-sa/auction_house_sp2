@@ -6,6 +6,7 @@ import {
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
 import { getListings } from '../api/listings';
+import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 
 // State management
@@ -34,9 +35,6 @@ let currentFilters: FilterState = {
 let allListings: Listing[] = [];
 let filteredListings: Listing[] = [];
 
-/**
- * Listen to navbar filter events
- */
 function listenToNavbarFilters(): void {
   // Category filter from navbar
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
@@ -68,9 +66,6 @@ function listenToNavbarFilters(): void {
   }) as EventListener);
 }
 
-/**
- * Initialize filter event listeners
- */
 function initializeFilters(): void {
   // View toggle (grid vs list)
   const gridViewBtn = document.getElementById('grid-view-btn');
@@ -147,9 +142,6 @@ function initializeFilters(): void {
   }
 }
 
-/**
- * Initialize collection page
- */
 export async function initCollectionPage(): Promise<void> {
   // Render header and footer
   await renderHeader();
@@ -165,15 +157,11 @@ export async function initCollectionPage(): Promise<void> {
   loadListings();
 }
 
-/**
- * Load listings from API
- */
 async function loadListings(): Promise<void> {
   try {
     // Show loading skeletons
     showCollectionCardSkeletons(24, 'collection-cards-grid');
 
-    // Fetch listings with filters (reduced from 100 to 50 for better performance)
     const response = await getListings({
       limit: 50,
       _seller: true,
@@ -188,14 +176,11 @@ async function loadListings(): Promise<void> {
       updateStats();
     }
   } catch (error) {
-    console.error('Error loading listings:', error);
+    logError('Failed to load collection listings', error);
     showError('Failed to load listings. Please try again later.');
   }
 }
 
-/**
- * Apply filters to listings
- */
 function applyFilters(): void {
   let filtered = [...allListings];
 
@@ -267,9 +252,6 @@ function applyFilters(): void {
   updateResultsInfo();
 }
 
-/**
- * Update results information display
- */
 function updateResultsInfo(): void {
   const resultsCount = document.getElementById('results-count');
   const resultsRange = document.getElementById('results-range');
@@ -299,9 +281,6 @@ function updateResultsInfo(): void {
   }
 }
 
-/**
- * Update hero stats
- */
 function updateStats(): void {
   const activeLotsCount = document.getElementById('active-lots-count');
   const endingSoonCount = document.getElementById('ending-soon-count');
@@ -329,9 +308,6 @@ function updateStats(): void {
 }
 
 
-/**
- * Show error message
- */
 function showError(message: string): void {
   const container = document.getElementById('collection-cards-grid');
   if (!container) return;

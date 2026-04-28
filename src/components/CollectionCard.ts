@@ -1,18 +1,46 @@
 import type { Listing } from '../types/api';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
+import { isWatched, toggleWatched } from '../utils/storage';
+import { logError } from '../utils/logger';
 
-/**
- * Collection Card Component
- * Use for: Catalog pages, collection pages, search results, browse grids
- */
+function renderFavoriteButton(listingId: string, borderStyle: string): string {
+  const watched = isWatched(listingId);
+  const buttonClass = watched
+    ? 'absolute top-3 right-3 bg-red-600 p-2 group/fav transition-all'
+    : 'absolute top-3 right-3 bg-white p-2 hover:bg-slate-900 group/fav transition-all';
+  const svgClass = watched
+    ? 'w-5 h-5 text-white transition-colors'
+    : 'w-5 h-5 text-slate-700 group-hover/fav:text-white transition-colors';
+  const fill = watched ? 'currentColor' : 'none';
 
-/**
- * Create a single Collection Card
- * @param listing - The listing data
- * @param viewMode - 'grid' or 'list' view mode
- * @returns HTML string for the collection card
- */
+  return `
+    <button
+      class="${buttonClass}"
+      style="${borderStyle}"
+      aria-label="${watched ? 'Remove from watchlist' : 'Add to watchlist'}"
+      aria-pressed="${watched}"
+      data-action="toggle-favorite"
+      data-listing-id="${listingId}"
+    >
+      <svg
+        class="${svgClass}"
+        fill="${fill}"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        />
+      </svg>
+    </button>
+  `;
+}
+
 export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list' = 'grid'): string {
   const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
@@ -25,13 +53,10 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
   const imageUrl = listing.media?.[0]?.url || 'https://via.placeholder.com/500x500?text=No+Image';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
 
-  // Generate responsive image attributes
   const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'square');
 
-  // Extract tag for category badge (use first tag or default)
   const tag = listing.tags?.[0] || 'General';
 
-  // Determine status badge based on listing state and urgency
   const getStatusBadge = (): string => {
     if (!isActive) {
       return `
@@ -47,18 +72,16 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
         </div>`;
     }
 
-    // Parse time remaining to determine urgency
     const hoursMatch = timeRemaining.match(/(\d+)h/);
     const hours = hoursMatch ? parseInt(hoursMatch[1]) : 999;
 
+    // Under 6h left = urgency styling (red, pulsing).
     if (hours < 6) {
-      // Less than 6 hours - URGENT (red, pulsing, with fire icon)
       return `
         <div class="absolute top-3 left-3 bg-red-600 px-3 py-2 text-xs font-bold text-white shadow-lg animate-pulse inline-flex items-center gap-1.5" style="border: 2px solid #991b1b">
           <i class="fa-solid fa-fire"></i> ${timeRemaining}
         </div>`;
     } else {
-      // More than 6 hours - normal (green)
       return `
         <div class="absolute top-3 left-3 bg-green-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #15803d">
           ${timeRemaining}
@@ -96,31 +119,11 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             ${getStatusBadge()}
 
             <!-- Favorite Button -->
-            <button
-              class="absolute top-3 right-3 bg-white p-2 hover:bg-slate-900 group/fav transition-all"
-              style="border: 2px solid #1e293b"
-              title="Add to watchlist"
-              data-action="toggle-favorite"
-              data-listing-id="${listing.id}"
-            >
-              <svg
-                class="w-5 h-5 text-slate-700 group-hover/fav:text-white transition-colors"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-            </button>
+            ${renderFavoriteButton(listing.id, 'border: 2px solid #1e293b')}
           </div>
         </div>
 
-        <!-- Content Section (Flex grow to fill space) -->
+        <!-- Content Section -->
         <div class="flex-1 p-6 flex flex-col justify-between">
           <div>
             <!-- Lot Number + Category Badge -->
@@ -138,7 +141,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
               </a>
             </h3>
 
-            <!-- Description (truncated for list view) -->
+            <!-- Description -->
             ${listing.description ? `
               <p class="mb-4 text-sm text-slate-600 line-clamp-2">
                 ${listing.description}
@@ -159,7 +162,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             </div>
           </div>
 
-          <!-- Bottom Section: Price + CTA -->
+          <!-- Bottom: Price + CTA -->
           <div class="flex items-center justify-between gap-4 mt-4">
             <!-- Price -->
             <div class="flex items-baseline gap-2">
@@ -192,7 +195,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
       data-listing-id="${listing.id}"
     >
       <div class="relative overflow-hidden">
-        <!-- Image with hover effect -->
+        <!-- Image -->
         <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid #1e293b">
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
@@ -209,7 +212,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             />
           </a>
 
-          <!-- Overlay on hover -->
+          <!-- Hover overlay -->
           <div class="absolute inset-0 bg-slate-900 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
             <button
               class="bg-white px-6 py-3 text-xs font-bold text-slate-900 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
@@ -226,27 +229,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
         ${getStatusBadge()}
 
         <!-- Favorite Button -->
-        <button
-          class="absolute top-3 right-3 bg-white p-2 hover:bg-slate-900 group/fav transition-all"
-          style="border: 3px solid #1e293b"
-          title="Add to watchlist"
-          data-action="toggle-favorite"
-          data-listing-id="${listing.id}"
-        >
-          <svg
-            class="w-5 h-5 text-slate-700 group-hover/fav:text-white transition-colors"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
-        </button>
+        ${renderFavoriteButton(listing.id, 'border: 3px solid #1e293b')}
       </div>
 
       <!-- Content -->
@@ -301,12 +284,6 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
   `;
 }
 
-/**
- * Render Collection Cards in a grid container
- * @param listings - Array of listing data
- * @param containerId - ID of the container element
- * @param viewMode - 'grid' or 'list' view mode
- */
 export function renderCollectionCards(
   listings: Listing[],
   containerId: string = 'collection-cards-grid',
@@ -314,7 +291,7 @@ export function renderCollectionCards(
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Container with id "${containerId}" not found`);
+    logError(`Container with id "${containerId}" not found`);
     return;
   }
 
@@ -335,22 +312,16 @@ export function renderCollectionCards(
     return;
   }
 
-  // Render all cards
   container.innerHTML = listings.map(listing => createCollectionCard(listing, viewMode)).join('');
 
-  // Attach event listeners for interactive elements
   attachCollectionCardEvents(containerId);
 }
 
-/**
- * Attach event listeners to Collection Card interactive elements
- * @param containerId - ID of the container element
- */
 export function attachCollectionCardEvents(containerId: string = 'collection-cards-grid'): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Handle "View & Bid" button clicks
+  // View & Bid buttons
   const viewBidButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="view-bid"]');
   viewBidButtons.forEach(button => {
     button.addEventListener('click', (event) => {
@@ -358,16 +329,15 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
       const listingId = button.getAttribute('data-listing-id');
 
       if (!listingId) {
-        console.error('No listing ID found on button');
+        logError('View & Bid button missing data-listing-id');
         return;
       }
 
-      // Redirect to listing detail page (it will handle authentication if needed)
       window.location.href = `/listing.html?id=${listingId}`;
     });
   });
 
-  // Handle "Quick View" button clicks
+  // Quick View buttons
   const quickViewButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="quick-view"]');
   quickViewButtons.forEach(button => {
     button.addEventListener('click', (event) => {
@@ -376,50 +346,57 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
       const listingId = button.getAttribute('data-listing-id');
 
       if (!listingId) {
-        console.error('No listing ID found on button');
+        logError('Quick view button missing data-listing-id');
         return;
       }
 
-      // Redirect to listing detail page
       window.location.href = `/listing.html?id=${listingId}`;
     });
   });
 
-  // Handle "Favorite" button clicks
+  // Favorite buttons (persist to watchlist in localStorage)
   const favoriteButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="toggle-favorite"]');
   favoriteButtons.forEach(button => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      // Toggle favorite state (visual only for now)
-      const svg = button.querySelector('svg');
-      if (svg) {
-        const currentFill = svg.getAttribute('fill');
-        if (currentFill === 'none') {
-          // Add to favorites
-          svg.setAttribute('fill', 'currentColor');
-          button.classList.add('bg-red-600');
-          button.querySelector('svg')?.classList.remove('text-slate-700');
-          button.querySelector('svg')?.classList.add('text-white');
-        } else {
-          // Remove from favorites
-          svg.setAttribute('fill', 'none');
-          button.classList.remove('bg-red-600');
-          button.querySelector('svg')?.classList.remove('text-white');
-          button.querySelector('svg')?.classList.add('text-slate-700');
-        }
+      const listingId = button.getAttribute('data-listing-id');
+      if (!listingId) {
+        logError('Favorite button missing data-listing-id');
+        return;
       }
 
-      // In the future, save favorite state to API
-      // const listingId = button.getAttribute('data-listing-id');
+      const nowWatched = toggleWatched(listingId);
+      const svg = button.querySelector('svg');
+
+      button.setAttribute('aria-pressed', String(nowWatched));
+      button.setAttribute(
+        'aria-label',
+        nowWatched ? 'Remove from watchlist' : 'Add to watchlist'
+      );
+
+      if (nowWatched) {
+        button.classList.remove('bg-white', 'hover:bg-slate-900');
+        button.classList.add('bg-red-600');
+        if (svg) {
+          svg.setAttribute('fill', 'currentColor');
+          svg.classList.remove('text-slate-700', 'group-hover/fav:text-white');
+          svg.classList.add('text-white');
+        }
+      } else {
+        button.classList.remove('bg-red-600');
+        button.classList.add('bg-white', 'hover:bg-slate-900');
+        if (svg) {
+          svg.setAttribute('fill', 'none');
+          svg.classList.remove('text-white');
+          svg.classList.add('text-slate-700', 'group-hover/fav:text-white');
+        }
+      }
     });
   });
 }
 
-/**
- * Create loading skeleton for Collection Card
- */
 export function createCollectionCardSkeleton(): string {
   return `
     <div class="bg-white animate-pulse" style="border: 2px solid #1e293b">
@@ -438,18 +415,13 @@ export function createCollectionCardSkeleton(): string {
   `;
 }
 
-/**
- * Show loading skeletons in the container
- * @param count - Number of skeletons to show
- * @param containerId - ID of the container element
- */
 export function showCollectionCardSkeletons(
   count: number = 8,
   containerId: string = 'collection-cards-grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Container with id "${containerId}" not found`);
+    logError(`Container with id "${containerId}" not found`);
     return;
   }
 

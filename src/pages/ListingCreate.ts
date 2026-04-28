@@ -3,11 +3,11 @@ import { renderFooter } from '../components/Footer';
 import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
 import { createListing } from '../api/listings';
 import { protectedRoute } from '../utils/auth';
+import { toast } from '../components/Toast';
+import { logError } from '../utils/logger';
+import { getErrorMessage } from '../utils/errorHandling';
 import type { CreateListingData } from '../types/api';
 
-/**
- * Initialize listing create page
- */
 export async function initListingCreatePage(): Promise<void> {
   // Render header and footer
   await renderHeader();
@@ -28,9 +28,6 @@ export async function initListingCreatePage(): Promise<void> {
   renderCreateForm();
 }
 
-/**
- * Render the create listing form with live preview
- */
 function renderCreateForm(): void {
   const container = document.getElementById('create-listing-content');
   if (!container) return;
@@ -220,9 +217,6 @@ function renderCreateForm(): void {
   initFormHandlers();
 }
 
-/**
- * Initialize form handlers
- */
 function initFormHandlers(): void {
   const form = document.getElementById('create-listing-form') as HTMLFormElement;
   const titleInput = document.getElementById('title') as HTMLInputElement;
@@ -338,9 +332,6 @@ function initFormHandlers(): void {
   }
 }
 
-/**
- * Handle form submission
- */
 async function handleFormSubmit(event: Event): Promise<void> {
   event.preventDefault();
 
@@ -395,14 +386,8 @@ async function handleFormSubmit(event: Event): Promise<void> {
     // Redirect to the created listing
     window.location.href = `/listing.html?id=${response.data.id}`;
   } catch (error) {
-    console.error('Error creating listing:', error);
-
-    let errorMessage = 'Failed to create listing. Please try again.';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-
-    alert(errorMessage);
+    logError('Failed to create listing', error);
+    toast.error(getErrorMessage(error, 'Failed to create listing. Please try again.'));
 
     // Re-enable submit button
     submitBtn.disabled = false;

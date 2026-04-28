@@ -9,6 +9,7 @@ import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
 import { addStructuredData, generateWebsiteStructuredData, generateOrganizationStructuredData } from '../utils/seo';
+import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import {
   renderSearchField,
@@ -47,9 +48,6 @@ let catalogState: CatalogState = {
   itemsPerPage: 12,
 };
 
-/**
- * Listen to navbar filter events
- */
 function listenToNavbarFilters(): void {
   // Category filter from navbar
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
@@ -85,9 +83,6 @@ function listenToNavbarFilters(): void {
   }) as EventListener);
 }
 
-/**
- * Initialize sticky filter bar with scroll detection and event handlers
- */
 function initStickyFilterBar(): void {
   const stickyBar = document.getElementById('sticky-catalog-filters');
   const catalogSection = document.querySelector('#catalog-cards')?.parentElement;
@@ -169,9 +164,6 @@ function initStickyFilterBar(): void {
   initStickyFilterEvents();
 }
 
-/**
- * Initialize event listeners for sticky filter bar
- */
 function initStickyFilterEvents(): void {
   // Initialize search field using component
   initSearchField('sticky-search-input', 300);
@@ -207,9 +199,6 @@ function initStickyFilterEvents(): void {
   }
 }
 
-/**
- * Sync sticky filter bar with current state
- */
 function syncStickyFiltersWithState(): void {
   // Sync search input using component
   setSearchFieldValue('sticky-search-input', catalogState.search);
@@ -224,9 +213,6 @@ function syncStickyFiltersWithState(): void {
   setSortValue('sticky-sort-select', catalogState.sort, catalogState.sortOrder);
 }
 
-/**
- * Initialize home page
- */
 async function initHomePage(): Promise<void> {
   // Render header and footer (header includes guest banner)
   await renderHeader();
@@ -249,9 +235,6 @@ async function initHomePage(): Promise<void> {
   await loadAllData();
 }
 
-/**
- * Setup create listing button behavior
- */
 function setupCreateListingButton(): void {
   const createListingBtn = document.getElementById('create-listing-btn');
   if (!createListingBtn) return;
@@ -267,12 +250,8 @@ function setupCreateListingButton(): void {
   }
 }
 
-/**
- * Load all data for the home page
- */
 async function loadAllData(): Promise<void> {
   try {
-    // Fetch listings (reduced from 100 to 50 for better initial load performance)
     const response = await getListings({
       limit: 50,
       _seller: true,
@@ -294,15 +273,12 @@ async function loadAllData(): Promise<void> {
       showNoListingsMessage();
     }
   } catch (error) {
-    console.error('Error loading data:', error);
+    logError('Failed to load home page data', error);
     toast.error('Failed to load listings. Please refresh the page.');
     showErrorInSections();
   }
 }
 
-/**
- * Show no listings message in all sections
- */
 function showNoListingsMessage(): void {
   const noDataHTML = `
     <div class="col-span-full text-center py-12">
@@ -329,9 +305,6 @@ function showNoListingsMessage(): void {
   }
 }
 
-/**
- * Show error message in all sections
- */
 function showErrorInSections(): void {
   const errorHTML = `
     <div class="col-span-full text-center py-12">
@@ -355,9 +328,6 @@ function showErrorInSections(): void {
   });
 }
 
-/**
- * Render Hero Section with mosaic and stats
- */
 function renderHeroSection(): void {
   const heroMosaic = document.getElementById('hero-mosaic');
   const heroActiveCount = document.getElementById('hero-active-count');
@@ -483,9 +453,7 @@ function renderHeroSection(): void {
   heroMosaic.innerHTML = mosaicHTML;
 }
 
-/**
- * Render Trending Section (listings with most bids)
- */
+// Trending = active listings sorted by bid count
 function renderTrendingSection(): void {
   const now = new Date();
   const activeListings = allListings.filter(listing => new Date(listing.endsAt) > now);
@@ -503,9 +471,6 @@ function renderTrendingSection(): void {
   }, 300);
 }
 
-/**
- * Render New Listings Section (newest listings)
- */
 function renderNewListingsSection(): void {
   const now = new Date();
   const activeListings = allListings.filter(listing => new Date(listing.endsAt) > now);
@@ -522,9 +487,7 @@ function renderNewListingsSection(): void {
   }, 400);
 }
 
-/**
- * Render Ending Soon Section (listings ending in next 24 hours)
- */
+// Listings ending in the next 24 hours
 function renderEndingSoonSection(): void {
   const now = new Date();
   const tomorrow = new Date(now);
@@ -543,16 +506,10 @@ function renderEndingSoonSection(): void {
   }, 500);
 }
 
-/**
- * Render Catalog Section with filters
- */
 function renderCatalogSection(): void {
   applyCatalogFilters();
 }
 
-/**
- * Apply catalog filters
- */
 function applyCatalogFilters(): void {
   let filtered = [...allListings];
 

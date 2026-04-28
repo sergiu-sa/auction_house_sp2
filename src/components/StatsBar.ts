@@ -1,36 +1,16 @@
-/**
- * Stats Bar component for logged-in users
- * Displays user-specific and platform statistics in the footer
- */
-
 import { getCurrentUser } from '../utils/auth';
 import { getProfileListings, getProfileBids, getProfileWins } from '../api/profile';
+import { formatCurrency } from '../utils/formatCurrency';
+import { logError } from '../utils/logger';
 import type { Bid } from '../types/api';
 
 export interface StatsData {
   myListings: number;
   myBids: number;
-  winRate: number; 
+  winRate: number;
   activeBidsValue: number;
 }
 
-/**
- * Format currency for display
- */
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
-/**
- * Render the stats bar component
- * @param data - Stats data to display
- * @returns HTML string for the stats bar section
- */
 export function renderStatsBar(data: StatsData): string {
   return `
     <div class="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4">
@@ -63,7 +43,7 @@ export function renderStatsBar(data: StatsData): string {
 
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="activeBidsValue">
-          ${formatCurrency(data.activeBidsValue)}
+          ${formatCurrency(data.activeBidsValue, true)}
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
           Active Bids
@@ -73,22 +53,22 @@ export function renderStatsBar(data: StatsData): string {
   `;
 }
 
-/**
- * Calculate win rate percentage
- * @param totalBids - Total number of bids placed
- * @param totalWins - Total number of auctions won
- * @returns Win rate as a percentage (0-100)
- */
-function calculateWinRate(totalBids: number, totalWins: number): number {
-  if (totalBids === 0) return 0;
-  return (totalWins / totalBids) * 100;
+// Win rate = wins / unique auctions bid on. Multiple bids on the same listing count as one attempt.
+function calculateWinRate(attemptedAuctions: number, totalWins: number): number {
+  if (attemptedAuctions === 0) return 0;
+  const rate = (totalWins / attemptedAuctions) * 100;
+  return Math.min(rate, 100);
 }
 
-/**
- * Calculate total value of active bids
- * @param bids - Array of user's bids with listing details
- * @returns Total value of bids on auctions that haven't ended yet
- */
+function countAuctionsBidOn(bids: Bid[]): number {
+  const ids = new Set<string>();
+  for (const bid of bids) {
+    if (bid.listing?.id) ids.add(bid.listing.id);
+  }
+  return ids.size;
+}
+
+// Sum of bids on auctions that haven't ended yet
 function calculateActiveBidsValue(bids: Bid[]): number {
   const now = new Date();
   return bids
@@ -96,10 +76,6 @@ function calculateActiveBidsValue(bids: Bid[]): number {
     .reduce((total, bid) => total + bid.amount, 0);
 }
 
-/**
- * Fetch real stats data from API for logged-in user
- * @returns Promise with stats data or null if error
- */
 export async function fetchStats(): Promise<StatsData | null> {
   try {
     const user = getCurrentUser();
@@ -107,40 +83,33 @@ export async function fetchStats(): Promise<StatsData | null> {
       return null;
     }
 
-    // Fetch data in parallel for better performance
+    // Fetch listings, bids and wins in parallel
     const [listingsResponse, bidsResponse, winsResponse] =
       await Promise.all([
         getProfileListings(user.name),
-        getProfileBids(user.name), 
+        getProfileBids(user.name),
         getProfileWins(user.name)
       ]);
 
-    // Calculate stats
     const myListings = listingsResponse.data.length;
     const myBids = bidsResponse.data.length;
     const totalWins = winsResponse.data?.length || 0;
-    const winRate = calculateWinRate(myBids, totalWins);
+    const auctionsBidOn = countAuctionsBidOn(bidsResponse.data);
+    const winRate = calculateWinRate(auctionsBidOn, totalWins);
     const activeBidsValue = calculateActiveBidsValue(bidsResponse.data);
 
     return {
       myListings,
       myBids,
       winRate,
-      activeBidsValue
+      activeBidsValue,
     };
   } catch (error) {
-    console.error('Error fetching stats:', error);
+    logError('Failed to fetch stats', error);
     return null;
   }
 }
 
-/**
- * Animate number counting effect
- * @param element - The element to animate
- * @param target - The target number
- * @param isCurrency - Whether to format as currency
- * @param duration - Animation duration in milliseconds
- */
 function animateNumber(
   element: HTMLElement,
   target: number,
@@ -159,19 +128,13 @@ function animateNumber(
     }
 
     if (isCurrency) {
-      element.textContent = formatCurrency(Math.floor(current));
+      element.textContent = formatCurrency(Math.floor(current), true);
     } else {
       element.textContent = new Intl.NumberFormat('en-US').format(Math.floor(current));
     }
   }, 16);
 }
 
-/**
- * Animate win rate percentage
- * @param element - The element to animate
- * @param target - The target percentage
- * @param duration - Animation duration in milliseconds
- */
 function animateWinRate(
   element: HTMLElement,
   target: number,
@@ -192,22 +155,18 @@ function animateWinRate(
   }, 16);
 }
 
-/**
- * Initialize stats bar component with dynamic data
- * Fetches data from API, renders the component, and animates numbers
- */
 export async function initStatsBar(): Promise<void> {
   const container = document.getElementById('stats-bar-container');
   if (!container) return;
 
-  // Check if user is logged in
+  // Hide stats for guests
   const user = getCurrentUser();
   if (!user) {
-    container.innerHTML = ''; // Don't show stats for guests
+    container.innerHTML = '';
     return;
   }
 
-  // Show loading state
+  // Loading state
   container.innerHTML = `
     <div class="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4">
       ${Array(4)
@@ -228,24 +187,21 @@ export async function initStatsBar(): Promise<void> {
     </div>
   `;
 
-  // Fetch data
   const data = await fetchStats();
 
   if (!data) {
-    container.innerHTML = ''; // Hide on error
+    container.innerHTML = '';
     return;
   }
 
-  // Render component
   container.innerHTML = renderStatsBar(data);
 
-  // Animate numbers if IntersectionObserver is available
+  // Animate counters when the bar scrolls into view
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Animate each stat
             const myListingsEl = container.querySelector(
               '[data-stat="myListings"]'
             ) as HTMLElement;
@@ -275,11 +231,7 @@ export async function initStatsBar(): Promise<void> {
   }
 }
 
-/**
- * Update stats bar with new data
- * Useful for real-time updates or after user actions
- * @param data - New stats data
- */
+// Update stats bar in place with new data (used after user actions)
 export function updateStatsBar(data: StatsData): void {
   const container = document.getElementById('stats-bar-container');
   if (!container) return;
@@ -312,7 +264,7 @@ export function updateStatsBar(data: StatsData): void {
 
   if (activeBidsValueEl) {
     const currentValue = parseInt(
-      activeBidsValueEl.textContent?.replace(/[$,]/g, '') || '0'
+      activeBidsValueEl.textContent?.replace(/[^\d]/g, '') || '0'
     );
     if (currentValue !== data.activeBidsValue) {
       animateNumber(activeBidsValueEl, data.activeBidsValue, true, 500);
@@ -320,10 +272,7 @@ export function updateStatsBar(data: StatsData): void {
   }
 }
 
-/**
- * Refresh stats bar - fetches and updates with latest data
- * Useful after creating a listing, placing a bid, etc.
- */
+// Refetch and update — call after creating a listing, placing a bid, etc.
 export async function refreshStatsBar(): Promise<void> {
   const data = await fetchStats();
   if (data) {

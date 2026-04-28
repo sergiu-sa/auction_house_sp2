@@ -1,11 +1,9 @@
-/**
- * Breadcrumb Component
- * Reusable breadcrumb navigation for consistent page navigation
- */
+import { logError } from '../utils/logger';
 
 export interface BreadcrumbItem {
   label: string;
-  href?: string; // If undefined, item is rendered as current page (no link)
+  // Omit href to render as the current page (no link).
+  href?: string;
 }
 
 export interface BreadcrumbConfig {
@@ -14,9 +12,6 @@ export interface BreadcrumbConfig {
   className?: string;
 }
 
-/**
- * Render breadcrumb navigation HTML
- */
 export function renderBreadcrumb(config: BreadcrumbConfig): string {
   const { items, className = '' } = config;
 
@@ -49,29 +44,23 @@ export function renderBreadcrumb(config: BreadcrumbConfig): string {
   `;
 }
 
-/**
- * Render breadcrumb directly into a container element
- */
 export function renderBreadcrumbInContainer(config: BreadcrumbConfig): void {
   const { containerId } = config;
 
   if (!containerId) {
-    console.error('Breadcrumb: containerId is required for renderBreadcrumbInContainer');
+    logError('Breadcrumb: containerId is required for renderBreadcrumbInContainer');
     return;
   }
 
   const container = document.getElementById(containerId);
   if (!container) {
-    console.error(`Breadcrumb: Container with id "${containerId}" not found`);
+    logError(`Breadcrumb: Container with id "${containerId}" not found`);
     return;
   }
 
   container.innerHTML = renderBreadcrumb(config);
 }
 
-/**
- * Update the last breadcrumb item (useful for dynamic titles)
- */
 export function updateLastBreadcrumbItem(containerId: string, newLabel: string): void {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -82,9 +71,6 @@ export function updateLastBreadcrumbItem(containerId: string, newLabel: string):
   }
 }
 
-/**
- * Common breadcrumb configurations for frequently used pages
- */
 export const BREADCRUMB_PRESETS = {
   home: (): BreadcrumbItem[] => [
     { label: 'Home', href: '/index.html' },

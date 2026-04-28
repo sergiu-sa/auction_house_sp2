@@ -1,12 +1,5 @@
-/**
- * Newsletter subscription component for guest users
- * Displays a newsletter signup form in the footer
- */
+import { isValidEmail } from '../utils/validation';
 
-/**
- * Render the newsletter component
- * @returns HTML string for the newsletter section
- */
 export function renderNewsletter(): string {
   return `
     <div class="mb-20 bg-slate-800 p-10 lg:p-12" style="border: 3px solid #334155">
@@ -53,10 +46,6 @@ export function renderNewsletter(): string {
   `;
 }
 
-/**
- * Initialize newsletter form functionality
- * Handles form submission and validation
- */
 export function initNewsletter(): void {
   const form = document.getElementById('newsletter-form') as HTMLFormElement;
   const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
@@ -95,8 +84,7 @@ export function initNewsletter(): void {
     `;
 
     try {
-      // In a real application, would send this to  API
-      // For now, just simulate a successful subscription
+      // Simulated subscription — no backend wired up yet
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Success state
@@ -120,7 +108,7 @@ export function initNewsletter(): void {
         submitBtn.classList.add('bg-slate-900', 'hover:bg-slate-800');
       }, 3000);
 
-    } catch (error) {
+    } catch {
       // Error state
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnContent;
@@ -128,9 +116,6 @@ export function initNewsletter(): void {
     }
   });
 
-  /**
-   * Display error message
-   */
   function showError(message: string): void {
     if (!errorDiv || !emailInput) return;
     errorDiv.textContent = message;
@@ -139,9 +124,6 @@ export function initNewsletter(): void {
     emailInput.focus();
   }
 
-  /**
-   * Display success message
-   */
   function showSuccess(message: string): void {
     if (!errorDiv) return;
     errorDiv.textContent = message;
@@ -153,13 +135,5 @@ export function initNewsletter(): void {
       errorDiv.classList.remove('text-green-400');
       errorDiv.classList.add('text-red-400');
     }, 5000);
-  }
-
-  /**
-   * Validate email format
-   */
-  function isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   }
 }

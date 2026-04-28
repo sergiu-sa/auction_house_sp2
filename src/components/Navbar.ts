@@ -11,17 +11,13 @@ import {
   initActiveOnlyCheckbox,
   initSortDropdown,
 } from './filters';
+import { logError } from '../utils/logger';
 import type { User } from '../types/api';
 
-// Cache for user profile data with 30-second TTL
+// 30-second profile cache so credits stay fresh without refetching every page render
 let profileCache: { data: User; timestamp: number } | null = null;
-const CACHE_TTL = 30000; // 30 seconds
+const CACHE_TTL = 30000;
 
-/**
- * Render the header/navigation component
- * Fetches fresh user data to ensure credits are up to date (with 30s cache)
- * Renders different navbar variants based on data-page-type attribute
- */
 export async function renderHeader(): Promise<void> {
   const header = document.getElementById('header');
   if (!header) return;
@@ -63,7 +59,7 @@ export async function renderHeader(): Promise<void> {
         }
       } catch (error) {
         // If fetch fails, continue with cached user data
-        console.error('Failed to fetch fresh user data:', error);
+        logError('Failed to fetch fresh user data', error);
       }
     }
   }
@@ -89,9 +85,7 @@ export async function renderHeader(): Promise<void> {
   initHeaderEvents(pageType);
 }
 
-/**
- * Render minimal navbar for auth pages (login, register)
- */
+// Minimal navbar for auth pages (login, register)
 function renderMinimalNavbar(): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
@@ -118,9 +112,7 @@ function renderMinimalNavbar(): string {
   `;
 }
 
-/**
- * Render simple navbar for user content pages (profile, create/edit listing)
- */
+// Simple navbar for user content pages (profile, create/edit listing)
 function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
@@ -176,9 +168,7 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string 
   `;
 }
 
-/**
- * Render full navbar for browse pages (index, collection, listing details)
- */
+// Full navbar for browse pages (index, collection, listing details)
 function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
@@ -337,9 +327,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
   `;
 }
 
-/**
- * Render user section (credits + profile dropdown OR auth buttons)
- */
+// User section: credits + profile dropdown for logged-in users, auth buttons for guests
 function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <div class="flex items-center gap-3">
@@ -466,9 +454,6 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
   `;
 }
 
-/**
- * Render mobile menu drawer
- */
 function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <!-- MOBILE MENU DRAWER -->
@@ -600,9 +585,6 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
   `;
 }
 
-/**
- * Initialize header event listeners based on page type
- */
 function initHeaderEvents(pageType: string): void {
   // Mobile menu drawer
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -698,9 +680,7 @@ function initHeaderEvents(pageType: string): void {
   }
 }
 
-/**
- * Initialize events specific to browse pages (search, filters)
- */
+// Search + filter events, only used on browse pages
 function initBrowsePageEvents(): void {
   // Get filter elements
   const filtersBar = document.getElementById('advanced-filters-bar');

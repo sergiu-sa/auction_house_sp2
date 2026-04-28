@@ -12,10 +12,10 @@ import type { Profile, Listing, Bid, UpdateProfileData } from '../types/api';
 import { formatDate, formatTimeRemaining } from '../utils/formatDate';
 import { isValidUrl } from '../utils/validation';
 import { showToast } from '../components/Toast';
+import { setUser } from '../utils/storage';
+import { logError } from '../utils/logger';
+import { getErrorMessage } from '../utils/errorHandling';
 
-/**
- * Initialize profile page
- */
 export async function initProfilePage(): Promise<void> {
   // Render header and footer
   await renderHeader();
@@ -57,9 +57,6 @@ export async function initProfilePage(): Promise<void> {
   }
 }
 
-/**
- * Update page header title and description
- */
 function updatePageHeader(title: string, description: string): void {
   const titleElement = document.getElementById('page-title');
   const descElement = document.getElementById('page-description');
@@ -73,9 +70,6 @@ function updatePageHeader(title: string, description: string): void {
   }
 }
 
-/**
- * Load profile data from API
- */
 async function loadProfileData(username: string, isOwnProfile: boolean): Promise<void> {
   const container = document.getElementById('profile-content');
   if (!container) return;
@@ -108,14 +102,11 @@ async function loadProfileData(username: string, isOwnProfile: boolean): Promise
     // Render profile
     renderProfile(profile, listings, bids, wins, isOwnProfile);
   } catch (error) {
-    console.error('Error loading profile:', error);
+    logError('Failed to load profile data', error);
     showError('Failed to load profile data');
   }
 }
 
-/**
- * Render complete profile
- */
 function renderProfile(
   profile: Profile,
   listings: Listing[],
@@ -146,9 +137,6 @@ function renderProfile(
   }
 }
 
-/**
- * Render profile hero section
- */
 function renderProfileHero(
   profile: Profile,
   activeListingsCount: number,
@@ -332,9 +320,6 @@ function renderProfileHero(
   `;
 }
 
-/**
- * Render about and settings section
- */
 function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string {
   return `
     <section>
@@ -459,9 +444,6 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
   `;
 }
 
-/**
- * Render active listings section
- */
 function renderActiveListings(listings: Listing[], isOwnProfile: boolean): string {
   if (listings.length === 0) {
     return `
@@ -533,13 +515,12 @@ function renderActiveListings(listings: Listing[], isOwnProfile: boolean): strin
   `;
 }
 
-/**
- * Render listing card
- */
 function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
   const imageUrl = listing.media?.[0]?.url || '';
   const bidsCount = listing._count?.bids || 0;
-  const highestBid = listing.bids?.[listing.bids.length - 1]?.amount || 0;
+  const highestBid = listing.bids?.length
+    ? Math.max(...listing.bids.map((b) => b.amount))
+    : 0;
   const tag = listing.tags?.[0] || 'General';
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
@@ -609,9 +590,6 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
   `;
 }
 
-/**
- * Render wins and bids section
- */
 function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
   return `
     <section>
@@ -664,11 +642,10 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
   `;
 }
 
-/**
- * Render win item
- */
 function renderWinItem(win: Listing): string {
-  const highestBid = win.bids?.[win.bids.length - 1]?.amount || 0;
+  const highestBid = win.bids?.length
+    ? Math.max(...win.bids.map((b) => b.amount))
+    : 0;
   const timeAgo = formatDate(win.endsAt);
 
   return `
@@ -690,9 +667,6 @@ function renderWinItem(win: Listing): string {
   `;
 }
 
-/**
- * Render bid item
- */
 function renderBidItem(bid: Bid): string {
   const timeAgo = formatDate(bid.created);
 
@@ -710,9 +684,6 @@ function renderBidItem(bid: Bid): string {
   `;
 }
 
-/**
- * Setup event listeners
- */
 function setupEventListeners(profile: Profile): void {
   const profileForm = document.getElementById('profile-form');
   if (profileForm) {
@@ -733,9 +704,6 @@ function setupEventListeners(profile: Profile): void {
   }
 }
 
-/**
- * Handle profile update
- */
 async function handleProfileUpdate(username: string): Promise<void> {
   const bioInput = document.getElementById('bio-input') as HTMLTextAreaElement;
   const avatarInput = document.getElementById('avatar-input') as HTMLInputElement;
@@ -796,8 +764,6 @@ async function handleProfileUpdate(username: string): Promise<void> {
         avatar: response.data.avatar,
         banner: response.data.banner,
       };
-      // Import setUser at the top if not already imported
-      const { setUser } = await import('../utils/storage');
       setUser(updatedUser);
     }
 
@@ -810,15 +776,8 @@ async function handleProfileUpdate(username: string): Promise<void> {
       await renderHeader();
     }, 1000);
   } catch (error) {
-    console.error('Error updating profile:', error);
-
-    // Show specific error message if available
-    let errorMessage = 'Failed to update profile';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-
-    showToast(errorMessage, 'error');
+    logError('Failed to update profile', error, { username });
+    showToast(getErrorMessage(error, 'Failed to update profile'), 'error');
 
     // Re-enable button
     submitBtn.disabled = false;
@@ -827,9 +786,6 @@ async function handleProfileUpdate(username: string): Promise<void> {
 }
 
 
-/**
- * Show error message
- */
 function showError(message: string): void {
   const container = document.getElementById('profile-content');
   if (!container) return;

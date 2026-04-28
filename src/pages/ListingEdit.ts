@@ -10,9 +10,6 @@ import type { Listing, UpdateListingData } from '../types/api';
 
 let currentListing: Listing | null = null;
 
-/**
- * Initialize listing edit page
- */
 export async function initListingEditPage(): Promise<void> {
   // Render header and footer
   await renderHeader();
@@ -36,9 +33,6 @@ export async function initListingEditPage(): Promise<void> {
   await loadListingData(listingId);
 }
 
-/**
- * Load listing data from API
- */
 async function loadListingData(listingId: string): Promise<void> {
   const container = document.getElementById('edit-listing-content');
   if (!container) return;
@@ -70,14 +64,11 @@ async function loadListingData(listingId: string): Promise<void> {
     initializePreview();
     initializeDeleteModal(listingId);
   } catch (error) {
-    console.error('Error loading listing:', error);
+    logError('Failed to load listing for edit', error, { listingId });
     showError('Failed to load listing data. The listing may not exist or you may not have permission to edit it.');
   }
 }
 
-/**
- * Render the edit form with listing data
- */
 function renderEditForm(listing: Listing, hasBids: boolean): void {
   const container = document.getElementById('edit-listing-content');
   if (!container) return;
@@ -348,9 +339,6 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
   `;
 }
 
-/**
- * Initialize form event listeners
- */
 function initializeFormListeners(listingId: string, hasBids: boolean): void {
   const form = document.getElementById('editForm') as HTMLFormElement;
   if (!form) return;
@@ -415,14 +403,11 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
         window.location.href = `/listing.html?id=${listingId}`;
       }, 1500);
     } catch (error: unknown) {
-      console.error('Error updating listing:', error);
-
       // Restore button state
       const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
       submitButton.disabled = false;
       submitButton.innerHTML = '<i class="fa-solid fa-floppy-disk text-base"></i><span>Save changes</span>';
 
-      // Show error message
       logError('Failed to update listing', error, { listingId });
       const errorMessage = getErrorMessage(error, 'Failed to update listing. Please try again.');
       toast.error(errorMessage);
@@ -430,9 +415,6 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
   });
 }
 
-/**
- * Initialize live preview updates
- */
 function initializePreview(): void {
   const titleInput = document.getElementById('title') as HTMLInputElement;
   const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
@@ -521,9 +503,6 @@ function initializePreview(): void {
   imageUrlsInput.addEventListener('input', updateImagePreviews);
 }
 
-/**
- * Initialize delete modal functionality
- */
 function initializeDeleteModal(listingId: string): void {
   const deleteButton = document.getElementById('deleteButton');
   const deleteModal = document.getElementById('deleteModal');
@@ -532,15 +511,18 @@ function initializeDeleteModal(listingId: string): void {
 
   if (!deleteButton || !deleteModal || !cancelDelete || !confirmDelete) return;
 
-  // Show modal
-  deleteButton.addEventListener('click', () => {
+  const openModal = (): void => {
     deleteModal.classList.remove('hidden');
-  });
+    deleteModal.classList.add('flex');
+  };
 
-  // Hide modal
-  cancelDelete.addEventListener('click', () => {
+  const closeModal = (): void => {
+    deleteModal.classList.remove('flex');
     deleteModal.classList.add('hidden');
-  });
+  };
+
+  deleteButton.addEventListener('click', openModal);
+  cancelDelete.addEventListener('click', closeModal);
 
   // Confirm deletion
   confirmDelete.addEventListener('click', async () => {
@@ -561,34 +543,26 @@ function initializeDeleteModal(listingId: string): void {
         window.location.href = '/profile.html';
       }, 1500);
     } catch (error: unknown) {
-      console.error('Error deleting listing:', error);
-
       // Restore button state
       const deleteBtn = confirmDelete as HTMLButtonElement;
       deleteBtn.disabled = false;
       deleteBtn.innerHTML = 'Delete Forever';
 
-      // Show error message
       logError('Failed to delete listing', error, { listingId });
       const errorMessage = getErrorMessage(error, 'Failed to delete listing. Please try again.');
       toast.error(errorMessage);
 
-      // Close modal
-      deleteModal.classList.add('hidden');
+      closeModal();
     }
   });
 
-  // Close modal on outside click
   deleteModal.addEventListener('click', (e) => {
     if (e.target === deleteModal) {
-      deleteModal.classList.add('hidden');
+      closeModal();
     }
   });
 }
 
-/**
- * Show error message
- */
 function showError(message: string): void {
   const container = document.getElementById('edit-listing-content');
   if (!container) return;
