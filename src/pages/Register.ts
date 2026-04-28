@@ -7,14 +7,12 @@ import {
   clearFieldError,
   clearFormErrors,
 } from '../utils/validation';
-import { formatTimeRemaining } from '../utils/formatDate';
 import { toast } from '../components/Toast';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
-import { getListings } from '../api/listings';
+import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
-import type { Listing } from '../types/api';
 
 
 export async function initRegisterPage(): Promise<void> {
@@ -66,140 +64,57 @@ export async function initRegisterPage(): Promise<void> {
   }
 
   // Initialize product showcase animations
-  initProductShowcase();
+  initShowcase();
 }
 
-async function initProductShowcase(): Promise<void> {
-  // Animate starter credits counter
+async function initShowcase(): Promise<void> {
+  animateStarterCreditsCounter();
+  simulateActiveUsersCounter();
+
+  await initProductShowcase({
+    pageName: 'register',
+    fallbackImages: {
+      featured: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop',
+      tileA: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
+      tileB: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop',
+    },
+    featuredDescriptionLength: 80,
+    showFeaturedBid: false,
+    tileATitleMaxLength: 30,
+    tileBTitleMaxLength: 30,
+    showTileABidAndTime: false,
+    showTileBDescription: false,
+    tileBDescriptionLength: 0,
+  });
+}
+
+function animateStarterCreditsCounter(): void {
   const starterCredits = document.getElementById('starter-credits');
-  if (starterCredits) {
-    let credits = 800;
-    const targetCredits = 1000;
-    const interval = setInterval(() => {
-      credits += 10;
-      starterCredits.textContent = credits.toString();
-      if (credits >= targetCredits) {
-        clearInterval(interval);
-      }
-    }, 50);
-  }
+  if (!starterCredits) return;
 
-  // Simulate active users count
-  const activeUsers = document.getElementById('active-users');
-  if (activeUsers) {
-    let users = 2744;
-    setInterval(() => {
-      // Random increment/decrement
-      const change = Math.random() > 0.5 ? Math.floor(Math.random() * 5) : -Math.floor(Math.random() * 3);
-      users = Math.max(2700, Math.min(2800, users + change));
-      activeUsers.textContent = users.toLocaleString();
-    }, 4000);
-  }
-
-  // Fetch and display real listings
-  await loadDynamicListings();
-
-  // Refresh listings every 15 seconds
-  setInterval(() => {
-    loadDynamicListings();
-  }, 15000);
-}
-
-async function loadDynamicListings(): Promise<void> {
-  try {
-    // Fetch latest listings with bids
-    const response = await getListings({
-      limit: 3,
-      _bids: true,
-      sort: 'created',
-      sortOrder: 'desc',
-    });
-
-    if (response.data && response.data.length > 0) {
-      updateProductShowcase(response.data);
+  let credits = 800;
+  const targetCredits = 1000;
+  const interval = setInterval(() => {
+    credits += 10;
+    starterCredits.textContent = credits.toString();
+    if (credits >= targetCredits) {
+      clearInterval(interval);
     }
-  } catch (error) {
-    logError('Failed to load dynamic listings on register page', error);
-    // Silently fail - keep existing content
-  }
+  }, 50);
 }
 
+function simulateActiveUsersCounter(): void {
+  const activeUsers = document.getElementById('active-users');
+  if (!activeUsers) return;
 
-function updateProductShowcase(listings: Listing[]): void {
-  // Update featured listing (main tile)
-  if (listings[0]) {
-    updateFeaturedListing(listings[0]);
-  }
-
-  // Update small tiles
-  if (listings[1]) {
-    updateSmallTile(listings[1], 'tile-a');
-  }
-  if (listings[2]) {
-    updateSmallTile(listings[2], 'tile-b');
-  }
-}
-
-
-function updateFeaturedListing(listing: Listing): void {
-  const article = document.querySelector('[data-tile="featured"]') as HTMLElement;
-  if (!article) return;
-
-  // Update image
-  const img = article.querySelector('img') as HTMLImageElement;
-  if (img && listing.media && listing.media.length > 0) {
-    img.src = listing.media[0].url;
-    img.alt = listing.media[0].alt || listing.title;
-    img.onerror = () => {
-      img.src = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop';
-    };
-  }
-
-  // Update title
-  const titleElement = article.querySelector('.font-serif') as HTMLElement;
-  if (titleElement) {
-    titleElement.textContent = listing.title;
-  }
-
-  // Update description
-  const descElement = article.querySelector('.text-xs.text-slate-600') as HTMLElement;
-  if (descElement && listing.description) {
-    descElement.textContent = listing.description.substring(0, 80) + '...';
-  }
-}
-
-
-function updateSmallTile(listing: Listing, tileId: string): void {
-  const article = document.querySelector(`[data-tile="${tileId}"]`) as HTMLElement;
-  if (!article) return;
-
-
-  const img = article.querySelector('img') as HTMLImageElement;
-  if (img && listing.media && listing.media.length > 0) {
-    img.src = listing.media[0].url;
-    img.alt = listing.media[0].alt || listing.title;
-    img.onerror = () => {
-      if (tileId === 'tile-a') {
-        img.src = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop';
-      } else {
-        img.src = 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop';
-      }
-    };
-  }
-
-  // Update title
-  const titleElement = article.querySelector('.text-xs.font-semibold') as HTMLElement;
-  if (titleElement) {
-    titleElement.textContent = listing.title.substring(0, 30) + (listing.title.length > 30 ? '...' : '');
-  }
-
-  // Update bid count and time remaining
-  const metaElement = article.querySelector('.text-\\[11px\\].text-slate-600') as HTMLElement;
-  if (metaElement && listing.bids && listing.endsAt) {
-    const bidCount = listing.bids.length;
-    const timeLeft = formatTimeRemaining(listing.endsAt);
-    metaElement.textContent = `${bidCount} ${bidCount === 1 ? 'bid' : 'bids'} • ${timeLeft}`;
-  }
+  let users = 2744;
+  setInterval(() => {
+    const change = Math.random() > 0.5
+      ? Math.floor(Math.random() * 5)
+      : -Math.floor(Math.random() * 3);
+    users = Math.max(2700, Math.min(2800, users + change));
+    activeUsers.textContent = users.toLocaleString();
+  }, 4000);
 }
 
 

@@ -1,14 +1,12 @@
 import { login } from '../api/auth';
 import { redirectIfAuthenticated } from '../utils/auth';
 import { isValidEmail, showFieldError, clearFieldError, clearFormErrors } from '../utils/validation';
-import { formatTimeRemaining } from '../utils/formatDate';
 import { toast } from '../components/Toast';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
-import { getListings } from '../api/listings';
+import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
-import type { Listing } from '../types/api';
 
 export async function initLoginPage(): Promise<void> {
   // Render header and footer
@@ -41,132 +39,21 @@ export async function initLoginPage(): Promise<void> {
   }
 
   // Initialize product showcase animations
-  initProductShowcase();
-}
-
-async function initProductShowcase(): Promise<void> {
-  await loadDynamicListings();
-
-  // Refresh every 15 seconds
-  setInterval(() => {
-    loadDynamicListings();
-  }, 15000);
-}
-
-async function loadDynamicListings(): Promise<void> {
-  try {
-    // Fetch latest listings with bids
-    const response = await getListings({
-      limit: 3,
-      _bids: true,
-      sort: 'created',
-      sortOrder: 'desc',
-    });
-
-    if (response.data && response.data.length > 0) {
-      updateProductShowcase(response.data);
-    }
-  } catch (error) {
-    logError('Failed to load dynamic listings on login page', error);
-    // Silently fail - keep existing content
-  }
-}
-
-function updateProductShowcase(listings: Listing[]): void {
-  // Update featured listing (main tile)
-  if (listings[0]) {
-    updateFeaturedListing(listings[0]);
-  }
-
-  // Update small tiles
-  if (listings[1]) {
-    updateSmallTile(listings[1], 'tile-a');
-  }
-  if (listings[2]) {
-    updateSmallTile(listings[2], 'tile-b');
-  }
-}
-
-function updateFeaturedListing(listing: Listing): void {
-  const article = document.querySelector('[data-tile="featured"]') as HTMLElement;
-  if (!article) return;
-
-  // Update image
-  const img = article.querySelector('img') as HTMLImageElement;
-  if (img && listing.media && listing.media.length > 0) {
-    img.src = listing.media[0].url;
-    img.alt = listing.media[0].alt || listing.title;
-    img.onerror = () => {
-      img.src = 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop';
-    };
-  }
-
-  // Update title
-  const titleElement = article.querySelector('.font-serif') as HTMLElement;
-  if (titleElement) {
-    titleElement.textContent = listing.title;
-  }
-
-  // Update description
-  const descElement = article.querySelector('.text-xs.text-slate-600') as HTMLElement;
-  if (descElement && listing.description) {
-    descElement.textContent = listing.description.substring(0, 60) + '...';
-  }
-
-  // Update current bid
-  const bidElement = article.querySelector('#featured-bid') as HTMLElement;
-  if (bidElement && listing.bids && listing.bids.length > 0) {
-    const highestBid = Math.max(...listing.bids.map(bid => bid.amount));
-    bidElement.textContent = highestBid.toString();
-  }
-}
-
-function updateSmallTile(listing: Listing, tileId: string): void {
-  const article = document.querySelector(`[data-tile="${tileId}"]`) as HTMLElement;
-  if (!article) return;
-
-  // Update image
-  const img = article.querySelector('img') as HTMLImageElement;
-  if (img && listing.media && listing.media.length > 0) {
-    img.src = listing.media[0].url;
-    img.alt = listing.media[0].alt || listing.title;
-    img.onerror = () => {
-      if (tileId === 'tile-a') {
-        img.src = 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop';
-      } else {
-        img.src = 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop';
-      }
-    };
-  }
-
-  // Update title
-  const titleElement = article.querySelector('.text-xs.font-semibold') as HTMLElement;
-  if (titleElement) {
-    titleElement.textContent = listing.title.substring(0, 25) + (listing.title.length > 25 ? '...' : '');
-  }
-
-  // For tile-a: Update bid count and time remaining
-  if (tileId === 'tile-a') {
-    const watchBids = article.querySelector('#watch-bids') as HTMLElement;
-    const watchTime = article.querySelector('#watch-time') as HTMLElement;
-
-    if (watchBids && listing.bids) {
-      watchBids.textContent = listing.bids.length.toString();
-    }
-
-    if (watchTime && listing.endsAt) {
-      const timeLeft = formatTimeRemaining(listing.endsAt);
-      watchTime.textContent = timeLeft;
-    }
-  }
-
-  // For tile-b: Update description text
-  if (tileId === 'tile-b') {
-    const descElement = article.querySelector('.text-\\[11px\\].text-slate-600') as HTMLElement;
-    if (descElement && listing.description) {
-      descElement.textContent = listing.description.substring(0, 40) + '...';
-    }
-  }
+  initProductShowcase({
+    pageName: 'login',
+    fallbackImages: {
+      featured: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop',
+      tileA: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop',
+      tileB: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop',
+    },
+    featuredDescriptionLength: 60,
+    showFeaturedBid: true,
+    tileATitleMaxLength: 25,
+    tileBTitleMaxLength: 25,
+    showTileABidAndTime: true,
+    showTileBDescription: true,
+    tileBDescriptionLength: 40,
+  });
 }
 
 

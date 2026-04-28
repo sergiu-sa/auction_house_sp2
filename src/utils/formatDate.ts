@@ -30,22 +30,6 @@ export function formatDateShort(date: string | Date): string {
 }
 
 /**
- * Format date for datetime-local input
- * Example: "2024-01-15T14:30"
- */
-export function formatDateForInput(date: string | Date): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
-
-  const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const day = String(dateObj.getDate()).padStart(2, '0');
-  const hours = String(dateObj.getHours()).padStart(2, '0');
-  const minutes = String(dateObj.getMinutes()).padStart(2, '0');
-
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
-/**
  * Get time remaining until a date
  * Returns object with days, hours, minutes, seconds
  */
@@ -110,33 +94,4 @@ export function formatTimeRemaining(endDate: string | Date): string {
 export function isAuctionActive(endDate: string | Date): boolean {
   const end = typeof endDate === 'string' ? new Date(endDate) : endDate;
   return end > new Date();
-}
-
-/**
- * Get relative time string
- * Example: "2 hours ago", "Just now", "In 3 days"
- */
-export function getRelativeTime(date: string | Date): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
-  const now = new Date();
-  const diff = now.getTime() - dateObj.getTime();
-  const absDiff = Math.abs(diff);
-
-  const seconds = Math.floor(absDiff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const months = Math.floor(days / 30);
-  const years = Math.floor(days / 365);
-
-  const isFuture = diff < 0;
-  const prefix = isFuture ? 'In ' : '';
-  const suffix = isFuture ? '' : ' ago';
-
-  if (seconds < 60) return 'Just now';
-  if (minutes < 60) return `${prefix}${minutes} minute${minutes > 1 ? 's' : ''}${suffix}`;
-  if (hours < 24) return `${prefix}${hours} hour${hours > 1 ? 's' : ''}${suffix}`;
-  if (days < 30) return `${prefix}${days} day${days > 1 ? 's' : ''}${suffix}`;
-  if (months < 12) return `${prefix}${months} month${months > 1 ? 's' : ''}${suffix}`;
-  return `${prefix}${years} year${years > 1 ? 's' : ''}${suffix}`;
 }

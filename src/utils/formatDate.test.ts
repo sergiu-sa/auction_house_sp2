@@ -2,11 +2,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   formatDate,
   formatDateShort,
-  formatDateForInput,
   getTimeRemaining,
   formatTimeRemaining,
   isAuctionActive,
-  getRelativeTime,
 } from './formatDate';
 
 describe('Date Formatting', () => {
@@ -56,31 +54,6 @@ describe('Date Formatting', () => {
       expect(formatted).toContain('Dec');
       expect(formatted).toContain('25');
       expect(formatted).toContain('2024');
-    });
-  });
-
-  describe('formatDateForInput', () => {
-    it('should format date for datetime-local input', () => {
-      const date = new Date('2024-01-15T14:30:00');
-      const formatted = formatDateForInput(date);
-
-      expect(formatted).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/);
-      expect(formatted).toContain('2024');
-      expect(formatted).toContain('01');
-      expect(formatted).toContain('15');
-    });
-
-    it('should pad single digit months and days', () => {
-      const date = new Date('2024-03-05T09:05:00');
-      const formatted = formatDateForInput(date);
-
-      expect(formatted).toBe('2024-03-05T09:05');
-    });
-
-    it('should handle string dates', () => {
-      const formatted = formatDateForInput('2024-12-31T23:59:00');
-
-      expect(formatted).toBe('2024-12-31T23:59');
     });
   });
 });
@@ -185,83 +158,6 @@ describe('Time Remaining Calculations', () => {
     it('should handle string dates', () => {
       expect(isAuctionActive('2024-01-20T12:00:00')).toBe(true);
       expect(isAuctionActive('2024-01-10T12:00:00')).toBe(false);
-    });
-  });
-});
-
-describe('Relative Time', () => {
-  beforeEach(() => {
-    vi.setSystemTime(new Date('2024-01-15T12:00:00'));
-  });
-
-  describe('getRelativeTime', () => {
-    it('should show "Just now" for recent timestamps', () => {
-      const recent = new Date('2024-01-15T11:59:30'); // 30 seconds ago
-
-      expect(getRelativeTime(recent)).toBe('Just now');
-    });
-
-    it('should show minutes ago', () => {
-      const minutes = new Date('2024-01-15T11:45:00'); // 15 minutes ago
-      const result = getRelativeTime(minutes);
-
-      expect(result).toContain('minute');
-      expect(result).toContain('ago');
-    });
-
-    it('should show hours ago', () => {
-      const hours = new Date('2024-01-15T09:00:00'); // 3 hours ago
-      const result = getRelativeTime(hours);
-
-      expect(result).toContain('hour');
-      expect(result).toContain('ago');
-    });
-
-    it('should show days ago', () => {
-      const days = new Date('2024-01-12T12:00:00'); // 3 days ago
-      const result = getRelativeTime(days);
-
-      expect(result).toContain('day');
-      expect(result).toContain('ago');
-    });
-
-    it('should show future time with "In" prefix', () => {
-      const future = new Date('2024-01-16T12:00:00'); // 1 day in future
-      const result = getRelativeTime(future);
-
-      expect(result).toContain('In');
-      expect(result).toContain('day');
-    });
-
-    it('should pluralize correctly', () => {
-      const oneDay = new Date('2024-01-14T12:00:00');
-      const twoDays = new Date('2024-01-13T12:00:00');
-
-      expect(getRelativeTime(oneDay)).toContain('1 day');
-      expect(getRelativeTime(twoDays)).toContain('2 days');
-    });
-
-    it('should handle months', () => {
-      const months = new Date('2023-11-15T12:00:00'); // ~2 months ago
-      const result = getRelativeTime(months);
-
-      expect(result).toContain('month');
-      expect(result).toContain('ago');
-    });
-
-    it('should handle years', () => {
-      const years = new Date('2022-01-15T12:00:00'); // 2 years ago
-      const result = getRelativeTime(years);
-
-      expect(result).toContain('year');
-      expect(result).toContain('ago');
-    });
-
-    it('should handle string dates', () => {
-      const result = getRelativeTime('2024-01-14T12:00:00');
-
-      expect(result).toContain('day');
-      expect(result).toContain('ago');
     });
   });
 });
