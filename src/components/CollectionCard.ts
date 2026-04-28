@@ -50,7 +50,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
     ? Math.max(...bids.map(bid => bid.amount))
     : 0;
 
-  const imageUrl = listing.media?.[0]?.url || 'https://via.placeholder.com/500x500?text=No+Image';
+  const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
 
   const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'square');
