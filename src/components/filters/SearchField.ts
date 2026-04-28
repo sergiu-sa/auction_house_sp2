@@ -22,8 +22,8 @@ export function renderSearchField(config: SearchFieldConfig): string {
   } = config;
 
   const inputClasses = variant === 'compact'
-    ? 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none'
-    : 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none';
+    ? 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2'
+    : 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2';
 
   return `
     <div class="relative flex-1">
@@ -33,7 +33,7 @@ export function renderSearchField(config: SearchFieldConfig): string {
         placeholder="${placeholder}"
         value="${initialValue}"
         class="${inputClasses}"
-        style="border: 2px solid #334155"
+        style="border: 2px solid var(--aucto-border-mid)"
       />
       <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
     </div>

@@ -164,11 +164,11 @@ function renderProfileHero(
       </nav>
 
       <!-- Main hero card -->
-      <div class="bg-white relative" style="border: 3px solid #1e293b">
+      <div class="bg-white relative" style="border: 3px solid var(--aucto-border-dark)">
         <!-- Banner -->
         <div
           class="relative h-40 md:h-48 bg-slate-200"
-          style="border-bottom: 3px solid #1e293b; min-height: 10rem;"
+          style="border-bottom: 3px solid var(--aucto-border-dark); min-height: 10rem;"
         >
           ${
             bannerUrl
@@ -191,7 +191,7 @@ function renderProfileHero(
           <!-- Avatar -->
           <div
             class="w-28 h-28 flex-shrink-0 bg-white"
-            style="border: 3px solid #1e293b;"
+            style="border: 3px solid var(--aucto-border-dark);"
           >
             ${
               avatarUrl
@@ -246,7 +246,7 @@ function renderProfileHero(
             <button
               id="edit-profile-btn"
               class="bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
-              style="border: 2px solid #1e293b"
+              style="border: 2px solid var(--aucto-border-dark)"
             >
               <i class="fa-solid fa-pen-to-square text-sm"></i>
               <span>Edit profile</span>
@@ -254,7 +254,7 @@ function renderProfileHero(
             <a
               href="/listing-create.html"
               class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-900 hover:bg-slate-50 inline-flex items-center gap-2 justify-center"
-              style="border: 2px solid #334155"
+              style="border: 2px solid var(--aucto-border-mid)"
             >
               <i class="fa-solid fa-plus text-sm"></i>
               <span>Create listing</span>
@@ -269,7 +269,7 @@ function renderProfileHero(
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div
           class="bg-white px-6 py-5 text-center"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
@@ -281,7 +281,7 @@ function renderProfileHero(
         </div>
         <div
           class="bg-white px-6 py-5 text-center"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
@@ -293,7 +293,7 @@ function renderProfileHero(
         </div>
         <div
           class="bg-white px-6 py-5 text-center"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
@@ -305,7 +305,7 @@ function renderProfileHero(
         </div>
         <div
           class="bg-white px-6 py-5 text-center"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
@@ -325,7 +325,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
     <section>
       <div class="grid gap-6 ${isOwnProfile ? 'lg:grid-cols-2' : 'lg:grid-cols-1'}">
         <!-- About card -->
-        <div class="bg-white p-8 md:p-10" style="border: 3px solid #1e293b">
+        <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-3xl font-bold text-slate-900">
             About this seller
           </h2>
@@ -371,7 +371,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
         <!-- Settings card (only show for own profile) -->
         ${
           isOwnProfile
-            ? `<div class="bg-white p-8 md:p-10" style="border: 3px solid #1e293b">
+            ? `<div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-2xl font-bold text-slate-900">
             Profile settings
           </h2>
@@ -388,8 +388,8 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
               </label>
               <textarea
                 id="bio-input"
-                class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                style="border: 2px solid #334155"
+                class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                style="border: 2px solid var(--aucto-border-mid)"
                 rows="3"
                 placeholder="Short description about yourself"
               >${profile.bio || ''}</textarea>
@@ -404,8 +404,8 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
               <input
                 id="avatar-input"
                 type="url"
-                class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                style="border: 2px solid #334155"
+                class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                style="border: 2px solid var(--aucto-border-mid)"
                 placeholder="https://url.com/avatar.jpg"
                 value="${profile.avatar?.url || ''}"
               />
@@ -420,8 +420,8 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
               <input
                 id="banner-input"
                 type="url"
-                class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                style="border: 2px solid #334155"
+                class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                style="border: 2px solid var(--aucto-border-mid)"
                 placeholder="https://url.com/banner.jpg"
                 value="${profile.banner?.url || ''}"
               />
@@ -430,7 +430,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
             <button
               type="submit"
               class="mt-4 w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
-              style="border: 2px solid #1e293b"
+              style="border: 2px solid var(--aucto-border-dark)"
             >
               <i class="fa-solid fa-floppy-disk text-base"></i>
               <span>Save profile changes</span>
@@ -448,7 +448,7 @@ function renderActiveListings(listings: Listing[], isOwnProfile: boolean): strin
   if (listings.length === 0) {
     return `
       <section>
-        <div class="bg-white p-8 md:p-10" style="border: 3px solid #1e293b">
+        <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <div class="mb-6 flex flex-wrap items-baseline justify-between gap-4">
             <div>
               <h2 class="text-3xl font-bold text-slate-900">Active listings</h2>
@@ -461,7 +461,7 @@ function renderActiveListings(listings: Listing[], isOwnProfile: boolean): strin
                 ? `<a
               href="/listing-create.html"
               class="inline-flex items-center gap-2 bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
-              style="border: 2px solid #1e293b"
+              style="border: 2px solid var(--aucto-border-dark)"
             >
               <i class="fa-solid fa-plus text-sm"></i>
               <span>Create listing</span>
@@ -485,7 +485,7 @@ function renderActiveListings(listings: Listing[], isOwnProfile: boolean): strin
 
   return `
     <section>
-      <div class="bg-white p-8 md:p-10" style="border: 3px solid #1e293b">
+      <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
         <div class="mb-6 flex flex-wrap items-baseline justify-between gap-4">
           <div>
             <h2 class="text-3xl font-bold text-slate-900">Active listings</h2>
@@ -498,7 +498,7 @@ function renderActiveListings(listings: Listing[], isOwnProfile: boolean): strin
               ? `<a
             href="/listing-create.html"
             class="inline-flex items-center gap-2 bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
-            style="border: 2px solid #1e293b"
+            style="border: 2px solid var(--aucto-border-dark)"
           >
             <i class="fa-solid fa-plus text-sm"></i>
             <span>Create listing</span>
@@ -527,11 +527,11 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
   return `
     <article
       class="bg-white transition-all hover:-translate-y-1"
-      style="border: 2px solid #1e293b"
+      style="border: 2px solid var(--aucto-border-dark)"
     >
       <div
         class="aspect-square bg-slate-100"
-        style="border-bottom: 2px solid #1e293b"
+        style="border-bottom: 2px solid var(--aucto-border-dark)"
       >
         ${
           imageUrl
@@ -567,7 +567,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           <a
             href="/listing.html?id=${listing.id}"
             class="flex-1 bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
-            style="border: 2px solid #1e293b"
+            style="border: 2px solid var(--aucto-border-dark)"
           >
             <i class="fa-solid fa-eye text-sm"></i>
             <span>View</span>
@@ -577,7 +577,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
               ? `<a
             href="/listing-edit.html?id=${listing.id}"
             class="bg-white py-3 px-4 text-xs font-bold tracking-wide text-slate-900 hover:bg-slate-50 inline-flex items-center justify-center"
-            style="border: 2px solid #334155"
+            style="border: 2px solid var(--aucto-border-mid)"
             title="Edit listing"
           >
             <i class="fa-solid fa-pen text-sm"></i>
@@ -595,7 +595,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
     <section>
       <div class="grid gap-6 lg:grid-cols-2">
         <!-- Wins -->
-        <div class="bg-white p-8 md:p-10" style="border: 3px solid #1e293b">
+        <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-2xl font-bold text-slate-900">Recent wins</h2>
           <p class="mb-6 text-sm text-slate-600">
             ${wins.length === 0 ? 'You haven\'t won any auctions yet' : `You have won ${wins.length} ${wins.length === 1 ? 'auction' : 'auctions'}`}
@@ -616,7 +616,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
         </div>
 
         <!-- Bids -->
-        <div class="bg-white p-8 md:p-10" style="border: 3px solid #1e293b">
+        <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-2xl font-bold text-slate-900">
             Recent bid activity
           </h2>
@@ -791,14 +791,14 @@ function showError(message: string): void {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="bg-white p-8 text-center" style="border: 3px solid #1e293b">
+    <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
       <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
       <p class="text-slate-600 mb-4">${message}</p>
       <a
         href="/index.html"
         class="inline-block bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid #1e293b"
+        style="border: 2px solid var(--aucto-border-dark)"
       >
         Go to Home
       </a>

@@ -74,7 +74,7 @@ export function renderPagination(config: PaginationConfig): void {
     html += `
       <button
         class="px-4 md:px-6 py-2 md:py-3 text-xs font-bold tracking-wide bg-white text-slate-700 hover:bg-slate-50 transition-colors"
-        style="border: 2px solid #334155"
+        style="border: 2px solid var(--aucto-border-mid)"
         data-page="1"
         aria-label="Go to page 1"
       >

@@ -26,9 +26,9 @@ export function createQuickCard(listing: Listing): string {
   const sellerName = listing.seller?.name || 'Unknown';
 
   return `
-    <article class="bg-white" style="border: 3px solid #1e293b" data-listing-id="${listing.id}">
+    <article class="bg-white" style="border: 3px solid var(--aucto-border-dark)" data-listing-id="${listing.id}">
       <!-- Image -->
-      <div class="h-48 bg-slate-100" style="border-bottom: 3px solid #1e293b">
+      <div class="h-48 bg-slate-100" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${listing.id}" class="block h-full">
           <img
             src="${imgAttrs.src}"
@@ -48,7 +48,7 @@ export function createQuickCard(listing: Listing): string {
       <!-- Content -->
       <div class="p-6">
         <!-- Header: Lot Number + Time Badge -->
-        <div class="mb-4 flex items-center justify-between pb-4" style="border-bottom: 2px solid #e2e8f0">
+        <div class="mb-4 flex items-center justify-between pb-4" style="border-bottom: 2px solid var(--aucto-border-light)">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">
             Lot ${listing.id.slice(-3)}
           </span>
@@ -85,7 +85,7 @@ export function createQuickCard(listing: Listing): string {
         <!-- CTA Button -->
         <button
           class="w-full bg-slate-900 py-3 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
           data-action="place-bid"
           data-listing-id="${listing.id}"
           ${!isActive ? 'disabled' : ''}
@@ -158,10 +158,10 @@ export function attachQuickCardEvents(containerId: string = 'quick-cards-grid'):
 
 export function createQuickCardSkeleton(): string {
   return `
-    <div class="bg-white animate-pulse" style="border: 3px solid #1e293b">
-      <div class="h-48 bg-slate-200" style="border-bottom: 3px solid #1e293b"></div>
+    <div class="bg-white animate-pulse" style="border: 3px solid var(--aucto-border-dark)">
+      <div class="h-48 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)"></div>
       <div class="p-6">
-        <div class="mb-4 flex items-center justify-between pb-4" style="border-bottom: 2px solid #e2e8f0">
+        <div class="mb-4 flex items-center justify-between pb-4" style="border-bottom: 2px solid var(--aucto-border-light)">
           <div class="h-3 bg-slate-200 rounded w-16"></div>
           <div class="h-3 bg-slate-200 rounded w-12"></div>
         </div>

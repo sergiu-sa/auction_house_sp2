@@ -67,7 +67,7 @@
   </head>
   <body class="antialiased bg-aucto-bg" data-page-type="auth">
     <!-- Skip Navigation Link -->
-    <a href="#main-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid #1e293b">Skip to main content</a>
+    <a href="#main-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid var(--aucto-border-dark)">Skip to main content</a>
 
     <!-- Header (rendered by JavaScript) -->
     <div id="header"></div>
@@ -77,20 +77,20 @@
       <section class="px-4 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
         <div
           class="p-4 bg-white md:p-8 lg:p-10"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <div class="grid gap-6 lg:grid-cols-[3fr,2fr] lg:gap-8 items-stretch">
             <!-- LEFT: REGISTER TILE -->
             <section
               aria-label="Create Aucto account"
               class="flex flex-col justify-between p-4 bg-slate-50 md:p-8"
-              style="border: 3px solid #1e293b"
+              style="border: 3px solid var(--aucto-border-dark)"
             >
               <!-- Label + status -->
               <div class="mb-6">
                 <div class="flex items-center justify-between gap-4 mb-4">
                   <div class="flex items-center gap-3">
-                    <div class="h-0.5 w-12 bg-red-700"></div>
+                    <div class="h-0.5 w-12 bg-aucto-red"></div>
                     <span
                       class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
                     >
@@ -144,8 +144,8 @@
                     type="text"
                     autocomplete="name"
                     placeholder="First name and last name"
-                    class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                    style="border: 3px solid #334155"
+                    class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                    style="border: 3px solid var(--aucto-border-mid)"
                     required
                   />
                   <div id="name-error" class="hidden mt-2 text-xs text-red-700"></div>
@@ -165,8 +165,8 @@
                     type="email"
                     autocomplete="email"
                     placeholder="your.name@stud.noroff.no"
-                    class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                    style="border: 3px solid #334155"
+                    class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                    style="border: 3px solid var(--aucto-border-mid)"
                     required
                   />
                   <p class="mt-2 text-xs text-slate-500">
@@ -190,8 +190,8 @@
                       type="password"
                       autocomplete="new-password"
                       placeholder="Create a password"
-                      class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                      style="border: 3px solid #334155"
+                      class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                      style="border: 3px solid var(--aucto-border-mid)"
                       required
                     />
                     <p class="mt-1 text-xs text-slate-500">
@@ -213,8 +213,8 @@
                       type="password"
                       autocomplete="new-password"
                       placeholder="Repeat your password"
-                      class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                      style="border: 3px solid #334155"
+                      class="w-full px-4 py-3 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                      style="border: 3px solid var(--aucto-border-mid)"
                       required
                     />
                     <div id="confirm-password-error" class="hidden mt-2 text-xs text-red-700"></div>
@@ -225,7 +225,7 @@
                   <button
                     type="submit"
                     class="w-full bg-slate-900 py-3 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
-                    style="border: 3px solid #1e293b"
+                    style="border: 3px solid var(--aucto-border-dark)"
                   >
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Create account</span>
@@ -233,7 +233,7 @@
                   <a
                     href="/login.html"
                     class="w-full bg-white py-3 text-[11px] text-center font-bold tracking-[0.18em] uppercase text-slate-900 hover:bg-slate-50 inline-flex items-center justify-center gap-2"
-                    style="border: 3px solid #334155"
+                    style="border: 3px solid var(--aucto-border-mid)"
                   >
                     <i class="text-xs fa-solid fa-sign-in-alt"></i>
                     Already registered? Log in
@@ -277,12 +277,12 @@
               <article
                 data-tile="featured"
                 class="bg-slate-50"
-                style="border: 3px solid #1e293b"
+                style="border: 3px solid var(--aucto-border-dark)"
                 aria-label="Example listing creation"
               >
                 <div
                   class="relative h-40 sm:h-48 md:h-56 bg-slate-200"
-                  style="border-bottom: 3px solid #1e293b"
+                  style="border-bottom: 3px solid var(--aucto-border-dark)"
                 >
                   <img
                     src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop"
@@ -296,7 +296,7 @@
                   </div>
                   <div
                     class="absolute px-3 py-1 text-xs font-semibold bg-white right-3 bottom-3 text-slate-900"
-                    style="border: 3px solid #1e293b"
+                    style="border: 3px solid var(--aucto-border-dark)"
                   >
                     <span id="starter-credits">1000</span> starter credits
                   </div>
@@ -322,11 +322,11 @@
                 <article
                   data-tile="tile-a"
                   class="flex flex-col bg-slate-50"
-                  style="border: 3px solid #1e293b"
+                  style="border: 3px solid var(--aucto-border-dark)"
                 >
                   <div
                     class="h-48 sm:h-52 md:h-56 bg-slate-200"
-                    style="border-bottom: 3px solid #1e293b"
+                    style="border-bottom: 3px solid var(--aucto-border-dark)"
                   >
                     <img
                       src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop"
@@ -353,11 +353,11 @@
                 <article
                   data-tile="tile-b"
                   class="flex flex-col bg-slate-50"
-                  style="border: 3px solid #1e293b"
+                  style="border: 3px solid var(--aucto-border-dark)"
                 >
                   <div
                     class="h-48 sm:h-52 md:h-56 bg-slate-200"
-                    style="border-bottom: 3px solid #1e293b"
+                    style="border-bottom: 3px solid var(--aucto-border-dark)"
                   >
                     <img
                       src="https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop"

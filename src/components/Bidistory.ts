@@ -119,7 +119,7 @@ export function createBidForm(
             step="1"
             required
             placeholder="${minimumBid}"
-            class="w-full px-4 py-3 text-lg font-bold border-2 border-slate-900 focus:outline-none focus:border-blue-500"
+            class="w-full px-4 py-3 text-lg font-bold border-2 border-slate-900 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
           />
           <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
             credits

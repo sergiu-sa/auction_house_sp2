@@ -107,7 +107,7 @@ function showError(message: string) {
     main.innerHTML = `
       <div class="bg-warm-white py-16">
         <div class="mx-auto max-w-7xl px-6 md:px-8">
-          <div class="bg-white p-8 text-center" style="border: 3px solid #1e293b">
+          <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
             <i class="fa-solid fa-exclamation-triangle text-4xl text-red-700 mb-4"></i>
             <h1 class="text-2xl font-bold text-slate-900 mb-2">Error</h1>
             <p class="text-slate-600">${message}</p>
@@ -193,7 +193,7 @@ function renderMediaGallery(listing: Listing) {
 
   gallery.innerHTML = `
     <!-- Main image -->
-    <div class="aspect-[4/3] bg-slate-100 mb-4 md:mb-6" style="border: 3px solid #1e293b">
+    <div class="aspect-[4/3] bg-slate-100 mb-4 md:mb-6" style="border: 3px solid var(--aucto-border-dark)">
       <img
         id="main-image"
         src="${mainImgAttrs.src}"
@@ -283,7 +283,7 @@ function renderListingDetails(listing: Listing) {
     <h3 class="mb-4 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
       Details
     </h3>
-    <div class="flex flex-wrap gap-6 text-xs text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid #e2e8f0">
+    <div class="flex flex-wrap gap-6 text-xs text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
       ${listing.tags && listing.tags.length > 0 ? `
         <div>
           <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
@@ -353,7 +353,7 @@ function renderBidPanel(listing: Listing) {
       ` : ''}
     </div>
 
-    <div class="mb-10 pb-6" style="border-bottom: 2px solid #e2e8f0">
+    <div class="mb-10 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
       <div class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
         <i class="fa-solid fa-clock text-xs ${isActive ? 'text-red-700' : 'text-slate-500'}"></i>
         <span>Time Remaining</span>
@@ -375,8 +375,8 @@ function renderBidPanel(listing: Listing) {
             min="${minimumBid}"
             value="${minimumBid}"
             step="1"
-            class="w-full bg-slate-50 px-4 py-4 text-lg font-bold text-slate-900 focus:outline-none"
-            style="border: 2px solid #334155"
+            class="w-full bg-slate-50 px-4 py-4 text-lg font-bold text-slate-900 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+            style="border: 2px solid var(--aucto-border-mid)"
             required
           />
           <div class="mt-3 text-xs text-slate-500">
@@ -393,7 +393,7 @@ function renderBidPanel(listing: Listing) {
           type="submit"
           id="place-bid-btn"
           class="w-full bg-slate-900 px-6 py-4 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2 mt-2"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
         >
           <i class="fa-solid fa-gavel text-base"></i>
           <span>Place Bid</span>
@@ -408,7 +408,7 @@ function renderBidPanel(listing: Listing) {
         <a
           href="/login.html?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}"
           class="w-full bg-slate-900 px-6 py-4 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
         >
           <i class="fa-solid fa-right-to-bracket text-base"></i>
           <span>Login to Bid</span>
@@ -418,7 +418,7 @@ function renderBidPanel(listing: Listing) {
         </div>
       </div>
     ` : `
-      <div class="bg-slate-100 px-6 py-10 text-center mt-6" style="border: 2px solid #334155">
+      <div class="bg-slate-100 px-6 py-10 text-center mt-6" style="border: 2px solid var(--aucto-border-mid)">
         <i class="fa-solid fa-circle-xmark text-3xl text-slate-500 mb-4"></i>
         <p class="text-sm font-bold text-slate-700">This auction has ended</p>
       </div>
@@ -636,7 +636,7 @@ function renderTags(listing: Listing) {
       ${listing.tags.map(tag => `
         <span
           class="bg-slate-50 px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-slate-700 uppercase"
-          style="border: 2px solid #334155"
+          style="border: 2px solid var(--aucto-border-mid)"
         >
           ${tag}
         </span>
@@ -673,7 +673,7 @@ function renderBidHistory(listing: Listing) {
         const isUserBid = user && bid.bidder?.name === user.name;
 
         return `
-          <div class="flex items-start justify-between gap-4 py-4 ${index < sortedBids.length - 1 ? 'border-b-2' : ''}" style="border-color: #e2e8f0">
+          <div class="flex items-start justify-between gap-4 py-4 ${index < sortedBids.length - 1 ? 'border-b-2' : ''}" style="border-color: var(--aucto-border-light)">
             <div>
               <div class="text-base font-bold text-slate-900 mb-1">
                 ${new Intl.NumberFormat('en-US').format(bid.amount)} Credits
@@ -716,8 +716,8 @@ function renderSellerProfile(listing: Listing) {
     : null;
 
   profile.innerHTML = `
-    <div class="mb-6 flex items-center gap-4 pb-6" style="border-bottom: 2px solid #e2e8f0">
-      <div class="h-16 w-16 bg-slate-100 flex-shrink-0" style="border: 2px solid #1e293b">
+    <div class="mb-6 flex items-center gap-4 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
+      <div class="h-16 w-16 bg-slate-100 flex-shrink-0" style="border: 2px solid var(--aucto-border-dark)">
         ${avatarAttrs ? `
           <img
             src="${avatarAttrs.src}"
@@ -749,12 +749,12 @@ function renderSellerProfile(listing: Listing) {
     </div>
 
     ${seller.bio ? `
-      <p class="text-sm leading-relaxed text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid #e2e8f0">
+      <p class="text-sm leading-relaxed text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
         ${seller.bio}
       </p>
     ` : ''}
 
-    <div class="pt-6" style="border-top: 2px solid #e2e8f0">
+    <div class="pt-6" style="border-top: 2px solid var(--aucto-border-light)">
       <a
         href="/profile.html?user=${seller.name}"
         class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-slate-700 transition-colors"
@@ -777,19 +777,19 @@ function renderListingMeta(listing: Listing) {
 
   meta.innerHTML = `
     <dl class="space-y-0">
-      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid #e2e8f0">
+      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <dt class="text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
           Listing ID
         </dt>
         <dd class="text-sm font-mono text-slate-900">${listing.id.substring(0, 12)}...</dd>
       </div>
-      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid #e2e8f0">
+      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <dt class="text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
           Created
         </dt>
         <dd class="text-sm text-slate-900 text-right">${formatDate(listing.created)}</dd>
       </div>
-      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid #e2e8f0">
+      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <dt class="text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
           Ends
         </dt>
@@ -797,7 +797,7 @@ function renderListingMeta(listing: Listing) {
           ${formatDate(listing.endsAt)}
         </dd>
       </div>
-      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid #e2e8f0">
+      <div class="flex justify-between gap-4 py-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <dt class="text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
           Total Bids
         </dt>
@@ -813,7 +813,7 @@ function renderListingMeta(listing: Listing) {
       </div>
     </dl>
 
-    <div class="mt-0 pt-6 text-xs text-slate-500 leading-relaxed" style="border-top: 2px solid #e2e8f0">
+    <div class="mt-0 pt-6 text-xs text-slate-500 leading-relaxed" style="border-top: 2px solid var(--aucto-border-light)">
       <p>
         All bids are binding. By placing a bid you agree to the platform
         terms and conditions and confirm you have sufficient credits at

@@ -82,7 +82,7 @@
   </head>
   <body class="antialiased bg-aucto-bg" data-page-type="browse">
     <!-- Skip Navigation Link -->
-    <a href="#catalog-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid #1e293b">Skip to main content</a>
+    <a href="#catalog-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid var(--aucto-border-dark)">Skip to main content</a>
 
     <!-- Header (rendered by JavaScript) -->
     <div id="header"></div>
@@ -117,7 +117,7 @@
             <div class="flex gap-3">
               <div
                 class="bg-slate-800 px-5 py-3 min-w-[100px] text-center"
-                style="border: 3px solid #334155"
+                style="border: 3px solid var(--aucto-border-mid)"
               >
                 <div class="mb-0.5 text-2xl font-bold text-white" id="active-lots-count">
                   ---
@@ -144,7 +144,7 @@
               <button
                 id="refresh-listings-btn"
                 class="inline-flex items-center gap-2 px-4 py-3 text-xs font-bold tracking-[0.18em] uppercase bg-white text-slate-900 hover:bg-slate-100 transition-colors"
-                style="border: 3px solid #334155"
+                style="border: 3px solid var(--aucto-border-mid)"
                 title="Refresh listings"
               >
                 <i class="text-sm fa-solid fa-rotate"></i>
@@ -153,7 +153,7 @@
               <button
                 id="clear-filters-btn"
                 class="inline-flex items-center gap-2 px-4 py-3 text-xs font-bold tracking-[0.18em] uppercase bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
-                style="border: 3px solid #334155"
+                style="border: 3px solid var(--aucto-border-mid)"
                 title="Clear all filters"
               >
                 <i class="text-sm fa-solid fa-filter-circle-xmark"></i>
@@ -178,7 +178,7 @@
         <!-- Results Header -->
         <div
           class="flex flex-wrap items-center justify-between gap-6 p-6 mb-8 bg-white"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <div>
             <h2 class="mb-2 text-3xl font-bold text-slate-900">
@@ -199,7 +199,7 @@
               <button
                 id="grid-view-btn"
                 class="flex items-center gap-2 px-4 py-3 text-xs font-bold text-white transition-all bg-slate-900"
-                style="border: 3px solid #1e293b"
+                style="border: 3px solid var(--aucto-border-dark)"
                 title="Grid view"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -215,7 +215,7 @@
               <button
                 id="list-view-btn"
                 class="flex items-center gap-2 px-4 py-3 text-xs font-bold transition-all bg-white text-slate-700 hover:bg-slate-50"
-                style="border: 3px solid #334155"
+                style="border: 3px solid var(--aucto-border-mid)"
                 title="List view"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -282,7 +282,7 @@
             <div class="flex flex-wrap justify-center gap-3 mb-12">
               <button
                 class="flex items-center gap-2 px-8 py-3 text-sm font-bold tracking-wide transition-all bg-white text-slate-900 hover:bg-slate-100"
-                style="border: 3px solid #334155"
+                style="border: 3px solid var(--aucto-border-mid)"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -296,7 +296,7 @@
               </button>
               <button
                 class="flex items-center gap-2 px-8 py-3 text-sm font-bold tracking-wide text-white transition-all bg-slate-800 hover:bg-slate-700"
-                style="border: 3px solid #334155"
+                style="border: 3px solid var(--aucto-border-mid)"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path

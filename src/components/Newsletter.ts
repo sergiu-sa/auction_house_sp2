@@ -2,9 +2,9 @@ import { isValidEmail } from '../utils/validation';
 
 export function renderNewsletter(): string {
   return `
-    <div class="mb-20 bg-slate-800 p-10 lg:p-12" style="border: 3px solid #334155">
+    <div class="mb-20 bg-slate-800 p-10 lg:p-12" style="border: 3px solid var(--aucto-border-mid)">
       <div class="mb-6 flex items-center gap-4">
-        <div class="h-0.5 w-12 bg-red-700"></div>
+        <div class="h-0.5 w-12 bg-aucto-red"></div>
         <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">
           Never Miss
         </span>
@@ -24,8 +24,8 @@ export function renderNewsletter(): string {
             name="email"
             placeholder="your.email@stud.noroff.no"
             required
-            class="w-full bg-slate-50 px-6 py-4 text-sm font-normal text-slate-900 transition-colors placeholder:text-slate-400 focus:outline-none"
-            style="border: 2px solid #334155"
+            class="w-full bg-slate-50 px-6 py-4 text-sm font-normal text-slate-900 transition-colors placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+            style="border: 2px solid var(--aucto-border-mid)"
             aria-describedby="newsletter-error"
           />
           <div id="newsletter-error" class="mt-2 text-sm text-red-400 hidden" role="alert"></div>
@@ -33,7 +33,7 @@ export function renderNewsletter(): string {
         <button
           type="submit"
           class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
-          style="border: 3px solid #1e293b"
+          style="border: 3px solid var(--aucto-border-dark)"
         >
           <i class="fa-solid fa-bell text-sm"></i>
           Subscribe to Alerts

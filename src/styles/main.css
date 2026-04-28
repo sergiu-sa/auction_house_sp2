@@ -2,6 +2,18 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/*
+ * Design tokens.
+
+ */
+:root {
+  --aucto-bg: #f7f7f5;
+  --aucto-border-light: #e2e8f0;
+  --aucto-border-mid: #334155;
+  --aucto-border-dark: #1e293b;
+  --aucto-red: #dc2629;
+}
+
 /* Custom styles */
 body {
   font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;

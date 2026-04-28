@@ -14,7 +14,7 @@ export interface StatsData {
 export function renderStatsBar(data: StatsData): string {
   return `
     <div class="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4">
-      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
+      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="myListings">
           ${new Intl.NumberFormat('en-US').format(data.myListings)}
         </div>
@@ -23,7 +23,7 @@ export function renderStatsBar(data: StatsData): string {
         </div>
       </div>
 
-      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
+      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="myBids">
           ${new Intl.NumberFormat('en-US').format(data.myBids)}
         </div>
@@ -32,7 +32,7 @@ export function renderStatsBar(data: StatsData): string {
         </div>
       </div>
 
-      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
+      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="winRate">
           ${data.winRate.toFixed(1)}%
         </div>
@@ -41,7 +41,7 @@ export function renderStatsBar(data: StatsData): string {
         </div>
       </div>
 
-      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
+      <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="activeBidsValue">
           ${formatCurrency(data.activeBidsValue, true)}
         </div>
@@ -173,7 +173,7 @@ export async function initStatsBar(): Promise<void> {
         .fill(0)
         .map(
           () => `
-        <div class="bg-slate-800 p-6 text-center" style="border: 3px solid #334155">
+        <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
           <div class="mb-2 text-4xl font-bold text-slate-700">
             <i class="fa-solid fa-spinner fa-spin"></i>
           </div>
