@@ -248,7 +248,7 @@ export function renderFooter(): void {
     <!-- Bottom Bar -->
     <div
       class="flex flex-col items-center justify-between gap-8 pt-12 md:flex-row"
-      style="border-top: 2px solid #334155"
+      style="border-top: 2px solid var(--aucto-border-mid)"
     >
       <div class="text-sm text-slate-500">
         &copy; 2025 Aucto. All rights reserved.

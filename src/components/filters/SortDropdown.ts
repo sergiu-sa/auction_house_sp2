@@ -35,8 +35,8 @@ export function renderSortDropdown(config: SortDropdownConfig): string {
   } = config;
 
   const selectClasses = variant === 'compact'
-    ? 'bg-white px-3 py-1.5 pr-7 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline-none appearance-none'
-    : 'bg-white px-4 py-2 pr-8 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline-none appearance-none';
+    ? 'bg-white px-3 py-1.5 pr-7 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 appearance-none'
+    : 'bg-white px-4 py-2 pr-8 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 appearance-none';
 
   const arrowSize = variant === 'compact'
     ? 'border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 5px solid #64748b;'
@@ -49,7 +49,7 @@ export function renderSortDropdown(config: SortDropdownConfig): string {
       <select
         id="${id}"
         class="${selectClasses}"
-        style="border: 2px solid #334155"
+        style="border: 2px solid var(--aucto-border-mid)"
       >
         ${SORT_OPTIONS.map((option) => `
           <option value="${option.value}" ${option.value === defaultValue ? 'selected' : ''}>

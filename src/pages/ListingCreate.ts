@@ -33,11 +33,11 @@ function renderCreateForm(): void {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="bg-white p-6 md:p-10" style="border: 3px solid #1e293b">
+    <div class="bg-white p-6 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
       <!-- Header -->
       <div class="mb-8 md:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="flex items-center gap-4">
-          <div class="h-0.5 w-14 bg-red-700"></div>
+          <div class="h-0.5 w-14 bg-aucto-red"></div>
           <h1 class="text-[12px] font-bold tracking-[0.18em] uppercase text-slate-500">
             Create new listing
           </h1>
@@ -83,7 +83,7 @@ function renderCreateForm(): void {
               id="title"
               name="title"
               placeholder="e.g., Vintage camera set"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
             />
           </div>
@@ -98,7 +98,7 @@ function renderCreateForm(): void {
               name="description"
               rows="6"
               placeholder="Describe the condition, features, and any important notes about your item…"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700 resize-none"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700 resize-none"
               required
             ></textarea>
           </div>
@@ -113,7 +113,7 @@ function renderCreateForm(): void {
               name="media"
               rows="4"
               placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg&#10;https://example.com/image3.jpg"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700 resize-none"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700 resize-none"
             ></textarea>
             <p class="mt-2 text-xs text-slate-500">
               Enter one image URL per line. Images will preview on the right.
@@ -130,7 +130,7 @@ function renderCreateForm(): void {
               id="tags"
               name="tags"
               placeholder="e.g., vintage, camera, photography"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
             />
             <p class="mt-2 text-xs text-slate-500">
               Separate tags with commas
@@ -146,7 +146,7 @@ function renderCreateForm(): void {
               type="datetime-local"
               id="endsAt"
               name="endsAt"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
             />
           </div>
@@ -175,7 +175,7 @@ function renderCreateForm(): void {
           <!-- Main Preview Image -->
           <div
             class="relative h-64 md:h-80 bg-slate-200 overflow-hidden"
-            style="border: 3px solid #1e293b"
+            style="border: 3px solid var(--aucto-border-dark)"
             id="mainPreview"
           >
             <div class="w-full h-full flex items-center justify-center text-slate-400">

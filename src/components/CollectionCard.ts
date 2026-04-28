@@ -67,7 +67,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
 
     if (bids.length === 0) {
       return `
-        <div class="absolute top-3 left-3 bg-blue-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #1e40af">
+        <div class="absolute top-3 left-3 bg-slate-900 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid var(--aucto-border-dark)">
           NEW
         </div>`;
     }
@@ -94,7 +94,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
     return `
       <article
         class="bg-white transition-all duration-300 hover:shadow-xl group relative flex flex-col sm:flex-row"
-        style="border: 3px solid #1e293b"
+        style="border: 3px solid var(--aucto-border-dark)"
         data-listing-id="${listing.id}"
       >
         <!-- Image Section (Fixed width in list view) -->
@@ -129,13 +129,13 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             <!-- Lot Number + Category Badge -->
             <div class="mb-3 flex items-center gap-3 text-[11px] font-bold tracking-[0.18em] uppercase">
               <span class="text-slate-500">Lot ${listing.id.slice(-3)}</span>
-              <span class="bg-blue-100 text-blue-800 px-2 py-1" style="border: 1px solid #3b82f6">
+              <span class="bg-slate-100 text-slate-800 px-2 py-1" style="border: 1px solid var(--aucto-border-mid)">
                 ${tag}
               </span>
             </div>
 
             <!-- Title -->
-            <h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+            <h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors">
               <a href="/listing.html?id=${listing.id}" class="hover:underline">
                 ${listing.title}
               </a>
@@ -172,8 +172,8 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
 
             <!-- CTA Button -->
             <button
-              class="bg-slate-900 px-8 py-3 text-xs font-bold tracking-wide text-white hover:bg-blue-600 transition-all inline-flex items-center justify-center gap-2"
-              style="border: 3px solid #1e293b"
+              class="bg-slate-900 px-8 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 transition-all inline-flex items-center justify-center gap-2"
+              style="border: 3px solid var(--aucto-border-dark)"
               data-action="view-bid"
               data-listing-id="${listing.id}"
               ${!isActive ? 'disabled' : ''}
@@ -191,12 +191,12 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
   return `
     <article
       class="bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group relative"
-      style="border: 3px solid #1e293b"
+      style="border: 3px solid var(--aucto-border-dark)"
       data-listing-id="${listing.id}"
     >
       <div class="relative overflow-hidden">
         <!-- Image -->
-        <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid #1e293b">
+        <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid var(--aucto-border-dark)">
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
               src="${imgAttrs.src}"
@@ -216,7 +216,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
           <div class="absolute inset-0 bg-slate-900 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
             <button
               class="bg-white px-6 py-3 text-xs font-bold text-slate-900 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-              style="border: 3px solid #1e293b"
+              style="border: 3px solid var(--aucto-border-dark)"
               data-action="quick-view"
               data-listing-id="${listing.id}"
             >
@@ -237,13 +237,13 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
         <!-- Lot Number + Category Badge -->
         <div class="mb-3 flex items-center justify-between text-[11px] font-bold tracking-[0.18em] uppercase">
           <span class="text-slate-500">Lot ${listing.id.slice(-3)}</span>
-          <span class="bg-blue-100 text-blue-800 px-2 py-1" style="border: 1px solid #3b82f6">
+          <span class="bg-slate-100 text-slate-800 px-2 py-1" style="border: 1px solid var(--aucto-border-mid)">
             ${tag}
           </span>
         </div>
 
         <!-- Title -->
-        <h3 class="mb-3 text-xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+        <h3 class="mb-3 text-xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors">
           <a href="/listing.html?id=${listing.id}" class="hover:underline">
             ${listing.title}
           </a>
@@ -270,8 +270,8 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
 
         <!-- CTA Button -->
         <button
-          class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-blue-600 transition-all transform hover:scale-105 inline-flex items-center justify-center gap-2"
-          style="border: 3px solid #1e293b"
+          class="w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 transition-all transform hover:scale-105 inline-flex items-center justify-center gap-2"
+          style="border: 3px solid var(--aucto-border-dark)"
           data-action="view-bid"
           data-listing-id="${listing.id}"
           ${!isActive ? 'disabled' : ''}
@@ -297,7 +297,7 @@ export function renderCollectionCards(
 
   if (listings.length === 0) {
     container.innerHTML = `
-      <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid #1e293b">
+      <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid var(--aucto-border-dark)">
         <div class="max-w-md mx-auto">
           <svg class="w-24 h-24 mx-auto mb-6 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -399,8 +399,8 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
 
 export function createCollectionCardSkeleton(): string {
   return `
-    <div class="bg-white animate-pulse" style="border: 2px solid #1e293b">
-      <div class="aspect-square bg-slate-200" style="border-bottom: 2px solid #1e293b"></div>
+    <div class="bg-white animate-pulse" style="border: 3px solid var(--aucto-border-dark)">
+      <div class="aspect-square bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)"></div>
       <div class="p-5">
         <div class="mb-3 flex items-center justify-between">
           <div class="h-3 bg-slate-200 rounded w-16"></div>

@@ -313,14 +313,14 @@ function showError(message: string): void {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid #1e293b">
+    <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid var(--aucto-border-dark)">
       <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
       <p class="text-slate-600 mb-4">${message}</p>
       <button
         onclick="window.location.reload()"
         class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid #1e293b"
+        style="border: 2px solid var(--aucto-border-dark)"
       >
         Reload Page
       </button>

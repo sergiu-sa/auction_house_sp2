@@ -54,13 +54,13 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
   } else {
     labelText = 'Popular Auction';
     statusText = 'Active';
-    statusColor = 'text-blue-400';
+    statusColor = 'text-slate-300';
   }
 
   return `
-    <div class="mb-20 bg-slate-800 p-10 lg:p-12" style="border: 3px solid #334155">
+    <div class="mb-20 bg-slate-800 p-10 lg:p-12" style="border: 3px solid var(--aucto-border-mid)">
       <div class="mb-6 flex items-center gap-4">
-        <div class="h-0.5 w-12 ${data.isUserWin ? 'bg-green-500' : data.isEnded ? 'bg-red-700' : 'bg-blue-500'}"></div>
+        <div class="h-0.5 w-12 ${data.isUserWin ? 'bg-green-500' : data.isEnded ? 'bg-aucto-red' : 'bg-slate-500'}"></div>
         <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">
           ${labelText}
         </span>
@@ -228,7 +228,7 @@ export async function initFeaturedWin(): Promise<void> {
 
   // Loading state
   container.innerHTML = `
-    <div class="mb-20 bg-slate-800 p-10 lg:p-12 flex items-center justify-center" style="border: 3px solid #334155">
+    <div class="mb-20 bg-slate-800 p-10 lg:p-12 flex items-center justify-center" style="border: 3px solid var(--aucto-border-mid)">
       <div class="text-slate-400">
         <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
       </div>

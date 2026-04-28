@@ -82,7 +82,7 @@
   </head>
   <body class="antialiased bg-aucto-bg" data-page-type="browse">
     <!-- Skip Navigation Link -->
-    <a href="#main-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid #1e293b">Skip to main content</a>
+    <a href="#main-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid var(--aucto-border-dark)">Skip to main content</a>
 
     <!-- Header (rendered by JavaScript) -->
     <div id="header"></div>
@@ -101,7 +101,7 @@
             <!-- LEFT: MEDIA + DESCRIPTION -->
             <div class="space-y-6 flex flex-col">
               <!-- Lot Header -->
-              <div class="bg-white p-6 md:p-8 flex-shrink-0" style="border: 3px solid #1e293b">
+              <div class="bg-white p-6 md:p-8 flex-shrink-0" style="border: 3px solid var(--aucto-border-dark)">
                 <div id="listing-header">
                   <!-- Loading state -->
                   <div class="animate-pulse space-y-4">
@@ -113,7 +113,7 @@
               </div>
 
               <!-- Media Gallery -->
-              <div class="bg-white p-4 md:p-6 flex-grow" style="border: 3px solid #1e293b">
+              <div class="bg-white p-4 md:p-6 flex-grow" style="border: 3px solid var(--aucto-border-dark)">
                 <div id="media-gallery">
                   <!-- Loading state -->
                   <div class="animate-pulse">
@@ -132,7 +132,7 @@
             <!-- RIGHT: BID PANEL -->
             <aside class="space-y-6 flex flex-col h-full">
               <!-- Bid input -->
-              <div class="bg-white p-6 flex-shrink-0" style="border: 3px solid #1e293b">
+              <div class="bg-white p-6 flex-shrink-0" style="border: 3px solid var(--aucto-border-dark)">
                 <div id="bid-panel">
                   <!-- Loading state -->
                   <div class="animate-pulse space-y-6">
@@ -149,7 +149,7 @@
                 <button
                   id="watch-btn"
                   class="flex-1 bg-white px-4 py-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center gap-2"
-                  style="border: 3px solid #334155"
+                  style="border: 3px solid var(--aucto-border-mid)"
                   aria-label="Add to watchlist"
                 >
                   <i class="fa-solid fa-bookmark text-sm"></i>
@@ -158,7 +158,7 @@
                 <button
                   id="share-btn"
                   class="flex-1 bg-white px-4 py-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center gap-2"
-                  style="border: 3px solid #334155"
+                  style="border: 3px solid var(--aucto-border-mid)"
                   aria-label="Share listing"
                 >
                   <i class="fa-solid fa-share text-sm"></i>
@@ -167,7 +167,7 @@
               </div>
 
               <!-- Tags -->
-              <div class="bg-white p-6 flex-shrink-0" style="border: 3px solid #1e293b" id="tags-section">
+              <div class="bg-white p-6 flex-shrink-0" style="border: 3px solid var(--aucto-border-dark)" id="tags-section">
                 <!-- Loading state -->
                 <div class="animate-pulse space-y-3">
                   <div class="h-4 bg-slate-200 rounded w-1/4"></div>
@@ -180,7 +180,7 @@
               </div>
 
               <!-- Details block -->
-              <div class="bg-white p-6 flex-grow" style="border: 3px solid #1e293b">
+              <div class="bg-white p-6 flex-grow" style="border: 3px solid var(--aucto-border-dark)">
                 <div id="listing-details">
                   <!-- Loading state -->
                   <div class="animate-pulse space-y-4">
@@ -195,7 +195,7 @@
           <!-- Bottom: Bids, Seller, Meta -->
           <div class="mt-12 grid gap-8 lg:grid-cols-3">
             <!-- Bid history -->
-            <div class="bg-white p-8" style="border: 3px solid #1e293b">
+            <div class="bg-white p-8" style="border: 3px solid var(--aucto-border-dark)">
               <h2 class="mb-6 text-2xl font-bold text-slate-900">Bid History</h2>
               <div id="bid-history">
                 <!-- Loading state -->
@@ -208,7 +208,7 @@
             </div>
 
             <!-- Seller info -->
-            <div class="bg-white p-8" style="border: 3px solid #1e293b">
+            <div class="bg-white p-8" style="border: 3px solid var(--aucto-border-dark)">
               <h2 class="mb-6 text-2xl font-bold text-slate-900">Seller Profile</h2>
               <div id="seller-profile">
                 <!-- Loading state -->
@@ -226,7 +226,7 @@
             </div>
 
             <!-- Listing meta -->
-            <div class="bg-white p-8" style="border: 3px solid #1e293b">
+            <div class="bg-white p-8" style="border: 3px solid var(--aucto-border-dark)">
               <h2 class="mb-6 text-2xl font-bold text-slate-900">Listing Details</h2>
               <div id="listing-meta">
                 <!-- Loading state -->

@@ -298,7 +298,7 @@ function showNoListingsMessage(): void {
   const heroMosaic = document.getElementById('hero-mosaic');
   if (heroMosaic) {
     heroMosaic.innerHTML = `
-      <div class="flex items-center justify-center p-12 bg-slate-50" style="border: 3px solid #1e293b">
+      <div class="flex items-center justify-center p-12 bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
         <p class="text-slate-600">No featured listings available at this time.</p>
       </div>
     `;
@@ -314,7 +314,7 @@ function showErrorInSections(): void {
       <button
         onclick="window.location.reload()"
         class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid #1e293b"
+        style="border: 2px solid var(--aucto-border-dark)"
       >
         Reload Page
       </button>
@@ -356,7 +356,7 @@ function renderHeroSection(): void {
 
   if (featured.length === 0) {
     heroMosaic.innerHTML = `
-      <div class="col-span-full flex items-center justify-center p-12 bg-slate-50" style="border: 3px solid #1e293b">
+      <div class="col-span-full flex items-center justify-center p-12 bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
         <p class="text-slate-600">No featured listings available at this time.</p>
       </div>
     `;
@@ -372,8 +372,8 @@ function renderHeroSection(): void {
 
   let mosaicHTML = `
     <!-- Main featured lot -->
-    <article class="row-span-1 bg-slate-50" style="border: 3px solid #1e293b">
-      <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid #1e293b">
+    <article class="row-span-1 bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
+      <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${main.id}" class="block h-full">
           <img
             src="${mainImage}"
@@ -385,7 +385,7 @@ function renderHeroSection(): void {
           <i class="fa-solid fa-fire text-amber-400"></i>
           <span>Hot</span>
         </div>
-        <div class="absolute right-4 bottom-4 bg-white px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-900" style="border: 2px solid #1e293b">
+        <div class="absolute right-4 bottom-4 bg-white px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-900" style="border: 2px solid var(--aucto-border-dark)">
           ${mainTimeRemaining}
         </div>
       </div>
@@ -425,8 +425,8 @@ function renderHeroSection(): void {
       const highestBid = bids.length > 0 ? Math.max(...bids.map(b => b.amount)) : 0;
 
       mosaicHTML += `
-        <article class="bg-slate-50" style="border: 3px solid #1e293b">
-          <div class="h-48 sm:h-52 md:h-56 bg-slate-200" style="border-bottom: 3px solid #1e293b">
+        <article class="bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
+          <div class="h-48 sm:h-52 md:h-56 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
             <a href="/listing.html?id=${listing.id}" class="block h-full">
               <img
                 src="${image}"

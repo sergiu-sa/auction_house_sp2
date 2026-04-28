@@ -90,7 +90,7 @@ function renderMinimalNavbar(): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
-        <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
+        <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid var(--aucto-border-light)">
           <!-- Brand Logo -->
           <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
             <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-9" width="120" height="36" />
@@ -117,7 +117,7 @@ function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string 
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
-        <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid #e2e8f0">
+        <div class="flex items-center justify-between gap-6 pb-4" style="border-bottom: 1px solid var(--aucto-border-light)">
 
           <!-- Brand Logo -->
           <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
@@ -174,7 +174,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
         <!-- Top row: brand + search + nav + credits -->
-        <div class="flex items-center gap-3 pb-4" style="border-bottom: 1px solid #e2e8f0">
+        <div class="flex items-center gap-3 pb-4" style="border-bottom: 1px solid var(--aucto-border-light)">
 
           <!-- Brand Logo - Always visible -->
           <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
@@ -191,8 +191,8 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
                   name="q"
                   type="search"
                   placeholder="Search by title, description, or lot number..."
-                  class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                  style="border: 2px solid #334155"
+                  class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                  style="border: 2px solid var(--aucto-border-mid)"
                 />
                 <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
               </div>
@@ -203,7 +203,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
               id="toggle-advanced-filters"
               type="button"
               class="flex items-center gap-2 bg-white px-3 py-2 hover:bg-slate-50"
-              style="border: 2px solid #334155"
+              style="border: 2px solid var(--aucto-border-mid)"
               aria-expanded="false"
               aria-controls="advanced-filters-bar"
               aria-label="Toggle advanced filters"
@@ -221,7 +221,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
             id="mobile-search-btn"
             type="button"
             class="lg:hidden flex items-center justify-center bg-white px-3 py-2 hover:bg-slate-50"
-            style="border: 2px solid #334155"
+            style="border: 2px solid var(--aucto-border-mid)"
             aria-label="Toggle search"
             aria-expanded="false"
           >
@@ -270,7 +270,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
         <div
           id="mobile-search-bar"
           class="hidden lg:hidden px-2 py-4"
-          style="border-bottom: 1px solid #e2e8f0"
+          style="border-bottom: 1px solid var(--aucto-border-light)"
         >
           <form role="search" aria-label="Search auctions" id="mobile-search-form">
             <label for="mobile-search-input" class="sr-only">Search auctions</label>
@@ -280,8 +280,8 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
                 name="q"
                 type="search"
                 placeholder="Search auctions..."
-                class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                style="border: 2px solid #334155"
+                class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+                style="border: 2px solid var(--aucto-border-mid)"
               />
               <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
             </div>
@@ -292,7 +292,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
             id="mobile-toggle-filters"
             type="button"
             class="mt-3 w-full flex items-center justify-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
-            style="border: 2px solid #334155"
+            style="border: 2px solid var(--aucto-border-mid)"
             aria-expanded="false"
             aria-controls="advanced-filters-bar"
             aria-label="Toggle filters"
@@ -336,7 +336,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           ? `
         <!-- Logged In User -->
         <!-- Credits Box -->
-        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 3px solid #1e293b" aria-label="User credits">
+        <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 3px solid var(--aucto-border-dark)" aria-label="User credits">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
           <span class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
         </div>
@@ -346,15 +346,15 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           <button
             id="profile-menu-btn"
             class="flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50 transition-colors"
-            style="border: 3px solid #1e293b"
+            style="border: 3px solid var(--aucto-border-dark)"
             aria-expanded="false"
             aria-haspopup="true"
             aria-label="Open profile menu"
           >
             ${
               user.avatar?.url
-                ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
-                : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
+                ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
+                : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
             }
             <span class="text-sm font-bold text-slate-900">${user.name}</span>
             <i class="fa-solid fa-chevron-down text-xs text-slate-500 transition-transform" id="profile-menu-chevron" aria-hidden="true"></i>
@@ -364,7 +364,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           <div
             id="profile-dropdown-menu"
             class="hidden absolute right-0 mt-2 w-56 bg-white shadow-2xl z-50 transform origin-top-right transition-all"
-            style="border: 3px solid #1e293b"
+            style="border: 3px solid var(--aucto-border-dark)"
             role="menu"
             aria-label="Profile menu"
           >
@@ -374,14 +374,14 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
                 <i class="fa-solid fa-user w-5 text-slate-600" aria-hidden="true"></i>
                 <span>My Profile</span>
               </a>
-              <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors border-t" style="border-color: #e2e8f0" role="menuitem">
+              <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors border-t" style="border-color: var(--aucto-border-light)" role="menuitem">
                 <i class="fa-solid fa-plus w-5 text-slate-600" aria-hidden="true"></i>
                 <span>Create Listing</span>
               </a>
               <button
                 id="logout-btn"
                 class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 transition-colors border-t"
-                style="border-color: #e2e8f0"
+                style="border-color: var(--aucto-border-light)"
                 role="menuitem"
               >
                 <i class="fa-solid fa-sign-out-alt w-5" aria-hidden="true"></i>
@@ -396,7 +396,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           id="mobile-menu-btn"
           type="button"
           class="lg:hidden flex items-center justify-center bg-slate-900 px-2.5 py-2 hover:bg-slate-800"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
           aria-expanded="false"
           aria-label="Toggle menu"
         >
@@ -408,7 +408,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         <a
           href="/login.html"
           class="hidden bg-white px-4 py-2 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50 md:inline-flex items-center gap-2"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
           aria-label="Log in to your account"
         >
           <i class="fa-solid fa-right-to-bracket text-sm" aria-hidden="true"></i>
@@ -419,7 +419,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         <a
           href="/register.html"
           class="hidden lg:inline-flex items-center gap-2 bg-slate-900 px-5 py-2 text-sm font-bold tracking-wide text-white hover:bg-slate-800"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
           aria-label="Create new account"
         >
           <i class="fa-solid fa-user-plus text-sm" aria-hidden="true"></i>
@@ -430,7 +430,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         <a
           href="/register.html"
           class="hidden sm:inline-flex lg:hidden items-center gap-1.5 bg-slate-900 px-3 py-2 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
           aria-label="Create new account"
         >
           <i class="fa-solid fa-user-plus text-xs" aria-hidden="true"></i>
@@ -442,7 +442,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           id="mobile-menu-btn"
           type="button"
           class="lg:hidden flex items-center justify-center bg-slate-900 px-2.5 py-2 hover:bg-slate-800"
-          style="border: 2px solid #1e293b"
+          style="border: 2px solid var(--aucto-border-dark)"
           aria-expanded="false"
           aria-label="Toggle menu"
         >
@@ -465,7 +465,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
     <aside
       id="mobile-menu-drawer"
       class="fixed top-0 right-0 bottom-0 w-80 bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto"
-      style="border-left: 3px solid #1e293b"
+      style="border-left: 3px solid var(--aucto-border-dark)"
       role="dialog"
       aria-label="Mobile menu"
       aria-modal="true"
@@ -474,12 +474,12 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         isUserLoggedIn && user
           ? `
       <!-- Mobile Menu Header - Logged In -->
-      <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
+      <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <div class="flex items-center gap-2">
           ${
             user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid #1e293b" />`
-              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid #1e293b" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
+              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
+              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
           }
           <div>
             <div class="text-sm font-bold text-slate-900">${user.name}</div>
@@ -518,7 +518,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         </div>
 
         <!-- Divider -->
-        <div class="my-4" style="border-top: 2px solid #e2e8f0"></div>
+        <div class="my-4" style="border-top: 2px solid var(--aucto-border-light)"></div>
 
         <!-- Logout -->
         <button id="mobile-logout-btn" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 rounded transition-colors" aria-label="Logout">
@@ -529,7 +529,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       `
           : `
       <!-- Mobile Menu Header - Guest -->
-      <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid #e2e8f0">
+      <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <div class="flex items-center gap-2">
           <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-8" width="107" height="32" />
         </div>
@@ -565,15 +565,15 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         </div>
 
         <!-- Divider -->
-        <div class="my-4" style="border-top: 2px solid #e2e8f0"></div>
+        <div class="my-4" style="border-top: 2px solid var(--aucto-border-light)"></div>
 
         <!-- Auth Buttons -->
         <div class="space-y-2">
-          <a href="/login.html" class="w-full flex items-center justify-center gap-2 bg-white px-4 py-3 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50" style="border: 2px solid #1e293b" aria-label="Log in to your account">
+          <a href="/login.html" class="w-full flex items-center justify-center gap-2 bg-white px-4 py-3 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50" style="border: 2px solid var(--aucto-border-dark)" aria-label="Log in to your account">
             <i class="fa-solid fa-right-to-bracket text-sm" aria-hidden="true"></i>
             <span>Log in</span>
           </a>
-          <a href="/register.html" class="w-full flex items-center justify-center gap-2 bg-slate-900 px-4 py-3 text-sm font-bold tracking-wide text-white hover:bg-slate-800" style="border: 2px solid #1e293b" aria-label="Create new account">
+          <a href="/register.html" class="w-full flex items-center justify-center gap-2 bg-slate-900 px-4 py-3 text-sm font-bold tracking-wide text-white hover:bg-slate-800" style="border: 2px solid var(--aucto-border-dark)" aria-label="Create new account">
             <i class="fa-solid fa-user-plus text-sm" aria-hidden="true"></i>
             <span>Create account</span>
           </a>

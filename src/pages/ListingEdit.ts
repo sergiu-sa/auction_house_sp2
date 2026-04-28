@@ -84,11 +84,11 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
   const tags = listing.tags?.join(', ') || '';
 
   container.innerHTML = `
-    <div class="bg-white p-10" style="border: 3px solid #1e293b">
+    <div class="bg-white p-10" style="border: 3px solid var(--aucto-border-dark)">
       <!-- HEADER -->
       <div class="mb-10 flex items-center justify-between">
         <div class="flex items-center gap-4">
-          <div class="h-0.5 w-14 bg-red-700"></div>
+          <div class="h-0.5 w-14 bg-aucto-red"></div>
           <h1 class="text-[12px] font-bold tracking-[0.18em] uppercase text-slate-500">
             Edit listing
           </h1>
@@ -134,7 +134,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               id="title"
               name="title"
               value="${listing.title}"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
               ${hasBids ? 'disabled' : ''}
             />
@@ -152,7 +152,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               id="description"
               name="description"
               rows="6"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
             >${listing.description || ''}</textarea>
           </div>
@@ -168,7 +168,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               id="imageUrls"
               name="media"
               rows="4"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
             >${imageUrls}</textarea>
             <p class="mt-2 text-xs text-slate-500">
               Enter one image URL per line. Images will preview on the right.
@@ -188,7 +188,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               name="tags"
               value="${tags}"
               placeholder="e.g., vintage, tech, collectible"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
             />
             <p class="mt-2 text-xs text-slate-500">
               Separate tags with commas
@@ -207,7 +207,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               id="endDate"
               name="endsAt"
               value="${formattedDate}"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline-none focus:border-red-700"
+              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
             />
           </div>
@@ -236,7 +236,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- MAIN PREVIEW -->
           <div
             class="relative h-80 bg-slate-200 border-3 border-slate-900 overflow-hidden"
-            style="border: 3px solid #1e293b"
+            style="border: 3px solid var(--aucto-border-dark)"
             id="mainPreview"
           >
             ${listing.media?.[0]?.url ? `
@@ -297,7 +297,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
       <!-- DANGER ZONE -->
       <div class="mt-16 pt-10 border-t-2 border-slate-200">
         <div class="flex items-center gap-4 mb-6">
-          <div class="h-0.5 w-14 bg-red-700"></div>
+          <div class="h-0.5 w-14 bg-aucto-red"></div>
           <span class="text-[12px] font-bold tracking-[0.18em] uppercase text-red-700">
             Danger Zone
           </span>
@@ -568,14 +568,14 @@ function showError(message: string): void {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="bg-white p-8 text-center" style="border: 3px solid #1e293b">
+    <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
       <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
       <p class="text-slate-600 mb-4">${message}</p>
       <button
         onclick="window.history.back()"
         class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid #1e293b"
+        style="border: 2px solid var(--aucto-border-dark)"
       >
         Go Back
       </button>
