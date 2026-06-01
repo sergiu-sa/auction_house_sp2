@@ -33,6 +33,14 @@ export async function initRegisterPage(): Promise<void> {
   // Handle form submission
   form.addEventListener('submit', handleRegisterSubmit);
 
+  // Continue-as-guest button
+  const guestBtn = document.getElementById('guest-continue-btn');
+  if (guestBtn) {
+    guestBtn.addEventListener('click', () => {
+      window.location.href = '/index.html';
+    });
+  }
+
   // Real-time validation
   const nameInput = document.getElementById('name') as HTMLInputElement;
   if (nameInput) {
