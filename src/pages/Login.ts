@@ -26,6 +26,14 @@ export async function initLoginPage(): Promise<void> {
   // Handle form submission
   form.addEventListener('submit', handleLoginSubmit);
 
+  // Continue-as-guest button
+  const guestBtn = document.getElementById('guest-continue-btn');
+  if (guestBtn) {
+    guestBtn.addEventListener('click', () => {
+      window.location.href = '/index.html';
+    });
+  }
+
   // Real-time validation
   const emailInput = document.getElementById('email') as HTMLInputElement;
   if (emailInput) {
