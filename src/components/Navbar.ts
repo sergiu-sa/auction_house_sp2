@@ -449,7 +449,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
 
 function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
   return `
-    <!-- MOBILE MENU DRAWER -->
+    <!-- MOBILE MENU DRAWER (hidden = display:none so it stays out of layout) -->
     <div
       id="mobile-menu-overlay"
       class="hidden fixed inset-0 bg-slate-900/50 z-40"
@@ -457,7 +457,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
 
     <aside
       id="mobile-menu-drawer"
-      class="fixed top-0 right-0 bottom-0 w-80 bg-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto"
+      class="hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 overflow-y-auto"
       style="border-left: 3px solid var(--aucto-border-dark)"
       role="dialog"
       aria-label="Mobile menu"
@@ -557,7 +557,7 @@ function initHeaderEvents(pageType: string): void {
 
   function openMobileMenu() {
     if (mobileMenuDrawer && mobileMenuOverlay && mobileMenuBtn) {
-      mobileMenuDrawer.classList.remove('translate-x-full');
+      mobileMenuDrawer.classList.remove('hidden');
       mobileMenuOverlay.classList.remove('hidden');
       mobileMenuBtn.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
@@ -566,7 +566,7 @@ function initHeaderEvents(pageType: string): void {
 
   function closeMobileMenu() {
     if (mobileMenuDrawer && mobileMenuOverlay && mobileMenuBtn) {
-      mobileMenuDrawer.classList.add('translate-x-full');
+      mobileMenuDrawer.classList.add('hidden');
       mobileMenuOverlay.classList.add('hidden');
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';

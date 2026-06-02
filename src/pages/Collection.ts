@@ -75,7 +75,7 @@ function initializeFilters(): void {
   if (gridViewBtn && listViewBtn && listingsGrid) {
     gridViewBtn.addEventListener('click', () => {
       currentFilters.viewMode = 'grid';
-      listingsGrid.className = 'grid gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+      listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
       gridViewBtn.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50');
       gridViewBtn.classList.add('bg-slate-900', 'text-white');
       listViewBtn.classList.remove('bg-slate-900', 'text-white');

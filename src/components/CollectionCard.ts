@@ -135,7 +135,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             </div>
 
             <!-- Title -->
-            <h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors">
+            <h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors break-words">
               <a href="/listing.html?id=${listing.id}" class="hover:underline">
                 ${listing.title}
               </a>
@@ -196,7 +196,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
     >
       <div class="relative overflow-hidden">
         <!-- Image -->
-        <div class="aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid var(--aucto-border-dark)">
+        <div class="aspect-[3/2] sm:aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid var(--aucto-border-dark)">
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
               src="${imgAttrs.src}"
@@ -243,7 +243,7 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
         </div>
 
         <!-- Title -->
-        <h3 class="mb-3 text-xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors">
+        <h3 class="mb-3 text-xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors break-words">
           <a href="/listing.html?id=${listing.id}" class="hover:underline">
             ${listing.title}
           </a>
@@ -400,7 +400,7 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
 export function createCollectionCardSkeleton(): string {
   return `
     <div class="bg-white animate-pulse" style="border: 3px solid var(--aucto-border-dark)">
-      <div class="aspect-square bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)"></div>
+      <div class="aspect-[3/2] sm:aspect-square bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)"></div>
       <div class="p-5">
         <div class="mb-3 flex items-center justify-between">
           <div class="h-3 bg-slate-200 rounded w-16"></div>
