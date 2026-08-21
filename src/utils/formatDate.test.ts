@@ -4,6 +4,8 @@ import {
   formatDateShort,
   getTimeRemaining,
   formatTimeRemaining,
+  formatTimeRemainingCompact,
+  formatTimeAgo,
   isAuctionActive,
 } from './formatDate';
 
@@ -159,5 +161,101 @@ describe('Time Remaining Calculations', () => {
       expect(isAuctionActive('2024-01-20T12:00:00')).toBe(true);
       expect(isAuctionActive('2024-01-10T12:00:00')).toBe(false);
     });
+  });
+});
+
+describe('formatTimeAgo', () => {
+  beforeEach(() => {
+    vi.setSystemTime(new Date('2024-01-15T12:00:00'));
+  });
+
+  it('should show "just now" for dates less than a minute old', () => {
+    expect(formatTimeAgo(new Date('2024-01-15T11:59:30'))).toBe('just now');
+  });
+
+  it('should format minutes ago', () => {
+    expect(formatTimeAgo(new Date('2024-01-15T11:55:00'))).toBe('5m ago');
+  });
+
+  it('should format hours ago', () => {
+    expect(formatTimeAgo(new Date('2024-01-15T09:00:00'))).toBe('3h ago');
+  });
+
+  it('should format days ago', () => {
+    expect(formatTimeAgo(new Date('2024-01-13T12:00:00'))).toBe('2d ago');
+  });
+
+  it('should use the largest whole unit only', () => {
+    expect(formatTimeAgo(new Date('2024-01-13T09:30:00'))).toBe('2d ago');
+  });
+
+  it('should handle string dates', () => {
+    expect(formatTimeAgo('2024-01-15T10:00:00')).toBe('2h ago');
+  });
+
+  it('should show "just now" for future dates', () => {
+    expect(formatTimeAgo(new Date('2024-01-15T12:05:00'))).toBe('just now');
+  });
+});
+
+describe('formatTimeRemainingCompact', () => {
+  beforeEach(() => {
+    vi.setSystemTime(new Date('2024-01-15T12:00:00'));
+  });
+
+  it('should show only the largest unit when days remain', () => {
+    expect(formatTimeRemainingCompact(new Date('2024-01-18T14:30:00'))).toBe('3d');
+  });
+
+  it('should show hours when less than a day remains', () => {
+    expect(formatTimeRemainingCompact(new Date('2024-01-15T15:45:00'))).toBe('3h');
+  });
+
+  it('should show minutes when less than an hour remains', () => {
+    expect(formatTimeRemainingCompact(new Date('2024-01-15T12:45:00'))).toBe('45m');
+  });
+
+  it('should show seconds when less than a minute remains', () => {
+    expect(formatTimeRemainingCompact(new Date('2024-01-15T12:00:30'))).toBe('30s');
+  });
+
+  it('should show "Ended" for past dates', () => {
+    expect(formatTimeRemainingCompact(new Date('2024-01-10T12:00:00'))).toBe('Ended');
+  });
+
+  it('should handle string dates', () => {
+    expect(formatTimeRemainingCompact('2024-01-22T12:00:00')).toBe('7d');
+  });
+});
+
+describe('unparseable dates', () => {
+  beforeEach(() => {
+    vi.setSystemTime(new Date('2024-01-15T12:00:00'));
+  });
+
+  it('should treat an unparseable date as expired', () => {
+    expect(getTimeRemaining('not-a-date').expired).toBe(true);
+  });
+
+  it('should not leak NaN into the compact countdown', () => {
+    expect(formatTimeRemainingCompact('not-a-date')).toBe('Ended');
+  });
+
+  it('should not leak NaN into the full countdown', () => {
+    expect(formatTimeRemaining('not-a-date')).toBe('Ended');
+  });
+});
+
+describe('formatTimeAgo beyond a month', () => {
+  beforeEach(() => {
+    vi.setSystemTime(new Date('2024-01-15T12:00:00'));
+  });
+
+  it('should still count days at the 30 day boundary', () => {
+    expect(formatTimeAgo(new Date('2023-12-16T12:00:00'))).toBe('30d ago');
+  });
+
+  it('should fall back to a short date past 30 days', () => {
+    expect(formatTimeAgo(new Date('2023-11-01T12:00:00'))).toBe('Nov 1, 2023');
   });
 });

@@ -45,7 +45,9 @@ export function getTimeRemaining(endDate: string | Date): {
   const now = new Date();
   const total = end.getTime() - now.getTime();
 
-  if (total <= 0) {
+  // An unparseable date yields NaN, which slips past every comparison below
+  // and leaks "NaN" into the UI. Treat it as expired.
+  if (Number.isNaN(total) || total <= 0) {
     return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
   }
 
@@ -86,6 +88,65 @@ export function formatTimeRemaining(endDate: string | Date): string {
   }
 
   return parts.join(' ') || 'Ending soon';
+}
+
+/**
+ * Format time remaining as its largest unit only, for tight spaces
+ * Example: "3d" or "3h" or "45m" or "30s" or "Ended"
+ */
+export function formatTimeRemainingCompact(endDate: string | Date): string {
+  const remaining = getTimeRemaining(endDate);
+
+  if (remaining.expired) {
+    return 'Ended';
+  }
+
+  if (remaining.days > 0) {
+    return `${remaining.days}d`;
+  }
+  if (remaining.hours > 0) {
+    return `${remaining.hours}h`;
+  }
+  if (remaining.minutes > 0) {
+    return `${remaining.minutes}m`;
+  }
+
+  return `${remaining.seconds}s`;
+}
+
+/** Past this many days, a relative time stops being easier to read than a date. */
+const RELATIVE_TIME_MAX_DAYS = 30;
+
+/**
+ * Format elapsed time since a past date
+ * Example: "5m ago" or "3h ago" or "2d ago" or "just now"
+ * Falls back to a short date once the gap exceeds a month.
+ */
+export function formatTimeAgo(date: string | Date): string {
+  const then = typeof date === 'string' ? new Date(date) : date;
+  const elapsed = Date.now() - then.getTime();
+
+  const minutes = Math.floor(elapsed / (1000 * 60));
+  if (minutes < 1) {
+    return 'just now';
+  }
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 1) {
+    return `${minutes}m ago`;
+  }
+
+  const days = Math.floor(hours / 24);
+  if (days < 1) {
+    return `${hours}h ago`;
+  }
+
+  // "412d ago" is not something anyone converts back into a date
+  if (days > RELATIVE_TIME_MAX_DAYS) {
+    return formatDateShort(then);
+  }
+
+  return `${days}d ago`;
 }
 
 /**

@@ -38,6 +38,15 @@ export default tseslint.config(
     },
   },
   {
+    // Maintenance scripts run in Node, not the browser
+    files: ['scripts/**'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     files: ['**/*.test.ts'],
     languageOptions: {
       globals: {

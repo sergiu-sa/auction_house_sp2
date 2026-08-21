@@ -10,6 +10,9 @@ import {
   initCategoryFilters,
   initActiveOnlyCheckbox,
   initSortDropdown,
+  setActiveCategory,
+  setActiveOnlyState,
+  setSortValue,
 } from './filters';
 import { logError } from '../utils/logger';
 import type { User } from '../types/api';
@@ -764,4 +767,16 @@ function initBrowsePageEvents(): void {
 
   // Initialize sort dropdown using component
   initSortDropdown('sort-filter-select');
+
+  // A page clearing its filters resets this bar back to its defaults.
+  // These setters only touch the UI, so they cannot loop back into the page.
+  document.addEventListener('clearAllFilters', () => {
+    setActiveCategory('data-filter', 'all');
+    setActiveOnlyState('active-only-filter', false);
+    setSortValue('sort-filter-select', 'created', 'desc');
+
+    if (globalSearchInput) {
+      globalSearchInput.value = '';
+    }
+  });
 }

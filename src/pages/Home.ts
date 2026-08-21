@@ -3,11 +3,11 @@ import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { renderProductCards, showProductCardSkeletons } from '../components/ProductCard';
 import { renderQuickCards, showQuickCardSkeletons } from '../components/QuickCard';
-import { renderCollectionCards } from '../components/CollectionCard';
+import { renderCollectionCards, showCollectionCardSkeletons } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
-import { formatTimeRemaining } from '../utils/formatDate';
+import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { addStructuredData, generateWebsiteStructuredData, generateOrganizationStructuredData } from '../utils/seo';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
@@ -37,7 +37,12 @@ interface CatalogState {
   itemsPerPage: number;
 }
 
+// Pool for the hero, trending, new-listings and ending-soon sections
 let allListings: Listing[] = [];
+// Separate pool for the catalog grid. Its active-only filter re-queries the API,
+// which must not disturb the sections above it.
+let catalogListings: Listing[] = [];
+let catalogRequestId = 0;
 const catalogState: CatalogState = {
   category: 'all',
   sort: 'endsAt',
@@ -69,7 +74,9 @@ function listenToNavbarFilters(): void {
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     catalogState.activeOnly = e.detail.activeOnly;
     catalogState.page = 1; // Reset to first page
-    applyCatalogFilters();
+    // Re-query instead of filtering locally: the fetched page holds the newest
+    // listings, most of which have already ended, so a local filter finds almost none.
+    loadCatalogListings();
     syncStickyFiltersWithState();
   }) as EventListener);
 
@@ -262,6 +269,7 @@ async function loadAllData(): Promise<void> {
 
     if (response.data && response.data.length > 0) {
       allListings = response.data;
+      catalogListings = response.data;
 
       // Render all sections
       renderHeroSection();
@@ -276,6 +284,42 @@ async function loadAllData(): Promise<void> {
     logError('Failed to load home page data', error);
     toast.error('Failed to load listings. Please refresh the page.');
     showErrorInSections();
+  }
+}
+
+/**
+ * Reload the catalog grid only, leaving the sections above it untouched.
+ * Uses the same query as the initial load so clearing the filter restores
+ * exactly the original pool.
+ */
+async function loadCatalogListings(): Promise<void> {
+  const requestId = ++catalogRequestId;
+
+  try {
+    showCollectionCardSkeletons(catalogState.itemsPerPage, 'catalog-cards');
+
+    const response = await getListings({
+      limit: 50,
+      _seller: true,
+      _bids: true,
+      _active: catalogState.activeOnly,
+      sort: 'created',
+      sortOrder: 'desc',
+    });
+
+    // A newer request started while this one was in flight
+    if (requestId !== catalogRequestId) return;
+
+    catalogListings = response.data || [];
+    applyCatalogFilters();
+  } catch (error) {
+    if (requestId !== catalogRequestId) return;
+
+    logError('Failed to load catalog listings', error);
+    toast.error('Failed to update the catalog. Please try again.');
+
+    // Never leave the grid stuck on skeletons
+    renderCollectionCards([], 'catalog-cards');
   }
 }
 
@@ -336,8 +380,7 @@ function renderHeroSection(): void {
   if (!heroMosaic) return;
 
   // Get active listings only
-  const now = new Date();
-  const activeListings = allListings.filter(listing => new Date(listing.endsAt) > now);
+  const activeListings = allListings.filter(listing => isAuctionActive(listing.endsAt));
 
   // Update stats
   if (heroActiveCount) {
@@ -455,8 +498,7 @@ function renderHeroSection(): void {
 
 // Trending = active listings sorted by bid count
 function renderTrendingSection(): void {
-  const now = new Date();
-  const activeListings = allListings.filter(listing => new Date(listing.endsAt) > now);
+  const activeListings = allListings.filter(listing => isAuctionActive(listing.endsAt));
 
   // Get top 3 listings by bid count
   const trending = [...activeListings]
@@ -472,8 +514,7 @@ function renderTrendingSection(): void {
 }
 
 function renderNewListingsSection(): void {
-  const now = new Date();
-  const activeListings = allListings.filter(listing => new Date(listing.endsAt) > now);
+  const activeListings = allListings.filter(listing => isAuctionActive(listing.endsAt));
 
   // Get 3 newest listings
   const newListings = [...activeListings]
@@ -487,23 +528,31 @@ function renderNewListingsSection(): void {
   }, 400);
 }
 
-// Listings ending in the next 24 hours
-function renderEndingSoonSection(): void {
-  const now = new Date();
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const endingSoon = allListings.filter(listing => {
-    const endsAt = new Date(listing.endsAt);
-    return endsAt >= now && endsAt <= tomorrow;
-  }).sort((a, b) => new Date(a.endsAt).getTime() - new Date(b.endsAt).getTime())
-    .slice(0, 4);
-
+/**
+ * The active lots closest to closing.
+ *
+ * This is a rank, not a fixed time window. A window renders empty whenever
+ * nothing happens to be closing inside it, which leaves the section dead most
+ * of the time; the cards print the real countdown, so nothing is overstated.
+ */
+async function renderEndingSoonSection(): Promise<void> {
   showQuickCardSkeletons(4, 'ending-soon-cards');
 
-  setTimeout(() => {
-    renderQuickCards(endingSoon, 'ending-soon-cards');
-  }, 500);
+  try {
+    const response = await getListings({
+      limit: 4,
+      _seller: true,
+      _bids: true,
+      _active: true,
+      sort: 'endsAt',
+      sortOrder: 'asc',
+    });
+
+    renderQuickCards(response.data || [], 'ending-soon-cards');
+  } catch (error) {
+    logError('Failed to load ending soon listings', error);
+    renderQuickCards([], 'ending-soon-cards');
+  }
 }
 
 function renderCatalogSection(): void {
@@ -511,7 +560,7 @@ function renderCatalogSection(): void {
 }
 
 function applyCatalogFilters(): void {
-  let filtered = [...allListings];
+  let filtered = [...catalogListings];
 
   // Filter by category
   if (catalogState.category !== 'all') {
@@ -530,10 +579,10 @@ function applyCatalogFilters(): void {
     );
   }
 
-  // Filter by active only
+  // Guard only: the API already returns active listings when this is on.
+  // This drops any lot that expired while the page sat open.
   if (catalogState.activeOnly) {
-    const now = new Date();
-    filtered = filtered.filter(listing => new Date(listing.endsAt) > now);
+    filtered = filtered.filter(listing => isAuctionActive(listing.endsAt));
   }
 
   // Sort listings

@@ -18,6 +18,7 @@ export async function getListings(params?: {
   sortOrder?: 'asc' | 'desc';
   _seller?: boolean;
   _bids?: boolean;
+  _active?: boolean;
 }): Promise<ApiResponse<Listing[]>> {
   const queryParams = new URLSearchParams();
 
@@ -28,6 +29,7 @@ export async function getListings(params?: {
   if (params?.sortOrder) queryParams.append('sortOrder', params.sortOrder);
   if (params?._seller) queryParams.append('_seller', 'true');
   if (params?._bids) queryParams.append('_bids', 'true');
+  if (params?._active) queryParams.append('_active', 'true');
 
   const query = queryParams.toString();
   const endpoint = `/auction/listings${query ? `?${query}` : ''}`;
