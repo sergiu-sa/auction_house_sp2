@@ -9,7 +9,7 @@ import {
   updateProfile,
 } from '../api/profile';
 import type { Profile, Listing, Bid, UpdateProfileData } from '../types/api';
-import { formatDate, formatTimeRemaining } from '../utils/formatDate';
+import { formatTimeAgo, formatTimeRemaining } from '../utils/formatDate';
 import { isValidUrl } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import { setUser } from '../utils/storage';
@@ -646,7 +646,7 @@ function renderWinItem(win: Listing): string {
   const highestBid = win.bids?.length
     ? Math.max(...win.bids.map((b) => b.amount))
     : 0;
-  const timeAgo = formatDate(win.endsAt);
+  const timeAgo = formatTimeAgo(win.endsAt);
 
   return `
     <div class="flex items-start justify-between gap-3">
@@ -668,7 +668,7 @@ function renderWinItem(win: Listing): string {
 }
 
 function renderBidItem(bid: Bid): string {
-  const timeAgo = formatDate(bid.created);
+  const timeAgo = formatTimeAgo(bid.created);
 
   return `
     <div class="flex items-center justify-between gap-3">

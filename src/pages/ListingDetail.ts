@@ -4,7 +4,7 @@ import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/B
 import { getListing } from '../api/listings';
 import { placeBid } from '../api/bids';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
-import { formatTimeRemaining, formatDate, formatDateShort, isAuctionActive, getTimeRemaining } from '../utils/formatDate';
+import { formatTimeRemaining, formatTimeAgo, formatDate, formatDateShort, isAuctionActive, getTimeRemaining } from '../utils/formatDate';
 import { isValidBidAmount } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import {
@@ -679,7 +679,7 @@ function renderBidHistory(listing: Listing) {
                 ${new Intl.NumberFormat('en-US').format(bid.amount)} Credits
               </div>
               <div class="text-xs text-slate-500">
-                ${isUserBid ? '@you' : `@${bid.bidder?.name || 'Anonymous'}`} · ${formatTimeRemaining(bid.created)} ago
+                ${isUserBid ? '@you' : `@${bid.bidder?.name || 'Anonymous'}`} · ${formatTimeAgo(bid.created)}
               </div>
             </div>
             ${isHighest ? `
