@@ -6,6 +6,7 @@ import {
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
 import { getListings } from '../api/listings';
+import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 
@@ -34,6 +35,8 @@ let currentFilters: FilterState = {
 
 let allListings: Listing[] = [];
 let filteredListings: Listing[] = [];
+let loadRequestId = 0;
+let nextCloseInterval: number | null = null;
 
 function listenToNavbarFilters(): void {
   // Category filter from navbar
@@ -53,8 +56,10 @@ function listenToNavbarFilters(): void {
   // Active only checkbox from navbar
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     currentFilters.activeOnly = e.detail.activeOnly;
-    currentFilters.page = 1; 
-    applyFilters();
+    currentFilters.page = 1;
+    // Re-query instead of filtering locally: the fetched page holds the newest
+    // listings, most of which have already ended, so a local filter finds almost none.
+    loadListings();
   }) as EventListener);
 
   // Sort from navbar
@@ -108,8 +113,8 @@ function initializeFilters(): void {
         icon.classList.add('fa-spin');
       }
 
-      // Reload listings
-      loadListings().finally(() => {
+      // Spin until both the grid and the tiles have settled
+      Promise.allSettled([loadListings(), loadStats()]).finally(() => {
         if (icon) {
           icon.classList.remove('fa-spin');
         }
@@ -136,8 +141,10 @@ function initializeFilters(): void {
       // Dispatch events to update navbar UI
       document.dispatchEvent(new CustomEvent('clearAllFilters'));
 
-      // Reapply filters
-      applyFilters();
+      // Sort and active-only are both part of the API query, so the pool
+      // itself is stale after a reset — always refetch rather than re-sorting
+      // whatever happened to be loaded.
+      loadListings();
     });
   }
 }
@@ -155,9 +162,12 @@ export async function initCollectionPage(): Promise<void> {
 
   // Load listings
   loadListings();
+  loadStats();
 }
 
 async function loadListings(): Promise<void> {
+  const requestId = ++loadRequestId;
+
   try {
     // Show loading skeletons
     showCollectionCardSkeletons(24, 'collection-cards-grid');
@@ -166,16 +176,21 @@ async function loadListings(): Promise<void> {
       limit: 50,
       _seller: true,
       _bids: true,
+      _active: currentFilters.activeOnly,
       sort: currentFilters.sort,
       sortOrder: currentFilters.sortOrder,
     });
 
+    // A newer request started while this one was in flight
+    if (requestId !== loadRequestId) return;
+
     if (response.data) {
       allListings = response.data;
       applyFilters();
-      updateStats();
     }
   } catch (error) {
+    if (requestId !== loadRequestId) return;
+
     logError('Failed to load collection listings', error);
     showError('Failed to load listings. Please try again later.');
   }
@@ -203,7 +218,8 @@ function applyFilters(): void {
     );
   }
 
-  // Filter by active only
+  // Guard only: the API already returns active listings when this is on.
+  // This drops any lot that expired while the page sat open.
   if (currentFilters.activeOnly) {
     const now = new Date();
     filtered = filtered.filter((listing) => new Date(listing.endsAt) > now);
@@ -281,30 +297,70 @@ function updateResultsInfo(): void {
   }
 }
 
-function updateStats(): void {
-  const activeLotsCount = document.getElementById('active-lots-count');
-  const endingSoonCount = document.getElementById('ending-soon-count');
-
-  if (activeLotsCount) {
-    activeLotsCount.textContent = new Intl.NumberFormat('en-US').format(
-      allListings.length
-    );
-  }
-
-  if (endingSoonCount) {
-    // Count listings ending in next 24 hours
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const endingSoon = allListings.filter((listing) => {
-      const endsAt = new Date(listing.endsAt);
-      return endsAt <= tomorrow && endsAt >= new Date();
+/**
+ * The stat tiles describe the whole active pool, not the page currently shown,
+ * so they get their own query instead of counting the filtered grid.
+ */
+async function loadStats(): Promise<void> {
+  try {
+    // Both tiles come from one row: meta carries the active total, and sorting
+    // by endsAt puts the next lot to close first. No need to pull the pool.
+    const response = await getListings({
+      limit: 1,
+      _active: true,
+      sort: 'endsAt',
+      sortOrder: 'asc',
     });
 
-    endingSoonCount.textContent = new Intl.NumberFormat('en-US').format(
-      endingSoon.length
-    );
+    const activeListings = response.data || [];
+    const totalActive = response.meta?.totalCount ?? activeListings.length;
+
+    const activeLotsCount = document.getElementById('active-lots-count');
+    if (activeLotsCount) {
+      activeLotsCount.textContent = new Intl.NumberFormat('en-US').format(totalActive);
+    }
+
+    // Time until the next close, rather than a count inside a fixed window
+    // that sits at zero whenever nothing is closing.
+    startNextCloseCountdown(activeListings[0]?.endsAt);
+  } catch (error) {
+    logError('Failed to load collection stats', error);
   }
+}
+
+/**
+ * Keep the "next closes" tile ticking. Without this it would still read the
+ * value it was given on page load hours later, for a lot that has since closed.
+ */
+function startNextCloseCountdown(endsAt?: string): void {
+  if (nextCloseInterval) {
+    window.clearInterval(nextCloseInterval);
+    nextCloseInterval = null;
+  }
+
+  const tile = document.getElementById('next-close-countdown');
+  if (!tile) return;
+
+  if (!endsAt) {
+    tile.textContent = '--';
+    return;
+  }
+
+  const tick = (): void => {
+    const remaining = formatTimeRemainingCompact(endsAt);
+    tile.textContent = remaining;
+
+    // That lot has closed, so another one is now next in line
+    if (remaining === 'Ended') {
+      window.clearInterval(nextCloseInterval ?? undefined);
+      nextCloseInterval = null;
+      loadStats();
+    }
+  };
+
+  tick();
+  // Minute granularity is enough: the tile never shows units below a minute
+  nextCloseInterval = window.setInterval(tick, 60_000);
 }
 
 
