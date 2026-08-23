@@ -34,7 +34,17 @@ jobs:
       - name: Test
         run: npm test
 
-      # Build verifies type-safety + bundling. Runtime API calls are not exercised here,
-      # so VITE_API_KEY can stay unset — the code falls back to empty strings.
+      # Build verifies type-safety + bundling.
+      # Runtime API calls are not exercised here, so VITE_API_KEY can stay unset;
+      # the code falls back to empty strings.
       - name: Build
         run: npm run build
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      # The smoke suite serves every request from tests/e2e/fixtures, so it needs no API key and no network.
+      # The `visual` project is deliberately excluded:
+      # Playwright keys screenshots by platform, so macOS baselines never match an ubuntu runner.
+      - name: E2E smoke suite
+        run: npm run test:e2e

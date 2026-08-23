@@ -1,0 +1,48 @@
+{
+  "data": {
+    "id": "1b22b753-d3d0-418f-8ec1-b6a1e344cbb3",
+    "title": "Arceau watch, Large model, 36 mm",
+    "description": "Steel watch, quartz movement, white-lacquered dial, short interchangeable strap in natural Barenia calfskin\n\nMade in Switzerland",
+    "media": [
+      {
+        "url": "https://assets.hermes.com/is/image/hermesproduct/arceau-watch-large-model-36mm--404005WW00-front-wm-1-0-0-2000-2000-q99_g.jpg",
+        "alt": ""
+      },
+      {
+        "url": "https://assets.hermes.com/is/image/hermesproduct/arceau-watch-large-model-36mm--404005WW00-worn-2-0-0-2000-2000-q99_g.jpg",
+        "alt": ""
+      },
+      {
+        "url": "https://assets.hermes.com/is/image/hermesproduct/arceau-watch-large-model-36mm--404008WW00-worn-2-0-0-2000-2000-q99_g.jpg",
+        "alt": ""
+      }
+    ],
+    "tags": [
+      "watch",
+      "luxury",
+      "heritage",
+      "tech"
+    ],
+    "created": "2026-02-11T14:43:54.214Z",
+    "updated": "2026-02-11T14:43:54.214Z",
+    "endsAt": "2026-02-21T14:43:00.000Z",
+    "bids": [],
+    "seller": {
+      "name": "Oltenks",
+      "email": "redacted@stud.noroff.no",
+      "bio": "This is my Profile",
+      "avatar": {
+        "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+        "alt": "Oltenks monogram"
+      },
+      "banner": {
+        "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "alt": ""
+      }
+    },
+    "_count": {
+      "bids": 0
+    }
+  },
+  "meta": {}
+}

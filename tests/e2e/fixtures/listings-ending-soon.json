@@ -1,0 +1,300 @@
+{
+  "data": [
+    {
+      "id": "233cb870-735b-437a-9a8e-7e16f80ffcc7",
+      "title": "Black Leather Messenger Bag with Flap Closure",
+      "description": "Classic black leather messenger bag with flap closure and metal clasp details. Rectangular shape with shoulder strap and textured leather surface. Practical and timeless design for everyday or work use. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1682316967717-16b32a406559?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T15:13:16.634Z",
+      "updated": "2026-01-28T15:13:16.634Z",
+      "endsAt": "2026-08-28T16:13:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "3493a610-af8a-4028-bb55-a181f8ab3801",
+      "title": "Woven Handbag with Leather Flap Closure",
+      "description": "Stylish woven handbag with a structured leather flap, top handle, and metal clasp closure. Features a shoulder strap for versatile carrying. Unique texture and warm tone, perfect for spring and summer outfits. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=1038&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-29T08:13:51.036Z",
+      "updated": "2026-01-29T08:13:51.036Z",
+      "endsAt": "2026-08-29T09:13:00.000Z",
+      "bids": [
+        {
+          "id": "71752c4e-5526-4aa4-b47e-5c937a4ca144",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:46:13.001Z"
+        },
+        {
+          "id": "450b5276-1fad-43de-828f-502415880e6c",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller04",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:26:34.848Z"
+        },
+        {
+          "id": "9a3c3988-a67f-4183-9bb9-a9e42409ed28",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller56",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi, I'm Emily. I bake.",
+            "avatar": {
+              "url": "https://i.postimg.cc/Qt4gzpqJ/jeffery-erhunse-vp9m-Rauo68c-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T21:00:12.313Z"
+        },
+        {
+          "id": "6b424db6-cd21-45b7-ba19-b4ece1249730",
+          "amount": 999,
+          "bidder": {
+            "name": "Seller102",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-10T14:48:19.915Z"
+        },
+        {
+          "id": "a4092a71-5493-42f5-90af-260991928808",
+          "amount": 1000,
+          "bidder": {
+            "name": "Seller22",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/woman-with-braided-hair-illustration_1308-174675.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/gradient-hexagonal-background_52683-62053.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-03-19T09:30:47.305Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller13",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm fancy, and I wear pants :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 5
+      }
+    },
+    {
+      "id": "72c2500e-ecea-4508-999a-1230f59ab300",
+      "title": "Silver Necklace with Green Stone Charms",
+      "description": "Delicate silver-tone necklace adorned with small green stone charms spaced evenly along the chain. Lightweight and elegant design that adds subtle color and sparkle. Ideal for layering or everyday wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1676329945867-01c9975aa9d1?q=80&w=1233&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:25:58.482Z",
+      "updated": "2026-01-29T08:25:58.482Z",
+      "endsAt": "2026-08-29T09:25:00.000Z",
+      "bids": [
+        {
+          "id": "a2762ce3-8515-4957-b666-c5b241074ff3",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:36:32.969Z"
+        },
+        {
+          "id": "8fae9e28-79ee-4857-a788-a87855c0de64",
+          "amount": 35,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selSeller70 things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:31:44.845Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller04",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "b2ca3c5e-5d50-4f69-8677-a0d2daf54766",
+      "title": "Black and Grey Leather Mini Crossbody Bag",
+      "description": "Compact leather crossbody bag in black and grey tones with metal hardware and front strap detail. Features a structured shape and chain shoulder strap. Small but eye-catching, ideal for essentials. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?q=80&w=1034&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-28T14:49:34.435Z",
+      "updated": "2026-01-28T14:49:34.435Z",
+      "endsAt": "2026-09-02T15:49:00.000Z",
+      "bids": [
+        {
+          "id": "bc63a8d3-f812-416b-bb6c-13f1d1d601d9",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller13",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm fancy, and I wear pants :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:22:03.970Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller25",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hey! I'm Seller25, and I like frogs :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1617957796155-72d8717ac882?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": false,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": 2,
+    "pageCount": 13,
+    "totalCount": 52
+  }
+}
