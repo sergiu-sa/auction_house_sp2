@@ -32,3 +32,8 @@ coverage
 *.sw?
 
 docs/
+
+# Playwright output (baselines under tests/ are tracked; these are per-run artifacts)
+test-results
+playwright-report
+playwright/.cache

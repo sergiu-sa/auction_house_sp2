@@ -1,0 +1,248 @@
+{
+  "data": [
+    {
+      "id": "70c3fc8d-2955-4fbb-9da0-51741d459b73",
+      "title": "HP Gaming Headset – RGB Comfort Edition",
+      "description": "A comfy over-ear gaming headset with clear sound and “don’t talk to me I’m raiding” energy. Great for long sessions, Discord chaos, and ignoring responsibilities.",
+      "media": [
+        {
+          "url": "https://i.postimg.cc/JhwvhGvc/Headset-HP-Sales-Image.webp",
+          "alt": "Headset"
+        }
+      ],
+      "tags": [
+        "audio",
+        "pc",
+        "console",
+        "gear"
+      ],
+      "created": "2025-12-08T14:31:39.068Z",
+      "updated": "2026-01-31T14:31:00.025Z",
+      "endsAt": "2026-01-31T14:31:00.000Z",
+      "bids": [
+        {
+          "id": "ec1ab1db-e2cc-43d6-98f2-0057c4fdded1",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller41",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-08T16:13:31.140Z"
+        },
+        {
+          "id": "6623e8e7-3792-4473-b548-0ee330c76744",
+          "amount": 22,
+          "bidder": {
+            "name": "Seller66",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hi hello! this is my profile, and this is the place where I have updated my bio inside edit profile",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1524008279394-3aed4643b30b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1hZ2ljYWx8ZW58MHx8MHx8fDA%3D",
+              "alt": "User avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1533371452382-d45a9da51ad9?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2025-12-08T17:07:37.342Z"
+        },
+        {
+          "id": "5a98246c-ee38-43fe-a695-33941effe7e5",
+          "amount": 23,
+          "bidder": {
+            "name": "Seller47",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-09T08:42:45.937Z"
+        },
+        {
+          "id": "e48f2b36-24cb-4774-9fe1-6067029394e4",
+          "amount": 24,
+          "bidder": {
+            "name": "Oltenks",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my Profile",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+              "alt": "Oltenks monogram"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2025-12-10T20:06:48.547Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller17",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Welcome to my profile....",
+        "avatar": {
+          "url": "https://media.licdn.com/dms/image/v2/D5603AQF8dtl_3TbBqw/profile-displayphoto-shrink_200_200/B56ZVYxNy2GoAg-/0/1740951052305?e=1766016000&v=beta&t=ni4GLn_hOFjh7FJyvwEjCG8D_bqdqBCbcETcsbS_6S0",
+          "alt": "A picture of mine"
+        },
+        "banner": {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkrjJgSvYGjlUDxBTCuG-TOkOP4tNtNNJ7bA&s",
+          "alt": "nature beautiful  background"
+        }
+      },
+      "_count": {
+        "bids": 4
+      }
+    },
+    {
+      "id": "0e64f155-4e0e-464b-ad4e-a53187d375a8",
+      "title": "Marvel",
+      "description": "Marvel the avengers",
+      "media": [
+        {
+          "url": "https://www.emp-shop.no/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dw8733aa54/100151_MT_Marvel.jpg?sw=768",
+          "alt": "marvel"
+        }
+      ],
+      "tags": [
+        "marvel. avengers"
+      ],
+      "created": "2025-12-08T13:38:14.848Z",
+      "updated": "2025-12-14T13:38:00.022Z",
+      "endsAt": "2025-12-14T13:38:00.000Z",
+      "bids": [
+        {
+          "id": "6d4c23dd-0aa8-4f64-8bf9-f6acdc111c05",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller08",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://storyquilts.com/cdn/shop/products/56140D650715.jpg?v=1606962953",
+              "alt": "Avatar"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-pictures-a8zq5u8qw3ega7cx.jpg",
+              "alt": "Banner"
+            }
+          },
+          "created": "2025-12-08T13:41:26.376Z"
+        },
+        {
+          "id": "6c8d9fc1-d5f8-4e3e-bf70-3b1a4af64312",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller101",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Shrek",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-08T14:22:41.269Z"
+        },
+        {
+          "id": "112271c4-7194-444f-aebd-d61e75ae35e5",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller17",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my profile....",
+            "avatar": {
+              "url": "https://media.licdn.com/dms/image/v2/D5603AQF8dtl_3TbBqw/profile-displayphoto-shrink_200_200/B56ZVYxNy2GoAg-/0/1740951052305?e=1766016000&v=beta&t=ni4GLn_hOFjh7FJyvwEjCG8D_bqdqBCbcETcsbS_6S0",
+              "alt": "A picture of mine"
+            },
+            "banner": {
+              "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkrjJgSvYGjlUDxBTCuG-TOkOP4tNtNNJ7bA&s",
+              "alt": "nature beautiful  background"
+            }
+          },
+          "created": "2025-12-08T16:27:45.984Z"
+        },
+        {
+          "id": "4d9a68dd-5c51-4a7a-86ca-0174d32e8e31",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2025-12-09T10:03:15.900Z"
+        },
+        {
+          "id": "de5978c9-a112-48ac-b3a1-d479b36bc5e9",
+          "amount": 5,
+          "bidder": {
+            "name": "Oltenks",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my Profile",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+              "alt": "Oltenks monogram"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2025-12-10T20:06:25.096Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller87",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my bio, i like turtles. Seller101",
+        "avatar": {
+          "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+          "alt": "hawkman"
+        },
+        "banner": {
+          "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+          "alt": "marvel avengers"
+        }
+      },
+      "_count": {
+        "bids": 5
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": true,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": null,
+    "pageCount": 1,
+    "totalCount": 2
+  }
+}

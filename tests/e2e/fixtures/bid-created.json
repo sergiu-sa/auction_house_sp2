@@ -1,0 +1,16 @@
+{
+  "data": {
+    "id": "b1d00000-1111-4222-8333-444455556666",
+    "amount": 150,
+    "bidder": {
+      "name": "Oltenks",
+      "email": "redacted@stud.noroff.no",
+      "avatar": {
+        "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+        "alt": "Oltenks monogram"
+      }
+    },
+    "created": "2026-08-22T15:30:00.000Z"
+  },
+  "meta": {}
+}

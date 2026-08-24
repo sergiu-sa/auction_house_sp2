@@ -1,0 +1,682 @@
+{
+  "data": [
+    {
+      "id": "ea66d9bf-9c8c-4d25-aecc-3f8f7bcdcc46",
+      "amount": 6,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T20:36:46.675Z",
+      "listing": {
+        "id": "b5b73a99-23d3-4d62-921f-dbcd3b8e549f",
+        "title": "Lamp",
+        "description": "A grey lamp, perfect for your livingroom. Perfect for interior upgrading.",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "lamp",
+          "interior",
+          "design"
+        ],
+        "created": "2026-04-28T14:33:35.689Z",
+        "updated": "2026-04-30T12:04:58.353Z",
+        "endsAt": "2026-06-28T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "6ad0d3f1-f4a3-4d69-8e41-c22db1e6a67c",
+      "amount": 4,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T16:12:46.670Z",
+      "listing": {
+        "id": "b6fc2579-4ae4-426a-b9a9-2a47139a763e",
+        "title": "Milk and honey book",
+        "description": "Great book by Rupi Kaur",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "book",
+          "reading"
+        ],
+        "created": "2026-04-28T12:02:44.484Z",
+        "updated": "2026-04-28T12:02:44.484Z",
+        "endsAt": "2026-05-18T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "19dc03b1-64b6-4a2a-803f-c06a3c7228ab",
+      "amount": 3,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T16:12:42.309Z",
+      "listing": {
+        "id": "b6fc2579-4ae4-426a-b9a9-2a47139a763e",
+        "title": "Milk and honey book",
+        "description": "Great book by Rupi Kaur",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "book",
+          "reading"
+        ],
+        "created": "2026-04-28T12:02:44.484Z",
+        "updated": "2026-04-28T12:02:44.484Z",
+        "endsAt": "2026-05-18T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "9fe55bc7-b679-48d8-bcb9-af8cabb4f6c6",
+      "amount": 2,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T16:12:40.458Z",
+      "listing": {
+        "id": "b6fc2579-4ae4-426a-b9a9-2a47139a763e",
+        "title": "Milk and honey book",
+        "description": "Great book by Rupi Kaur",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "book",
+          "reading"
+        ],
+        "created": "2026-04-28T12:02:44.484Z",
+        "updated": "2026-04-28T12:02:44.484Z",
+        "endsAt": "2026-05-18T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "a5f08c46-236c-4b8f-bdfc-b761f8cc2e03",
+      "amount": 12,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T16:12:27.778Z",
+      "listing": {
+        "id": "03418429-d51a-4c72-a0ae-d34b08ab07df",
+        "title": "Wooden Elephant",
+        "description": "The Elephant wooden figurine from Georg Jensen is a great decorative figurine of the cozy elephant we have grown to love so much.",
+        "media": [
+          {
+            "url": "https://images.pexels.com/photos/6219067/pexels-photo-6219067.jpeg",
+            "alt": ""
+          },
+          {
+            "url": "https://images.pexels.com/photos/6219103/pexels-photo-6219103.jpeg",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "toy",
+          "kids"
+        ],
+        "created": "2026-04-24T08:37:58.726Z",
+        "updated": "2026-05-04T08:44:23.922Z",
+        "endsAt": "2026-05-24T08:37:00.000Z"
+      }
+    },
+    {
+      "id": "27446ac1-c597-42d7-a56d-31437384ab7e",
+      "amount": 11,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T16:12:25.924Z",
+      "listing": {
+        "id": "03418429-d51a-4c72-a0ae-d34b08ab07df",
+        "title": "Wooden Elephant",
+        "description": "The Elephant wooden figurine from Georg Jensen is a great decorative figurine of the cozy elephant we have grown to love so much.",
+        "media": [
+          {
+            "url": "https://images.pexels.com/photos/6219067/pexels-photo-6219067.jpeg",
+            "alt": ""
+          },
+          {
+            "url": "https://images.pexels.com/photos/6219103/pexels-photo-6219103.jpeg",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "toy",
+          "kids"
+        ],
+        "created": "2026-04-24T08:37:58.726Z",
+        "updated": "2026-05-04T08:44:23.922Z",
+        "endsAt": "2026-05-24T08:37:00.000Z"
+      }
+    },
+    {
+      "id": "5d547e02-450b-4736-8dca-d38891189495",
+      "amount": 1,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-04-28T13:51:40.734Z",
+      "listing": {
+        "id": "b6fc2579-4ae4-426a-b9a9-2a47139a763e",
+        "title": "Milk and honey book",
+        "description": "Great book by Rupi Kaur",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "book",
+          "reading"
+        ],
+        "created": "2026-04-28T12:02:44.484Z",
+        "updated": "2026-04-28T12:02:44.484Z",
+        "endsAt": "2026-05-18T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "98e44992-a6f5-4b16-bb02-48f5cc613e87",
+      "amount": 10,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-02-11T12:03:07.654Z",
+      "listing": {
+        "id": "945f4562-7365-4902-b279-91d7ed2c5d42",
+        "title": "Computer",
+        "description": "Newest model of laptop, perfect for students or mobile office workers.",
+        "media": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/10/10/21/47/laptop-2838921_1280.jpg",
+            "alt": "Computer"
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/10/11/09/26/office-1730939_1280.jpg",
+            "alt": "Computer"
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/05/11/11/15/workplace-2303851_1280.jpg",
+            "alt": "Computer"
+          }
+        ],
+        "tags": [],
+        "created": "2026-02-07T23:19:20.217Z",
+        "updated": "2026-02-28T00:00:00.020Z",
+        "endsAt": "2026-02-28T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "304d2211-8bb9-425f-b602-db538527557d",
+      "amount": 1,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2026-02-11T12:01:44.917Z",
+      "listing": {
+        "id": "e709a57a-e749-4366-9022-9ebf96d15d38",
+        "title": "Minimalist Black Leather Strap Watch",
+        "description": "Sleek minimalist wristwatch with a thin black case, white dial, and slim hour markers. Paired with a black leather strap for a clean, timeless look. Suitable for everyday wear or formal occasions.",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1451859757691-f318d641ab4d?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": "Item image"
+          }
+        ],
+        "tags": [
+          "luxuryauctionhouse",
+          "watches"
+        ],
+        "created": "2026-01-28T15:04:52.279Z",
+        "updated": "2026-01-28T15:04:52.279Z",
+        "endsAt": "2026-07-31T16:04:00.000Z"
+      }
+    },
+    {
+      "id": "1464cf1d-b2d2-46a2-98b7-29a9c1776771",
+      "amount": 2,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-22T13:16:21.395Z",
+      "listing": {
+        "id": "14d77ef6-d3bf-4698-ba34-a72e0e612a4c",
+        "title": "House",
+        "description": "House",
+        "media": [
+          {
+            "url": "https://share.google/FlDyHwqFhhPreOZPy",
+            "alt": "House"
+          }
+        ],
+        "tags": [],
+        "created": "2025-12-17T20:28:32.704Z",
+        "updated": "2025-12-17T20:28:32.704Z",
+        "endsAt": "2026-12-16T22:59:00.000Z"
+      }
+    },
+    {
+      "id": "e6961bdc-c6bf-4e7b-b87c-5c51a7bb631c",
+      "amount": 2,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-14T12:48:29.487Z",
+      "listing": {
+        "id": "060fd184-d0be-4c51-9651-80b7e22664bd",
+        "title": "cute black dog",
+        "description": "a cutie patootie black doggo.",
+        "media": [
+          {
+            "url": "https://picsum.photos/id/237/800/600",
+            "alt": "cute black dog"
+          }
+        ],
+        "tags": [],
+        "created": "2025-12-12T10:49:06.182Z",
+        "updated": "2025-12-15T00:00:00.081Z",
+        "endsAt": "2025-12-15T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "96d6a77e-28e8-4974-ab60-4dcaaf66f194",
+      "amount": 71,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-14T12:08:18.522Z",
+      "listing": {
+        "id": "e0592930-d6bc-4cd4-b673-095b2841b30b",
+        "title": "SelSeller70 my dog",
+        "description": "Cute dog, good homes only.",
+        "media": [
+          {
+            "url": "https://plus.unsplash.com/premium_photo-1666777247416-ee7a95235559?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": "SelSeller70 my dog"
+          }
+        ],
+        "tags": [
+          "dog",
+          "animal",
+          "cute"
+        ],
+        "created": "2025-12-14T11:26:57.819Z",
+        "updated": "2025-12-14T15:26:00.020Z",
+        "endsAt": "2025-12-14T15:26:00.000Z"
+      }
+    },
+    {
+      "id": "eefd7e9f-a1b7-4f66-a8b8-a667ce7f439b",
+      "amount": 70,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-14T12:08:16.839Z",
+      "listing": {
+        "id": "e0592930-d6bc-4cd4-b673-095b2841b30b",
+        "title": "SelSeller70 my dog",
+        "description": "Cute dog, good homes only.",
+        "media": [
+          {
+            "url": "https://plus.unsplash.com/premium_photo-1666777247416-ee7a95235559?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": "SelSeller70 my dog"
+          }
+        ],
+        "tags": [
+          "dog",
+          "animal",
+          "cute"
+        ],
+        "created": "2025-12-14T11:26:57.819Z",
+        "updated": "2025-12-14T15:26:00.020Z",
+        "endsAt": "2025-12-14T15:26:00.000Z"
+      }
+    },
+    {
+      "id": "53e98d46-029f-4512-b793-5c188a075471",
+      "amount": 1,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-10T20:07:32.503Z",
+      "listing": {
+        "id": "fb453a3d-fc23-454f-ad0b-20e74fed5b60",
+        "title": "Asus ROG Strix G15 Gaming Laptop – High Performance, Excellent Condition but Used",
+        "description": "This Asus ROG Strix G15 gaming laptop delivers powerful performance for gaming, video editing, and other intensive tasks. It has been well-maintained, kept clean, and used only lightly. With its RGB keyboard, fast refresh rate, and strong GPU.",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+            "alt": "laptop image"
+          }
+        ],
+        "tags": [
+          "laptop",
+          "gaming",
+          "Asus",
+          "ROG"
+        ],
+        "created": "2025-12-10T19:11:03.733Z",
+        "updated": "2026-02-27T19:09:00.020Z",
+        "endsAt": "2026-02-27T19:09:00.000Z"
+      }
+    },
+    {
+      "id": "e48f2b36-24cb-4774-9fe1-6067029394e4",
+      "amount": 24,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-10T20:06:48.547Z",
+      "listing": {
+        "id": "70c3fc8d-2955-4fbb-9da0-51741d459b73",
+        "title": "HP Gaming Headset – RGB Comfort Edition",
+        "description": "A comfy over-ear gaming headset with clear sound and “don’t talk to me I’m raiding” energy. Great for long sessions, Discord chaos, and ignoring responsibilities.",
+        "media": [
+          {
+            "url": "https://i.postimg.cc/JhwvhGvc/Headset-HP-Sales-Image.webp",
+            "alt": "Headset"
+          }
+        ],
+        "tags": [
+          "audio",
+          "pc",
+          "console",
+          "gear"
+        ],
+        "created": "2025-12-08T14:31:39.068Z",
+        "updated": "2026-01-31T14:31:00.025Z",
+        "endsAt": "2026-01-31T14:31:00.000Z"
+      }
+    },
+    {
+      "id": "de5978c9-a112-48ac-b3a1-d479b36bc5e9",
+      "amount": 5,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-10T20:06:25.096Z",
+      "listing": {
+        "id": "0e64f155-4e0e-464b-ad4e-a53187d375a8",
+        "title": "Marvel",
+        "description": "Marvel the avengers",
+        "media": [
+          {
+            "url": "https://www.emp-shop.no/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dw8733aa54/100151_MT_Marvel.jpg?sw=768",
+            "alt": "marvel"
+          }
+        ],
+        "tags": [
+          "marvel. avengers"
+        ],
+        "created": "2025-12-08T13:38:14.848Z",
+        "updated": "2025-12-14T13:38:00.022Z",
+        "endsAt": "2025-12-14T13:38:00.000Z"
+      }
+    },
+    {
+      "id": "648085cb-f7db-4e5e-9bac-7df39077dd02",
+      "amount": 16,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-10T17:42:08.661Z",
+      "listing": {
+        "id": "43243662-0d3c-461f-90c6-9fb722cc3224",
+        "title": "Zenit-E Camera",
+        "description": "The Zenit-E is a 35mm film SLR camera produced by the Soviet Union's KMZ factory from 1965 to 1986, known for its ruggedness, affordability, and use of the M42 screw lens mount",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": "listing image"
+          }
+        ],
+        "tags": [],
+        "created": "2025-12-04T11:19:19.679Z",
+        "updated": "2025-12-14T11:18:00.024Z",
+        "endsAt": "2025-12-14T11:18:00.000Z"
+      }
+    },
+    {
+      "id": "5c149d86-761e-4a75-8d59-2046b8def08e",
+      "amount": 13,
+      "bidder": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "created": "2025-12-05T20:18:06.507Z",
+      "listing": {
+        "id": "a216f0e6-e43a-43d5-ba2c-efded7fedf10",
+        "title": "Seaside Villa Retreat",
+        "description": "A modern three-bedroom villa overlooking the fjords, featuring floor-to-ceiSeller70 windows, private shoreline access, and interior finishes in natural stone and timber. Designed for quiet luxury and panoramic views.",
+        "media": [
+          {
+            "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": ""
+          }
+        ],
+        "tags": [
+          "Real Estate"
+        ],
+        "created": "2025-11-30T13:03:14.021Z",
+        "updated": "2025-12-02T09:17:40.898Z",
+        "endsAt": "2026-09-03T12:03:00.000Z"
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": true,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": null,
+    "pageCount": 1,
+    "totalCount": 18
+  }
+}

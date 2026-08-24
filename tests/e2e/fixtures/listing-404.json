@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "message": "No listing with such ID"
+    }
+  ],
+  "status": "Not Found",
+  "statusCode": 404
+}

@@ -1,0 +1,129 @@
+{
+  "data": {
+    "id": "3493a610-af8a-4028-bb55-a181f8ab3801",
+    "title": "Woven Handbag with Leather Flap Closure",
+    "description": "Stylish woven handbag with a structured leather flap, top handle, and metal clasp closure. Features a shoulder strap for versatile carrying. Unique texture and warm tone, perfect for spring and summer outfits. Good condition.",
+    "media": [
+      {
+        "url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=1038&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "alt": "Item image"
+      }
+    ],
+    "tags": [
+      "luxuryauctionhouse",
+      "handbags"
+    ],
+    "created": "2026-01-29T08:13:51.036Z",
+    "updated": "2026-01-29T08:13:51.036Z",
+    "endsAt": "2026-08-29T09:13:00.000Z",
+    "bids": [
+      {
+        "id": "71752c4e-5526-4aa4-b47e-5c937a4ca144",
+        "amount": 15,
+        "bidder": {
+          "name": "Seller21",
+          "email": "redacted@stud.noroff.no",
+          "bio": "All that sparkles is gold!",
+          "avatar": {
+            "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "alt": "Profile image"
+          },
+          "banner": {
+            "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+            "alt": "Profile image"
+          }
+        },
+        "created": "2026-01-29T08:46:13.001Z"
+      },
+      {
+        "id": "450b5276-1fad-43de-828f-502415880e6c",
+        "amount": 10,
+        "bidder": {
+          "name": "Seller04",
+          "email": "redacted@stud.noroff.no",
+          "bio": null,
+          "avatar": {
+            "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+            "alt": "A blurry multi-colored rainbow background"
+          },
+          "banner": {
+            "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+            "alt": "A blurry multi-colored rainbow background"
+          }
+        },
+        "created": "2026-01-29T08:26:34.848Z"
+      },
+      {
+        "id": "9a3c3988-a67f-4183-9bb9-a9e42409ed28",
+        "amount": 50,
+        "bidder": {
+          "name": "Seller56",
+          "email": "redacted@stud.noroff.no",
+          "bio": "Hi, I'm Emily. I bake.",
+          "avatar": {
+            "url": "https://i.postimg.cc/Qt4gzpqJ/jeffery-erhunse-vp9m-Rauo68c-unsplash.jpg",
+            "alt": "A blurry multi-colored rainbow background"
+          },
+          "banner": {
+            "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+            "alt": "A blurry multi-colored rainbow background"
+          }
+        },
+        "created": "2026-01-29T21:00:12.313Z"
+      },
+      {
+        "id": "6b424db6-cd21-45b7-ba19-b4ece1249730",
+        "amount": 999,
+        "bidder": {
+          "name": "Seller102",
+          "email": "redacted@stud.noroff.no",
+          "bio": null,
+          "avatar": {
+            "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+            "alt": "A blurry multi-colored rainbow background"
+          },
+          "banner": {
+            "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+            "alt": "A blurry multi-colored rainbow background"
+          }
+        },
+        "created": "2026-02-10T14:48:19.915Z"
+      },
+      {
+        "id": "a4092a71-5493-42f5-90af-260991928808",
+        "amount": 1000,
+        "bidder": {
+          "name": "Seller22",
+          "email": "redacted@stud.noroff.no",
+          "bio": "Hi there!",
+          "avatar": {
+            "url": "https://img.freepik.com/free-vector/woman-with-braided-hair-illustration_1308-174675.jpg",
+            "alt": ""
+          },
+          "banner": {
+            "url": "https://img.freepik.com/free-vector/gradient-hexagonal-background_52683-62053.jpg",
+            "alt": ""
+          }
+        },
+        "created": "2026-03-19T09:30:47.305Z"
+      }
+    ],
+    "seller": {
+      "name": "Seller13",
+      "email": "redacted@stud.noroff.no",
+      "bio": "I'm fancy, and I wear pants :)",
+      "avatar": {
+        "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "alt": "Profile image"
+      },
+      "banner": {
+        "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+        "alt": "Profile image"
+      }
+    },
+    "_count": {
+      "bids": 5
+    }
+  },
+  "meta": {}
+}

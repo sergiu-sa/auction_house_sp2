@@ -1,0 +1,1371 @@
+{
+  "data": [
+    {
+      "id": "01d6c95e-e6d8-4a69-9e8e-5cbc4730d070",
+      "title": "Yoann Siloine Polaroid Camera",
+      "description": "Stylish vintage-inspired Yoann Siloine Polaroid camera with a timeless retro look. Perfect for instant photography lovers, collectors, or as a decorative display piece. Compact, iconic, and full of nostalgic character.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1516962126636-27ad087061cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Listing image"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "camera",
+        "photo"
+      ],
+      "created": "2026-04-08T15:48:12.978Z",
+      "updated": "2026-05-09T12:34:40.943Z",
+      "endsAt": "2026-05-15T16:00:00.000Z",
+      "bids": [
+        {
+          "id": "7ea35b84-fad2-4ba6-a3ec-5d304b23e6ca",
+          "amount": 35,
+          "bidder": {
+            "name": "Seller73",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page. It is alittle here but i am more into bidding than selSeller70",
+            "avatar": {
+              "url": "https://images.voicy.network/Content/Clips/Images/04ad182e-8970-4049-8eba-f072d08799d5-small.png",
+              "alt": "Avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1507752533523-5186b0bc4c43?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Banner"
+            }
+          },
+          "created": "2026-05-07T20:53:18.296Z"
+        },
+        {
+          "id": "69876a99-8777-4386-8813-c3df9fede762",
+          "amount": 32,
+          "bidder": {
+            "name": "Seller30",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Blabal",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1607350999170-b893fef057ea?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1426170042593-200f250dfdaf?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-07T10:16:35.949Z"
+        },
+        {
+          "id": "a459a9e7-3ade-4247-9669-fd6cfc7c83d1",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T14:15:39.860Z"
+        },
+        {
+          "id": "6c84cc87-1a8e-402f-a2a1-814287e154ee",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T14:44:19.101Z"
+        },
+        {
+          "id": "b656b226-03c1-468a-8094-ea2a4a786ec0",
+          "amount": 13,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T14:50:15.561Z"
+        },
+        {
+          "id": "f4abf52c-49cb-45f2-b678-db3e9ee494a7",
+          "amount": 16,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T15:50:49.095Z"
+        },
+        {
+          "id": "64e0401b-c569-48e2-9b46-359757747240",
+          "amount": 19,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T15:52:45.902Z"
+        },
+        {
+          "id": "ff6a924f-e7b2-482c-93d3-dac68b6b6590",
+          "amount": 22,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T15:55:25.125Z"
+        },
+        {
+          "id": "5fad8e8e-c5b7-46cd-9e84-be889806ad49",
+          "amount": 23,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T15:56:09.931Z"
+        },
+        {
+          "id": "88884e18-61e2-43ac-af85-eb1427d905c6",
+          "amount": 25,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-11T19:53:59.968Z"
+        },
+        {
+          "id": "ed5bb620-af9d-4d87-825c-ae41a08ed513",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selSeller70 things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T07:33:13.674Z"
+        },
+        {
+          "id": "0532eba1-7dff-48d2-9fa1-835107747d87",
+          "amount": 31,
+          "bidder": {
+            "name": "Seller69",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my profile! :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1455849318743-b2233052fcff?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "two person standing on gray tile paving"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "multicolored confetti"
+            }
+          },
+          "created": "2026-04-24T12:51:15.537Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller83",
+        "email": "redacted@stud.noroff.no",
+        "bio": "A 28-year-old student who is passionate about vintage things",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile banner"
+        }
+      },
+      "_count": {
+        "bids": 12
+      }
+    },
+    {
+      "id": "c0c9211f-2e69-48d3-bd5a-587a2df027d6",
+      "title": "“Whats Ur Number” Vinyl Record",
+      "description": "Vintage-style vinyl record titled “Whats Ur Number”. A great addition to any music collection, perfect for vinyl enthusiasts and retro decor lovers. The record has a classic look with light signs of use and plenty of nostalgic character.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1496293455970-f8581aae0e3b?q=80&w=1413&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Listing image"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1602848597941-0d3d3a2c1241?q=80&w=875&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Listing image"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "vinyl",
+        "music"
+      ],
+      "created": "2026-04-19T14:20:58.326Z",
+      "updated": "2026-05-09T08:42:29.653Z",
+      "endsAt": "2026-05-31T14:30:00.000Z",
+      "bids": [
+        {
+          "id": "89fca49e-ba25-4147-b188-c6765af0db81",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller63",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello! This is my page.",
+            "avatar": {
+              "url": "https://i.pinimg.com/736x/fe/d0/fb/fed0fb5ff5f901ec26ee9d591ed41b29.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://static.wikia.nocookie.net/witch-hat-atelier/images/5/55/Qifrey_opening_a_portal.jpg/revision/latest?cb=20200828205523",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-10T21:39:11.289Z"
+        },
+        {
+          "id": "f60f626f-ae04-4e40-a928-0f1706d7cb2b",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-04-25T09:48:33.558Z"
+        },
+        {
+          "id": "1e76fca9-818b-43fb-9a7d-1944a56b31dc",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-04T20:53:41.172Z"
+        },
+        {
+          "id": "4b78753e-0645-4835-82c0-997ff2510b31",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-04T21:20:52.855Z"
+        },
+        {
+          "id": "f75a360b-2c36-49b1-9527-c09c219146eb",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-04T21:22:12.025Z"
+        },
+        {
+          "id": "da7c1c72-22b1-41e1-9712-0b1a9138b23a",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-04T21:23:51.480Z"
+        },
+        {
+          "id": "66c6b348-fc5f-4421-9b79-107d195763a4",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-04T21:28:21.012Z"
+        },
+        {
+          "id": "7d69f062-c520-4584-9755-f70597d4191d",
+          "amount": 16,
+          "bidder": {
+            "name": "Seller57",
+            "email": "redacted@stud.noroff.no",
+            "bio": "",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1731370963513-810eab0e3194?q=80&w=1883&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "sky"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1581966691582-f35c9b4689f4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "not road"
+            }
+          },
+          "created": "2026-05-31T13:24:47.684Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller83",
+        "email": "redacted@stud.noroff.no",
+        "bio": "A 28-year-old student who is passionate about vintage things",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile banner"
+        }
+      },
+      "_count": {
+        "bids": 8
+      }
+    },
+    {
+      "id": "2bb652e8-fdb3-46a7-ac0d-c43602b5fd79",
+      "title": "Watch",
+      "description": "Beautiful vintage watch",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0Y2h8ZW58MHx8MHx8fDA%3D",
+          "alt": "Watch"
+        }
+      ],
+      "tags": [
+        "watch",
+        "timeless",
+        "antique"
+      ],
+      "created": "2025-10-04T18:47:52.594Z",
+      "updated": "2025-10-11T18:47:00.025Z",
+      "endsAt": "2025-10-11T18:47:00.000Z",
+      "bids": [
+        {
+          "id": "5e486972-065b-4c1b-8e67-53356f075432",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller71",
+            "email": "redacted@stud.noroff.no",
+            "bio": "SelSeller70 treasures, buying dreams—one auction at a time. Let’s make some deals!",
+            "avatar": {
+              "url": "https://i.imgur.com/Fb5lDO9.jpeg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/2310713/pexels-photo-2310713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              "alt": ""
+            }
+          },
+          "created": "2025-10-10T04:58:57.819Z"
+        },
+        {
+          "id": "abfbd257-58f6-4fba-80c6-f8a07fe8001a",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller68",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-10-04T18:51:07.463Z"
+        },
+        {
+          "id": "423cd2b5-71af-4680-b344-0cb7dbf0270f",
+          "amount": 52,
+          "bidder": {
+            "name": "Seller79",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-10-11T12:03:59.131Z"
+        },
+        {
+          "id": "b60865ee-9943-4df4-8c94-2ba11aa279a6",
+          "amount": 54,
+          "bidder": {
+            "name": "Seller67",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-10-11T12:04:10.941Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller55",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://thispersondoesnotexist.com/",
+          "alt": "Seller55's avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 4
+      }
+    },
+    {
+      "id": "d8787abf-9d6b-4249-ba87-59b9393d6a8f",
+      "title": "Vinyl Record Collection",
+      "description": "Large collection of vintage vinyl records featuring a variety of artists and genres.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1604128311556-816dfb846a54?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vinyl Record Collection"
+        }
+      ],
+      "tags": [
+        "music"
+      ],
+      "created": "2026-04-27T16:48:13.393Z",
+      "updated": "2026-04-27T16:48:13.393Z",
+      "endsAt": "2027-04-07T22:00:00.000Z",
+      "bids": [
+        {
+          "id": "85440406-c34e-4f2e-84e3-4e781a360dac",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-05-09T12:40:26.129Z"
+        },
+        {
+          "id": "c18e7a1d-56ee-4f54-99d0-4c3c489e0aa5",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller20",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my NightNode bio",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Placeholder avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Placeholder banner"
+            }
+          },
+          "created": "2026-05-03T21:22:35.747Z"
+        },
+        {
+          "id": "a779c57a-edc1-4bb1-863d-2eedcaef78b8",
+          "amount": 11,
+          "bidder": {
+            "name": "Seller05",
+            "email": "redacted@stud.noroff.no",
+            "bio": "GONNA SELL SO MUCH STUFF YEAHH!! I LOVE CLOWNS!!",
+            "avatar": {
+              "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771869563/f7xbkk7hhbanuvnelfym.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771869564/ix4sdviodf6cberetttg.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-08-17T20:16:48.706Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller10",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I just started coding again",
+        "avatar": {
+          "url": "https://soenderjyskehh.dk/wp-content/uploads/2025/09/Actionfotos-til-hjemmeside-25-26-5.png",
+          "alt": "Seller10's avatar"
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-photo/glasses-lie-laptop-reflecting-light-from-screen-dark_169016-52267.jpg?semt=ais_hybrid&w=740&q=80",
+          "alt": "Seller10's banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "21586595-1a6e-42e3-a668-00493b0064a5",
+      "title": "Vintage yellow car",
+      "description": "This is 1982 vintage car yellow in color",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1459603677915-a62079ffd002?q=80&w=1534&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "#vintage #car"
+      ],
+      "created": "2025-09-13T13:14:12.241Z",
+      "updated": "2025-09-14T13:14:00.013Z",
+      "endsAt": "2025-09-14T13:14:00.000Z",
+      "bids": [
+        {
+          "id": "a445ecf6-7cdd-4989-9761-489d76b67139",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller26",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-09-13T14:45:22.537Z"
+        },
+        {
+          "id": "e7c19b74-db10-4889-81f5-b396f8a9fd6c",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller11",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A nice guy! Updated 7!",
+            "avatar": {
+              "url": "https://media.gettyimages.com/id/1833762186/photo/istanbul-turkey-mauro-icardi-of-galatasaray-celebrates-after-scoring-his-teams-third-goal.jpg?s=612x612&w=gi&k=20&c=qHVmPYQ6yA7Rvr1k1QLki3KOrAOHIY2DXOheh92FxKM=",
+              "alt": "Seller11's avatar"
+            },
+            "banner": {
+              "url": "https://www.shutterstock.com/shutterstock/videos/31122052/thumb/1.jpg?ip=x480",
+              "alt": "Seller11's banner"
+            }
+          },
+          "created": "2025-09-13T17:29:40.877Z"
+        },
+        {
+          "id": "9abc4538-87de-4833-95e9-76fdeda8752f",
+          "amount": 70,
+          "bidder": {
+            "name": "Seller35",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This for test profilbild",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://unsplash.com/illustrations/a-person-laying-on-the-ground-with-a-speech-bubble-above-them-NW65ZOxqi4M",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-09-14T08:52:22.380Z"
+        },
+        {
+          "id": "b770cd38-7cc7-4734-9892-3453caa03332",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller70",
+            "email": "redacted@stud.noroff.no",
+            "bio": "skdjflk dsldkfj lsdjfl jslfj sl dfj lksjflkj slfjsdlfk jsdfjlkksdjlkjfkjdskf slfk j jlkf jslj lkjdsflkj sfdj lksjdf ljsfdl kjflskdjlfsd.",
+            "avatar": {
+              "url": "https://i.postimg.cc/pVn8vkJq/Seller70.jpg",
+              "alt": "Avatar image"
+            },
+            "banner": {
+              "url": "https://i.postimg.cc/pVn8vkJq/Seller70.jpg",
+              "alt": "Banner image"
+            }
+          },
+          "created": "2025-09-13T14:08:22.601Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller33",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This me noroff studen",
+        "avatar": {
+          "url": "https://wudasi6951.live-website.com/wp-content/uploads/2025/03/sketchperfect-2.jpg",
+          "alt": "profile pic"
+        },
+        "banner": {
+          "url": "https://wudasi6951.live-website.com/wp-content/uploads/2025/03/sketchperfect-5.jpg",
+          "alt": "apple"
+        }
+      },
+      "_count": {
+        "bids": 4
+      }
+    },
+    {
+      "id": "7bf54a83-4024-4384-8dcb-eec6b489752e",
+      "title": "Vintage Wooden Alphabet Blocks",
+      "description": "The set includes multiple letters in red, blue, green, and yellow, perfect for collectors, decorators, or educational use.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1558907353-ceb54f3882ed?q=80&w=2077&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "The set includes multiple letters"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1683234803972-cc87e51d4af1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "The set includes multiple letters"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1568828668638-b1b4014d91a2?q=80&w=2095&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "The set includes multiple letters"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "toys",
+        "collectibles"
+      ],
+      "created": "2025-02-20T21:09:17.267Z",
+      "updated": "2025-02-20T21:16:25.499Z",
+      "endsAt": "2025-04-26T20:09:00.000Z",
+      "bids": [
+        {
+          "id": "3b73a8ad-6867-4f9d-a40b-b004e8963f77",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller55",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://thispersondoesnotexist.com/",
+              "alt": "Seller55's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-02-22T10:16:30.282Z"
+        },
+        {
+          "id": "bc106f09-7ccd-45eb-8e3d-eefb58743adf",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller55",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://thispersondoesnotexist.com/",
+              "alt": "Seller55's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-02-22T10:22:52.586Z"
+        },
+        {
+          "id": "3bd157e6-7a5a-43f3-9890-6886cb82ea31",
+          "amount": 150,
+          "bidder": {
+            "name": "Seller93",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-02-22T12:04:06.079Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller88",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1724583698704-94b3f4771c58?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "User Avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1724583698704-94b3f4771c58?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "User Banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "d77d0efe-601c-437b-ad20-37edacc759cb",
+      "title": "Vintage watch",
+      "description": "This is a 19th centure vitage watch",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "#vintage",
+        "#watch"
+      ],
+      "created": "2025-09-10T14:51:09.511Z",
+      "updated": "2025-09-11T14:50:00.015Z",
+      "endsAt": "2025-09-11T14:50:00.000Z",
+      "bids": [
+        {
+          "id": "59ba953c-8060-4814-a891-297cc5a24243",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller62",
+            "email": "redacted@stud.noroff.no",
+            "bio": "2",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1722076460134-3219f90e9fad?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-09-10T17:55:55.868Z"
+        },
+        {
+          "id": "50feeefb-2483-4eb1-ac0e-52ce7e46279d",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller06",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Whyyyy",
+            "avatar": {
+              "url": "https://assets.epicurious.com/photos/630386df4eaa77f49a537aa5/1:1/w_3968,h_3968,c_limit/Brown_Sugar_Bacon_RECIPE_081722_38635.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://assets.epicurious.com/photos/630386df4eaa77f49a537aa5/1:1/w_3968,h_3968,c_limit/Brown_Sugar_Bacon_RECIPE_081722_38635.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2025-09-10T21:54:07.207Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller33",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This me noroff studen",
+        "avatar": {
+          "url": "https://wudasi6951.live-website.com/wp-content/uploads/2025/03/sketchperfect-2.jpg",
+          "alt": "profile pic"
+        },
+        "banner": {
+          "url": "https://wudasi6951.live-website.com/wp-content/uploads/2025/03/sketchperfect-5.jpg",
+          "alt": "apple"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "5b364d0a-55fa-46ac-8d5e-defd549d7fbf",
+      "title": "Vintage vintage",
+      "description": "No!",
+      "media": [
+        {
+          "url": "https://media.istockphoto.com/id/1849544097/vector/art-composition-abstract-transparency-geometrical-background-digital-human-head-constructing.webp?s=1024x1024&w=is&k=20&c=5dSbCMDAFUfBVFLCdS4H4g2f45IFra4KqxSbEdHNRVI=",
+          "alt": "No description neede, only money!"
+        }
+      ],
+      "tags": [],
+      "created": "2025-09-19T11:04:18.511Z",
+      "updated": "2025-09-19T11:04:47.387Z",
+      "endsAt": "2025-09-23T01:04:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller84",
+        "email": "redacted@stud.noroff.no",
+        "bio": "sagreagrv",
+        "avatar": {
+          "url": "https://media.istockphoto.com/id/1849544097/vector/art-composition-abstract-transparency-geometrical-background-digital-human-head-constructing.webp?s=1024x1024&w=is&k=20&c=5dSbCMDAFUfBVFLCdS4H4g2f45IFra4KqxSbEdHNRVI=",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "7166d610-8b10-46ed-9943-db821c3ab202",
+      "title": "Vintage View-Master 3D Viewer with Slide Reel",
+      "description": "Popular among collectors and nostalgia enthusiasts, this device was a staple of childhood entertainment in the mid-to-late 20th century.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1615402019964-169f5ecbaf05?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vintage View-Master 3D Viewer with Slide Reel"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1615402020061-337a2a5a97ab?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vintage View-Master 3D Viewer with Slide Reel"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1615402020065-b01cca46ca41?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vintage View-Master 3D Viewer with Slide Reel"
+        }
+      ],
+      "tags": [
+        "toys"
+      ],
+      "created": "2025-02-20T21:06:13.912Z",
+      "updated": "2025-02-20T21:06:13.912Z",
+      "endsAt": "2025-04-27T20:06:00.000Z",
+      "bids": [
+        {
+          "id": "a028502d-6b24-4603-98c9-f49dc01a21a3",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller39",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Graduate of Noroff Frontend Developer course.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=855",
+              "alt": "Seller39's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1758637612224-82540ceeb007?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1740",
+              "alt": "Seller39's banner"
+            }
+          },
+          "created": "2025-02-22T13:33:22.582Z"
+        },
+        {
+          "id": "04ce047c-bdf9-4bba-87cc-18ef922332e5",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller07",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnJhMWJjbTk5bjVycW5xNWQ4dXk3dHVmZ25sYmw5M2x6MzJxZ2JscSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uTNsYTSDYfaPm/giphy.gif",
+              "alt": "Seller07's profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-02-26T15:36:24.043Z"
+        },
+        {
+          "id": "3929ed48-f16c-420f-9c3f-c80e54ce83b5",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller85",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Professional vibe curator & lover of all things cozy.",
+            "avatar": {
+              "url": "https://github.com/user-attachments/assets/1187ee9a-7c21-4952-8182-b41a7cea879c",
+              "alt": "Cartoon of a girl"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1749665833248-1076a72f05eb?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Golden leaves"
+            }
+          },
+          "created": "2025-02-26T17:51:36.322Z"
+        },
+        {
+          "id": "96d95f4c-c78d-4461-99b1-4849a5b805d2",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller91",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Passionate collector of rare and unique items, with a focus on vintage fashion and antique furniture. Always on the lookout for the next great find! Updated...",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1608889175123-8ee362201f81?q=80&w=2980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile picture of the user"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1578070181910-f1e514afdd08?q=80&w=3033&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Banner image showcasing the user's collection"
+            }
+          },
+          "created": "2025-02-26T21:33:29.432Z"
+        },
+        {
+          "id": "6e5c0dd2-1089-4b5c-bda8-18f4657d5b3e",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller39",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Graduate of Noroff Frontend Developer course.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=855",
+              "alt": "Seller39's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1758637612224-82540ceeb007?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1740",
+              "alt": "Seller39's banner"
+            }
+          },
+          "created": "2025-02-27T18:29:56.877Z"
+        },
+        {
+          "id": "de160c43-247c-4e2c-af72-a7e1f2d7c38a",
+          "amount": 8,
+          "bidder": {
+            "name": "Seller92",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio. Updated",
+            "avatar": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My avatar alt text"
+            },
+            "banner": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My banner alt text"
+            }
+          },
+          "created": "2025-02-28T17:49:33.107Z"
+        },
+        {
+          "id": "77991ea0-205c-46fe-87dd-07e92199af27",
+          "amount": 9,
+          "bidder": {
+            "name": "Seller92",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio. Updated",
+            "avatar": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My avatar alt text"
+            },
+            "banner": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My banner alt text"
+            }
+          },
+          "created": "2025-02-28T18:03:35.179Z"
+        },
+        {
+          "id": "ab931124-545d-49ec-9d55-a9882bb26f46",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller92",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio. Updated",
+            "avatar": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My avatar alt text"
+            },
+            "banner": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My banner alt text"
+            }
+          },
+          "created": "2025-02-28T18:42:32.295Z"
+        },
+        {
+          "id": "32e166f1-9d02-492f-aad7-aecdc31c31d0",
+          "amount": 11,
+          "bidder": {
+            "name": "Seller91",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Passionate collector of rare and unique items, with a focus on vintage fashion and antique furniture. Always on the lookout for the next great find! Updated...",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1608889175123-8ee362201f81?q=80&w=2980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile picture of the user"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1578070181910-f1e514afdd08?q=80&w=3033&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Banner image showcasing the user's collection"
+            }
+          },
+          "created": "2025-03-02T09:18:26.952Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller88",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1724583698704-94b3f4771c58?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "User Avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1724583698704-94b3f4771c58?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "User Banner"
+        }
+      },
+      "_count": {
+        "bids": 9
+      }
+    },
+    {
+      "id": "769bcff9-1550-425c-a6ca-e48c581c319c",
+      "title": "Vintage vase",
+      "description": "Beautiful vintage vase from Italy. Looks \nbrand new.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1663888672535-956677e08412?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "vintage",
+        "interior"
+      ],
+      "created": "2026-04-28T10:37:19.125Z",
+      "updated": "2026-05-06T00:00:00.016Z",
+      "endsAt": "2026-05-06T00:00:00.000Z",
+      "bids": [
+        {
+          "id": "4dfc6683-fb30-418b-9223-49bbe540b37d",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-04-29T09:37:51.690Z"
+        },
+        {
+          "id": "4d7a6e0e-c615-4da2-a845-baaf32f02fc7",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-04T12:31:19.720Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller99",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my first bio! Welcome to my profile and feel free to bid on my listings.!helli",
+        "avatar": {
+          "url": "https://static.vecteezy.com/system/resources/thumbnails/004/899/680/small/beautiful-blonde-woman-with-makeup-avatar-for-a-beauty-salon-illustration-in-the-cartoon-style-vector.jpg",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://static.vecteezy.com/system/resources/thumbnails/022/536/549/small/modern-banner-background-colorful-blue-and-purple-gradations-circles-eps-10-free-vector.jpg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "a8e26aab-4833-4186-8a4e-6397451df466",
+      "title": "Vintage Unique Watch",
+      "description": "A rare, vintage watch with a unique design, featuring intricate engravings and a limited edition release. Perfect for watch collectors and enthusiasts.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=3094&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Front view of the vintage unique watch"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "watch",
+        "collectible"
+      ],
+      "created": "2025-02-24T21:21:42.016Z",
+      "updated": "2025-03-01T21:21:00.012Z",
+      "endsAt": "2025-03-01T21:21:00.000Z",
+      "bids": [
+        {
+          "id": "53cb5c37-038e-4c1c-831a-1ba846b2cdf4",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller92",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio. Updated",
+            "avatar": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My avatar alt text"
+            },
+            "banner": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My banner alt text"
+            }
+          },
+          "created": "2025-02-28T18:05:04.598Z"
+        },
+        {
+          "id": "3b94061d-4824-4cba-8f30-2264fb326046",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller92",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio. Updated",
+            "avatar": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My avatar alt text"
+            },
+            "banner": {
+              "url": "https://unsplash.com/photos/a-man-with-long-hair-and-a-beard-wearing-a-horned-hat-HIfw5PRU5fI",
+              "alt": "My banner alt text"
+            }
+          },
+          "created": "2025-02-28T18:42:43.537Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller91",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Passionate collector of rare and unique items, with a focus on vintage fashion and antique furniture. Always on the lookout for the next great find! Updated...",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1608889175123-8ee362201f81?q=80&w=2980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile picture of the user"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1578070181910-f1e514afdd08?q=80&w=3033&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Banner image showcasing the user's collection"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "337e8b97-0dfd-4b15-975e-562dbfd863d9",
+      "title": "Vintage typewriter lamp🛋️",
+      "description": "🛋️Vintage typewriter lamp🛋️",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1641985900076-bbdc73ebea8a?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vintage typewriter lamp"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1641985896769-54ba80478024?q=80&w=1998&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vintage typewriter lamp"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1641985900182-921096a6f3ce?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vintage typewriter lamp"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "interior"
+      ],
+      "created": "2025-02-25T20:37:42.213Z",
+      "updated": "2025-02-25T20:45:00.011Z",
+      "endsAt": "2025-02-25T20:45:00.000Z",
+      "bids": [
+        {
+          "id": "8305d4d0-b4d5-4098-975c-32cbc8b65ce0",
+          "amount": 1000,
+          "bidder": {
+            "name": "Seller58",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-02-25T20:39:47.856Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller88",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1724583698704-94b3f4771c58?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "User Avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1724583698704-94b3f4771c58?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "User Banner"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": false,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": 2,
+    "pageCount": 10,
+    "totalCount": 116
+  }
+}

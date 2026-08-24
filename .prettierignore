@@ -1,0 +1,11 @@
+dist
+coverage
+node_modules
+
+# Vendored third-party assets:
+#  these must stay byte-identical to what was downloaded, and reformatting a minified file makes it larger and harder to diff.
+tests/e2e/assets
+
+# Recorded API responses and generated screenshots.
+tests/e2e/fixtures
+tests/e2e/visual.spec.ts-snapshots

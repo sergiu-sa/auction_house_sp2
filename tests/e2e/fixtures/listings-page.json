@@ -1,0 +1,3733 @@
+{
+  "data": [
+    {
+      "id": "58afc458-8db6-402a-9ef7-11932f0e0193",
+      "title": "something",
+      "description": "some listing",
+      "media": [],
+      "tags": [],
+      "created": "2026-07-02T10:40:49.932Z",
+      "updated": "2026-07-02T10:40:49.932Z",
+      "endsAt": "2026-07-25T14:40:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller98",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://i.pravatar.cc/150?img=3",
+          "alt": "Seller98 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "245f372f-a379-4f79-8072-861d3caa8db1",
+      "title": "Wooden Desk Lamp",
+      "description": "Minimalist wooden base desk lamp, warm light. Works perfectly, bulb included.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1708164970111-8ae9a5eed7b1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFdvb2RlbiUyMERlc2slMjBMYW1wfGVufDB8fDB8fHww",
+          "alt": "Wooden Desk Lamp"
+        }
+      ],
+      "tags": [
+        "lamp",
+        "desk",
+        "wood",
+        "minimal"
+      ],
+      "created": "2026-06-07T15:19:13.360Z",
+      "updated": "2026-06-07T15:19:13.360Z",
+      "endsAt": "2026-07-10T20:20:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller65",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/8e/8e0a151238b7bcd298b797cc2048a24180dc527a_medium.jpg",
+          "alt": "Seller65"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1557683316-973673baf926?w=1200",
+          "alt": "Seller65"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "58e0cf36-d72d-4bea-adb8-3c3b6f16c7d2",
+      "title": "Leather Vintage Bag",
+      "description": "Brown leather shoulder bag from the 80s. Minor wear, solid stitching. Great for daily use or collection",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800",
+          "alt": "Leather Vintage Bag"
+        }
+      ],
+      "tags": [
+        "leather",
+        "bag",
+        "vintage",
+        "old"
+      ],
+      "created": "2026-06-07T15:15:47.227Z",
+      "updated": "2026-06-07T15:15:47.227Z",
+      "endsAt": "2026-06-26T20:15:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller65",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/8e/8e0a151238b7bcd298b797cc2048a24180dc527a_medium.jpg",
+          "alt": "Seller65"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1557683316-973673baf926?w=1200",
+          "alt": "Seller65"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "db30266c-a5b0-4d6c-9372-9bad0275f90a",
+      "title": "Vintage Blue Ceramic Vase",
+      "description": "Hand-crafted ceramic vase from the 1970s, excellent condition. Perfect for collectors or home decor.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?w=800",
+          "alt": "Vintage Blue Ceramic Vase"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "ceramic",
+        "vase"
+      ],
+      "created": "2026-06-07T12:30:51.232Z",
+      "updated": "2026-06-07T12:30:51.232Z",
+      "endsAt": "2026-06-28T17:30:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller65",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/8e/8e0a151238b7bcd298b797cc2048a24180dc527a_medium.jpg",
+          "alt": "Seller65"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1557683316-973673baf926?w=1200",
+          "alt": "Seller65"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "313dbd1d-71c5-4eee-b7fe-028e8d3a1a99",
+      "title": "test",
+      "description": "test",
+      "media": [],
+      "tags": [
+        "art"
+      ],
+      "created": "2026-06-04T08:35:17.951Z",
+      "updated": "2026-06-05T10:00:00.018Z",
+      "endsAt": "2026-06-05T10:00:00.000Z",
+      "bids": [
+        {
+          "id": "8a425dcb-66c9-4bd1-8c3b-5a01e7a67501",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller100",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello. This is my profile! <3",
+            "avatar": {
+              "url": "https://i.pinimg.com/736x/b6/e6/87/b6e687094f11e465e7d710a6b5754a4e.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1461696114087-397271a7aedc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-06-04T19:25:14.394Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller81",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "fced970a-5cb7-4c95-aaa4-6430183d6e6f",
+      "title": "new",
+      "description": "kjhjkajdh",
+      "media": [
+        {
+          "url": "https://www.shutterstock.com/image-photo/sun-sets-behind-mountain-ranges-600nw-2479236003.jpg",
+          "alt": "new"
+        }
+      ],
+      "tags": [
+        "test",
+        "test2"
+      ],
+      "created": "2026-06-03T18:45:05.631Z",
+      "updated": "2026-06-26T00:00:00.027Z",
+      "endsAt": "2026-06-26T00:00:00.000Z",
+      "bids": [
+        {
+          "id": "f9daf63d-60ed-456a-b178-4246af5a71b5",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller19",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/premium-vector/man-avatar-profile-picture-isolated-background-avatar-profile-picture-man_1293239-4866.jpg",
+              "alt": "Helene alt"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/purple-pink-background-with-white-triangle-middle_483537-4225.jpg",
+              "alt": "Helene alt"
+            }
+          },
+          "created": "2026-06-04T15:55:34.795Z"
+        },
+        {
+          "id": "fed8b0a5-19cd-43d2-9fe8-ab83d4924db2",
+          "amount": 25,
+          "bidder": {
+            "name": "Seller12",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there...again",
+            "avatar": {
+              "url": "https://img.magnific.com/free-vector/smiSeller70-young-man-illustration_1308-174669.jpg",
+              "alt": "Seller12 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller12 banner"
+            }
+          },
+          "created": "2026-06-04T16:21:21.681Z"
+        },
+        {
+          "id": "04312a51-afb5-403e-bccd-8ad768416d9c",
+          "amount": 26,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-06-05T12:12:24.312Z"
+        },
+        {
+          "id": "4a4b3847-2980-4e41-9d00-a49a011d117d",
+          "amount": 27,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-06-05T12:24:58.684Z"
+        },
+        {
+          "id": "67a7443e-f27a-4786-ad06-d95a20eb97a6",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller31",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Heyyy my name is Seller31 and I love steaSeller70 my owners yarn",
+            "avatar": {
+              "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1782216141/reuvx6wxlwxom31ty3xm.webp",
+              "alt": "Seller31's profile picture"
+            },
+            "banner": {
+              "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1780725153/gdmlj0gieisqdveuhsrx.webp",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T04:04:00.607Z"
+        },
+        {
+          "id": "f1c1582d-bbf1-4001-b740-dc7145002cd0",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller48",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T18:23:18.499Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller96",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 6
+      }
+    },
+    {
+      "id": "07d9c428-844b-4a65-b766-c870fd0991cc",
+      "title": "Seller28 TEST [UPDATED]",
+      "description": "DCCDFVDFVF [UPDATED]",
+      "media": [
+        {
+          "url": "https://img.magnific.com/free-psd/collection-six-potted-indoor-plants-green-foliage-home-decor_191095-78779.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://img.magnific.com/free-vector/tropical-plant-transparent-background_1308-60285.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://img.magnific.com/free-psd/elegant-indoor-palm-tree-modern-pot_632498-25513.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-06-03T15:47:11.788Z",
+      "updated": "2026-06-03T15:48:23.664Z",
+      "endsAt": "2026-10-29T19:50:00.000Z",
+      "bids": [
+        {
+          "id": "d6fb46c2-b76f-4fe1-a074-b0daa61a94a7",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller15",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.magnific.com/free-vector/smiSeller70-young-man-illustration_1308-174669.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-03T16:04:19.841Z"
+        },
+        {
+          "id": "29d6fc44-dd46-4979-a946-073c96302f7f",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller60",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-05T10:32:46.647Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller28",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hi there!",
+        "avatar": {
+          "url": "https://img.freepik.com/free-vector/smiSeller70-young-man-illustration_1308-174669.jpg",
+          "alt": "Seller28"
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-vector/modern-abstract-gradient-background-with-elegant-elements-vector-illustration_361591-3821.jpg?semt=ais_hybrid&w=740&q=80",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "6201dbcc-2438-4ea9-9ce0-06396f5d5ae7",
+      "title": "Milagros_ TEST [UPDATE]",
+      "description": "DCSSFVVGBGB [UPDATED]",
+      "media": [
+        {
+          "url": "https://img.magnific.com/free-vector/tropical-plant-transparent-background_1308-60285.jpg",
+          "alt": "Milagros_ TEST [UPDATE]"
+        },
+        {
+          "url": "https://img.magnific.com/free-psd/monstera-deliciosa-plant-pot-lush-green-leaves-home-decor-indoor-plant-tropical-foliage-vibrant-green-potted-plant-houseplant-greenery-plant-photography_191095-84025.jpg",
+          "alt": "Milagros_ TEST [UPDATE]"
+        },
+        {
+          "url": "https://img.magnific.com/free-psd/collection-six-potted-indoor-plants-green-foliage-home-decor_191095-78779.jpg",
+          "alt": "Milagros_ TEST [UPDATE]"
+        }
+      ],
+      "tags": [
+        "antiques"
+      ],
+      "created": "2026-06-03T14:33:12.357Z",
+      "updated": "2026-06-03T14:34:25.023Z",
+      "endsAt": "2026-09-16T17:35:00.000Z",
+      "bids": [
+        {
+          "id": "1a514e50-8279-4514-8d18-d26dc5e69fe2",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller40",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hei, jeg heter Tonje.",
+            "avatar": {
+              "url": "https://i.imgur.com/FDCzURD.jpeg",
+              "alt": "Seller40 avatar"
+            },
+            "banner": {
+              "url": "https://i.imgur.com/PYYALIz.jpeg",
+              "alt": "Seller40 banner"
+            }
+          },
+          "created": "2026-06-04T10:39:31.803Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller29",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hi there!",
+        "avatar": {
+          "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "ae0a72f2-7b2b-4006-9274-3be471357279",
+      "title": "Mercedes Benz Automobile",
+      "description": "Used car that goes wroom wroom on the road, perfect for new and old drivers who want to contribute to destruction of the ozone layer",
+      "media": [],
+      "tags": [
+        "car",
+        "mercedez",
+        "vehicle"
+      ],
+      "created": "2026-05-31T13:33:04.428Z",
+      "updated": "2026-05-31T13:33:04.428Z",
+      "endsAt": "2026-06-03T13:33:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller57",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1731370963513-810eab0e3194?q=80&w=1883&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "sky"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1581966691582-f35c9b4689f4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "not road"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "7a6f01f1-0155-41d2-9ec8-67a151a7f8b8",
+      "title": "Mercedes Benz Automobile",
+      "description": "Used car that goes wroom wroom on the road, perfect for new and old drivers who want to contribute to destruction of the ozone layer",
+      "media": [],
+      "tags": [
+        "car",
+        "mercedez",
+        "vehicle"
+      ],
+      "created": "2026-05-31T13:24:39.223Z",
+      "updated": "2026-05-31T13:24:39.223Z",
+      "endsAt": "2026-06-03T13:24:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller57",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1731370963513-810eab0e3194?q=80&w=1883&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "sky"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1581966691582-f35c9b4689f4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "not road"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "91d06ffc-b507-489d-acdb-e459c276e6e8",
+      "title": "Listing",
+      "description": "SuperListing stuff",
+      "media": [
+        {
+          "url": "https://www.emp-shop.no/dw/image/v2/BBQV_PRD/on/demandware.static/-/Library-Sites-EMPSharedLibrary/default/dw8733aa54/100151_MT_Marvel.jpg?sw=768",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-30T13:16:01.593Z",
+      "updated": "2026-05-30T13:16:20.805Z",
+      "endsAt": "2026-06-28T13:15:00.000Z",
+      "bids": [
+        {
+          "id": "2efa31d0-3e21-4404-a1bd-9a45a895f483",
+          "amount": 150,
+          "bidder": {
+            "name": "Seller28",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/smiSeller70-young-man-illustration_1308-174669.jpg",
+              "alt": "Seller28"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/modern-abstract-gradient-background-with-elegant-elements-vector-illustration_361591-3821.jpg?semt=ais_hybrid&w=740&q=80",
+              "alt": ""
+            }
+          },
+          "created": "2026-06-03T15:48:56.875Z"
+        },
+        {
+          "id": "2318e915-3b35-4791-8568-779285b03c4b",
+          "amount": 160,
+          "bidder": {
+            "name": "Seller31",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Heyyy my name is Seller31 and I love steaSeller70 my owners yarn",
+            "avatar": {
+              "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1782216141/reuvx6wxlwxom31ty3xm.webp",
+              "alt": "Seller31's profile picture"
+            },
+            "banner": {
+              "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1780725153/gdmlj0gieisqdveuhsrx.webp",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T04:17:18.175Z"
+        },
+        {
+          "id": "d7c24f1c-9923-438a-bc27-e52c74efb153",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller48",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T18:23:30.048Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller89",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://url.com/image.jpg",
+          "alt": "Avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "e700c5a5-ef9b-47c2-980d-ccc4b755c06e",
+      "title": "Skyline r34 GTR",
+      "description": "fdsfdsfsdfds",
+      "media": [],
+      "tags": [],
+      "created": "2026-05-28T08:00:36.121Z",
+      "updated": "2026-05-30T22:00:00.020Z",
+      "endsAt": "2026-05-30T22:00:00.000Z",
+      "bids": [
+        {
+          "id": "b21ccddf-5358-4446-a60e-460508cabce6",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-05-28T14:03:22.650Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller45",
+        "email": "redacted@stud.noroff.no",
+        "bio": "hei hei !!!",
+        "avatar": {
+          "url": "https://i.pinimg.com/1200x/25/b8/9f/25b89fedd44c9e7597e61fef1d68b2aa.jpg",
+          "alt": "Seller45 avatar"
+        },
+        "banner": {
+          "url": "https://i.pinimg.com/1200x/e5/92/d6/e592d652df062696bf96484cb6480188.jpg",
+          "alt": "Seller45 banner"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "c813768a-8cdf-4b22-90a3-d336623b3900",
+      "title": "Necklace",
+      "description": "beautiful danty necklace",
+      "media": [
+        {
+          "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1779799994/guclhgb7lxk0y6evvuh3.jpg",
+          "alt": "Listing image 1"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-26T12:53:15.790Z",
+      "updated": "2026-05-26T12:53:15.790Z",
+      "endsAt": "2026-07-19T00:00:00.000Z",
+      "bids": [
+        {
+          "id": "6243f321-07ab-434a-8444-fa7bba79f7ab",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller40",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hei, jeg heter Tonje.",
+            "avatar": {
+              "url": "https://i.imgur.com/FDCzURD.jpeg",
+              "alt": "Seller40 avatar"
+            },
+            "banner": {
+              "url": "https://i.imgur.com/PYYALIz.jpeg",
+              "alt": "Seller40 banner"
+            }
+          },
+          "created": "2026-05-27T11:36:38.476Z"
+        },
+        {
+          "id": "92a9eba5-b9d4-4ffc-a44b-2181bf6c3e5c",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-05-28T13:09:25.793Z"
+        },
+        {
+          "id": "e6e54149-a3cf-4102-be3e-803368b2e76f",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-05-28T13:32:38.401Z"
+        },
+        {
+          "id": "e8625a34-b9e0-4e50-98bf-712048352a5e",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-05-28T13:43:28.244Z"
+        },
+        {
+          "id": "0caf7118-846c-4275-9426-7ab76f7b4a1d",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-05-28T13:43:36.390Z"
+        },
+        {
+          "id": "e3faaa9f-a8e1-4255-9136-37addc650107",
+          "amount": 11,
+          "bidder": {
+            "name": "Seller44",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": "Test Seller43"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg",
+              "alt": "Test Seller43"
+            }
+          },
+          "created": "2026-06-03T14:04:50.594Z"
+        },
+        {
+          "id": "3aac0a56-84a2-40e3-aa5f-ed101740d66a",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller29",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-06-03T14:34:58.177Z"
+        },
+        {
+          "id": "04ac3421-7c52-4c36-b6cd-8d1ca7814b57",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller34",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T05:41:58.225Z"
+        },
+        {
+          "id": "d01a061e-a9eb-44df-9d83-f00661d4d0e5",
+          "amount": 21,
+          "bidder": {
+            "name": "Seller34",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T05:42:24.165Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller31",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Heyyy my name is Seller31 and I love steaSeller70 my owners yarn",
+        "avatar": {
+          "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1782216141/reuvx6wxlwxom31ty3xm.webp",
+          "alt": "Seller31's profile picture"
+        },
+        "banner": {
+          "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1780725153/gdmlj0gieisqdveuhsrx.webp",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 9
+      }
+    },
+    {
+      "id": "2af03c1d-d174-47d3-8059-fb751f91ceef",
+      "title": "test",
+      "description": "dette er en test",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "test"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-20T13:46:49.300Z",
+      "updated": "2026-06-12T20:22:00.024Z",
+      "endsAt": "2026-06-12T20:22:00.000Z",
+      "bids": [
+        {
+          "id": "acd4af79-efaa-4ec9-915f-798ea1f1edb0",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller95",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my cool story bro.",
+            "avatar": {
+              "url": "https://i.postimg.cc/c4SDxdqV/diego-hernandez-MSepzb-KFz10-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-22T06:02:41.628Z"
+        },
+        {
+          "id": "dc3e037e-3386-4f02-8407-78d2618eef68",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveSeller70!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-05-27T20:34:58.041Z"
+        },
+        {
+          "id": "59a753ae-a6d8-45e9-b65d-79e3fb85602c",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller24",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": "avatar"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+              "alt": "banner"
+            }
+          },
+          "created": "2026-06-04T15:23:31.617Z"
+        },
+        {
+          "id": "68ffd411-0a3f-4993-88f7-ca4c7395f550",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller12",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there...again",
+            "avatar": {
+              "url": "https://img.magnific.com/free-vector/smiSeller70-young-man-illustration_1308-174669.jpg",
+              "alt": "Seller12 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller12 banner"
+            }
+          },
+          "created": "2026-06-04T16:19:57.840Z"
+        },
+        {
+          "id": "afa01102-2b85-43b3-9a03-136b10cb52ec",
+          "amount": 101,
+          "bidder": {
+            "name": "Seller40",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hei, jeg heter Tonje.",
+            "avatar": {
+              "url": "https://i.imgur.com/FDCzURD.jpeg",
+              "alt": "Seller40 avatar"
+            },
+            "banner": {
+              "url": "https://i.imgur.com/PYYALIz.jpeg",
+              "alt": "Seller40 banner"
+            }
+          },
+          "created": "2026-06-05T11:22:13.493Z"
+        },
+        {
+          "id": "0d865e73-3413-4985-8e3a-51fc529c2f88",
+          "amount": 102,
+          "bidder": {
+            "name": "Seller31",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Heyyy my name is Seller31 and I love steaSeller70 my owners yarn",
+            "avatar": {
+              "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1782216141/reuvx6wxlwxom31ty3xm.webp",
+              "alt": "Seller31's profile picture"
+            },
+            "banner": {
+              "url": "https://res.cloudinary.com/dobcqphb0/image/upload/v1780725153/gdmlj0gieisqdveuhsrx.webp",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-06T04:17:45.319Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller80",
+        "email": "redacted@stud.noroff.no",
+        "bio": "hello!",
+        "avatar": {
+          "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+          "alt": "Seller80 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller80 banner"
+        }
+      },
+      "_count": {
+        "bids": 6
+      }
+    },
+    {
+      "id": "657a21c1-a8b1-4b6b-bc98-1c57e934f871",
+      "title": "Seller27 TEST 1",
+      "description": "dscjndkcnSD",
+      "media": [
+        {
+          "url": "https://img.freepik.com/free-photo/palm-tree-house-plant-pot_53876-125837.jpg",
+          "alt": "Listing image"
+        },
+        {
+          "url": "https://img.freepik.com/free-psd/elegant-indoor-palm-tree-modern-pot_632498-25513.jpg",
+          "alt": "Listing image"
+        },
+        {
+          "url": "https://img.freepik.com/free-photo/palm-tree-house-plant-pot_53876-125837.jpg, https://img.freepik.com/free-photo/palm-tree-house-plant-pot_53876-125837.jpg",
+          "alt": "Listing image"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-19T12:24:08.311Z",
+      "updated": "2026-05-21T14:24:00.018Z",
+      "endsAt": "2026-05-21T14:24:00.000Z",
+      "bids": [
+        {
+          "id": "9323d6a8-9084-41b1-af99-d87cbe46fbe5",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-20T08:13:21.101Z"
+        },
+        {
+          "id": "d3edb554-9131-428b-93ef-4ee62e3e6e24",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-20T12:31:45.166Z"
+        },
+        {
+          "id": "2dc7cba8-4069-4cbd-bb39-00199b38e505",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller74",
+            "email": "redacted@stud.noroff.no",
+            "bio": "",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller74 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1777903675832-6da170eee699?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller74 banner"
+            }
+          },
+          "created": "2026-05-20T12:33:06.289Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller27",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hi there!",
+        "avatar": {
+          "url": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+          "alt": "Avatar"
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+          "alt": "Banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "0d0579fc-d780-4d03-927f-ddc7707e3a71",
+      "title": "Test",
+      "description": "teeest",
+      "media": [],
+      "tags": [],
+      "created": "2026-05-16T11:51:44.205Z",
+      "updated": "2026-05-19T20:22:00.090Z",
+      "endsAt": "2026-05-19T20:22:00.000Z",
+      "bids": [
+        {
+          "id": "ca23333f-9aef-4770-b435-4aa8ed22ddc5",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller46",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page where I sell useful objects",
+            "avatar": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+              "alt": "Seller46's profile picture"
+            },
+            "banner": {
+              "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller46's banner picture"
+            }
+          },
+          "created": "2026-05-17T11:43:18.666Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller80",
+        "email": "redacted@stud.noroff.no",
+        "bio": "hello!",
+        "avatar": {
+          "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+          "alt": "Seller80 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller80 banner"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "7397bd87-7c61-47a1-a28c-ae4636f02eba",
+      "title": "Telephone",
+      "description": "Vintage telephone",
+      "media": [
+        {
+          "url": "https://nucleovisual.com/wp-content/uploads/2025/08/Nokia-1100-1.jpg",
+          "alt": "Telephone"
+        },
+        {
+          "url": "https://tse1.mm.bing.net/th/id/OIP.gwAOxxvc6ub7ziTLdL79UQHaLI?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+          "alt": "Front view"
+        },
+        {
+          "url": "https://galeri7.uludagsozluk.com/261/nokia-1100_516557_m.jpg",
+          "alt": "Telephone"
+        },
+        {
+          "url": "https://tse3.mm.bing.net/th/id/OIP.GD7g8u3BR5xBNvB3JHbXTwHaHY?r=0&w=550&h=548&rs=1&pid=ImgDetMain&o=7&rm=3",
+          "alt": "Telephone"
+        },
+        {
+          "url": "https://tse3.mm.bing.net/th/id/OIP.NoMARkfy8yCx-Nz7905zFwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+          "alt": "Telephone"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "electronics"
+      ],
+      "created": "2026-05-16T09:59:31.834Z",
+      "updated": "2026-05-17T09:59:00.017Z",
+      "endsAt": "2026-05-17T09:59:00.000Z",
+      "bids": [
+        {
+          "id": "17f4a0d8-43f4-4202-8072-07e96d3dacdf",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-16T12:09:10.634Z"
+        },
+        {
+          "id": "6b649702-13fc-4458-bb63-c6044c420ca6",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller99",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my first bio! Welcome to my profile and feel free to bid on my listings.!helli",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/004/899/680/small/beautiful-blonde-woman-with-makeup-avatar-for-a-beauty-salon-illustration-in-the-cartoon-style-vector.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/022/536/549/small/modern-banner-background-colorful-blue-and-purple-gradations-circles-eps-10-free-vector.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-16T13:24:54.278Z"
+        },
+        {
+          "id": "74c2c507-a58a-4bf2-80e7-b884e2522a4d",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller09",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": "Seller09's avatar"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/premium-photo/gradient-banner-rainbow-gradient-background-abstract-gradient-wallpaper-vibrant-gradient-background_605423-36984.jpg",
+              "alt": "Seller09's banner"
+            }
+          },
+          "created": "2026-05-16T18:36:19.935Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller37",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "43ca8c3b-39fb-4aa4-bffc-d988ff52cf14",
+      "title": "Testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+      "description": "daasdasdsadasd",
+      "media": [],
+      "tags": [
+        "test"
+      ],
+      "created": "2026-05-15T18:36:42.243Z",
+      "updated": "2026-05-15T18:40:00.017Z",
+      "endsAt": "2026-05-15T18:40:00.000Z",
+      "bids": [
+        {
+          "id": "7cb46722-3c71-4969-b7ac-3e1050aedda7",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller97",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Just another seller ;)",
+            "avatar": {
+              "url": "https://i.pinimg.com/236x/5d/b6/98/5db69840945ffda1f0fbfe1822277d80.jpg",
+              "alt": "Crowley"
+            },
+            "banner": {
+              "url": "https://i.pinimg.com/1200x/4c/36/d8/4c36d8bb4e08e3b0b5ff33dd0a7a6475.jpg",
+              "alt": "Me and my bestie"
+            }
+          },
+          "created": "2026-05-15T18:37:06.488Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller82",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my bio",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1680355455579-e851904eb784?q=80&w=1015&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Placeholder avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1614850523011-8f49ffc73908?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Placeholder banner"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "3d7d24e7-e15b-41a5-9051-a9335334ff40",
+      "title": "The Official \"Elijah Wood Wig Collection\" – Do You Wear Wigs? Now You Can.",
+      "description": "A glorious, mysterious, and fully unverified collection of wigs, inspired by the most important philosophical questions of our time. \nDo you wear wigs?\nHave you worn wigs?\nIf not, will you wear wigs?\nWhen will you wear wigs?",
+      "media": [
+        {
+          "url": "https://i.pinimg.com/736x/80/4f/a2/804fa233567acf6ff0dd66ee839b4a3e.jpg",
+          "alt": "Gandalf"
+        },
+        {
+          "url": "https://i.pinimg.com/736x/cb/a8/c2/cba8c287f0f32b6d4a5e0126e83e1096.jpg",
+          "alt": "Legolas"
+        },
+        {
+          "url": "https://i.pinimg.com/736x/af/8a/a2/af8aa2fa2abbb9c92d5d0f6cbe74c182.jpg",
+          "alt": "Bombur"
+        }
+      ],
+      "tags": [
+        "Hair"
+      ],
+      "created": "2026-05-15T18:25:03.299Z",
+      "updated": "2026-05-22T18:19:00.018Z",
+      "endsAt": "2026-05-22T18:19:00.000Z",
+      "bids": [
+        {
+          "id": "182d1b58-934f-4e08-a5f1-4f9c5dd1e0c8",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller97",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Just another seller ;)",
+            "avatar": {
+              "url": "https://i.pinimg.com/236x/5d/b6/98/5db69840945ffda1f0fbfe1822277d80.jpg",
+              "alt": "Crowley"
+            },
+            "banner": {
+              "url": "https://i.pinimg.com/1200x/4c/36/d8/4c36d8bb4e08e3b0b5ff33dd0a7a6475.jpg",
+              "alt": "Me and my bestie"
+            }
+          },
+          "created": "2026-05-15T18:29:35.361Z"
+        },
+        {
+          "id": "7e80e851-eb31-4ba4-8b91-d3d0115d347c",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-16T07:49:12.423Z"
+        },
+        {
+          "id": "cff60d07-c164-462a-9b17-77510ce1a3d1",
+          "amount": 400,
+          "bidder": {
+            "name": "Seller99",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my first bio! Welcome to my profile and feel free to bid on my listings.!helli",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/004/899/680/small/beautiful-blonde-woman-with-makeup-avatar-for-a-beauty-salon-illustration-in-the-cartoon-style-vector.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/022/536/549/small/modern-banner-background-colorful-blue-and-purple-gradations-circles-eps-10-free-vector.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-17T17:08:02.917Z"
+        },
+        {
+          "id": "26f2f885-e0ea-491f-b963-368f247a3c98",
+          "amount": 450,
+          "bidder": {
+            "name": "Seller14",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+              "alt": "Seller14 avatar"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+              "alt": "Seller14 banner"
+            }
+          },
+          "created": "2026-05-18T20:31:32.646Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller42",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I am Elijah Wood! Silly, goofy guy!",
+        "avatar": {
+          "url": "https://i.pinimg.com/736x/b9/65/c5/b965c5c9976b380a4ac14f40c00ed7ea.jpg",
+          "alt": "Elijah Wood"
+        },
+        "banner": {
+          "url": "https://i.pinimg.com/736x/ae/95/6d/ae956d4118f45620dc611b2a5deb5b9c.jpg",
+          "alt": "Elijah wood"
+        }
+      },
+      "_count": {
+        "bids": 4
+      }
+    },
+    {
+      "id": "65e1f6a0-3494-4578-bb23-21d3b8004bdc",
+      "title": "Orange cat",
+      "description": "He's cute and lazy",
+      "media": [
+        {
+          "url": "https://static.scientificamerican.com/sciam/cache/file/2AE14CDD-1265-470C-9B15F49024186C10_source.jpg?crop=1%3A1%2Csmart&w=1000",
+          "alt": "retarded"
+        },
+        {
+          "url": "https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg",
+          "alt": "retarded"
+        }
+      ],
+      "tags": [
+        "books",
+        "electronics",
+        "cats"
+      ],
+      "created": "2026-05-15T18:18:10.068Z",
+      "updated": "2026-05-16T18:18:09.853Z",
+      "endsAt": "2026-05-16T18:18:09.836Z",
+      "bids": [
+        {
+          "id": "63ed05ab-abbe-4b05-b693-1698648b7a8c",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller16",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Crazy Cat Lady Profile\nSafe buyer",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+              "alt": "Seller16's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-16T08:04:06.762Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller02",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "92fba68a-61a7-4b43-8209-79a735e00be1",
+      "title": "1967 Chevrolet Impala",
+      "description": "SelSeller70 my car since I don't need it anymore.",
+      "media": [
+        {
+          "url": "https://static0.hotcarsimages.com/wordpress/wp-content/uploads/2023/02/supernatural-s-1967-chevy-impala.jpg?w=1600&h=900&fit=crop",
+          "alt": "Impala"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTydGiJNfzm9M2GOnFn7qO0889IOWss3--JA&s",
+          "alt": "Close up"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ106LNjQWeK1ppFuIfzDA52CIc09_14wNWyQ&s",
+          "alt": "Front"
+        },
+        {
+          "url": "https://www.serienjunkies.de/assets/images/33/26/33026854-jensen-ackles-und-der-impala-aus-supernatural-the-cw-2S7a.jpg",
+          "alt": "Car"
+        }
+      ],
+      "tags": [
+        "Car",
+        "Dean",
+        "Winchester"
+      ],
+      "created": "2026-05-15T17:57:52.423Z",
+      "updated": "2026-05-17T17:57:00.061Z",
+      "endsAt": "2026-05-17T17:57:00.000Z",
+      "bids": [
+        {
+          "id": "935a1b8a-f52e-4887-b81a-c11420d3f0e0",
+          "amount": 1000,
+          "bidder": {
+            "name": "Seller42",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I am Elijah Wood! Silly, goofy guy!",
+            "avatar": {
+              "url": "https://i.pinimg.com/736x/b9/65/c5/b965c5c9976b380a4ac14f40c00ed7ea.jpg",
+              "alt": "Elijah Wood"
+            },
+            "banner": {
+              "url": "https://i.pinimg.com/736x/ae/95/6d/ae956d4118f45620dc611b2a5deb5b9c.jpg",
+              "alt": "Elijah wood"
+            }
+          },
+          "created": "2026-05-15T18:04:57.162Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller97",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Just another seller ;)",
+        "avatar": {
+          "url": "https://i.pinimg.com/236x/5d/b6/98/5db69840945ffda1f0fbfe1822277d80.jpg",
+          "alt": "Crowley"
+        },
+        "banner": {
+          "url": "https://i.pinimg.com/1200x/4c/36/d8/4c36d8bb4e08e3b0b5ff33dd0a7a6475.jpg",
+          "alt": "Me and my bestie"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "36465e08-5caa-4e3e-9de1-a33776282998",
+      "title": "Heres for the weekend",
+      "description": "A little celebration to bring the weekend mood up",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1628349407899-46565857ab55?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d2Vla2VuZHxlbnwwfHwwfHx8MA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "weekend"
+      ],
+      "created": "2026-05-15T16:48:25.523Z",
+      "updated": "2026-05-16T16:47:00.019Z",
+      "endsAt": "2026-05-16T16:47:00.000Z",
+      "bids": [
+        {
+          "id": "d63dd33a-4dd0-4878-94d1-d60cbc7fc7c7",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-16T07:49:33.370Z"
+        },
+        {
+          "id": "cb5607d8-8b91-4fb1-8f94-ada0f47d1ad8",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-16T12:20:48.532Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller46",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Welcome to my page where I sell useful objects",
+        "avatar": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+          "alt": "Seller46's profile picture"
+        },
+        "banner": {
+          "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller46's banner picture"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "b8fff079-29d8-46d6-9425-0ccb1c555da7",
+      "title": "Lamp",
+      "description": "buy my lamp",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1651153758116-7c833dd60faf?q=80&w=993&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Lamp"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-15T07:43:06.922Z",
+      "updated": "2026-05-23T21:59:00.351Z",
+      "endsAt": "2026-05-23T21:59:00.000Z",
+      "bids": [
+        {
+          "id": "c1f93936-e6ba-43b4-8cb9-b9155d7337cf",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller01",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-15T11:45:56.784Z"
+        },
+        {
+          "id": "6206fade-dddd-42ea-90a1-3c7deed64526",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller37",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-15T14:17:08.103Z"
+        },
+        {
+          "id": "2ef84096-ecce-4fcc-93fe-5917b2977069",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller50",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": "Seller50's avatar"
+            },
+            "banner": {
+              "url": "https://images.immediate.co.uk/production/volatile/sites/10/2018/08/2048x1365-Houseplants-with-large-leaves-LI3918027-db59ed3.jpg",
+              "alt": "Seller50's banner"
+            }
+          },
+          "created": "2026-05-16T18:23:39.629Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller86",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "f98db003-40e3-40d7-87b4-18442416d958",
+      "title": "beautiful diamond ring",
+      "description": "beautiful  and delicate diamond ring for women",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1589674781759-c21c37956a44?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "beautiful diamond ring image 1"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-14T20:47:29.748Z",
+      "updated": "2026-05-14T20:48:49.231Z",
+      "endsAt": "2026-05-15T10:45:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller104",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Just exploring, collecting, and enjoying the little things that make life inteSeller84ing and beautiful",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1732408758806-1cd4dc5c018a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller104's avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1649385652265-0b9d8197a4b0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller104's banner"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "bde1f4b0-d93b-4199-a724-ee7397de35c2",
+      "title": "cat test 123",
+      "description": "cat",
+      "media": [
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgVfHORQFLyUf_rNove-xUmxIskDeMJ63REz_YIMQ6S0vCyQdkBvJos4igKspvCgpqnpy8h0xM--1uckzZIxDgyoHy37-MowkF-YzvVx8&s=10",
+          "alt": "cat test 123"
+        }
+      ],
+      "tags": [
+        "cat"
+      ],
+      "created": "2026-05-14T19:52:26.085Z",
+      "updated": "2026-05-15T19:52:00.018Z",
+      "endsAt": "2026-05-15T19:52:00.000Z",
+      "bids": [
+        {
+          "id": "7bdb1f31-731c-4353-85da-c25e8eff2325",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller64",
+            "email": "redacted@stud.noroff.no",
+            "bio": "It dosent matter if its sunday",
+            "avatar": {
+              "url": "https://images.unsplash.com/vector-1738292714432-14a17592a8c1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjF8fGFuaW1lfGVufDB8fDB8fHwy",
+              "alt": "Illustration of a shiba dog"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-15T06:57:00.306Z"
+        },
+        {
+          "id": "3d928602-952d-4f59-9de7-c42ad7e7233e",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller01",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-15T11:46:21.784Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller43",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgVfHORQFLyUf_rNove-xUmxIskDeMJ63REz_YIMQ6S0vCyQdkBvJos4igKspvCgpqnpy8h0xM--1uckzZIxDgyoHy37-MowkF-YzvVx8&s=10",
+          "alt": "Profile avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile banner"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "35385957-aa4a-4737-bee9-434e2499c650",
+      "title": "Who doesn't like art?",
+      "description": "SelSeller70 my perfect art collection to the highest bidder",
+      "media": [
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1731905991711-c8225d17fdbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1730730724569-6243d824199f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1731539599441-44bf7f36ad1e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzh8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1731909407992-6140ae803568?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1732088781390-faf00006bf18?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDd8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1732230074522-cf1d2163b800?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://plus.unsplash.com/premium_vector-1731905991863-d474fa2a6e99?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "art",
+        "images"
+      ],
+      "created": "2026-05-14T11:36:46.092Z",
+      "updated": "2026-05-14T11:38:52.863Z",
+      "endsAt": "2026-05-15T11:32:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller23",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Im just here to sell and buy stuff",
+        "avatar": {
+          "url": "https://images.unsplash.com/vector-1749532960847-0321e8e5c2c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          "alt": "Seller23's profile picture"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1778017825902-5d212f5ce532?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8",
+          "alt": "Seller23's banner picture"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "eb033183-324a-402c-81a5-a6120a3b3a83",
+      "title": "Ceramic vase",
+      "description": "Decorative ceramic vase up for bidding.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Ceramic vase"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Ceramic vase"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-13T22:16:40.579Z",
+      "updated": "2026-05-29T08:10:00.018Z",
+      "endsAt": "2026-05-29T08:10:00.000Z",
+      "bids": [
+        {
+          "id": "82d32651-0282-410d-839f-5a2714511aef",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller16",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Crazy Cat Lady Profile\nSafe buyer",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+              "alt": "Seller16's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-14T11:56:34.584Z"
+        },
+        {
+          "id": "fdbfdf91-3cdc-46e1-9600-7fb3b09639b1",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller103",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-14T19:29:14.173Z"
+        },
+        {
+          "id": "f234cad4-4993-4d4c-81fa-9b95b7d27b4d",
+          "amount": 31,
+          "bidder": {
+            "name": "Seller37",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-15T14:17:43.057Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller74",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "Seller74 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1777903675832-6da170eee699?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller74 banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "aa06bd8c-1c68-41d1-b2b9-2f4756dbebcf",
+      "title": "SelSeller70 first class tickets to highest bidder",
+      "description": "Enjoy the fancy travel in first class to the biggest cities in Europe. Visit several different countries in style.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1572573385781-2fd4f8c1389e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWlycGxhbmVzJUMyJUE4fGVufDB8fDB8fHww",
+          "alt": "plane with white stripe behind"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YWlycGxhbmVzJUMyJUE4fGVufDB8fDB8fHww",
+          "alt": "plane landing"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFpcnBsYW5lcyVDMiVBOHxlbnwwfHwwfHx8MA%3D%3D",
+          "alt": "plane on runway"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1499063078284-f78f7d89616a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGFpcnBsYW5lcyVDMiVBOHxlbnwwfHwwfHx8MA%3D%3D",
+          "alt": "plane in the clouds"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1605590427165-3884d6aa6731?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFpcnBsYW5lcyVDMiVBOHxlbnwwfHwwfHx8MA%3D%3D",
+          "alt": "over the wing"
+        }
+      ],
+      "tags": [
+        "travel",
+        "plane",
+        "class"
+      ],
+      "created": "2026-05-13T21:08:52.339Z",
+      "updated": "2026-05-14T21:05:00.018Z",
+      "endsAt": "2026-05-14T21:05:00.000Z",
+      "bids": [
+        {
+          "id": "5f850f70-ae85-4f61-ba66-1682d557cc7d",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller74",
+            "email": "redacted@stud.noroff.no",
+            "bio": "",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller74 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1777903675832-6da170eee699?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller74 banner"
+            }
+          },
+          "created": "2026-05-13T22:17:08.191Z"
+        },
+        {
+          "id": "c993d0d7-91fb-4365-a134-3143c33ccc4a",
+          "amount": 11,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-14T08:22:38.846Z"
+        },
+        {
+          "id": "71235735-e8c3-432e-bfec-b973888d7814",
+          "amount": 12,
+          "bidder": {
+            "name": "Seller03",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Treasure hunter, zookeeper and clinically insane",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "snowboarder"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1715817855875-1b786f6e25db?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Pink flowers"
+            }
+          },
+          "created": "2026-05-14T10:00:28.537Z"
+        },
+        {
+          "id": "e08718a6-78c7-4662-8925-861dba3cd570",
+          "amount": 13,
+          "bidder": {
+            "name": "Seller16",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Crazy Cat Lady Profile\nSafe buyer",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+              "alt": "Seller16's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-14T12:04:31.325Z"
+        },
+        {
+          "id": "a49c0498-84a8-4a50-963e-c85feca231b4",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller23",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Im just here to sell and buy stuff",
+            "avatar": {
+              "url": "https://images.unsplash.com/vector-1749532960847-0321e8e5c2c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+              "alt": "Seller23's profile picture"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1778017825902-5d212f5ce532?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8",
+              "alt": "Seller23's banner picture"
+            }
+          },
+          "created": "2026-05-14T13:17:00.823Z"
+        },
+        {
+          "id": "93b707e6-883c-43da-90c2-9c3a4d4eedd4",
+          "amount": 16,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-14T14:06:40.452Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller46",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Welcome to my page where I sell useful objects",
+        "avatar": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+          "alt": "Seller46's profile picture"
+        },
+        "banner": {
+          "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller46's banner picture"
+        }
+      },
+      "_count": {
+        "bids": 6
+      }
+    },
+    {
+      "id": "e94c5697-2680-4218-8071-cf914524a543",
+      "title": "Pen",
+      "description": "Very nice pen that i like",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1585997631913-896180ae8acb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Pen"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Pen"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-13T20:40:10.629Z",
+      "updated": "2026-05-13T20:52:10.476Z",
+      "endsAt": "2026-05-15T08:10:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller74",
+        "email": "redacted@stud.noroff.no",
+        "bio": "",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "Seller74 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1777903675832-6da170eee699?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller74 banner"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "b6065021-986c-46a5-b6e0-1ddf10fe84bb",
+      "title": "Bowl of cereal",
+      "description": "Do you want the Seller84 of my cereal? I'm quite full.",
+      "media": [
+        {
+          "url": "https://www.futurity.org/wp/wp-content/uploads/2019/12/cheerio-effect_1600.jpg",
+          "alt": "Bowl of cereal"
+        }
+      ],
+      "tags": [
+        "other"
+      ],
+      "created": "2026-05-13T10:10:48.612Z",
+      "updated": "2026-05-14T07:56:43.958Z",
+      "endsAt": "2026-05-15T16:00:00.000Z",
+      "bids": [
+        {
+          "id": "8cb7564a-bb8e-4ee9-9482-c062412ba976",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller49",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-13T12:19:48.748Z"
+        },
+        {
+          "id": "b6a9a434-4917-4857-b112-b599ed71ea0a",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller78",
+            "email": "redacted@stud.noroff.no",
+            "bio": "",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-13T15:56:55.468Z"
+        },
+        {
+          "id": "4104d913-38e5-4442-bb3c-ab5c91a49412",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-13T18:57:58.752Z"
+        },
+        {
+          "id": "0d3186c9-147c-4746-b6c0-ab18dfbc0ffd",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller54",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-13T11:09:25.101Z"
+        },
+        {
+          "id": "6c91b9d3-7a26-45eb-a402-0cbfeb3ef757",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-13T15:33:03.549Z"
+        },
+        {
+          "id": "cbb94d69-a1fc-4ac0-9f69-1ba52d247416",
+          "amount": 400,
+          "bidder": {
+            "name": "Seller03",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Treasure hunter, zookeeper and clinically insane",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "snowboarder"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1715817855875-1b786f6e25db?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Pink flowers"
+            }
+          },
+          "created": "2026-05-14T11:27:53.145Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller63",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hello! This is my page.",
+        "avatar": {
+          "url": "https://i.pinimg.com/736x/fe/d0/fb/fed0fb5ff5f901ec26ee9d591ed41b29.jpg",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://static.wikia.nocookie.net/witch-hat-atelier/images/5/55/Qifrey_opening_a_portal.jpg/revision/latest?cb=20200828205523",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 6
+      }
+    },
+    {
+      "id": "6565e632-c4b7-4f08-a084-5f411f745737",
+      "title": "test",
+      "description": null,
+      "media": [],
+      "tags": [],
+      "created": "2026-05-13T07:15:17.888Z",
+      "updated": "2026-05-13T07:15:17.888Z",
+      "endsAt": "2026-05-13T07:16:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller76",
+        "email": "redacted@stud.noroff.no",
+        "bio": "artist",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+          "alt": "Seller76"
+        },
+        "banner": {
+          "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "148a7827-c91f-486c-a350-f04e7f9e483d",
+      "title": "camera",
+      "description": "polaroid",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1605722625766-a4c989c747a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "camera"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-13T07:12:31.336Z",
+      "updated": "2026-05-13T07:12:31.336Z",
+      "endsAt": "2026-05-22T21:23:00.000Z",
+      "bids": [
+        {
+          "id": "1128f536-1711-4c1c-b1cc-13f4e2105d0a",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-13T07:12:52.736Z"
+        },
+        {
+          "id": "d8a382a1-dd7f-4643-a7c4-3ea6bc17db35",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller37",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-15T14:18:02.998Z"
+        },
+        {
+          "id": "1d7cf65e-1d5d-45bd-a270-e3482b333e14",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller09",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": "Seller09's avatar"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/premium-photo/gradient-banner-rainbow-gradient-background-abstract-gradient-wallpaper-vibrant-gradient-background_605423-36984.jpg",
+              "alt": "Seller09's banner"
+            }
+          },
+          "created": "2026-05-16T18:37:06.502Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller80",
+        "email": "redacted@stud.noroff.no",
+        "bio": "hello!",
+        "avatar": {
+          "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+          "alt": "Seller80 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller80 banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "45d75f2a-1320-47c9-a746-17baa764988a",
+      "title": "camera",
+      "description": "polaroid",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1605722625766-a4c989c747a4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "camera"
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-13T07:12:31.334Z",
+      "updated": "2026-05-13T07:12:31.334Z",
+      "endsAt": "2026-05-22T21:23:00.000Z",
+      "bids": [
+        {
+          "id": "2d0e6489-5505-4dce-8b2d-bc33e738c476",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller16",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Crazy Cat Lady Profile\nSafe buyer",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+              "alt": "Seller16's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-13T11:48:06.911Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller80",
+        "email": "redacted@stud.noroff.no",
+        "bio": "hello!",
+        "avatar": {
+          "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+          "alt": "Seller80 avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller80 banner"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "0ddaa093-4d6f-4d27-b192-90ea13bbdfe6",
+      "title": "Krabby Patty",
+      "description": "Delicious Krabby Patty. Chefs kiss. sss",
+      "media": [
+        {
+          "url": "https://static.wikia.nocookie.net/heroism/images/f/fa/Krabby_Patty.jpg/revision/latest?cb=20161107232603",
+          "alt": ""
+        },
+        {
+          "url": "https://www.media.hw-static.com/media/2016/05/Seller90-squarepants-nickelodeon-050516.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "Food"
+      ],
+      "created": "2026-05-12T22:35:02.485Z",
+      "updated": "2026-05-12T22:46:46.144Z",
+      "endsAt": "2026-05-15T22:34:00.000Z",
+      "bids": [
+        {
+          "id": "d33b676c-519b-4566-b546-8d3d8109d08e",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-13T09:22:54.859Z"
+        },
+        {
+          "id": "563f22df-6e65-4509-959d-a022defd8826",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-13T09:22:54.841Z"
+        },
+        {
+          "id": "d401f941-2fab-454c-8c26-53ad19a63766",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-13T09:22:54.857Z"
+        },
+        {
+          "id": "02b9a73e-5558-475f-a8ee-9babaa862c7e",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-13T09:23:05.685Z"
+        },
+        {
+          "id": "a7a179a6-62e5-42d1-b683-355360e96325",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-14T12:25:08.195Z"
+        },
+        {
+          "id": "8477336b-11af-4ed2-b405-d86679b37a9e",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller97",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Just another seller ;)",
+            "avatar": {
+              "url": "https://i.pinimg.com/236x/5d/b6/98/5db69840945ffda1f0fbfe1822277d80.jpg",
+              "alt": "Crowley"
+            },
+            "banner": {
+              "url": "https://i.pinimg.com/1200x/4c/36/d8/4c36d8bb4e08e3b0b5ff33dd0a7a6475.jpg",
+              "alt": "Me and my bestie"
+            }
+          },
+          "created": "2026-05-15T17:17:04.879Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller90",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my auction page :) test",
+        "avatar": {
+          "url": "https://static.wikia.nocookie.net/cartoons/images/e/ed/Profile_-_SpongeBob_SquarePants.png/revision/latest/thumbnail/width/360/height/360?cb=20240420115914",
+          "alt": "Tihi"
+        },
+        "banner": {
+          "url": "https://wallpapercave.com/wp/wp2967401.jpg",
+          "alt": "Pretty"
+        }
+      },
+      "_count": {
+        "bids": 6
+      }
+    },
+    {
+      "id": "4c7ff7e6-f1be-4150-ad82-436f9a1df8c0",
+      "title": "Squidward's house",
+      "description": "A very nice house under the sea.",
+      "media": [
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Ra4yRsA7nIYG-hgjJd0x_8kYuGmQkAc2tw&s",
+          "alt": "Image 1"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo31v_U8-Zo9ckQjwVevQqOrGkTrg7shKK3A&s",
+          "alt": "Interior"
+        }
+      ],
+      "tags": [
+        "House"
+      ],
+      "created": "2026-05-12T21:59:43.563Z",
+      "updated": "2026-05-12T21:59:43.563Z",
+      "endsAt": "2026-05-12T22:01:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller90",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my auction page :) test",
+        "avatar": {
+          "url": "https://static.wikia.nocookie.net/cartoons/images/e/ed/Profile_-_SpongeBob_SquarePants.png/revision/latest/thumbnail/width/360/height/360?cb=20240420115914",
+          "alt": "Tihi"
+        },
+        "banner": {
+          "url": "https://wallpapercave.com/wp/wp2967401.jpg",
+          "alt": "Pretty"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "53714fdb-cb5e-4c89-b3a0-309416673e63",
+      "title": "BMW M4",
+      "description": "SelSeller70 my car.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyfGVufDB8fDB8fHww",
+          "alt": "Car"
+        }
+      ],
+      "tags": [
+        "car"
+      ],
+      "created": "2026-05-12T21:45:38.405Z",
+      "updated": "2026-05-12T21:45:38.405Z",
+      "endsAt": "2026-05-12T21:46:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller94",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+        "avatar": {
+          "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+          "alt": "Yellow character"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Image banner"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "7594b05e-a613-4aac-9ab3-cdc9fab8926d",
+      "title": "wondering if the images are gonna show...",
+      "description": "test",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1777324369706-609d83aece87?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "wondering if the images are gonna show"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1778336110797-0deff0dd4b39?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyN3x8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "images"
+      ],
+      "created": "2026-05-12T20:06:14.426Z",
+      "updated": "2026-05-12T20:18:49.505Z",
+      "endsAt": "2026-05-13T20:05:00.000Z",
+      "bids": [
+        {
+          "id": "9e54289c-c70c-4e68-b59b-ebcd95ae78b8",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-13T09:59:28.955Z"
+        },
+        {
+          "id": "fa5df6b9-6672-4b19-9385-c0ed63907278",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-13T16:33:12.212Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller46",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Welcome to my page where I sell useful objects",
+        "avatar": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+          "alt": "Seller46's profile picture"
+        },
+        "banner": {
+          "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Seller46's banner picture"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "e400ece6-7def-42f1-bea4-9e06cd5142c1",
+      "title": "Testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+      "description": "test",
+      "media": [],
+      "tags": [
+        "test"
+      ],
+      "created": "2026-05-12T16:29:34.670Z",
+      "updated": "2026-05-12T16:29:34.670Z",
+      "endsAt": "2026-05-12T16:30:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller94",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+        "avatar": {
+          "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+          "alt": "Yellow character"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Image banner"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "3a80b7e5-bb01-48aa-bffa-1081d1a213c2",
+      "title": "MacBook Sleeve 13 inch",
+      "description": "Leather sleeve, fits 13 inch laptops perfectly, barely used",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800",
+          "alt": "Leather laptop sleeve"
+        }
+      ],
+      "tags": [
+        "laptop",
+        "accessories",
+        "leather"
+      ],
+      "created": "2026-05-12T15:16:23.085Z",
+      "updated": "2026-05-12T19:00:00.023Z",
+      "endsAt": "2026-05-12T19:00:00.000Z",
+      "bids": [
+        {
+          "id": "21853872-e870-439d-8e8b-699ee21b0411",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-12T15:30:08.808Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller32",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hello this is Fenris and Odin.  Odin is smart",
+        "avatar": {
+          "url": "https://preview.redd.it/how-is-your-jack-russell-with-other-small-animals-v0-ltadmzetto9d1.jpg?width=4320&format=pjpg&auto=webp&s=ad1a78fe8911f489b76bc4c75f6ffde2ad87e704",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://picsum.photos/id/888/1500/500",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "f251e488-476e-4968-999a-7dab450dce6f",
+      "title": "Mechanical Keyboard TKL",
+      "description": "Cherry MX Blue switches, barely used, comes with extra keycaps",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800",
+          "alt": "Mechanical keyboard"
+        }
+      ],
+      "tags": [
+        "keyboard",
+        "tech",
+        "gaming"
+      ],
+      "created": "2026-05-12T15:16:17.352Z",
+      "updated": "2026-05-12T15:16:17.352Z",
+      "endsAt": "2026-05-15T18:00:00.000Z",
+      "bids": [
+        {
+          "id": "c4484f88-f44f-403e-8839-433e11b17fcc",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-12T15:30:17.636Z"
+        },
+        {
+          "id": "c0da079e-41d5-45cd-9dca-51421cbf9890",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller80",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hello!",
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png",
+              "alt": "Seller80 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1673526759327-54f1f5b27322?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller80 banner"
+            }
+          },
+          "created": "2026-05-12T17:42:23.795Z"
+        },
+        {
+          "id": "b664be83-604e-4b1e-8fb3-299eaa6cb7eb",
+          "amount": 40,
+          "bidder": {
+            "name": "Seller03",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Treasure hunter, zookeeper and clinically insane",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "snowboarder"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1715817855875-1b786f6e25db?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Pink flowers"
+            }
+          },
+          "created": "2026-05-13T10:01:13.296Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller32",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hello this is Fenris and Odin.  Odin is smart",
+        "avatar": {
+          "url": "https://preview.redd.it/how-is-your-jack-russell-with-other-small-animals-v0-ltadmzetto9d1.jpg?width=4320&format=pjpg&auto=webp&s=ad1a78fe8911f489b76bc4c75f6ffde2ad87e704",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://picsum.photos/id/888/1500/500",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "e663d6f6-9b01-497f-833f-006e14c50c0f",
+      "title": "Vintage Polaroid Camera",
+      "description": "Classic OneStep 600 in great condition, includes film pack",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800",
+          "alt": "Vintage Polaroid camera"
+        }
+      ],
+      "tags": [
+        "camera",
+        "vintage",
+        "photography"
+      ],
+      "created": "2026-05-12T15:16:07.499Z",
+      "updated": "2026-05-12T15:16:07.499Z",
+      "endsAt": "2026-05-19T12:00:00.000Z",
+      "bids": [
+        {
+          "id": "0c523140-87cf-44b1-995d-ee13fd0f54cf",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-12T18:40:02.048Z"
+        },
+        {
+          "id": "193685ce-72c5-4a2c-9687-b36e849bf6a1",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller16",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Crazy Cat Lady Profile\nSafe buyer",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+              "alt": "Seller16's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-13T11:36:41.454Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller32",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hello this is Fenris and Odin.  Odin is smart",
+        "avatar": {
+          "url": "https://preview.redd.it/how-is-your-jack-russell-with-other-small-animals-v0-ltadmzetto9d1.jpg?width=4320&format=pjpg&auto=webp&s=ad1a78fe8911f489b76bc4c75f6ffde2ad87e704",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://picsum.photos/id/888/1500/500",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "bdf58546-a34c-4cd2-9512-2ed3d0a6bfd7",
+      "title": "Crazy Horse Lady Starter Kit",
+      "description": "Every serious horselady needs this starter kit! This is an edited listing I am activating again after it ended not sold",
+      "media": [
+        {
+          "url": "https://images.pexels.com/photos/13340074/pexels-photo-13340074.jpeg",
+          "alt": ""
+        },
+        {
+          "url": "https://images.pexels.com/photos/32994647/pexels-photo-32994647.jpeg",
+          "alt": ""
+        },
+        {
+          "url": "https://images.pexels.com/photos/10412593/pexels-photo-10412593.jpeg",
+          "alt": ""
+        },
+        {
+          "url": "https://images.pexels.com/photos/27935852/pexels-photo-27935852.jpeg",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "horses",
+        "foal"
+      ],
+      "created": "2026-05-12T14:29:27.724Z",
+      "updated": "2026-05-12T14:29:27.724Z",
+      "endsAt": "2026-05-19T12:29:00.000Z",
+      "bids": [
+        {
+          "id": "2d029ae8-b0fa-4dc2-827e-495a889dd902",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller46",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page where I sell useful objects",
+            "avatar": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+              "alt": "Seller46's profile picture"
+            },
+            "banner": {
+              "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller46's banner picture"
+            }
+          },
+          "created": "2026-05-12T15:52:05.932Z"
+        },
+        {
+          "id": "35699cc7-3d51-4a16-be57-420990e6b84a",
+          "amount": 150,
+          "bidder": {
+            "name": "Seller27",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+              "alt": "Avatar"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+              "alt": "Banner"
+            }
+          },
+          "created": "2026-05-19T12:22:14.813Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller16",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Crazy Cat Lady Profile\nSafe buyer",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+          "alt": "Seller16's avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "c06b5e65-02f8-4287-a592-08cbede61b30",
+      "title": "Coffe table",
+      "description": "A nice neat table",
+      "media": [
+        {
+          "url": "https://images.pexels.com/photos/36789165/pexels-photo-36789165.jpeg",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-12T14:13:10.199Z",
+      "updated": "2026-05-14T14:42:55.658Z",
+      "endsAt": "2026-05-15T01:33:00.000Z",
+      "bids": [
+        {
+          "id": "fd8e8082-39f4-482a-8026-1b97ee3b4875",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller63",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello! This is my page.",
+            "avatar": {
+              "url": "https://i.pinimg.com/736x/fe/d0/fb/fed0fb5ff5f901ec26ee9d591ed41b29.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://static.wikia.nocookie.net/witch-hat-atelier/images/5/55/Qifrey_opening_a_portal.jpg/revision/latest?cb=20200828205523",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-12T14:42:32.596Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller76",
+        "email": "redacted@stud.noroff.no",
+        "bio": "artist",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+          "alt": "Seller76"
+        },
+        "banner": {
+          "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "e158dbbb-9308-4d02-a62f-5a9b55da25ea",
+      "title": "Bicycle",
+      "description": "Red bicycle",
+      "media": [
+        {
+          "url": "https://images.pexels.com/photos/13684844/pexels-photo-13684844.jpeg",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-12T11:28:23.903Z",
+      "updated": "2026-05-13T11:28:00.019Z",
+      "endsAt": "2026-05-13T11:28:00.000Z",
+      "bids": [
+        {
+          "id": "2c0489a8-c5b2-44ca-b914-bfe0f06d0779",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller38",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello test",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "banner"
+            }
+          },
+          "created": "2026-05-12T11:35:48.617Z"
+        },
+        {
+          "id": "7689985d-bbe5-46f4-8088-ee0695374764",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller90",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my auction page :) test",
+            "avatar": {
+              "url": "https://static.wikia.nocookie.net/cartoons/images/e/ed/Profile_-_SpongeBob_SquarePants.png/revision/latest/thumbnail/width/360/height/360?cb=20240420115914",
+              "alt": "Tihi"
+            },
+            "banner": {
+              "url": "https://wallpapercave.com/wp/wp2967401.jpg",
+              "alt": "Pretty"
+            }
+          },
+          "created": "2026-05-12T22:31:28.645Z"
+        },
+        {
+          "id": "f49afaa6-d974-4724-9309-e50df742ac30",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller90",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my auction page :) test",
+            "avatar": {
+              "url": "https://static.wikia.nocookie.net/cartoons/images/e/ed/Profile_-_SpongeBob_SquarePants.png/revision/latest/thumbnail/width/360/height/360?cb=20240420115914",
+              "alt": "Tihi"
+            },
+            "banner": {
+              "url": "https://wallpapercave.com/wp/wp2967401.jpg",
+              "alt": "Pretty"
+            }
+          },
+          "created": "2026-05-12T22:33:01.548Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller77",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hi! Hi! Hiiiii!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "7e81a42d-a9c3-4d5a-b6c6-9c9d13a9b4c7",
+      "title": "Vinyl",
+      "description": "",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1547842462-b552abdeb38a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vinyl"
+        }
+      ],
+      "tags": [
+        "music",
+        "vinyl"
+      ],
+      "created": "2026-05-12T09:13:00.995Z",
+      "updated": "2026-05-12T09:13:00.995Z",
+      "endsAt": "2026-05-14T09:12:00.000Z",
+      "bids": [
+        {
+          "id": "3784fa21-5ee5-4e7f-8a7f-639a01eb34ee",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller59",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Gina tass",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1740252117027-4275d3f84385?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "clay figure avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "multi colored tiles"
+            }
+          },
+          "created": "2026-05-12T10:47:48.111Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller03",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Treasure hunter, zookeeper and clinically insane",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "snowboarder"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1715817855875-1b786f6e25db?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Pink flowers"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "6346cbd6-d8cb-4534-b7d6-5eb94792736c",
+      "title": "Cute lil guy",
+      "description": "",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1497752531616-c3afd9760a11?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "cute raccoon"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1601247387326-f8bcb5a234d4?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "raccoon"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1688521309226-b49a359bce2f?q=80&w=1295&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "raccoon"
+        }
+      ],
+      "tags": [
+        "raccoon",
+        "animal",
+        "zoo"
+      ],
+      "created": "2026-05-12T08:41:23.519Z",
+      "updated": "2026-05-14T09:58:42.210Z",
+      "endsAt": "2026-05-13T08:41:00.000Z",
+      "bids": [
+        {
+          "id": "6c856c10-4472-44e7-ab93-c42c67fb3a27",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller59",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Gina tass",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1740252117027-4275d3f84385?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "clay figure avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "multi colored tiles"
+            }
+          },
+          "created": "2026-05-12T10:47:36.861Z"
+        },
+        {
+          "id": "b9061247-a9d4-41d4-a894-5f887f0a2cf6",
+          "amount": 201,
+          "bidder": {
+            "name": "Seller77",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi! Hi! Hiiiii!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-12T11:09:44.728Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller03",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Treasure hunter, zookeeper and clinically insane",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "snowboarder"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1715817855875-1b786f6e25db?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Pink flowers"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "e0eda7ad-482e-4276-be15-77a6e9c7005f",
+      "title": "Clock",
+      "description": "Antique clocks",
+      "media": [
+        {
+          "url": "https://images.pexels.com/photos/16886382/pexels-photo-16886382.jpeg",
+          "alt": ""
+        },
+        {
+          "url": "https://images.pexels.com/photos/16560119/pexels-photo-16560119.jpeg",
+          "alt": ""
+        },
+        {
+          "url": "https://images.pexels.com/photos/16591489/pexels-photo-16591489.jpeg",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-05-12T08:12:08.539Z",
+      "updated": "2026-05-13T02:00:00.187Z",
+      "endsAt": "2026-05-13T02:00:00.000Z",
+      "bids": [
+        {
+          "id": "b126d113-0a64-45cb-a561-5733da21f85b",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller59",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Gina tass",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1740252117027-4275d3f84385?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "clay figure avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "multi colored tiles"
+            }
+          },
+          "created": "2026-05-12T10:47:53.989Z"
+        },
+        {
+          "id": "384cf8fa-c107-45ae-b425-60edbde69d76",
+          "amount": 201,
+          "bidder": {
+            "name": "Seller36",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-12T11:05:55.344Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller76",
+        "email": "redacted@stud.noroff.no",
+        "bio": "artist",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+          "alt": "Seller76"
+        },
+        "banner": {
+          "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "9de6f5b5-b5a1-44e3-91ac-68cfbc14c53c",
+      "title": "Coffee mugs",
+      "description": "This is some coffee mugs I'm getting rid of.",
+      "media": [
+        {
+          "url": "https://images.pexels.com/photos/9544541/pexels-photo-9544541.jpeg",
+          "alt": "Cat mug"
+        },
+        {
+          "url": "https://images.pexels.com/photos/3493047/pexels-photo-3493047.jpeg",
+          "alt": "Different mugs"
+        },
+        {
+          "url": "https://images.pexels.com/photos/36677276/pexels-photo-36677276.jpeg",
+          "alt": "Moon and cat mug"
+        }
+      ],
+      "tags": [
+        "mugs",
+        "cats",
+        "coffee"
+      ],
+      "created": "2026-05-11T12:33:20.646Z",
+      "updated": "2026-05-11T12:33:20.646Z",
+      "endsAt": "2026-05-11T12:34:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller94",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+        "avatar": {
+          "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+          "alt": "Yellow character"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Image banner"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "cfddb995-94df-4355-9ce6-b97afbe0338a",
+      "title": "The Office Official Dundie Award",
+      "description": "SelSeller70, kevins dundie award, For highest bid",
+      "media": [
+        {
+          "url": "https://www.tvstoreonline.com/cdn/shop/products/official-dundie-award-with-interchangeable-placards-tvstoreonline.jpg?v=1661287730",
+          "alt": "The Office Official Dundie Award"
+        }
+      ],
+      "tags": [
+        "Other"
+      ],
+      "created": "2026-05-11T08:45:06.250Z",
+      "updated": "2026-05-11T08:45:06.250Z",
+      "endsAt": "2026-05-14T08:45:00.000Z",
+      "bids": [
+        {
+          "id": "8682338e-e649-4e1a-a3b4-807753a49fae",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller46",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page where I sell useful objects",
+            "avatar": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+              "alt": "Seller46's profile picture"
+            },
+            "banner": {
+              "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller46's banner picture"
+            }
+          },
+          "created": "2026-05-11T08:49:52.998Z"
+        },
+        {
+          "id": "ed41cc39-0669-43b8-bffc-c62cf017f2af",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller59",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Gina tass",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1740252117027-4275d3f84385?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "clay figure avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "multi colored tiles"
+            }
+          },
+          "created": "2026-05-12T10:47:59.537Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller53",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Jim put my stuff in Jello again!!",
+        "avatar": {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ69w-xmFsT4bDpXKK8FXay0VR6HxEtgj6IXQ&s",
+          "alt": "Seller53's avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Seller53's banner"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "52058af3-d9a5-4b9f-8323-fa1e845d5f93",
+      "title": "SelSeller70 this little Gentlemen",
+      "description": "Buy me plz.....",
+      "media": [
+        {
+          "url": "https://www.simpsonspremium.com/cdn/shop/articles/dachshund.jpg?v=1636106720",
+          "alt": "SelSeller70 this little Gentlemen"
+        }
+      ],
+      "tags": [
+        "Other"
+      ],
+      "created": "2026-05-11T07:36:22.340Z",
+      "updated": "2026-05-17T12:11:49.116Z",
+      "endsAt": "2026-05-15T07:35:00.000Z",
+      "bids": [
+        {
+          "id": "c454cf0b-d591-4f62-ac24-851c319600d6",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-11T08:37:59.073Z"
+        },
+        {
+          "id": "0c85891e-5842-403c-8c81-4b6a6acbce20",
+          "amount": 84,
+          "bidder": {
+            "name": "Seller37",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-11T14:16:11.835Z"
+        },
+        {
+          "id": "5232aae2-d9aa-4629-bdbc-d65b6ea2c5d7",
+          "amount": 90,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-11T19:38:24.810Z"
+        },
+        {
+          "id": "cfc436c8-4dfd-412d-9ac9-4fc5c148525a",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller59",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Gina tass",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1740252117027-4275d3f84385?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "clay figure avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "multi colored tiles"
+            }
+          },
+          "created": "2026-05-12T10:48:08.299Z"
+        },
+        {
+          "id": "0766756f-b544-4c87-b47d-a89c8184a01e",
+          "amount": 80,
+          "bidder": {
+            "name": "Seller53",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Jim put my stuff in Jello again!!",
+            "avatar": {
+              "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ69w-xmFsT4bDpXKK8FXay0VR6HxEtgj6IXQ&s",
+              "alt": "Seller53's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Seller53's banner"
+            }
+          },
+          "created": "2026-05-11T08:46:27.355Z"
+        },
+        {
+          "id": "44299f6d-81ae-4f67-9fc3-efd0383f2cba",
+          "amount": 91,
+          "bidder": {
+            "name": "Seller16",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Crazy Cat Lady Profile\nSafe buyer",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/31440952/pexels-photo-31440952.jpeg",
+              "alt": "Seller16's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-12T06:23:59.412Z"
+        },
+        {
+          "id": "11df8752-aa42-41dc-a2f9-e52d29207ac4",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller03",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Treasure hunter, zookeeper and clinically insane",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "snowboarder"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1715817855875-1b786f6e25db?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Pink flowers"
+            }
+          },
+          "created": "2026-05-12T08:16:35.916Z"
+        },
+        {
+          "id": "e1ea5d50-ef29-42e6-88f2-f760b469f799",
+          "amount": 250,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. SelSeller70 old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-14T14:39:02.849Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller61",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Please, hope this works",
+        "avatar": {
+          "url": "https://i.pinimg.com/736x/05/ed/0e/05ed0e450af5cfaaa5425459a84f5fc5.jpg",
+          "alt": "Seller61's avatar"
+        },
+        "banner": {
+          "url": "https://i.pinimg.com/1200x/bf/e3/20/bfe32068dd6968b97be3972c962a0838.jpg",
+          "alt": "Seller61's banner"
+        }
+      },
+      "_count": {
+        "bids": 8
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": false,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": 2,
+    "pageCount": 64,
+    "totalCount": 3199
+  }
+}

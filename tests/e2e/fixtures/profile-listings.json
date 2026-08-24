@@ -1,0 +1,168 @@
+{
+  "data": [
+    {
+      "id": "1b22b753-d3d0-418f-8ec1-b6a1e344cbb3",
+      "title": "Arceau watch, Large model, 36 mm",
+      "description": "Steel watch, quartz movement, white-lacquered dial, short interchangeable strap in natural Barenia calfskin\n\nMade in Switzerland",
+      "media": [
+        {
+          "url": "https://assets.hermes.com/is/image/hermesproduct/arceau-watch-large-model-36mm--404005WW00-front-wm-1-0-0-2000-2000-q99_g.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://assets.hermes.com/is/image/hermesproduct/arceau-watch-large-model-36mm--404005WW00-worn-2-0-0-2000-2000-q99_g.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://assets.hermes.com/is/image/hermesproduct/arceau-watch-large-model-36mm--404008WW00-worn-2-0-0-2000-2000-q99_g.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "watch",
+        "luxury",
+        "heritage",
+        "tech"
+      ],
+      "created": "2026-02-11T14:43:54.214Z",
+      "updated": "2026-02-11T14:43:54.214Z",
+      "endsAt": "2026-02-21T14:43:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "afc8234a-fd6b-4a8d-9a9c-5fdca6abf2de",
+      "title": "Christmas Car",
+      "description": "It's a Car , It's Christmas ...It's Christmas Car",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1765111920677-b37901661563?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "Car",
+        "Christmas",
+        "Magic"
+      ],
+      "created": "2025-12-10T17:48:10.018Z",
+      "updated": "2025-12-10T17:48:10.018Z",
+      "endsAt": "2026-01-01T19:47:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "55127ad8-a8df-4405-a6eb-9b8085418b7d",
+      "title": "Photo Camera",
+      "description": "It takes much photos.....very very nice....You should buy :)",
+      "media": [
+        {
+          "url": "https://images.pexels.com/photos/50690/photography-camera-lens-lens-closeup-50690.jpeg",
+          "alt": "Photo Camera"
+        }
+      ],
+      "tags": [
+        "camera",
+        "vintage",
+        "art",
+        "photo"
+      ],
+      "created": "2025-12-10T17:02:46.033Z",
+      "updated": "2025-12-27T19:02:00.021Z",
+      "endsAt": "2025-12-27T19:02:00.000Z",
+      "bids": [
+        {
+          "id": "8aac1269-a55d-45d2-928c-c6032d3a1760",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller72",
+            "email": "redacted@stud.noroff.no",
+            "bio": "i am a student, and i love coding coding",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1765718826790-909aa08ac771?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller72's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1765718826790-909aa08ac771?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller72's banner"
+            }
+          },
+          "created": "2025-12-15T22:14:52.468Z"
+        },
+        {
+          "id": "813ddd6d-5207-491d-b0c1-fba7b1b11482",
+          "amount": 52,
+          "bidder": {
+            "name": "Seller72",
+            "email": "redacted@stud.noroff.no",
+            "bio": "i am a student, and i love coding coding",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1765718826790-909aa08ac771?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller72's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1765718826790-909aa08ac771?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller72's banner"
+            }
+          },
+          "created": "2025-12-15T22:15:09.068Z"
+        }
+      ],
+      "seller": {
+        "name": "Oltenks",
+        "email": "redacted@stud.noroff.no",
+        "bio": "This is my Profile",
+        "avatar": {
+          "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+          "alt": "Oltenks monogram"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": true,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": null,
+    "pageCount": 1,
+    "totalCount": 3
+  }
+}

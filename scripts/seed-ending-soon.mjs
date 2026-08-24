@@ -2,24 +2,31 @@
 /**
  * Seed short-duration auction listings.
  *
- * The shared Noroff pool has nothing closing inside a day — the soonest lot is
- * a week out — so anything time-sensitive ("Ending Soon", countdowns, the
- * "Next Closes" tile) has no data that exercises it. This creates a handful of
- * lots that close in hours instead, then cleans them up again.
+ * The shared Noroff pool has nothing closing inside a day;
+ *  the soonest lot is a week out;
+ *  so anything time-sensitive ("Ending Soon", countdowns, the "Next Closes" tile) has no data that exercises it.
+ * This creates a handful of lots that close in hours instead, then cleans them up again.
+ *
+ * `--stress` additionally creates the awkward content later phases need:
+ *  long strings, entity-bearing titles, zero and many media, a lot that expires mid session, and enough active lots to paginate.
+ *
+ * It asks for your Noroff email and password and exchanges them for a token in
+ * memory. Nothing is stored. Set AUCTO_TOKEN to skip the prompt.
  *
  * Usage:
- *   AUCTO_TOKEN=<token> node scripts/seed-ending-soon.mjs           # create
- *   AUCTO_TOKEN=<token> node scripts/seed-ending-soon.mjs --clean   # list what cleanup would remove
- *   AUCTO_TOKEN=<token> node scripts/seed-ending-soon.mjs --clean --yes   # actually remove them
+ *   node scripts/seed-ending-soon.mjs                                     # create the 4 short-duration lots
+ *   node scripts/seed-ending-soon.mjs --stress                            # + the stress set
+ *   node scripts/seed-ending-soon.mjs --stress --count=40
+ *   node scripts/seed-ending-soon.mjs --stress --dry-run                  # print payloads, no token, no network
+ *   node scripts/seed-ending-soon.mjs --clean                             # list what cleanup would remove
+ *   node scripts/seed-ending-soon.mjs --clean --yes                       # actually remove them
  *
- * Get your token from the browser console while logged in to the app:
- *   copy(localStorage.getItem('token'))
- *
- * Cleanup only ever touches listings on your own profile whose titles match
- * the LOTS table below. Anything else you own is left alone.
+ * Cleanup only ever touches listings on your own profile whose titles match the LOTS table below or carry the stress prefix.
+ * Anything else you own is left alone.
  */
 
 import { readFileSync } from 'node:fs';
+import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -52,7 +59,14 @@ function readEnvFile() {
 const env = readEnvFile();
 const BASE_URL = env.VITE_API_BASE_URL || 'https://v2.api.noroff.dev';
 const API_KEY = env.VITE_API_KEY;
-const TOKEN = process.env.AUCTO_TOKEN;
+// Optional. Trimmed and unquoted because it usually arrives via `pbpaste`, which can carry quotes or whitespace the API rejects.
+// If it is absent or malformed, the script logs in instead — see ensureToken().
+let TOKEN = (process.env.AUCTO_TOKEN || '')
+  .trim()
+  .replace(/^(["'])(.*)\1$/s, '$2')
+  .trim();
+
+let RESOLVED_USER = process.env.AUCTO_USER || null;
 
 /** Hours from now that each demo lot should close. */
 const LOTS = [
@@ -86,18 +100,170 @@ const LOTS = [
   },
 ];
 
-function requireConfig() {
-  const missing = [];
-  if (!API_KEY) missing.push('VITE_API_KEY (from .env)');
-  if (!TOKEN) missing.push('AUCTO_TOKEN (environment variable)');
+/** How --clean finds stress lots without knowing how many were generated. */
+const STRESS_PREFIX = 'AUCTO STRESS';
 
-  if (missing.length > 0) {
-    console.error('Missing required config:');
-    missing.forEach((item) => console.error(`  - ${item}`));
-    console.error('\nGet your token from the browser console while logged in:');
-    console.error("  copy(localStorage.getItem('token'))");
+/** Default number of bulk lots. 24 fills a catalog page, so 30 forces pagination. */
+const DEFAULT_STRESS_COUNT = 30;
+
+const IMG = (seed) => `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/600`;
+
+/**
+ * One row per fixture need.
+ * Three needs are absent because one account cannot produce them:
+ *  >20 bids (self-bidding is rejected), an already-ended own lot (create rejects a past endsAt), and a zero-result catalog.
+ * Those are covered by fixtures in tests/e2e/fixtures instead.
+ */
+function buildStressLots(count) {
+  const lots = [
+    {
+      need: 'entities in title and description — escaping must not double-escape them',
+      hours: 30,
+      title: `${STRESS_PREFIX} Ampersands & <angles> and 'apostrophes'`,
+      description:
+        "Fish & chips, a < b > c, it's got \"everything\" — & an ampersand that must survive a round trip unescaped.",
+      tags: ['stress', 'entities'],
+      media: [{ url: IMG('entities'), alt: 'A & B < C' }],
+    },
+    {
+      need: 'a double quote in the title — it can break out of a quoted HTML attribute',
+      hours: 31,
+      title: `${STRESS_PREFIX} The "Genuine" Article, 36 mm`,
+      description: 'The quote in the title is the point: it is what closes alt=" in an unescaped sink.',
+      tags: ['stress', 'quotes'],
+      media: [{ url: IMG('quote'), alt: 'The "Genuine" Article' }],
+    },
+    {
+      need: 'markup inside media[].alt — alt= is the most common attribute sink',
+      hours: 32,
+      title: `${STRESS_PREFIX} Alt Text Carrying Markup`,
+      description: 'The alt attribute below contains angle brackets and a quote.',
+      tags: ['stress', 'alt'],
+      media: [{ url: IMG('alt'), alt: '<b>bold</b> "quoted" & escaped' }],
+    },
+    {
+      need: 'longest title and description the API allows — clamping, overflow, card height',
+      hours: 33,
+      // 280 is the API's hard cap on description, measured 2026-08-23.
+      // Anything longer is rejected outright, so no listing can ever exceed it.
+      title: `${STRESS_PREFIX} ${'Extraordinarily Verbose Lot Title '.repeat(6)}`.slice(0, 220),
+      description: `${'This description is as long as the API permits, so clamping, truncation and card height can be measured rather than guessed. '.repeat(3)}`.slice(0, 280),
+      tags: ['stress', 'long'],
+      media: [{ url: IMG('long'), alt: 'Long content lot' }],
+    },
+    {
+      need: 'zero media — the placeholder branch, and a card rendered without an image',
+      hours: 34,
+      title: `${STRESS_PREFIX} No Media At All`,
+      description: 'This lot has no media array entries, so the placeholder path renders.',
+      tags: ['stress', 'nomedia'],
+      media: [],
+    },
+    {
+      need: 'more than four media — the gallery\'s "+N more" overflow indicator',
+      hours: 35,
+      title: `${STRESS_PREFIX} Six Photographs`,
+      description: 'Six images, so the gallery overflow indicator has something to indicate.',
+      tags: ['stress', 'gallery'],
+      media: Array.from({ length: 6 }, (_, i) => ({
+        url: IMG(`gallery-${i}`),
+        alt: `View ${i + 1} of 6`,
+      })),
+    },
+    {
+      need: 'expires during the session — the guard for a lot that ends while a page sits open',
+      minutes: 2,
+      title: `${STRESS_PREFIX} Closing In Two Minutes`,
+      description: 'Open a listings page and leave it. This lot should drop out of the active set.',
+      tags: ['stress', 'expiring'],
+      media: [{ url: IMG('expiring'), alt: 'Closing shortly' }],
+    },
+  ];
+
+  for (let i = 1; i <= count; i += 1) {
+    lots.push({
+      need: i === 1 ? `bulk fill — ${count} lots, enough to paginate a 24-per-page catalog` : null,
+      hours: 36 + i,
+      title: `${STRESS_PREFIX} Bulk Lot ${String(i).padStart(3, '0')}`,
+      description: `Filler lot ${i} of ${count}, created so the catalog has enough active rows to paginate.`,
+      tags: ['stress', 'bulk'],
+      media: [{ url: IMG(`bulk-${i}`), alt: `Bulk lot ${i}` }],
+    });
+  }
+
+  return lots;
+}
+
+function requireConfig() {
+  if (!API_KEY) {
+    console.error('Missing VITE_API_KEY in .env — copy it from .env.example and fill it in.');
     process.exit(1);
   }
+}
+
+/** Ask a question on the terminal. `hidden` suppresses echo, for passwords. */
+function ask(question, { hidden = false } = {}) {
+  return new Promise((resolve) => {
+    const rl = createInterface({ input: process.stdin, output: process.stdout, terminal: true });
+
+    if (hidden) {
+      rl._writeToOutput = (chunk) => {
+        // Echo the prompt itself, then nothing, so the password never appears.
+        if (chunk.includes(question)) rl.output.write(chunk);
+      };
+    }
+
+    rl.question(question, (answer) => {
+      rl.close();
+      if (hidden) process.stdout.write('\n');
+      resolve(answer.trim());
+    });
+  });
+}
+
+/**
+ * Exchange email and password for a token, in memory only.
+ *
+ * The alternative:
+ *  — copying the token out of the browser;
+ *  — depends on the clipboard, and a clipboard manager or Universal Clipboard can silently hand back something else.
+ * This path has no such failure mode.
+ * The password is neverechoed, never stored, and never written to disk or shell history.
+ */
+async function loginForToken() {
+  console.log(`Log in to ${BASE_URL}\n`);
+  const email = await ask('Noroff email: ');
+  const password = await ask('Password (hidden): ', { hidden: true });
+
+  const response = await fetch(`${BASE_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Noroff-API-Key': API_KEY },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const body = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    console.error(`\nLogin failed: ${response.status} ${body?.errors?.[0]?.message || response.statusText}`);
+    process.exit(1);
+  }
+
+  RESOLVED_USER = body.data.name;
+  console.log(`\nLogged in as @${RESOLVED_USER}\n`);
+  return body.data.accessToken;
+}
+
+/** Resolve a usable token, from the environment or by logging in. */
+async function ensureToken() {
+  if (TOKEN && /^[\w-]+\.[\w-]+\.[\w-]+$/.test(TOKEN)) return;
+
+  if (TOKEN) {
+    console.error('AUCTO_TOKEN is set but does not look like a token.');
+    console.error(`  length: ${TOKEN.length}  parts: ${TOKEN.split('.').length}`);
+    console.error('Ignoring it and logging in instead.\n');
+  }
+
+  TOKEN = await loginForToken();
 }
 
 async function api(path, options = {}) {
@@ -125,7 +291,7 @@ async function api(path, options = {}) {
 
 /** The token is a JWT; its payload carries the profile name. */
 function usernameFromToken() {
-  if (process.env.AUCTO_USER) return process.env.AUCTO_USER;
+  if (RESOLVED_USER) return RESOLVED_USER;
 
   try {
     const payload = JSON.parse(
@@ -146,47 +312,85 @@ function endsAtFromNow(hours) {
   return new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
 }
 
-async function seed() {
-  console.log(`Creating ${LOTS.length} short-duration lots on ${BASE_URL}\n`);
+/** A lot's closing time, from either `hours` or `minutes`. */
+function endsAtFor(lot) {
+  return lot.minutes !== undefined
+    ? new Date(Date.now() + lot.minutes * 60 * 1000).toISOString()
+    : endsAtFromNow(lot.hours);
+}
 
-  for (const lot of LOTS) {
+function payloadFor(lot) {
+  return {
+    title: lot.title,
+    description: lot.description,
+    tags: lot.tags,
+    media:
+      lot.media ??
+      [{ url: `https://picsum.photos/seed/${encodeURIComponent(lot.title)}/800/600`, alt: lot.title }],
+    endsAt: endsAtFor(lot),
+  };
+}
+
+async function seed(lots, { dryRun }) {
+  if (dryRun) {
+    console.log(`Dry run — ${lots.length} lot(s) would be created on ${BASE_URL}. Nothing is sent.\n`);
+    for (const lot of lots) {
+      if (lot.need) console.log(`  # ${lot.need}`);
+      const payload = payloadFor(lot);
+      console.log(
+        `  ${payload.endsAt}  media:${payload.media.length}  title:${payload.title.length}ch  desc:${payload.description.length}ch`
+      );
+      console.log(`    ${payload.title}`);
+    }
+    console.log(`\nRe-run without --dry-run to create them.`);
+    return;
+  }
+
+  console.log(`Creating ${lots.length} lot(s) on ${BASE_URL}\n`);
+
+  let created = 0;
+  for (const lot of lots) {
     try {
-      const created = await api('/auction/listings', {
+      const result = await api('/auction/listings', {
         method: 'POST',
-        body: JSON.stringify({
-          title: lot.title,
-          description: lot.description,
-          tags: lot.tags,
-          media: [
-            {
-              url: `https://picsum.photos/seed/${encodeURIComponent(lot.title)}/800/600`,
-              alt: lot.title,
-            },
-          ],
-          endsAt: endsAtFromNow(lot.hours),
-        }),
+        body: JSON.stringify(payloadFor(lot)),
       });
 
-      console.log(`  created  closes in ${String(lot.hours).padStart(2)}h  ${lot.title}`);
-      console.log(`           ${created.data.id}`);
+      created += 1;
+      console.log(`  created  ${result.data.id}  ${lot.title.slice(0, 60)}`);
     } catch (error) {
-      console.error(`  FAILED   ${lot.title}\n           ${error.message}`);
+      // Printed, not thrown, so the rest of the set still lands.
+      console.error(`  FAILED   ${lot.title.slice(0, 60)}\n           ${error.message}`);
     }
   }
 
-  console.log('\nDone. Re-run with --clean when you are finished with them.');
+  console.log(`\nDone — ${created}/${lots.length} created. Re-run with --clean --yes when finished.`);
 }
 
 async function clean(confirmed) {
   const username = usernameFromToken();
   const seededTitles = new Set(LOTS.map((lot) => lot.title));
 
-  const response = await api(
-    `/auction/profiles/${encodeURIComponent(username)}/listings?limit=100`
-  );
+  // Paginated because --stress can exceed one page, and bounded because an API that clamps an out-of-range page would loop forever.
+  const MAX_PAGES = 50;
+  const owned = [];
+  for (let page = 1; page <= MAX_PAGES; page += 1) {
+    const response = await api(
+      `/auction/profiles/${encodeURIComponent(username)}/listings?limit=100&page=${page}`
+    );
+    const rows = response.data || [];
+    if (rows.length === 0) break;
+    owned.push(...rows);
+    if (!response.meta || response.meta.isLastPage !== false) break;
+    if (page === MAX_PAGES) {
+      console.warn(`Stopped after ${MAX_PAGES} pages. Re-run --clean to catch any remainder.`);
+    }
+  }
 
-  const matches = (response.data || []).filter((listing) =>
-    seededTitles.has(listing.title)
+  const matches = owned.filter(
+    (listing) =>
+      typeof listing.title === 'string' &&
+      (seededTitles.has(listing.title) || listing.title.startsWith(STRESS_PREFIX))
   );
 
   if (matches.length === 0) {
@@ -194,7 +398,7 @@ async function clean(confirmed) {
     return;
   }
 
-  console.log(`Seeded lots found on @${username}:\n`);
+  console.log(`Seeded lots found on @${username} (of ${owned.length} owned):\n`);
   matches.forEach((listing) => {
     console.log(`  ${listing.id}  ${listing.title}`);
   });
@@ -217,11 +421,38 @@ async function clean(confirmed) {
   }
 }
 
-requireConfig();
-
 const args = process.argv.slice(2);
+const dryRun = args.includes('--dry-run');
+const countArg = args.find((a) => a.startsWith('--count='));
+const stressCount = countArg ? Number.parseInt(countArg.split('=')[1], 10) : DEFAULT_STRESS_COUNT;
+
+if (!Number.isInteger(stressCount) || stressCount < 0) {
+  console.error(`--count must be a non-negative integer, got: ${countArg}`);
+  process.exit(1);
+}
+
 if (args.includes('--clean')) {
-  await clean(args.includes('--yes'));
+  // Cleanup always talks to the API, even to list.
+  // --dry-run must never delete, so it downgrades --yes to listing-only.
+  requireConfig();
+  await ensureToken();
+
+  if (dryRun && args.includes('--yes')) {
+    console.log('--dry-run overrides --yes: listing what would be removed, deleting nothing.\n');
+  }
+
+  await clean(args.includes('--yes') && !dryRun);
+} else if (args.includes('--stress')) {
+  // A seeding dry run needs no credentials.
+  if (!dryRun) {
+    requireConfig();
+    await ensureToken();
+  }
+  await seed([...LOTS, ...buildStressLots(stressCount)], { dryRun });
 } else {
-  await seed();
+  if (!dryRun) {
+    requireConfig();
+    await ensureToken();
+  }
+  await seed(LOTS, { dryRun });
 }
