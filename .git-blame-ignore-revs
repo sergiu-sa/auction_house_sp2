@@ -1,0 +1,5 @@
+# Bulk reformats. Real authorship is the commit before these.
+# Configure once:  git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# chore(format): apply prettier across the repo
+baa7e9ab47d2566a447c6a9d0653b579d51a88da
