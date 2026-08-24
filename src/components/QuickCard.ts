@@ -5,6 +5,7 @@ import { isLoggedIn } from '../utils/auth';
 import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { logError } from '../utils/logger';
+import { escapeHtml } from '../utils/escapeHtml';
 
 // Quick Card — use for ending-soon sections, urgent listings, compact displays.
 export function createQuickCard(listing: Listing): string {
@@ -31,9 +32,9 @@ export function createQuickCard(listing: Listing): string {
       <div class="h-48 bg-slate-100" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${listing.id}" class="block h-full">
           <img
-            src="${imgAttrs.src}"
-            ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
-            alt="${imgAttrs.alt}"
+            src="${escapeHtml(imgAttrs.src)}"
+            ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
+            alt="${escapeHtml(imgAttrs.alt)}"
             width="${imgAttrs.width}"
             height="${imgAttrs.height}"
             sizes="${imgAttrs.sizes}"
@@ -63,7 +64,7 @@ export function createQuickCard(listing: Listing): string {
         <!-- Title -->
         <h4 class="mb-3 text-xl font-bold text-slate-900">
           <a href="/listing.html?id=${listing.id}" class="hover:underline">
-            ${listing.title}
+            ${escapeHtml(listing.title)}
           </a>
         </h4>
 
@@ -79,7 +80,7 @@ export function createQuickCard(listing: Listing): string {
 
         <!-- Footer: Bids + Seller -->
         <div class="mb-4 text-xs text-slate-500">
-          <span>${listing._count?.bids || 0} bids</span> · <span>@${sellerName}</span>
+          <span>${listing._count?.bids || 0} bids</span> · <span>@${escapeHtml(sellerName)}</span>
         </div>
 
         <!-- CTA Button -->

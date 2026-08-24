@@ -1,4 +1,5 @@
 import { logError } from '../utils/logger';
+import { escapeHtml } from '../utils/escapeHtml';
 
 export interface BreadcrumbItem {
   label: string;
@@ -28,8 +29,8 @@ export function renderBreadcrumb(config: BreadcrumbConfig): string {
 
             // Render item
             const itemHtml = item.href
-              ? `<a href="${item.href}" class="text-slate-500 hover:text-slate-900 transition-colors">${item.label}</a>`
-              : `<span class="text-slate-900">${item.label}</span>`;
+              ? `<a href="${escapeHtml(item.href)}" class="text-slate-500 hover:text-slate-900 transition-colors">${escapeHtml(item.label)}</a>`
+              : `<span class="text-slate-900">${escapeHtml(item.label)}</span>`;
 
             // Add separator unless it's the last item
             const separator = isLast

@@ -3,6 +3,7 @@ import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { isWatched, toggleWatched } from '../utils/storage';
 import { logError } from '../utils/logger';
+import { escapeHtml } from '../utils/escapeHtml';
 
 function renderFavoriteButton(listingId: string, borderStyle: string): string {
   const watched = isWatched(listingId);
@@ -102,9 +103,9 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
           <div class="aspect-square sm:h-full bg-slate-100 overflow-hidden" style="border-bottom: 3px solid #1e293b; border-right: 0; sm:border-right: 3px solid #1e293b; sm:border-bottom: 0;">
             <a href="/listing.html?id=${listing.id}" class="block h-full">
               <img
-                src="${imgAttrs.src}"
-                ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
-                alt="${imgAttrs.alt}"
+                src="${escapeHtml(imgAttrs.src)}"
+                ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
+                alt="${escapeHtml(imgAttrs.alt)}"
                 width="${imgAttrs.width}"
                 height="${imgAttrs.height}"
                 sizes="${imgAttrs.sizes}"
@@ -130,21 +131,21 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             <div class="mb-3 flex items-center gap-3 text-[11px] font-bold tracking-[0.18em] uppercase">
               <span class="text-slate-500">Lot ${listing.id.slice(-3)}</span>
               <span class="bg-slate-100 text-slate-800 px-2 py-1" style="border: 1px solid var(--aucto-border-mid)">
-                ${tag}
+                ${escapeHtml(tag)}
               </span>
             </div>
 
             <!-- Title -->
             <h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors break-words">
               <a href="/listing.html?id=${listing.id}" class="hover:underline">
-                ${listing.title}
+                ${escapeHtml(listing.title)}
               </a>
             </h3>
 
             <!-- Description -->
             ${listing.description ? `
               <p class="mb-4 text-sm text-slate-600 line-clamp-2">
-                ${listing.description}
+                ${escapeHtml(listing.description)}
               </p>
             ` : ''}
 
@@ -199,9 +200,9 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
         <div class="aspect-[3/2] sm:aspect-square bg-slate-100 overflow-hidden" style="border-bottom: 3px solid var(--aucto-border-dark)">
           <a href="/listing.html?id=${listing.id}" class="block h-full">
             <img
-              src="${imgAttrs.src}"
-              ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
-              alt="${imgAttrs.alt}"
+              src="${escapeHtml(imgAttrs.src)}"
+              ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
+              alt="${escapeHtml(imgAttrs.alt)}"
               width="${imgAttrs.width}"
               height="${imgAttrs.height}"
               sizes="${imgAttrs.sizes}"
@@ -238,14 +239,14 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
         <div class="mb-3 flex items-center justify-between text-[11px] font-bold tracking-[0.18em] uppercase">
           <span class="text-slate-500">Lot ${listing.id.slice(-3)}</span>
           <span class="bg-slate-100 text-slate-800 px-2 py-1" style="border: 1px solid var(--aucto-border-mid)">
-            ${tag}
+            ${escapeHtml(tag)}
           </span>
         </div>
 
         <!-- Title -->
         <h3 class="mb-3 text-xl font-bold leading-tight text-slate-900 group-hover:text-aucto-red transition-colors break-words">
           <a href="/listing.html?id=${listing.id}" class="hover:underline">
-            ${listing.title}
+            ${escapeHtml(listing.title)}
           </a>
         </h3>
 
