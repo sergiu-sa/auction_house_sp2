@@ -15,6 +15,7 @@ import { showToast } from '../components/Toast';
 import { setUser } from '../utils/storage';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
+import { escapeHtml } from '../utils/escapeHtml';
 
 export async function initProfilePage(): Promise<void> {
   // Render header and footer
@@ -173,7 +174,7 @@ function renderProfileHero(
           ${
             bannerUrl
               ? `<img
-              src="${bannerUrl}"
+              src="${escapeHtml(bannerUrl)}"
               alt="Profile banner"
               class="h-full w-full object-cover"
               width="1200"
@@ -196,7 +197,7 @@ function renderProfileHero(
             ${
               avatarUrl
                 ? `<img
-                src="${avatarUrl}"
+                src="${escapeHtml(avatarUrl)}"
                 alt="Profile avatar"
                 class="h-full w-full object-cover"
                 width="112"
@@ -206,7 +207,7 @@ function renderProfileHero(
                 referrerpolicy="no-referrer"
               />`
                 : `<div class="h-full w-full bg-slate-900 text-white flex items-center justify-center font-bold text-4xl">
-                ${profile.name.charAt(0).toUpperCase()}
+                ${escapeHtml(profile.name.charAt(0).toUpperCase())}
               </div>`
             }
           </div>
@@ -217,23 +218,23 @@ function renderProfileHero(
               class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1"
             >
               <i class="fa-solid fa-user text-xs"></i>
-              <span>@${profile.name}</span>
+              <span>@${escapeHtml(profile.name)}</span>
             </div>
             <div class="flex flex-wrap items-center gap-4">
               <h1
                 class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight"
               >
-                ${profile.name}
+                ${escapeHtml(profile.name)}
               </h1>
             </div>
             <div class="mt-1 text-sm text-slate-600 inline-flex items-center gap-2">
               <i class="fa-solid fa-envelope text-sm"></i>
-              <span>${profile.email}</span>
+              <span>${escapeHtml(profile.email)}</span>
             </div>
             ${
               profile.bio
                 ? `<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
-              ${profile.bio}
+              ${escapeHtml(profile.bio)}
             </p>`
                 : ''
             }
@@ -330,7 +331,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
             About this seller
           </h2>
           <p class="mb-4 text-sm leading-relaxed text-slate-600">
-            ${profile.bio || 'No bio provided yet.'}
+            ${escapeHtml(profile.bio || 'No bio provided yet.')}
           </p>
           <div class="mt-6 grid gap-4 text-sm text-slate-600 sm:grid-cols-2">
             <div>
@@ -339,7 +340,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
               >
                 Email
               </div>
-              <div>${profile.email}</div>
+              <div>${escapeHtml(profile.email)}</div>
             </div>
             <div>
               <div
@@ -347,7 +348,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
               >
                 Username
               </div>
-              <div>@${profile.name}</div>
+              <div>@${escapeHtml(profile.name)}</div>
             </div>
             <div>
               <div
@@ -392,7 +393,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
                 style="border: 2px solid var(--aucto-border-mid)"
                 rows="3"
                 placeholder="Short description about yourself"
-              >${profile.bio || ''}</textarea>
+              >${escapeHtml(profile.bio || '')}</textarea>
             </div>
 
             <div>
@@ -407,7 +408,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
                 class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
                 style="border: 2px solid var(--aucto-border-mid)"
                 placeholder="https://url.com/avatar.jpg"
-                value="${profile.avatar?.url || ''}"
+                value="${escapeHtml(profile.avatar?.url || '')}"
               />
             </div>
 
@@ -423,7 +424,7 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
                 class="w-full bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
                 style="border: 2px solid var(--aucto-border-mid)"
                 placeholder="https://url.com/banner.jpg"
-                value="${profile.banner?.url || ''}"
+                value="${escapeHtml(profile.banner?.url || '')}"
               />
             </div>
 
@@ -536,8 +537,8 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
         ${
           imageUrl
             ? `<img
-          src="${imageUrl}"
-          alt="${listing.title}"
+          src="${escapeHtml(imageUrl)}"
+          alt="${escapeHtml(listing.title)}"
           class="h-full w-full object-cover"
           loading="lazy"
           referrerpolicy="no-referrer"
@@ -551,11 +552,11 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
         <div
           class="mb-2 flex items-center justify-between text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
         >
-          <span>${tag}</span>
+          <span>${escapeHtml(tag)}</span>
           <span>${bidsCount} ${bidsCount === 1 ? 'bid' : 'bids'}</span>
         </div>
         <h3 class="mb-2 text-xl font-bold leading-tight text-slate-900">
-          ${listing.title}
+          ${escapeHtml(listing.title)}
         </h3>
         <div class="mb-3 text-xs text-slate-600">
           Ends ${timeRemaining}
@@ -652,7 +653,7 @@ function renderWinItem(win: Listing): string {
     <div class="flex items-start justify-between gap-3">
       <div>
         <a href="/listing.html?id=${win.id}" class="text-sm font-semibold text-slate-900 hover:text-slate-700">
-          ${win.title}
+          ${escapeHtml(win.title)}
         </a>
         <div class="text-xs text-slate-500">
           Won for ${highestBid} credits · ${timeAgo}

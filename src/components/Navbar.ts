@@ -16,6 +16,7 @@ import {
 } from './filters';
 import { logError } from '../utils/logger';
 import type { User } from '../types/api';
+import { escapeHtml } from '../utils/escapeHtml';
 
 // 30-second profile cache so credits stay fresh without refetching every page render
 let profileCache: { data: User; timestamp: number } | null = null;
@@ -30,8 +31,7 @@ interface NavLink {
 
 /**
  * Build the four primary nav links (Feed, Catalog, Create, Profile).
- * Guest users get rerouted to /login.html for Create and Profile, with
- * the original destination preserved via a `redirect` query param.
+ * Guest users get rerouted to /login.html for Create and Profile, with the original destination preserved via a `redirect` query param.
  */
 function getNavLinks(isLoggedIn: boolean, profileLabel: 'Profile' | 'My Profile' = 'Profile'): NavLink[] {
   return [
@@ -349,10 +349,10 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           >
             ${
               user.avatar?.url
-                ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
-                : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
+                ? `<img src="${escapeHtml(user.avatar.url)}" alt="${escapeHtml(user.name)} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
+                : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${escapeHtml(user.name.charAt(0).toUpperCase())}</div>`
             }
-            <span class="text-sm font-bold text-slate-900">${user.name}</span>
+            <span class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</span>
             <i class="fa-solid fa-chevron-down text-xs text-slate-500 transition-transform" id="profile-menu-chevron" aria-hidden="true"></i>
           </button>
 
@@ -474,11 +474,11 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
         <div class="flex items-center gap-2">
           ${
             user.avatar?.url
-              ? `<img src="${user.avatar.url}" alt="${user.name} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
-              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${user.name.charAt(0).toUpperCase()}</div>`
+              ? `<img src="${escapeHtml(user.avatar.url)}" alt="${escapeHtml(user.name)} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
+              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${escapeHtml(user.name.charAt(0).toUpperCase())}</div>`
           }
           <div>
-            <div class="text-sm font-bold text-slate-900">${user.name}</div>
+            <div class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</div>
             <div class="text-xs text-slate-600" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
           </div>
         </div>

@@ -25,6 +25,7 @@ import {
   setActiveOnlyState,
   setSortValue,
 } from '../components/filters';
+import { escapeHtml } from '../utils/escapeHtml';
 
 // State management for catalog section
 interface CatalogState {
@@ -39,8 +40,7 @@ interface CatalogState {
 
 // Pool for the hero, trending, new-listings and ending-soon sections
 let allListings: Listing[] = [];
-// Separate pool for the catalog grid. Its active-only filter re-queries the API,
-// which must not disturb the sections above it.
+// Separate pool for the catalog grid. Its active-only filter re-queries the API, which must not disturb the sections above it.
 let catalogListings: Listing[] = [];
 let catalogRequestId = 0;
 const catalogState: CatalogState = {
@@ -74,8 +74,7 @@ function listenToNavbarFilters(): void {
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     catalogState.activeOnly = e.detail.activeOnly;
     catalogState.page = 1; // Reset to first page
-    // Re-query instead of filtering locally: the fetched page holds the newest
-    // listings, most of which have already ended, so a local filter finds almost none.
+    // Re-query instead of filtering locally: the fetched page holds the newest listings, most of which have already ended, so a local filter finds almost none.
     loadCatalogListings();
     syncStickyFiltersWithState();
   }) as EventListener);
@@ -289,8 +288,7 @@ async function loadAllData(): Promise<void> {
 
 /**
  * Reload the catalog grid only, leaving the sections above it untouched.
- * Uses the same query as the initial load so clearing the filter restores
- * exactly the original pool.
+ * Uses the same query as the initial load so clearing the filter restores exactly the original pool.
  */
 async function loadCatalogListings(): Promise<void> {
   const requestId = ++catalogRequestId;
@@ -419,8 +417,8 @@ function renderHeroSection(): void {
       <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${main.id}" class="block h-full">
           <img
-            src="${mainImage}"
-            alt="${main.title}"
+            src="${escapeHtml(mainImage)}"
+            alt="${escapeHtml(main.title)}"
             class="h-full w-full object-cover"
           />
         </a>
@@ -435,7 +433,7 @@ function renderHeroSection(): void {
       <div class="p-5 md:p-6">
         <h3 class="mb-1 text-xl font-bold leading-tight text-slate-900">
           <a href="/listing.html?id=${main.id}" class="hover:underline">
-            ${main.title}
+            ${escapeHtml(main.title)}
           </a>
         </h3>
         <p class="mb-4 text-xs text-slate-600">
@@ -451,7 +449,7 @@ function renderHeroSection(): void {
           </span>
         </p>
         <div class="flex items-center justify-between text-xs text-slate-500">
-          ${main.seller?.name ? `<a href="/profile.html?user=${main.seller.name}" class="hover:text-slate-900 transition-colors">@${main.seller.name}</a>` : '<span>@Unknown</span>'}
+          ${main.seller?.name ? `<a href="/profile.html?user=${encodeURIComponent(main.seller.name)}" class="hover:text-slate-900 transition-colors">@${escapeHtml(main.seller.name)}</a>` : '<span>@Unknown</span>'}
         </div>
       </div>
     </article>
@@ -472,8 +470,8 @@ function renderHeroSection(): void {
           <div class="h-48 sm:h-52 md:h-56 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
             <a href="/listing.html?id=${listing.id}" class="block h-full">
               <img
-                src="${image}"
-                alt="${listing.title}"
+                src="${escapeHtml(image)}"
+                alt="${escapeHtml(listing.title)}"
                 class="h-full w-full object-cover"
               />
             </a>
@@ -481,7 +479,7 @@ function renderHeroSection(): void {
           <div class="p-2.5 sm:p-3">
             <h4 class="mb-1 text-sm font-bold text-slate-900 line-clamp-2">
               <a href="/listing.html?id=${listing.id}" class="hover:underline">
-                ${listing.title.length > 30 ? listing.title.substring(0, 30) + '...' : listing.title}
+                ${escapeHtml(listing.title.length > 30 ? listing.title.substring(0, 30) + '...' : listing.title)}
               </a>
             </h4>
             <p class="text-[11px] text-slate-600">${highestBid} credits</p>
@@ -531,9 +529,8 @@ function renderNewListingsSection(): void {
 /**
  * The active lots closest to closing.
  *
- * This is a rank, not a fixed time window. A window renders empty whenever
- * nothing happens to be closing inside it, which leaves the section dead most
- * of the time; the cards print the real countdown, so nothing is overstated.
+ * This is a rank, not a fixed time window. A window renders empty whenever nothing happens to be closing inside it, which leaves the section dead most of the time;
+ *  the cards print the real countdown, so nothing is overstated.
  */
 async function renderEndingSoonSection(): Promise<void> {
   showQuickCardSkeletons(4, 'ending-soon-cards');

@@ -5,6 +5,7 @@ import { isLoggedIn } from '../utils/auth';
 import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { logError } from '../utils/logger';
+import { escapeHtml } from '../utils/escapeHtml';
 
 // Product Card — use for featured sections, trending auctions, highlighted items.
 export function createProductCard(listing: Listing): string {
@@ -60,9 +61,9 @@ export function createProductCard(listing: Listing): string {
       <div class="aspect-square bg-slate-100" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${listing.id}" class="block h-full">
           <img
-            src="${imgAttrs.src}"
-            ${imgAttrs.srcset ? `srcset="${imgAttrs.srcset}"` : ''}
-            alt="${imgAttrs.alt}"
+            src="${escapeHtml(imgAttrs.src)}"
+            ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
+            alt="${escapeHtml(imgAttrs.alt)}"
             width="${imgAttrs.width}"
             height="${imgAttrs.height}"
             sizes="${imgAttrs.sizes}"
@@ -89,13 +90,13 @@ export function createProductCard(listing: Listing): string {
         <!-- Title -->
         <h3 class="mb-2 text-xl sm:text-2xl font-bold leading-tight text-slate-900 line-clamp-2">
           <a href="/listing.html?id=${listing.id}" class="hover:underline">
-            ${listing.title}
+            ${escapeHtml(listing.title)}
           </a>
         </h3>
 
         <!-- Description -->
         <p class="mb-4 text-xs sm:text-sm font-normal leading-relaxed text-slate-600 line-clamp-2">
-          ${listing.description || 'No description provided.'}
+          ${escapeHtml(listing.description || 'No description provided.')}
         </p>
 
         <!-- Bid Info Box -->
@@ -126,7 +127,7 @@ export function createProductCard(listing: Listing): string {
             <i class="fa-solid fa-gavel text-xs"></i>
             ${listing._count?.bids || 0} bid${(listing._count?.bids || 0) !== 1 ? 's' : ''}
           </span>
-          <span>@${sellerName}</span>
+          <span>@${escapeHtml(sellerName)}</span>
         </div>
 
         <!-- CTA Button -->

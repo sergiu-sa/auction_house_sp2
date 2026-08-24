@@ -3,6 +3,7 @@ import { getProfileWins } from '../api/profile';
 import { getListings } from '../api/listings';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
+import { escapeHtml } from '../utils/escapeHtml';
 
 export interface FeaturedWinData {
   lotNumber: string;
@@ -76,7 +77,7 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
       </div>
 
       <h4 class="mb-4 text-3xl font-bold text-white">
-        ${data.title}
+        ${escapeHtml(data.title)}
       </h4>
 
       <div class="mb-6 flex items-baseline gap-4">
@@ -89,28 +90,28 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
       </div>
 
       <p class="mb-6 text-sm leading-relaxed text-slate-300">
-        ${data.description || 'A successful auction with competitive bidding.'}
+        ${escapeHtml(data.description || 'A successful auction with competitive bidding.')}
       </p>
 
       <div class="flex items-center gap-3 pt-6" style="border-top: 2px solid #475569">
         ${
           data.winner.avatar
             ? `<img
-                src="${data.winner.avatar}"
-                alt="${data.winner.username}"
+                src="${escapeHtml(data.winner.avatar)}"
+                alt="${escapeHtml(data.winner.username)}"
                 class="h-10 w-10 object-cover"
                 style="border: 2px solid #475569"
                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"
               />
               <div class="h-10 w-10 bg-slate-700 items-center justify-center text-white font-bold text-sm hidden" style="border: 2px solid #475569; display: none;">
-                ${data.winner.username.charAt(0).toUpperCase()}
+                ${escapeHtml(data.winner.username.charAt(0).toUpperCase())}
               </div>`
             : `<div class="h-10 w-10 bg-slate-700 flex items-center justify-center text-white font-bold text-sm" style="border: 2px solid #475569">
-                ${data.winner.username.charAt(0).toUpperCase()}
+                ${escapeHtml(data.winner.username.charAt(0).toUpperCase())}
               </div>`
         }
         <div>
-          <div class="text-sm font-bold text-white">${data.winner.username}</div>
+          <div class="text-sm font-bold text-white">${escapeHtml(data.winner.username)}</div>
           <div class="text-xs text-slate-400">${
             data.isUserWin ? 'You' : data.isEnded ? 'Winning Bidder' : 'Leading Bidder'
           }</div>

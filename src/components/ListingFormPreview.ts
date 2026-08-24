@@ -9,6 +9,8 @@
  * That one diff is passed via options.
  */
 
+import { escapeHtml } from '../utils/escapeHtml';
+
 export interface ListingFormPreviewOptions {
   /** ID of the textarea holding newline-separated image URLs. */
   mediaInputId: string;
@@ -105,7 +107,7 @@ function renderEmptyMainPreview(): string {
 function renderMainPreviewImage(url: string): string {
   return `
     <img
-      src="${url}"
+      src="${escapeHtml(url)}"
       class="w-full h-full object-cover"
       alt="Preview"
       onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-slate-400\\'><div class=\\'text-center\\'><i class=\\'fa-solid fa-circle-xmark text-6xl mb-2 block text-red-500\\'></i><p class=\\'text-sm\\'>Invalid image URL</p></div></div>'"
@@ -117,7 +119,7 @@ function renderAdditionalImage(url: string, index: number): string {
   return `
     <div class="bg-white border-2 border-slate-900 overflow-hidden">
       <img
-        src="${url}"
+        src="${escapeHtml(url)}"
         class="w-full h-24 object-cover"
         alt="Additional preview ${index + 1}"
         onerror="this.parentElement.innerHTML='<div class=\\'w-full h-24 flex items-center justify-center bg-slate-200 text-slate-400\\'><i class=\\'fa-solid fa-circle-xmark text-red-500\\'></i></div>'"

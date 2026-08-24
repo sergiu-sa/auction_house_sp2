@@ -8,6 +8,7 @@ import { toast } from '../components/Toast';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
 import type { Listing, UpdateListingData } from '../types/api';
+import { escapeHtml } from '../utils/escapeHtml';
 
 let currentListing: Listing | null = null;
 
@@ -134,7 +135,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               type="text"
               id="title"
               name="title"
-              value="${listing.title}"
+              value="${escapeHtml(listing.title)}"
               class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
               ${hasBids ? 'disabled' : ''}
@@ -155,7 +156,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               rows="6"
               class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
               required
-            >${listing.description || ''}</textarea>
+            >${escapeHtml(listing.description || '')}</textarea>
           </div>
 
           <!-- IMAGES -->
@@ -170,7 +171,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               name="media"
               rows="4"
               class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-            >${imageUrls}</textarea>
+            >${escapeHtml(imageUrls)}</textarea>
             <p class="mt-2 text-xs text-slate-500">
               Enter one image URL per line. Images will preview on the right.
             </p>
@@ -187,7 +188,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               type="text"
               id="tags"
               name="tags"
-              value="${tags}"
+              value="${escapeHtml(tags)}"
               placeholder="e.g., vintage, tech, collectible"
               class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
             />
@@ -242,7 +243,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           >
             ${listing.media?.[0]?.url ? `
               <img
-                src="${listing.media[0].url}"
+                src="${escapeHtml(listing.media[0].url)}"
                 class="w-full h-full object-cover"
                 alt="Preview"
               />
@@ -259,10 +260,10 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- PREVIEW INFO -->
           <div class="bg-slate-50 border-2 border-slate-300 p-4">
             <h3 id="previewTitle" class="font-bold text-slate-900 mb-2 text-lg">
-              ${listing.title}
+              ${escapeHtml(listing.title)}
             </h3>
             <p id="previewDescription" class="text-sm text-slate-700">
-              ${listing.description || 'No description provided.'}
+              ${escapeHtml(listing.description || 'No description provided.')}
             </p>
             <div class="mt-4 pt-4 border-t border-slate-300">
               <p class="text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -285,7 +286,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
             ${listing.media?.slice(1, 4).map(media => `
               <div class="bg-white border-2 border-slate-900 overflow-hidden">
                 <img
-                  src="${media.url}"
+                  src="${escapeHtml(media.url)}"
                   class="w-full h-24 object-cover"
                   alt="Additional preview"
                 />
