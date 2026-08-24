@@ -7,26 +7,50 @@
     <!-- Primary Meta Tags -->
     <title>Listing Details - View Auction Item | Aucto</title>
     <meta name="title" content="Listing Details - View Auction Item | Aucto" />
-    <meta name="description" content="View detailed information about this auction listing. Check current bids, see seller profile, and place your bid before the auction ends." />
-    <meta name="keywords" content="auction listing, item details, place bid, seller profile, bid history" />
+    <meta
+      name="description"
+      content="View detailed information about this auction listing. Check current bids, see seller profile, and place your bid before the auction ends."
+    />
+    <meta
+      name="keywords"
+      content="auction listing, item details, place bid, seller profile, bid history"
+    />
     <meta name="author" content="Aucto" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://auctohouse.netlify.app/listing.html" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="product" />
-    <meta property="og:url" content="https://auctohouse.netlify.app/listing.html" />
+    <meta
+      property="og:url"
+      content="https://auctohouse.netlify.app/listing.html"
+    />
     <meta property="og:title" content="Auction Listing | Aucto" />
-    <meta property="og:description" content="View this auction listing and place your bid before it ends." />
-    <meta property="og:image" content="https://auctohouse.netlify.app/images/og-cover.svg" />
+    <meta
+      property="og:description"
+      content="View this auction listing and place your bid before it ends."
+    />
+    <meta
+      property="og:image"
+      content="https://auctohouse.netlify.app/images/og-cover.svg"
+    />
     <meta property="og:site_name" content="Aucto" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://auctohouse.netlify.app/listing.html" />
+    <meta
+      property="twitter:url"
+      content="https://auctohouse.netlify.app/listing.html"
+    />
     <meta property="twitter:title" content="Auction Listing | Aucto" />
-    <meta property="twitter:description" content="View this auction listing and place your bid before it ends." />
-    <meta property="twitter:image" content="https://auctohouse.netlify.app/images/og-cover.svg" />
+    <meta
+      property="twitter:description"
+      content="View this auction listing and place your bid before it ends."
+    />
+    <meta
+      property="twitter:image"
+      content="https://auctohouse.netlify.app/images/og-cover.svg"
+    />
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1e293b" />
@@ -41,7 +65,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -80,9 +108,14 @@
       />
     </noscript>
   </head>
-  <body class="antialiased bg-aucto-bg" data-page-type="browse">
+  <body class="bg-aucto-bg antialiased" data-page-type="browse">
     <!-- Skip Navigation Link -->
-    <a href="#main-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid var(--aucto-border-dark)">Skip to main content</a>
+    <a
+      href="#main-content"
+      class="absolute -top-10 left-0 z-[100] bg-slate-900 px-4 py-2 text-sm font-bold text-white no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-offset-2 focus:outline-aucto-red"
+      style="border: 3px solid var(--aucto-border-dark)"
+      >Skip to main content</a
+    >
 
     <!-- Header (rendered by JavaScript) -->
     <div id="header"></div>
@@ -96,28 +129,35 @@
           <div id="breadcrumb-nav" class="mb-8"></div>
 
           <!-- Top Layout -->
-          <div class="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-stretch">
-
+          <div
+            class="grid items-stretch gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
+          >
             <!-- LEFT: MEDIA + DESCRIPTION -->
-            <div class="space-y-6 flex flex-col">
+            <div class="flex flex-col space-y-6">
               <!-- Lot Header -->
-              <div class="bg-white p-6 md:p-8 flex-shrink-0" style="border: 3px solid var(--aucto-border-dark)">
+              <div
+                class="flex-shrink-0 bg-white p-6 md:p-8"
+                style="border: 3px solid var(--aucto-border-dark)"
+              >
                 <div id="listing-header">
                   <!-- Loading state -->
                   <div class="animate-pulse space-y-4">
-                    <div class="h-8 bg-slate-200 rounded w-1/4"></div>
-                    <div class="h-12 bg-slate-200 rounded w-3/4"></div>
-                    <div class="h-20 bg-slate-200 rounded"></div>
+                    <div class="h-8 w-1/4 rounded bg-slate-200"></div>
+                    <div class="h-12 w-3/4 rounded bg-slate-200"></div>
+                    <div class="h-20 rounded bg-slate-200"></div>
                   </div>
                 </div>
               </div>
 
               <!-- Media Gallery -->
-              <div class="bg-white p-4 md:p-6 flex-grow" style="border: 3px solid var(--aucto-border-dark)">
+              <div
+                class="flex-grow bg-white p-4 md:p-6"
+                style="border: 3px solid var(--aucto-border-dark)"
+              >
                 <div id="media-gallery">
                   <!-- Loading state -->
                   <div class="animate-pulse">
-                    <div class="aspect-[4/3] bg-slate-200 mb-4 md:mb-6"></div>
+                    <div class="mb-4 aspect-[4/3] bg-slate-200 md:mb-6"></div>
                     <div class="grid grid-cols-4 gap-3">
                       <div class="aspect-square bg-slate-200"></div>
                       <div class="aspect-square bg-slate-200"></div>
@@ -130,25 +170,28 @@
             </div>
 
             <!-- RIGHT: BID PANEL -->
-            <aside class="space-y-6 flex flex-col h-full">
+            <aside class="flex h-full flex-col space-y-6">
               <!-- Bid input -->
-              <div class="bg-white p-6 flex-shrink-0" style="border: 3px solid var(--aucto-border-dark)">
+              <div
+                class="flex-shrink-0 bg-white p-6"
+                style="border: 3px solid var(--aucto-border-dark)"
+              >
                 <div id="bid-panel">
                   <!-- Loading state -->
                   <div class="animate-pulse space-y-6">
-                    <div class="h-6 bg-slate-200 rounded w-1/2"></div>
-                    <div class="h-12 bg-slate-200 rounded w-1/3"></div>
-                    <div class="h-16 bg-slate-200 rounded"></div>
-                    <div class="h-14 bg-slate-200 rounded"></div>
+                    <div class="h-6 w-1/2 rounded bg-slate-200"></div>
+                    <div class="h-12 w-1/3 rounded bg-slate-200"></div>
+                    <div class="h-16 rounded bg-slate-200"></div>
+                    <div class="h-14 rounded bg-slate-200"></div>
                   </div>
                 </div>
               </div>
 
               <!-- Quick actions: Watch & Share buttons -->
-              <div class="flex gap-3 flex-shrink-0" id="quick-actions">
+              <div class="flex flex-shrink-0 gap-3" id="quick-actions">
                 <button
                   id="watch-btn"
-                  class="flex-1 bg-white px-4 py-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center gap-2"
+                  class="inline-flex flex-1 items-center justify-center gap-2 bg-white px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-700 transition-colors hover:bg-slate-50"
                   style="border: 3px solid var(--aucto-border-mid)"
                   aria-label="Add to watchlist"
                 >
@@ -157,7 +200,7 @@
                 </button>
                 <button
                   id="share-btn"
-                  class="flex-1 bg-white px-4 py-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center gap-2"
+                  class="inline-flex flex-1 items-center justify-center gap-2 bg-white px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-700 transition-colors hover:bg-slate-50"
                   style="border: 3px solid var(--aucto-border-mid)"
                   aria-label="Share listing"
                 >
@@ -167,25 +210,32 @@
               </div>
 
               <!-- Tags -->
-              <div class="bg-white p-6 flex-shrink-0" style="border: 3px solid var(--aucto-border-dark)" id="tags-section">
+              <div
+                class="flex-shrink-0 bg-white p-6"
+                style="border: 3px solid var(--aucto-border-dark)"
+                id="tags-section"
+              >
                 <!-- Loading state -->
                 <div class="animate-pulse space-y-3">
-                  <div class="h-4 bg-slate-200 rounded w-1/4"></div>
+                  <div class="h-4 w-1/4 rounded bg-slate-200"></div>
                   <div class="flex gap-2">
-                    <div class="h-8 bg-slate-200 rounded w-20"></div>
-                    <div class="h-8 bg-slate-200 rounded w-20"></div>
-                    <div class="h-8 bg-slate-200 rounded w-20"></div>
+                    <div class="h-8 w-20 rounded bg-slate-200"></div>
+                    <div class="h-8 w-20 rounded bg-slate-200"></div>
+                    <div class="h-8 w-20 rounded bg-slate-200"></div>
                   </div>
                 </div>
               </div>
 
               <!-- Details block -->
-              <div class="bg-white p-6 flex-grow" style="border: 3px solid var(--aucto-border-dark)">
+              <div
+                class="flex-grow bg-white p-6"
+                style="border: 3px solid var(--aucto-border-dark)"
+              >
                 <div id="listing-details">
                   <!-- Loading state -->
                   <div class="animate-pulse space-y-4">
-                    <div class="h-6 bg-slate-200 rounded w-1/3"></div>
-                    <div class="h-40 bg-slate-200 rounded"></div>
+                    <div class="h-6 w-1/3 rounded bg-slate-200"></div>
+                    <div class="h-40 rounded bg-slate-200"></div>
                   </div>
                 </div>
               </div>
@@ -195,46 +245,61 @@
           <!-- Bottom: Bids, Seller, Meta -->
           <div class="mt-12 grid gap-8 lg:grid-cols-3">
             <!-- Bid history -->
-            <div class="bg-white p-8" style="border: 3px solid var(--aucto-border-dark)">
-              <h2 class="mb-6 text-2xl font-bold text-slate-900">Bid History</h2>
+            <div
+              class="bg-white p-8"
+              style="border: 3px solid var(--aucto-border-dark)"
+            >
+              <h2 class="mb-6 text-2xl font-bold text-slate-900">
+                Bid History
+              </h2>
               <div id="bid-history">
                 <!-- Loading state -->
                 <div class="animate-pulse space-y-4">
-                  <div class="h-16 bg-slate-200 rounded"></div>
-                  <div class="h-16 bg-slate-200 rounded"></div>
-                  <div class="h-16 bg-slate-200 rounded"></div>
+                  <div class="h-16 rounded bg-slate-200"></div>
+                  <div class="h-16 rounded bg-slate-200"></div>
+                  <div class="h-16 rounded bg-slate-200"></div>
                 </div>
               </div>
             </div>
 
             <!-- Seller info -->
-            <div class="bg-white p-8" style="border: 3px solid var(--aucto-border-dark)">
-              <h2 class="mb-6 text-2xl font-bold text-slate-900">Seller Profile</h2>
+            <div
+              class="bg-white p-8"
+              style="border: 3px solid var(--aucto-border-dark)"
+            >
+              <h2 class="mb-6 text-2xl font-bold text-slate-900">
+                Seller Profile
+              </h2>
               <div id="seller-profile">
                 <!-- Loading state -->
                 <div class="animate-pulse space-y-4">
                   <div class="flex gap-4">
-                    <div class="h-16 w-16 bg-slate-200 rounded"></div>
+                    <div class="h-16 w-16 rounded bg-slate-200"></div>
                     <div class="flex-1 space-y-2">
-                      <div class="h-4 bg-slate-200 rounded w-1/2"></div>
-                      <div class="h-3 bg-slate-200 rounded w-3/4"></div>
+                      <div class="h-4 w-1/2 rounded bg-slate-200"></div>
+                      <div class="h-3 w-3/4 rounded bg-slate-200"></div>
                     </div>
                   </div>
-                  <div class="h-20 bg-slate-200 rounded"></div>
+                  <div class="h-20 rounded bg-slate-200"></div>
                 </div>
               </div>
             </div>
 
             <!-- Listing meta -->
-            <div class="bg-white p-8" style="border: 3px solid var(--aucto-border-dark)">
-              <h2 class="mb-6 text-2xl font-bold text-slate-900">Listing Details</h2>
+            <div
+              class="bg-white p-8"
+              style="border: 3px solid var(--aucto-border-dark)"
+            >
+              <h2 class="mb-6 text-2xl font-bold text-slate-900">
+                Listing Details
+              </h2>
               <div id="listing-meta">
                 <!-- Loading state -->
                 <div class="animate-pulse space-y-3">
-                  <div class="h-4 bg-slate-200 rounded"></div>
-                  <div class="h-4 bg-slate-200 rounded"></div>
-                  <div class="h-4 bg-slate-200 rounded"></div>
-                  <div class="h-4 bg-slate-200 rounded"></div>
+                  <div class="h-4 rounded bg-slate-200"></div>
+                  <div class="h-4 rounded bg-slate-200"></div>
+                  <div class="h-4 rounded bg-slate-200"></div>
+                  <div class="h-4 rounded bg-slate-200"></div>
                 </div>
               </div>
             </div>

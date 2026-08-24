@@ -21,7 +21,10 @@ export function isError(error: unknown): error is Error {
 /**
  * Extract error message from unknown error type
  */
-export function getErrorMessage(error: unknown, defaultMessage = 'An error occurred'): string {
+export function getErrorMessage(
+  error: unknown,
+  defaultMessage = 'An error occurred'
+): string {
   if (isApiError(error)) {
     return error.errors[0]?.message || defaultMessage;
   }
@@ -47,4 +50,3 @@ export function getErrorMessage(error: unknown, defaultMessage = 'An error occur
 
   return defaultMessage;
 }
-

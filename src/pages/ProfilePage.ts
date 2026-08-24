@@ -50,7 +50,10 @@ export async function initProfilePage(): Promise<void> {
     if (isOwnProfile) {
       updatePageHeader('My Profile', 'Manage your account, listings, and bids');
     } else {
-      updatePageHeader(`${username}'s Profile`, `View ${username}'s listings, bids, and auction activity`);
+      updatePageHeader(
+        `${username}'s Profile`,
+        `View ${username}'s listings, bids, and auction activity`
+      );
     }
 
     // Load the specified user's profile
@@ -71,7 +74,10 @@ function updatePageHeader(title: string, description: string): void {
   }
 }
 
-async function loadProfileData(username: string, isOwnProfile: boolean): Promise<void> {
+async function loadProfileData(
+  username: string,
+  isOwnProfile: boolean
+): Promise<void> {
   const container = document.getElementById('profile-content');
   if (!container) return;
 
@@ -321,7 +327,10 @@ function renderProfileHero(
   `;
 }
 
-function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string {
+function renderAboutAndSettings(
+  profile: Profile,
+  isOwnProfile: boolean
+): string {
   return `
     <section>
       <div class="grid gap-6 ${isOwnProfile ? 'lg:grid-cols-2' : 'lg:grid-cols-1'}">
@@ -445,7 +454,10 @@ function renderAboutAndSettings(profile: Profile, isOwnProfile: boolean): string
   `;
 }
 
-function renderActiveListings(listings: Listing[], isOwnProfile: boolean): string {
+function renderActiveListings(
+  listings: Listing[],
+  isOwnProfile: boolean
+): string {
   if (listings.length === 0) {
     return `
       <section>
@@ -599,7 +611,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
         <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-2xl font-bold text-slate-900">Recent wins</h2>
           <p class="mb-6 text-sm text-slate-600">
-            ${wins.length === 0 ? 'You haven\'t won any auctions yet' : `You have won ${wins.length} ${wins.length === 1 ? 'auction' : 'auctions'}`}
+            ${wins.length === 0 ? "You haven't won any auctions yet" : `You have won ${wins.length} ${wins.length === 1 ? 'auction' : 'auctions'}`}
           </p>
           ${
             wins.length === 0
@@ -622,7 +634,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
             Recent bid activity
           </h2>
           <p class="mb-6 text-sm text-slate-600">
-            ${bids.length === 0 ? 'You haven\'t placed any bids yet' : `You have placed ${bids.length} ${bids.length === 1 ? 'bid' : 'bids'}`}
+            ${bids.length === 0 ? "You haven't placed any bids yet" : `You have placed ${bids.length} ${bids.length === 1 ? 'bid' : 'bids'}`}
           </p>
           ${
             bids.length === 0
@@ -707,13 +719,19 @@ function setupEventListeners(profile: Profile): void {
 
 async function handleProfileUpdate(username: string): Promise<void> {
   const bioInput = document.getElementById('bio-input') as HTMLTextAreaElement;
-  const avatarInput = document.getElementById('avatar-input') as HTMLInputElement;
-  const bannerInput = document.getElementById('banner-input') as HTMLInputElement;
+  const avatarInput = document.getElementById(
+    'avatar-input'
+  ) as HTMLInputElement;
+  const bannerInput = document.getElementById(
+    'banner-input'
+  ) as HTMLInputElement;
 
   if (!bioInput || !avatarInput || !bannerInput) return;
 
   // Get the submit button to show loading state
-  const submitBtn = document.querySelector('#profile-form button[type="submit"]') as HTMLButtonElement;
+  const submitBtn = document.querySelector(
+    '#profile-form button[type="submit"]'
+  ) as HTMLButtonElement;
   if (!submitBtn) return;
 
   // Validate URLs if provided
@@ -751,7 +769,8 @@ async function handleProfileUpdate(username: string): Promise<void> {
   // Disable button and show loading state
   const originalBtnContent = submitBtn.innerHTML;
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-base"></i> <span>Saving...</span>';
+  submitBtn.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin text-base"></i> <span>Saving...</span>';
 
   try {
     const response = await updateProfile(username, updateData);
@@ -785,7 +804,6 @@ async function handleProfileUpdate(username: string): Promise<void> {
     submitBtn.innerHTML = originalBtnContent;
   }
 }
-
 
 function showError(message: string): void {
   const container = document.getElementById('profile-content');

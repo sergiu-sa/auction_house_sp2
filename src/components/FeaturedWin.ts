@@ -16,13 +16,13 @@ export interface FeaturedWinData {
     avatar?: string;
     verified: boolean;
   };
-  isUserWin: boolean; 
-  isEnded: boolean; 
+  isUserWin: boolean;
+  isEnded: boolean;
 }
 
 function getHighestBid(listing: Listing): number {
   if (!listing.bids || listing.bids.length === 0) return 0;
-  return Math.max(...listing.bids.map(bid => bid.amount));
+  return Math.max(...listing.bids.map((bid) => bid.amount));
 }
 
 function getWinner(listing: Listing) {
@@ -113,7 +113,11 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
         <div>
           <div class="text-sm font-bold text-white">${escapeHtml(data.winner.username)}</div>
           <div class="text-xs text-slate-400">${
-            data.isUserWin ? 'You' : data.isEnded ? 'Winning Bidder' : 'Leading Bidder'
+            data.isUserWin
+              ? 'You'
+              : data.isEnded
+                ? 'Winning Bidder'
+                : 'Leading Bidder'
           }</div>
         </div>
       </div>
@@ -121,7 +125,10 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
   `;
 }
 
-function convertListingToFeaturedWin(listing: Listing, currentUserName?: string): FeaturedWinData | null {
+function convertListingToFeaturedWin(
+  listing: Listing,
+  currentUserName?: string
+): FeaturedWinData | null {
   const winner = getWinner(listing);
   if (!winner) return null;
 
@@ -134,14 +141,15 @@ function convertListingToFeaturedWin(listing: Listing, currentUserName?: string)
     title: listing.title,
     finalPrice: highestBid,
     bidCount: listing._count?.bids || listing.bids?.length || 0,
-    description: listing.description || 'A successful auction with competitive bidding.',
+    description:
+      listing.description || 'A successful auction with competitive bidding.',
     winner: {
       username: winner.name,
       avatar: winner.avatar?.url,
-      verified: true
+      verified: true,
     },
     isUserWin,
-    isEnded
+    isEnded,
   };
 }
 
@@ -169,7 +177,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
       sort: 'endsAt',
       sortOrder: 'desc',
       _bids: true,
-      _seller: true
+      _seller: true,
     });
 
     if (!listingsResponse.data || listingsResponse.data.length === 0) {
@@ -178,7 +186,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
 
     // Find the most recent ended auction with bids
     const now = new Date();
-    const endedAuctions = listingsResponse.data.filter(listing => {
+    const endedAuctions = listingsResponse.data.filter((listing) => {
       const hasEnded = new Date(listing.endsAt) < now;
       const hasBids = listing.bids && listing.bids.length > 0;
       return hasEnded && hasBids;
@@ -186,7 +194,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
 
     if (endedAuctions.length === 0) {
       // Fallback: Find active auctions with bids as a showcase
-      const activeAuctions = listingsResponse.data.filter(listing => {
+      const activeAuctions = listingsResponse.data.filter((listing) => {
         const isActive = new Date(listing.endsAt) > now;
         const hasBids = listing.bids && listing.bids.length > 0;
         return isActive && hasBids;
@@ -197,8 +205,8 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
       }
 
       // Show the active auction with the most bids
-      const mostPopular = activeAuctions.sort((a, b) =>
-        (b.bids?.length || 0) - (a.bids?.length || 0)
+      const mostPopular = activeAuctions.sort(
+        (a, b) => (b.bids?.length || 0) - (a.bids?.length || 0)
       )[0];
 
       return convertListingToFeaturedWin(mostPopular, user.name);
@@ -207,7 +215,6 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
     // Get the most recent ended auction
     const featuredListing = endedAuctions[0];
     return convertListingToFeaturedWin(featuredListing, user.name);
-
   } catch (error) {
     logError('Failed to fetch featured win', error);
     return null;

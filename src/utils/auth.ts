@@ -2,7 +2,6 @@ import { getUser, isAuthenticated } from './storage';
 import { logError } from './logger';
 import type { User } from '../types/api';
 
-
 export function isLoggedIn(): boolean {
   return isAuthenticated();
 }
@@ -27,7 +26,8 @@ export function protectedRoute(options?: {
   showError?: boolean;
 }): boolean {
   if (!isAuthenticated()) {
-    const redirect = options?.redirectUrl || window.location.pathname + window.location.search;
+    const redirect =
+      options?.redirectUrl || window.location.pathname + window.location.search;
 
     if (options?.showError) {
       logError('Authentication required to access this page');
@@ -57,4 +57,3 @@ export function requireOwnership(
 
   return true;
 }
-

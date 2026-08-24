@@ -51,16 +51,16 @@ The other goal was to ship a real-world front-end without leaning on a framework
 
 ## Stack
 
-| Layer | Choice | Why |
-| --- | --- | --- |
-| Language | TypeScript (strict) | `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`. Build runs `tsc` before Vite. |
-| Bundler | Vite v7 | Multi-page entries via `rollupOptions.input`; ES2020 target, no legacy polyfills. |
-| Styling | Tailwind v3 | Custom palette (`aucto.*`, `warm-white`), 3px border utility, Cormorant + Source Sans 3 fonts. |
-| API | [Noroff API v2](https://docs.noroff.dev/docs/v2) | JWT auth + API-key authorisation. |
-| Testing | Vitest + jsdom | 53 unit tests across the three pure utility modules. |
-| Linting | ESLint v9 (flat config) + Prettier | `npm run lint` enforced in CI. |
-| CI | GitHub Actions | Type-check + lint + test + build on every PR and push to `main`. |
-| Hosting | Netlify | Catch-all 404 redirect, security headers, asset caching. |
+| Layer    | Choice                                           | Why                                                                                            |
+| -------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| Language | TypeScript (strict)                              | `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`. Build runs `tsc` before Vite.  |
+| Bundler  | Vite v7                                          | Multi-page entries via `rollupOptions.input`; ES2020 target, no legacy polyfills.              |
+| Styling  | Tailwind v3                                      | Custom palette (`aucto.*`, `warm-white`), 3px border utility, Cormorant + Source Sans 3 fonts. |
+| API      | [Noroff API v2](https://docs.noroff.dev/docs/v2) | JWT auth + API-key authorisation.                                                              |
+| Testing  | Vitest + jsdom                                   | 53 unit tests across the three pure utility modules.                                           |
+| Linting  | ESLint v9 (flat config) + Prettier               | `npm run lint` enforced in CI.                                                                 |
+| CI       | GitHub Actions                                   | Type-check + lint + test + build on every PR and push to `main`.                               |
+| Hosting  | Netlify                                          | Catch-all 404 redirect, security headers, asset caching.                                       |
 
 ---
 
@@ -76,16 +76,16 @@ npm run dev            # http://localhost:5173
 
 ### Scripts
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Vite dev server with HMR. |
-| `npm run build` | `tsc` (typecheck) + `vite build` → `dist/`. |
-| `npm run preview` | Serve the production build locally. |
-| `npm run type-check` | TypeScript only, no emit. |
-| `npm run lint` / `npm run lint:fix` | ESLint v9 flat config across `src/`. |
-| `npm run format` / `npm run format:check` | Prettier write / dry-run. |
-| `npm test` | One-shot Vitest run. |
-| `npm run test:watch` / `:ui` / `:coverage` | Watch mode / UI / coverage report. |
+| Command                                    | What it does                                |
+| ------------------------------------------ | ------------------------------------------- |
+| `npm run dev`                              | Vite dev server with HMR.                   |
+| `npm run build`                            | `tsc` (typecheck) + `vite build` → `dist/`. |
+| `npm run preview`                          | Serve the production build locally.         |
+| `npm run type-check`                       | TypeScript only, no emit.                   |
+| `npm run lint` / `npm run lint:fix`        | ESLint v9 flat config across `src/`.        |
+| `npm run format` / `npm run format:check`  | Prettier write / dry-run.                   |
+| `npm test`                                 | One-shot Vitest run.                        |
+| `npm run test:watch` / `:ui` / `:coverage` | Watch mode / UI / coverage report.          |
 
 `.env` (gitignored) needs `VITE_API_BASE_URL` and `VITE_API_KEY`. See `.env.example`.
 
@@ -93,7 +93,7 @@ npm run dev            # http://localhost:5173
 
 ## Project structure
 
-``` bash
+```bash
 src/
 ├── api/                # Single typed fetch wrapper + domain modules
 │   ├── auth.ts         # /auth endpoints (register, login, create-api-key)

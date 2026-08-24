@@ -1,6 +1,9 @@
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
-import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
+import {
+  renderBreadcrumbInContainer,
+  BREADCRUMB_PRESETS,
+} from '../components/Breadcrumb';
 import { initListingFormPreview } from '../components/ListingFormPreview';
 import { createListing } from '../api/listings';
 import { protectedRoute } from '../utils/auth';
@@ -219,7 +222,9 @@ function renderCreateForm(): void {
 }
 
 function initFormHandlers(): void {
-  const form = document.getElementById('create-listing-form') as HTMLFormElement;
+  const form = document.getElementById(
+    'create-listing-form'
+  ) as HTMLFormElement;
   const endDateInput = document.getElementById('endsAt') as HTMLInputElement;
 
   // Earliest allowed end date is one hour from now.
@@ -240,7 +245,9 @@ async function handleFormSubmit(event: Event): Promise<void> {
   event.preventDefault();
 
   const form = event.target as HTMLFormElement;
-  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const submitBtn = form.querySelector(
+    'button[type="submit"]'
+  ) as HTMLButtonElement;
 
   // Disable submit button
   submitBtn.disabled = true;
@@ -291,7 +298,9 @@ async function handleFormSubmit(event: Event): Promise<void> {
     window.location.href = `/listing.html?id=${response.data.id}`;
   } catch (error) {
     logError('Failed to create listing', error);
-    toast.error(getErrorMessage(error, 'Failed to create listing. Please try again.'));
+    toast.error(
+      getErrorMessage(error, 'Failed to create listing. Please try again.')
+    );
 
     // Re-enable submit button
     submitBtn.disabled = false;

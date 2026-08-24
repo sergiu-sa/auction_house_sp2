@@ -1,14 +1,27 @@
 import { getListings } from '../api/listings';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
-import { renderProductCards, showProductCardSkeletons } from '../components/ProductCard';
-import { renderQuickCards, showQuickCardSkeletons } from '../components/QuickCard';
-import { renderCollectionCards, showCollectionCardSkeletons } from '../components/CollectionCard';
+import {
+  renderProductCards,
+  showProductCardSkeletons,
+} from '../components/ProductCard';
+import {
+  renderQuickCards,
+  showQuickCardSkeletons,
+} from '../components/QuickCard';
+import {
+  renderCollectionCards,
+  showCollectionCardSkeletons,
+} from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
-import { addStructuredData, generateWebsiteStructuredData, generateOrganizationStructuredData } from '../utils/seo';
+import {
+  addStructuredData,
+  generateWebsiteStructuredData,
+  generateOrganizationStructuredData,
+} from '../utils/seo';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import {
@@ -91,7 +104,8 @@ function listenToNavbarFilters(): void {
 
 function initStickyFilterBar(): void {
   const stickyBar = document.getElementById('sticky-catalog-filters');
-  const catalogSection = document.querySelector('#catalog-cards')?.parentElement;
+  const catalogSection =
+    document.querySelector('#catalog-cards')?.parentElement;
 
   if (!stickyBar || !catalogSection) return;
 
@@ -175,10 +189,14 @@ function initStickyFilterEvents(): void {
   initSearchField('sticky-search-input', 300);
 
   // Also sync with navbar search when user types in sticky search
-  const stickySearchInput = document.getElementById('sticky-search-input') as HTMLInputElement;
+  const stickySearchInput = document.getElementById(
+    'sticky-search-input'
+  ) as HTMLInputElement;
   if (stickySearchInput) {
     stickySearchInput.addEventListener('input', () => {
-      const navbarSearch = document.getElementById('global-search-input') as HTMLInputElement;
+      const navbarSearch = document.getElementById(
+        'global-search-input'
+      ) as HTMLInputElement;
       if (navbarSearch) navbarSearch.value = stickySearchInput.value;
     });
   }
@@ -330,8 +348,13 @@ function showNoListingsMessage(): void {
     </div>
   `;
 
-  const sections = ['trending-cards', 'new-listings-cards', 'ending-soon-cards', 'catalog-cards'];
-  sections.forEach(id => {
+  const sections = [
+    'trending-cards',
+    'new-listings-cards',
+    'ending-soon-cards',
+    'catalog-cards',
+  ];
+  sections.forEach((id) => {
     const element = document.getElementById(id);
     if (element) element.innerHTML = noDataHTML;
   });
@@ -363,8 +386,14 @@ function showErrorInSections(): void {
     </div>
   `;
 
-  const sections = ['hero-mosaic', 'trending-cards', 'new-listings-cards', 'ending-soon-cards', 'catalog-cards'];
-  sections.forEach(id => {
+  const sections = [
+    'hero-mosaic',
+    'trending-cards',
+    'new-listings-cards',
+    'ending-soon-cards',
+    'catalog-cards',
+  ];
+  sections.forEach((id) => {
     const element = document.getElementById(id);
     if (element) element.innerHTML = errorHTML;
   });
@@ -378,7 +407,9 @@ function renderHeroSection(): void {
   if (!heroMosaic) return;
 
   // Get active listings only
-  const activeListings = allListings.filter(listing => isAuctionActive(listing.endsAt));
+  const activeListings = allListings.filter((listing) =>
+    isAuctionActive(listing.endsAt)
+  );
 
   // Update stats
   if (heroActiveCount) {
@@ -386,7 +417,10 @@ function renderHeroSection(): void {
   }
 
   if (heroBidsCount) {
-    const totalBids = allListings.reduce((sum, listing) => sum + (listing._count?.bids || 0), 0);
+    const totalBids = allListings.reduce(
+      (sum, listing) => sum + (listing._count?.bids || 0),
+      0
+    );
     heroBidsCount.textContent = totalBids.toLocaleString();
   }
 
@@ -408,7 +442,8 @@ function renderHeroSection(): void {
   const main = featured[0];
   const mainImage = main.media?.[0]?.url || '/images/placeholder.svg';
   const mainBids = main.bids || [];
-  const mainHighestBid = mainBids.length > 0 ? Math.max(...mainBids.map(b => b.amount)) : 0;
+  const mainHighestBid =
+    mainBids.length > 0 ? Math.max(...mainBids.map((b) => b.amount)) : 0;
   const mainTimeRemaining = formatTimeRemaining(main.endsAt);
 
   let mosaicHTML = `
@@ -463,7 +498,8 @@ function renderHeroSection(): void {
       const listing = featured[i];
       const image = listing.media?.[0]?.url || '/images/placeholder.svg';
       const bids = listing.bids || [];
-      const highestBid = bids.length > 0 ? Math.max(...bids.map(b => b.amount)) : 0;
+      const highestBid =
+        bids.length > 0 ? Math.max(...bids.map((b) => b.amount)) : 0;
 
       mosaicHTML += `
         <article class="bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
@@ -496,11 +532,13 @@ function renderHeroSection(): void {
 
 // Trending = active listings sorted by bid count
 function renderTrendingSection(): void {
-  const activeListings = allListings.filter(listing => isAuctionActive(listing.endsAt));
+  const activeListings = allListings.filter((listing) =>
+    isAuctionActive(listing.endsAt)
+  );
 
   // Get top 3 listings by bid count
   const trending = [...activeListings]
-    .filter(listing => (listing._count?.bids || 0) > 0)
+    .filter((listing) => (listing._count?.bids || 0) > 0)
     .sort((a, b) => (b._count?.bids || 0) - (a._count?.bids || 0))
     .slice(0, 3);
 
@@ -512,11 +550,15 @@ function renderTrendingSection(): void {
 }
 
 function renderNewListingsSection(): void {
-  const activeListings = allListings.filter(listing => isAuctionActive(listing.endsAt));
+  const activeListings = allListings.filter((listing) =>
+    isAuctionActive(listing.endsAt)
+  );
 
   // Get 3 newest listings
   const newListings = [...activeListings]
-    .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+    .sort(
+      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+    )
     .slice(0, 3);
 
   showProductCardSkeletons(3, 'new-listings-cards');
@@ -561,8 +603,10 @@ function applyCatalogFilters(): void {
 
   // Filter by category
   if (catalogState.category !== 'all') {
-    filtered = filtered.filter(listing =>
-      listing.tags?.some(tag => tag.toLowerCase() === catalogState.category.toLowerCase())
+    filtered = filtered.filter((listing) =>
+      listing.tags?.some(
+        (tag) => tag.toLowerCase() === catalogState.category.toLowerCase()
+      )
     );
   }
 
@@ -579,7 +623,7 @@ function applyCatalogFilters(): void {
   // Guard only: the API already returns active listings when this is on.
   // This drops any lot that expired while the page sat open.
   if (catalogState.activeOnly) {
-    filtered = filtered.filter(listing => isAuctionActive(listing.endsAt));
+    filtered = filtered.filter((listing) => isAuctionActive(listing.endsAt));
   }
 
   // Sort listings
@@ -620,7 +664,6 @@ function applyCatalogFilters(): void {
     },
   });
 }
-
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {

@@ -1,5 +1,5 @@
 /**
- * Pagination Component 
+ * Pagination Component
  */
 
 export interface PaginationConfig {
@@ -132,7 +132,8 @@ export function renderPagination(config: PaginationConfig): void {
   container.innerHTML = html;
 
   // Attach event listeners
-  const buttons = container.querySelectorAll<HTMLButtonElement>('button[data-page]');
+  const buttons =
+    container.querySelectorAll<HTMLButtonElement>('button[data-page]');
   buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
       e.preventDefault();

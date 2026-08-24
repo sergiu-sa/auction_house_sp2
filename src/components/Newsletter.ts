@@ -48,7 +48,9 @@ export function renderNewsletter(): string {
 
 export function initNewsletter(): void {
   const form = document.getElementById('newsletter-form') as HTMLFormElement;
-  const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
+  const emailInput = document.getElementById(
+    'newsletter-email'
+  ) as HTMLInputElement;
   const errorDiv = document.getElementById('newsletter-error');
 
   if (!form || !emailInput || !errorDiv) return;
@@ -75,7 +77,9 @@ export function initNewsletter(): void {
     }
 
     // Disable button during submission
-    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const submitBtn = form.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement;
     const originalBtnContent = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
@@ -85,7 +89,7 @@ export function initNewsletter(): void {
 
     try {
       // Simulated subscription — no backend wired up yet
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Success state
       submitBtn.innerHTML = `
@@ -107,7 +111,6 @@ export function initNewsletter(): void {
         submitBtn.classList.remove('bg-green-600');
         submitBtn.classList.add('bg-slate-900', 'hover:bg-slate-800');
       }, 3000);
-
     } catch {
       // Error state
       submitBtn.disabled = false;

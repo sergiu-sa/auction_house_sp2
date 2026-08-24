@@ -49,7 +49,9 @@ export function renderBreadcrumbInContainer(config: BreadcrumbConfig): void {
   const { containerId } = config;
 
   if (!containerId) {
-    logError('Breadcrumb: containerId is required for renderBreadcrumbInContainer');
+    logError(
+      'Breadcrumb: containerId is required for renderBreadcrumbInContainer'
+    );
     return;
   }
 
@@ -62,7 +64,10 @@ export function renderBreadcrumbInContainer(config: BreadcrumbConfig): void {
   container.innerHTML = renderBreadcrumb(config);
 }
 
-export function updateLastBreadcrumbItem(containerId: string, newLabel: string): void {
+export function updateLastBreadcrumbItem(
+  containerId: string,
+  newLabel: string
+): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -73,9 +78,7 @@ export function updateLastBreadcrumbItem(containerId: string, newLabel: string):
 }
 
 export const BREADCRUMB_PRESETS = {
-  home: (): BreadcrumbItem[] => [
-    { label: 'Home', href: '/index.html' },
-  ],
+  home: (): BreadcrumbItem[] => [{ label: 'Home', href: '/index.html' }],
 
   catalog: (): BreadcrumbItem[] => [
     { label: 'Home', href: '/index.html' },

@@ -7,7 +7,7 @@ import { initStatsBar } from './StatsBar';
  * Render the footer component
  */
 export function renderFooter(): void {
-  const footer = document.getElementById("footer");
+  const footer = document.getElementById('footer');
   if (!footer) return;
 
   const isUserLoggedIn = isLoggedIn();
@@ -16,16 +16,20 @@ export function renderFooter(): void {
     <footer class="bg-slate-900 px-6 md:px-8 pb-12 pt-20 text-slate-400">
   <div class="mx-auto max-w-7xl">
 
-    ${isUserLoggedIn ? `
+    ${
+      isUserLoggedIn
+        ? `
       <!-- Featured Win - Logged In Users Only -->
       <div id="featured-win-container"></div>
 
       <!-- Stats Bar - Logged In Users Only -->
       <div id="stats-bar-container"></div>
-    ` : `
+    `
+        : `
       <!-- Newsletter - Guest Users Only -->
       ${renderNewsletter()}
-    `}
+    `
+    }
     <!-- Main Footer Navigation -->
     <div class="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
       <!-- Brand -->

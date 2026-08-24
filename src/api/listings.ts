@@ -66,10 +66,7 @@ export async function updateListing(
   id: string,
   listingData: UpdateListingData
 ): Promise<ApiResponse<Listing>> {
-  return api.put<ApiResponse<Listing>>(
-    `/auction/listings/${id}`,
-    listingData
-  );
+  return api.put<ApiResponse<Listing>>(`/auction/listings/${id}`, listingData);
 }
 
 /**
@@ -79,4 +76,3 @@ export async function updateListing(
 export async function deleteListing(id: string): Promise<void> {
   return api.delete<void>(`/auction/listings/${id}`);
 }
-

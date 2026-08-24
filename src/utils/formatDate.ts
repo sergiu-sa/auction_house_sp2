@@ -48,7 +48,14 @@ export function getTimeRemaining(endDate: string | Date): {
   // An unparseable date yields NaN, which slips past every comparison below
   // and leaks "NaN" into the UI. Treat it as expired.
   if (Number.isNaN(total) || total <= 0) {
-    return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
+    return {
+      total: 0,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      expired: true,
+    };
   }
 
   const seconds = Math.floor((total / 1000) % 60);

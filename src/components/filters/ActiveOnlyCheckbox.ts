@@ -13,7 +13,9 @@ export interface ActiveOnlyCheckboxConfig {
 /**
  * Generate HTML for active-only checkbox
  */
-export function renderActiveOnlyCheckbox(config: ActiveOnlyCheckboxConfig): string {
+export function renderActiveOnlyCheckbox(
+  config: ActiveOnlyCheckboxConfig
+): string {
   const {
     id,
     checked = false,

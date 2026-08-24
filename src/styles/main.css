@@ -16,11 +16,20 @@
 
 /* Custom styles */
 body {
-  font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
+  font-family:
+    'Source Sans 3',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Cormorant", serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Cormorant', serif;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

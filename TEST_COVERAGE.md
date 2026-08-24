@@ -50,7 +50,7 @@ The test suite focuses on testing critical utility functions that handle:
 ### Covered Functions (100% coverage)
 
 - `formatCurrency()` - Currency formatting
-- `formatNumber()` - Number formatting  
+- `formatNumber()` - Number formatting
 - `formatDate()` - Date/time formatting
 - `formatTimeRemaining()` - Countdown timers
 - `getTimeUntil()` - Time calculations

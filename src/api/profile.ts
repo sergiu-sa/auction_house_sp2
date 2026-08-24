@@ -11,7 +11,9 @@ import type {
  * Get a profile by username
  * @param username - Profile username
  */
-export async function getProfile(username: string): Promise<ApiResponse<Profile>> {
+export async function getProfile(
+  username: string
+): Promise<ApiResponse<Profile>> {
   return api.get<ApiResponse<Profile>>(
     `/auction/profiles/${username}?_listings=true&_wins=true`
   );

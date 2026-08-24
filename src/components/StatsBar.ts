@@ -1,5 +1,9 @@
 import { getCurrentUser } from '../utils/auth';
-import { getProfileListings, getProfileBids, getProfileWins } from '../api/profile';
+import {
+  getProfileListings,
+  getProfileBids,
+  getProfileWins,
+} from '../api/profile';
 import { formatCurrency } from '../utils/formatCurrency';
 import { logError } from '../utils/logger';
 import type { Bid } from '../types/api';
@@ -54,7 +58,10 @@ export function renderStatsBar(data: StatsData): string {
 }
 
 // Win rate = wins / unique auctions bid on. Multiple bids on the same listing count as one attempt.
-function calculateWinRate(attemptedAuctions: number, totalWins: number): number {
+function calculateWinRate(
+  attemptedAuctions: number,
+  totalWins: number
+): number {
   if (attemptedAuctions === 0) return 0;
   const rate = (totalWins / attemptedAuctions) * 100;
   return Math.min(rate, 100);
@@ -72,7 +79,7 @@ function countAuctionsBidOn(bids: Bid[]): number {
 function calculateActiveBidsValue(bids: Bid[]): number {
   const now = new Date();
   return bids
-    .filter(bid => bid.listing && new Date(bid.listing.endsAt) > now)
+    .filter((bid) => bid.listing && new Date(bid.listing.endsAt) > now)
     .reduce((total, bid) => total + bid.amount, 0);
 }
 
@@ -84,12 +91,11 @@ export async function fetchStats(): Promise<StatsData | null> {
     }
 
     // Fetch listings, bids and wins in parallel
-    const [listingsResponse, bidsResponse, winsResponse] =
-      await Promise.all([
-        getProfileListings(user.name),
-        getProfileBids(user.name),
-        getProfileWins(user.name)
-      ]);
+    const [listingsResponse, bidsResponse, winsResponse] = await Promise.all([
+      getProfileListings(user.name),
+      getProfileBids(user.name),
+      getProfileWins(user.name),
+    ]);
 
     const myListings = listingsResponse.data.length;
     const myBids = bidsResponse.data.length;
@@ -130,7 +136,9 @@ function animateNumber(
     if (isCurrency) {
       element.textContent = formatCurrency(Math.floor(current), true);
     } else {
-      element.textContent = new Intl.NumberFormat('en-US').format(Math.floor(current));
+      element.textContent = new Intl.NumberFormat('en-US').format(
+        Math.floor(current)
+      );
     }
   }, 16);
 }
@@ -218,7 +226,8 @@ export async function initStatsBar(): Promise<void> {
             if (myListingsEl) animateNumber(myListingsEl, data.myListings);
             if (myBidsEl) animateNumber(myBidsEl, data.myBids);
             if (winRateEl) animateWinRate(winRateEl, data.winRate);
-            if (activeBidsValueEl) animateNumber(activeBidsValueEl, data.activeBidsValue, true);
+            if (activeBidsValueEl)
+              animateNumber(activeBidsValueEl, data.activeBidsValue, true);
 
             observer.disconnect();
           }
@@ -236,27 +245,41 @@ export function updateStatsBar(data: StatsData): void {
   const container = document.getElementById('stats-bar-container');
   if (!container) return;
 
-  const myListingsEl = container.querySelector('[data-stat="myListings"]') as HTMLElement;
-  const myBidsEl = container.querySelector('[data-stat="myBids"]') as HTMLElement;
-  const winRateEl = container.querySelector('[data-stat="winRate"]') as HTMLElement;
-  const activeBidsValueEl = container.querySelector('[data-stat="activeBidsValue"]') as HTMLElement;
+  const myListingsEl = container.querySelector(
+    '[data-stat="myListings"]'
+  ) as HTMLElement;
+  const myBidsEl = container.querySelector(
+    '[data-stat="myBids"]'
+  ) as HTMLElement;
+  const winRateEl = container.querySelector(
+    '[data-stat="winRate"]'
+  ) as HTMLElement;
+  const activeBidsValueEl = container.querySelector(
+    '[data-stat="activeBidsValue"]'
+  ) as HTMLElement;
 
   if (myListingsEl) {
-    const currentValue = parseInt(myListingsEl.textContent?.replace(/,/g, '') || '0');
+    const currentValue = parseInt(
+      myListingsEl.textContent?.replace(/,/g, '') || '0'
+    );
     if (currentValue !== data.myListings) {
       animateNumber(myListingsEl, data.myListings, false, 500);
     }
   }
 
   if (myBidsEl) {
-    const currentValue = parseInt(myBidsEl.textContent?.replace(/,/g, '') || '0');
+    const currentValue = parseInt(
+      myBidsEl.textContent?.replace(/,/g, '') || '0'
+    );
     if (currentValue !== data.myBids) {
       animateNumber(myBidsEl, data.myBids, false, 500);
     }
   }
 
   if (winRateEl) {
-    const currentValue = parseFloat(winRateEl.textContent?.replace('%', '') || '0');
+    const currentValue = parseFloat(
+      winRateEl.textContent?.replace('%', '') || '0'
+    );
     if (currentValue !== data.winRate) {
       animateWinRate(winRateEl, data.winRate, 500);
     }

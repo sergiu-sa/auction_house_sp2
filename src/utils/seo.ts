@@ -55,8 +55,14 @@ export function updateCanonicalUrl(url: string): void {
 /**
  * Update a meta tag by attribute type and name
  */
-function updateMetaTag(attrType: 'name' | 'property', attrValue: string, content: string): void {
-  let meta = document.querySelector<HTMLMetaElement>(`meta[${attrType}="${attrValue}"]`);
+function updateMetaTag(
+  attrType: 'name' | 'property',
+  attrValue: string,
+  content: string
+): void {
+  let meta = document.querySelector<HTMLMetaElement>(
+    `meta[${attrType}="${attrValue}"]`
+  );
 
   if (!meta) {
     meta = document.createElement('meta');
@@ -97,9 +103,10 @@ export function generateListingStructuredData(listing: {
   seller?: { name: string };
 }): object {
   const listingUrl = `${APP_BASE_URL}/listing.html?id=${listing.id}`;
-  const imageUrl = listing.media && listing.media.length > 0
-    ? listing.media[0].url
-    : `${APP_BASE_URL}/images/logo_v2.svg`;
+  const imageUrl =
+    listing.media && listing.media.length > 0
+      ? listing.media[0].url
+      : `${APP_BASE_URL}/images/logo_v2.svg`;
 
   return {
     '@context': 'https://schema.org/',
@@ -114,14 +121,18 @@ export function generateListingStructuredData(listing: {
       priceValidUntil: listing.endsAt,
       url: listingUrl,
     },
-    aggregateRating: listing._count?.bids ? {
-      '@type': 'AggregateRating',
-      ratingCount: listing._count.bids,
-    } : undefined,
-    seller: listing.seller ? {
-      '@type': 'Person',
-      name: listing.seller.name,
-    } : undefined,
+    aggregateRating: listing._count?.bids
+      ? {
+          '@type': 'AggregateRating',
+          ratingCount: listing._count.bids,
+        }
+      : undefined,
+    seller: listing.seller
+      ? {
+          '@type': 'Person',
+          name: listing.seller.name,
+        }
+      : undefined,
   };
 }
 

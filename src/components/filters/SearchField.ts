@@ -21,9 +21,10 @@ export function renderSearchField(config: SearchFieldConfig): string {
     variant = 'normal',
   } = config;
 
-  const inputClasses = variant === 'compact'
-    ? 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2'
-    : 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2';
+  const inputClasses =
+    variant === 'compact'
+      ? 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2'
+      : 'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2';
 
   return `
     <div class="relative flex-1">

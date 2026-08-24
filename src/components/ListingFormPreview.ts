@@ -22,11 +22,21 @@ const DEFAULT_TITLE = 'Your listing title';
 const DEFAULT_DESCRIPTION = 'Your description will appear here…';
 const DEFAULT_END_DATE = 'No end date set';
 
-export function initListingFormPreview(options: ListingFormPreviewOptions): void {
-  const titleInput = document.getElementById('title') as HTMLInputElement | null;
-  const descriptionInput = document.getElementById('description') as HTMLTextAreaElement | null;
-  const mediaInput = document.getElementById(options.mediaInputId) as HTMLTextAreaElement | null;
-  const endDateInput = document.getElementById(options.endDateInputId ?? 'endsAt') as HTMLInputElement | null;
+export function initListingFormPreview(
+  options: ListingFormPreviewOptions
+): void {
+  const titleInput = document.getElementById(
+    'title'
+  ) as HTMLInputElement | null;
+  const descriptionInput = document.getElementById(
+    'description'
+  ) as HTMLTextAreaElement | null;
+  const mediaInput = document.getElementById(
+    options.mediaInputId
+  ) as HTMLTextAreaElement | null;
+  const endDateInput = document.getElementById(
+    options.endDateInputId ?? 'endsAt'
+  ) as HTMLInputElement | null;
 
   const previewTitle = document.getElementById('previewTitle');
   const previewDescription = document.getElementById('previewDescription');
@@ -42,7 +52,8 @@ export function initListingFormPreview(options: ListingFormPreviewOptions): void
 
   if (descriptionInput && previewDescription) {
     descriptionInput.addEventListener('input', () => {
-      previewDescription.textContent = descriptionInput.value || DEFAULT_DESCRIPTION;
+      previewDescription.textContent =
+        descriptionInput.value || DEFAULT_DESCRIPTION;
     });
   }
 
