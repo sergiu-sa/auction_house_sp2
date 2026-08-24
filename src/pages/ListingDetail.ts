@@ -21,6 +21,7 @@ import { getErrorMessage } from '../utils/errorHandling';
 import { isWatched, toggleWatched } from '../utils/storage';
 import type { Listing } from '../types/api';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
+import { escapeHtml } from '../utils/escapeHtml';
 
 // Current listing data
 let currentListing: Listing | null = null;
@@ -139,10 +140,10 @@ function renderListingHeader(listing: Listing) {
       <div class="space-y-2 flex-1">
         <div class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">
           Listing ID: ${listing.id.substring(0, 8)}
-          ${listing.tags && listing.tags.length > 0 ? ` · ${listing.tags[0]}` : ''}
+          ${listing.tags && listing.tags.length > 0 ? ` · ${escapeHtml(listing.tags[0])}` : ''}
         </div>
         <h1 class="text-4xl md:text-5xl font-bold leading-tight text-slate-900">
-          ${listing.title}
+          ${escapeHtml(listing.title)}
         </h1>
       </div>
       <div class="hidden text-right md:block">
@@ -168,7 +169,7 @@ function renderListingHeader(listing: Listing) {
     </div>
 
     <p class="max-w-2xl text-sm md:text-base leading-relaxed text-slate-600">
-      ${listing.description || 'No description provided.'}
+      ${escapeHtml(listing.description || 'No description provided.')}
     </p>
   `;
 }
@@ -196,8 +197,8 @@ function renderMediaGallery(listing: Listing) {
     <div class="aspect-[4/3] bg-slate-100 mb-4 md:mb-6" style="border: 3px solid var(--aucto-border-dark)">
       <img
         id="main-image"
-        src="${mainImgAttrs.src}"
-        alt="${mainImgAttrs.alt}"
+        src="${escapeHtml(mainImgAttrs.src)}"
+        alt="${escapeHtml(mainImgAttrs.alt)}"
         width="${mainImgAttrs.width}"
         height="${mainImgAttrs.height}"
         sizes="${mainImgAttrs.sizes}"
@@ -215,13 +216,13 @@ function renderMediaGallery(listing: Listing) {
         <button
           class="aspect-square bg-slate-100 thumbnail-btn ${index === 0 ? 'opacity-100' : 'opacity-75'} hover:opacity-100 transition"
           style="border: ${index === 0 ? '3px' : '2px'} solid ${index === 0 ? '#1e293b' : '#475569'}"
-          data-image-url="${img.url}"
-          data-image-alt="${img.alt || listing.title}"
+          data-image-url="${escapeHtml(img.url)}"
+          data-image-alt="${escapeHtml(img.alt || listing.title)}"
           data-index="${index}"
         >
           <img
-            src="${thumbAttrs.src}"
-            alt="${thumbAttrs.alt}"
+            src="${escapeHtml(thumbAttrs.src)}"
+            alt="${escapeHtml(thumbAttrs.alt)}"
             width="${thumbAttrs.width}"
             height="${thumbAttrs.height}"
             loading="lazy"
@@ -290,7 +291,7 @@ function renderListingDetails(listing: Listing) {
             <i class="fa-solid fa-layer-group text-xs"></i>
             <span>Category</span>
           </div>
-          <div class="text-sm">${listing.tags.slice(0, 2).join(' · ')}</div>
+          <div class="text-sm">${escapeHtml(listing.tags.slice(0, 2).join(' · '))}</div>
         </div>
       ` : ''}
       <div>
@@ -314,7 +315,7 @@ function renderListingDetails(listing: Listing) {
         Description
       </h3>
       <div class="text-sm leading-relaxed text-slate-700 line-clamp-6">
-        <p>${listing.description || 'No description provided for this listing.'}</p>
+        <p>${escapeHtml(listing.description || 'No description provided for this listing.')}</p>
       </div>
     </div>
   `;
@@ -638,7 +639,7 @@ function renderTags(listing: Listing) {
           class="bg-slate-50 px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-slate-700 uppercase"
           style="border: 2px solid var(--aucto-border-mid)"
         >
-          ${tag}
+          ${escapeHtml(tag)}
         </span>
       `).join('')}
     </div>
@@ -679,7 +680,7 @@ function renderBidHistory(listing: Listing) {
                 ${new Intl.NumberFormat('en-US').format(bid.amount)} Credits
               </div>
               <div class="text-xs text-slate-500">
-                ${isUserBid ? '@you' : `@${bid.bidder?.name || 'Anonymous'}`} · ${formatTimeAgo(bid.created)}
+                ${isUserBid ? '@you' : `@${escapeHtml(bid.bidder?.name || 'Anonymous')}`} · ${formatTimeAgo(bid.created)}
               </div>
             </div>
             ${isHighest ? `
@@ -720,8 +721,8 @@ function renderSellerProfile(listing: Listing) {
       <div class="h-16 w-16 bg-slate-100 flex-shrink-0" style="border: 2px solid var(--aucto-border-dark)">
         ${avatarAttrs ? `
           <img
-            src="${avatarAttrs.src}"
-            alt="${avatarAttrs.alt}"
+            src="${escapeHtml(avatarAttrs.src)}"
+            alt="${escapeHtml(avatarAttrs.alt)}"
             width="64"
             height="64"
             loading="lazy"
@@ -730,14 +731,14 @@ function renderSellerProfile(listing: Listing) {
           />
         ` : `
           <div class="h-full w-full bg-slate-900 text-white flex items-center justify-center text-2xl font-bold">
-            ${seller.name.charAt(0).toUpperCase()}
+            ${escapeHtml(seller.name.charAt(0).toUpperCase())}
           </div>
         `}
       </div>
       <div>
         <div class="text-base font-bold text-slate-900 mb-1 inline-flex items-center gap-1.5">
           <i class="fa-solid fa-user text-sm"></i>
-          <a href="/profile.html?user=${seller.name}" class="hover:text-slate-700 transition-colors">@${seller.name}</a>
+          <a href="/profile.html?user=${encodeURIComponent(seller.name)}" class="hover:text-slate-700 transition-colors">@${escapeHtml(seller.name)}</a>
         </div>
         ${seller._count ? `
           <div class="text-xs text-slate-500 inline-flex items-center gap-1">
@@ -750,13 +751,13 @@ function renderSellerProfile(listing: Listing) {
 
     ${seller.bio ? `
       <p class="text-sm leading-relaxed text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
-        ${seller.bio}
+        ${escapeHtml(seller.bio)}
       </p>
     ` : ''}
 
     <div class="pt-6" style="border-top: 2px solid var(--aucto-border-light)">
       <a
-        href="/profile.html?user=${seller.name}"
+        href="/profile.html?user=${encodeURIComponent(seller.name)}"
         class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-slate-700 transition-colors"
       >
         <i class="fa-solid fa-arrow-right text-xs"></i>
