@@ -23,12 +23,22 @@
     <style>
       *,
       *::before,
-      *::after { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
       body {
         background: #f7f7f5;
         color: #1e293b;
-        font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+        font-family:
+          'Source Sans 3',
+          system-ui,
+          -apple-system,
+          sans-serif;
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -90,18 +100,24 @@
         text-transform: uppercase;
         text-decoration: none;
         border: 3px solid #1e293b;
-        transition: background-color 120ms ease, color 120ms ease;
+        transition:
+          background-color 120ms ease,
+          color 120ms ease;
       }
       a.btn-primary {
         background: #1e293b;
         color: #ffffff;
       }
-      a.btn-primary:hover { background: #334155; }
+      a.btn-primary:hover {
+        background: #334155;
+      }
       a.btn-secondary {
         background: #ffffff;
         color: #1e293b;
       }
-      a.btn-secondary:hover { background: #f1f5f9; }
+      a.btn-secondary:hover {
+        background: #f1f5f9;
+      }
       a.btn:focus-visible {
         outline: 3px solid #dc2629;
         outline-offset: 2px;
@@ -116,8 +132,8 @@
       </div>
       <h1>Lot not found.</h1>
       <p>
-        The page you were looking for has been outbid, withdrawn, or never existed.
-        Head back to the catalog or return home.
+        The page you were looking for has been outbid, withdrawn, or never
+        existed. Head back to the catalog or return home.
       </p>
       <div class="actions">
         <a class="btn btn-primary" href="/">Back to home</a>

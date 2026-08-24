@@ -1,6 +1,9 @@
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
-import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
+import {
+  renderBreadcrumbInContainer,
+  BREADCRUMB_PRESETS,
+} from '../components/Breadcrumb';
 import { initListingFormPreview } from '../components/ListingFormPreview';
 import { protectedRoute, requireOwnership } from '../utils/auth';
 import { getListing, updateListing, deleteListing } from '../api/listings';
@@ -45,7 +48,10 @@ async function loadListingData(listingId: string): Promise<void> {
     currentListing = response.data;
 
     // Check ownership before allowing edit
-    if (currentListing.seller && !requireOwnership(currentListing.seller.name)) {
+    if (
+      currentListing.seller &&
+      !requireOwnership(currentListing.seller.name)
+    ) {
       return;
     }
 
@@ -67,7 +73,9 @@ async function loadListingData(listingId: string): Promise<void> {
     initializeDeleteModal(listingId);
   } catch (error) {
     logError('Failed to load listing for edit', error, { listingId });
-    showError('Failed to load listing data. The listing may not exist or you may not have permission to edit it.');
+    showError(
+      'Failed to load listing data. The listing may not exist or you may not have permission to edit it.'
+    );
   }
 }
 
@@ -80,7 +88,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
   const formattedDate = endsAt.toISOString().slice(0, 16);
 
   // Extract image URLs from media array
-  const imageUrls = listing.media?.map(m => m.url).join('\n') || '';
+  const imageUrls = listing.media?.map((m) => m.url).join('\n') || '';
 
   // Extract tags
   const tags = listing.tags?.join(', ') || '';
@@ -241,20 +249,24 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
             style="border: 3px solid var(--aucto-border-dark)"
             id="mainPreview"
           >
-            ${listing.media?.[0]?.url ? `
+            ${
+              listing.media?.[0]?.url
+                ? `
               <img
                 src="${escapeHtml(listing.media[0].url)}"
                 class="w-full h-full object-cover"
                 alt="Preview"
               />
-            ` : `
+            `
+                : `
               <div class="w-full h-full flex items-center justify-center text-slate-400">
                 <div class="text-center">
                   <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400"></i>
                   <p class="text-sm">No image added yet</p>
                 </div>
               </div>
-            `}
+            `
+            }
           </div>
 
           <!-- PREVIEW INFO -->
@@ -283,7 +295,11 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
 
           <!-- ADDITIONAL IMAGES -->
           <div id="additionalImages" class="grid grid-cols-3 gap-4${listing.media && listing.media.length > 1 ? '' : ' hidden'}">
-            ${listing.media?.slice(1, 4).map(media => `
+            ${
+              listing.media
+                ?.slice(1, 4)
+                .map(
+                  (media) => `
               <div class="bg-white border-2 border-slate-900 overflow-hidden">
                 <img
                   src="${escapeHtml(media.url)}"
@@ -291,7 +307,10 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                   alt="Additional preview"
                 />
               </div>
-            `).join('') || ''}
+            `
+                )
+                .join('') || ''
+            }
           </div>
         </div>
       </div>
@@ -315,7 +334,9 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                 Once you delete a listing, there is no going back. This action cannot be undone.
                 All bids and listing data will be permanently removed.
               </p>
-              ${hasBids ? `
+              ${
+                hasBids
+                  ? `
                 <div class="bg-red-100 border border-red-300 p-3 text-xs text-red-800 rounded flex items-start gap-2">
                   <i class="fa-solid fa-triangle-exclamation text-red-700 flex-shrink-0 mt-0.5"></i>
                   <div>
@@ -324,7 +345,9 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                     Deleting it will affect those bidders.
                   </div>
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
             <button
               type="button"
@@ -349,13 +372,21 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
     e.preventDefault();
 
     const titleInput = document.getElementById('title') as HTMLInputElement;
-    const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
-    const imageUrlsInput = document.getElementById('imageUrls') as HTMLTextAreaElement;
+    const descriptionInput = document.getElementById(
+      'description'
+    ) as HTMLTextAreaElement;
+    const imageUrlsInput = document.getElementById(
+      'imageUrls'
+    ) as HTMLTextAreaElement;
     const tagsInput = document.getElementById('tags') as HTMLInputElement;
     const endDateInput = document.getElementById('endDate') as HTMLInputElement;
 
     // Validate form
-    if (!titleInput.value.trim() || !descriptionInput.value.trim() || !endDateInput.value) {
+    if (
+      !titleInput.value.trim() ||
+      !descriptionInput.value.trim() ||
+      !endDateInput.value
+    ) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -363,19 +394,19 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
     // Parse image URLs
     const imageUrls = imageUrlsInput.value
       .split('\n')
-      .map(url => url.trim())
-      .filter(url => url !== '');
+      .map((url) => url.trim())
+      .filter((url) => url !== '');
 
     // Parse tags
     const tags = tagsInput.value
       .split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag !== '');
+      .map((tag) => tag.trim())
+      .filter((tag) => tag !== '');
 
     // Prepare update data
     const updateData: UpdateListingData = {
       description: descriptionInput.value.trim(),
-      media: imageUrls.map(url => ({ url, alt: titleInput.value })),
+      media: imageUrls.map((url) => ({ url, alt: titleInput.value })),
     };
 
     // Only include title if listing has no bids
@@ -390,9 +421,12 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
 
     try {
       // Show loading state
-      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const submitButton = form.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
       submitButton.disabled = true;
-      submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-base"></i><span>Saving...</span>';
+      submitButton.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin text-base"></i><span>Saving...</span>';
 
       // Update listing via API
       await updateListing(listingId, updateData);
@@ -406,19 +440,28 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       }, 1500);
     } catch (error: unknown) {
       // Restore button state
-      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const submitButton = form.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
       submitButton.disabled = false;
-      submitButton.innerHTML = '<i class="fa-solid fa-floppy-disk text-base"></i><span>Save changes</span>';
+      submitButton.innerHTML =
+        '<i class="fa-solid fa-floppy-disk text-base"></i><span>Save changes</span>';
 
       logError('Failed to update listing', error, { listingId });
-      const errorMessage = getErrorMessage(error, 'Failed to update listing. Please try again.');
+      const errorMessage = getErrorMessage(
+        error,
+        'Failed to update listing. Please try again.'
+      );
       toast.error(errorMessage);
     }
   });
 }
 
 function initializePreview(): void {
-  initListingFormPreview({ mediaInputId: 'imageUrls', endDateInputId: 'endDate' });
+  initListingFormPreview({
+    mediaInputId: 'imageUrls',
+    endDateInputId: 'endDate',
+  });
 }
 
 function initializeDeleteModal(listingId: string): void {
@@ -448,7 +491,8 @@ function initializeDeleteModal(listingId: string): void {
       // Show loading state
       const deleteBtn = confirmDelete as HTMLButtonElement;
       deleteBtn.disabled = true;
-      deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
+      deleteBtn.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
 
       // Delete listing via API
       await deleteListing(listingId);
@@ -467,7 +511,10 @@ function initializeDeleteModal(listingId: string): void {
       deleteBtn.innerHTML = 'Delete Forever';
 
       logError('Failed to delete listing', error, { listingId });
-      const errorMessage = getErrorMessage(error, 'Failed to delete listing. Please try again.');
+      const errorMessage = getErrorMessage(
+        error,
+        'Failed to delete listing. Please try again.'
+      );
       toast.error(errorMessage);
 
       closeModal();

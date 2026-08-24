@@ -23,7 +23,12 @@ describe('getListings', () => {
   });
 
   it('should ask the API for active listings only when _active is set', async () => {
-    await getListings({ limit: 50, sort: 'created', sortOrder: 'desc', _active: true });
+    await getListings({
+      limit: 50,
+      sort: 'created',
+      sortOrder: 'desc',
+      _active: true,
+    });
 
     expect(requestedUrl()).toContain('_active=true');
   });

@@ -1,6 +1,11 @@
 import { login } from '../api/auth';
 import { redirectIfAuthenticated } from '../utils/auth';
-import { isValidEmail, showFieldError, clearFieldError, clearFormErrors } from '../utils/validation';
+import {
+  isValidEmail,
+  showFieldError,
+  clearFieldError,
+  clearFormErrors,
+} from '../utils/validation';
 import { toast } from '../components/Toast';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
@@ -50,9 +55,12 @@ export async function initLoginPage(): Promise<void> {
   initProductShowcase({
     pageName: 'login',
     fallbackImages: {
-      featured: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop',
-      tileA: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop',
-      tileB: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop',
+      featured:
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop',
+      tileA:
+        'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop',
+      tileB:
+        'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop',
     },
     featuredDescriptionLength: 60,
     showFeaturedBid: true,
@@ -63,7 +71,6 @@ export async function initLoginPage(): Promise<void> {
     tileBDescriptionLength: 40,
   });
 }
-
 
 function validateEmailField(input: HTMLInputElement): boolean {
   const email = input.value.trim();
@@ -87,7 +94,7 @@ async function handleLoginSubmit(e: Event): Promise<void> {
 
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form);
-  
+
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
@@ -113,13 +120,16 @@ async function handleLoginSubmit(e: Event): Promise<void> {
   if (!isValid) return;
 
   // Get submit button
-  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const submitBtn = form.querySelector(
+    'button[type="submit"]'
+  ) as HTMLButtonElement;
   if (!submitBtn) return;
 
   // Disable button and show loading state
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
+  submitBtn.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
 
   try {
     // Call login API
@@ -134,18 +144,20 @@ async function handleLoginSubmit(e: Event): Promise<void> {
       const redirect = urlParams.get('redirect') || '/index.html';
       window.location.href = redirect;
     }, 1000);
-
   } catch (error) {
     logError('Login failed', error);
 
     // Handle API errors
     if (error instanceof ApiErrorClass) {
       const errorMessage = error.errors[0]?.message || 'Login failed';
-      
+
       // Check for specific errors
       if (errorMessage.toLowerCase().includes('password')) {
         showFieldError('password', 'Incorrect password');
-      } else if (errorMessage.toLowerCase().includes('email') || errorMessage.toLowerCase().includes('user')) {
+      } else if (
+        errorMessage.toLowerCase().includes('email') ||
+        errorMessage.toLowerCase().includes('user')
+      ) {
         showFieldError('email', 'No account found with this email');
       } else {
         toast.error(errorMessage);

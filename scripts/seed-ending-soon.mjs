@@ -74,7 +74,7 @@ const LOTS = [
     hours: 2,
     title: 'Brass Desk Lamp with Green Glass Shade',
     description:
-      'A mid-century banker\'s lamp in solid brass, with the original green glass shade and pull-chain switch. Rewired and ready to use.',
+      "A mid-century banker's lamp in solid brass, with the original green glass shade and pull-chain switch. Rewired and ready to use.",
     tags: ['vintage', 'lighting'],
   },
   {
@@ -106,7 +106,8 @@ const STRESS_PREFIX = 'AUCTO STRESS';
 /** Default number of bulk lots. 24 fills a catalog page, so 30 forces pagination. */
 const DEFAULT_STRESS_COUNT = 30;
 
-const IMG = (seed) => `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/600`;
+const IMG = (seed) =>
+  `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/600`;
 
 /**
  * One row per fixture need.
@@ -121,7 +122,7 @@ function buildStressLots(count) {
       hours: 30,
       title: `${STRESS_PREFIX} Ampersands & <angles> and 'apostrophes'`,
       description:
-        "Fish & chips, a < b > c, it's got \"everything\" — & an ampersand that must survive a round trip unescaped.",
+        'Fish & chips, a < b > c, it\'s got "everything" — & an ampersand that must survive a round trip unescaped.',
       tags: ['stress', 'entities'],
       media: [{ url: IMG('entities'), alt: 'A & B < C' }],
     },
@@ -129,7 +130,8 @@ function buildStressLots(count) {
       need: 'a double quote in the title — it can break out of a quoted HTML attribute',
       hours: 31,
       title: `${STRESS_PREFIX} The "Genuine" Article, 36 mm`,
-      description: 'The quote in the title is the point: it is what closes alt=" in an unescaped sink.',
+      description:
+        'The quote in the title is the point: it is what closes alt=" in an unescaped sink.',
       tags: ['stress', 'quotes'],
       media: [{ url: IMG('quote'), alt: 'The "Genuine" Article' }],
     },
@@ -137,7 +139,8 @@ function buildStressLots(count) {
       need: 'markup inside media[].alt — alt= is the most common attribute sink',
       hours: 32,
       title: `${STRESS_PREFIX} Alt Text Carrying Markup`,
-      description: 'The alt attribute below contains angle brackets and a quote.',
+      description:
+        'The alt attribute below contains angle brackets and a quote.',
       tags: ['stress', 'alt'],
       media: [{ url: IMG('alt'), alt: '<b>bold</b> "quoted" & escaped' }],
     },
@@ -146,8 +149,16 @@ function buildStressLots(count) {
       hours: 33,
       // 280 is the API's hard cap on description, measured 2026-08-23.
       // Anything longer is rejected outright, so no listing can ever exceed it.
-      title: `${STRESS_PREFIX} ${'Extraordinarily Verbose Lot Title '.repeat(6)}`.slice(0, 220),
-      description: `${'This description is as long as the API permits, so clamping, truncation and card height can be measured rather than guessed. '.repeat(3)}`.slice(0, 280),
+      title:
+        `${STRESS_PREFIX} ${'Extraordinarily Verbose Lot Title '.repeat(6)}`.slice(
+          0,
+          220
+        ),
+      description:
+        `${'This description is as long as the API permits, so clamping, truncation and card height can be measured rather than guessed. '.repeat(3)}`.slice(
+          0,
+          280
+        ),
       tags: ['stress', 'long'],
       media: [{ url: IMG('long'), alt: 'Long content lot' }],
     },
@@ -155,7 +166,8 @@ function buildStressLots(count) {
       need: 'zero media — the placeholder branch, and a card rendered without an image',
       hours: 34,
       title: `${STRESS_PREFIX} No Media At All`,
-      description: 'This lot has no media array entries, so the placeholder path renders.',
+      description:
+        'This lot has no media array entries, so the placeholder path renders.',
       tags: ['stress', 'nomedia'],
       media: [],
     },
@@ -163,7 +175,8 @@ function buildStressLots(count) {
       need: 'more than four media — the gallery\'s "+N more" overflow indicator',
       hours: 35,
       title: `${STRESS_PREFIX} Six Photographs`,
-      description: 'Six images, so the gallery overflow indicator has something to indicate.',
+      description:
+        'Six images, so the gallery overflow indicator has something to indicate.',
       tags: ['stress', 'gallery'],
       media: Array.from({ length: 6 }, (_, i) => ({
         url: IMG(`gallery-${i}`),
@@ -174,7 +187,8 @@ function buildStressLots(count) {
       need: 'expires during the session — the guard for a lot that ends while a page sits open',
       minutes: 2,
       title: `${STRESS_PREFIX} Closing In Two Minutes`,
-      description: 'Open a listings page and leave it. This lot should drop out of the active set.',
+      description:
+        'Open a listings page and leave it. This lot should drop out of the active set.',
       tags: ['stress', 'expiring'],
       media: [{ url: IMG('expiring'), alt: 'Closing shortly' }],
     },
@@ -182,7 +196,10 @@ function buildStressLots(count) {
 
   for (let i = 1; i <= count; i += 1) {
     lots.push({
-      need: i === 1 ? `bulk fill — ${count} lots, enough to paginate a 24-per-page catalog` : null,
+      need:
+        i === 1
+          ? `bulk fill — ${count} lots, enough to paginate a 24-per-page catalog`
+          : null,
       hours: 36 + i,
       title: `${STRESS_PREFIX} Bulk Lot ${String(i).padStart(3, '0')}`,
       description: `Filler lot ${i} of ${count}, created so the catalog has enough active rows to paginate.`,
@@ -196,7 +213,9 @@ function buildStressLots(count) {
 
 function requireConfig() {
   if (!API_KEY) {
-    console.error('Missing VITE_API_KEY in .env — copy it from .env.example and fill it in.');
+    console.error(
+      'Missing VITE_API_KEY in .env — copy it from .env.example and fill it in.'
+    );
     process.exit(1);
   }
 }
@@ -204,7 +223,11 @@ function requireConfig() {
 /** Ask a question on the terminal. `hidden` suppresses echo, for passwords. */
 function ask(question, { hidden = false } = {}) {
   return new Promise((resolve) => {
-    const rl = createInterface({ input: process.stdin, output: process.stdout, terminal: true });
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      terminal: true,
+    });
 
     if (hidden) {
       rl._writeToOutput = (chunk) => {
@@ -237,14 +260,19 @@ async function loginForToken() {
 
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Noroff-API-Key': API_KEY },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Noroff-API-Key': API_KEY,
+    },
     body: JSON.stringify({ email, password }),
   });
 
   const body = await response.json().catch(() => null);
 
   if (!response.ok) {
-    console.error(`\nLogin failed: ${response.status} ${body?.errors?.[0]?.message || response.statusText}`);
+    console.error(
+      `\nLogin failed: ${response.status} ${body?.errors?.[0]?.message || response.statusText}`
+    );
     process.exit(1);
   }
 
@@ -259,7 +287,9 @@ async function ensureToken() {
 
   if (TOKEN) {
     console.error('AUCTO_TOKEN is set but does not look like a token.');
-    console.error(`  length: ${TOKEN.length}  parts: ${TOKEN.split('.').length}`);
+    console.error(
+      `  length: ${TOKEN.length}  parts: ${TOKEN.split('.').length}`
+    );
     console.error('Ignoring it and logging in instead.\n');
   }
 
@@ -324,16 +354,21 @@ function payloadFor(lot) {
     title: lot.title,
     description: lot.description,
     tags: lot.tags,
-    media:
-      lot.media ??
-      [{ url: `https://picsum.photos/seed/${encodeURIComponent(lot.title)}/800/600`, alt: lot.title }],
+    media: lot.media ?? [
+      {
+        url: `https://picsum.photos/seed/${encodeURIComponent(lot.title)}/800/600`,
+        alt: lot.title,
+      },
+    ],
     endsAt: endsAtFor(lot),
   };
 }
 
 async function seed(lots, { dryRun }) {
   if (dryRun) {
-    console.log(`Dry run — ${lots.length} lot(s) would be created on ${BASE_URL}. Nothing is sent.\n`);
+    console.log(
+      `Dry run — ${lots.length} lot(s) would be created on ${BASE_URL}. Nothing is sent.\n`
+    );
     for (const lot of lots) {
       if (lot.need) console.log(`  # ${lot.need}`);
       const payload = payloadFor(lot);
@@ -360,11 +395,15 @@ async function seed(lots, { dryRun }) {
       console.log(`  created  ${result.data.id}  ${lot.title.slice(0, 60)}`);
     } catch (error) {
       // Printed, not thrown, so the rest of the set still lands.
-      console.error(`  FAILED   ${lot.title.slice(0, 60)}\n           ${error.message}`);
+      console.error(
+        `  FAILED   ${lot.title.slice(0, 60)}\n           ${error.message}`
+      );
     }
   }
 
-  console.log(`\nDone — ${created}/${lots.length} created. Re-run with --clean --yes when finished.`);
+  console.log(
+    `\nDone — ${created}/${lots.length} created. Re-run with --clean --yes when finished.`
+  );
 }
 
 async function clean(confirmed) {
@@ -383,14 +422,17 @@ async function clean(confirmed) {
     owned.push(...rows);
     if (!response.meta || response.meta.isLastPage !== false) break;
     if (page === MAX_PAGES) {
-      console.warn(`Stopped after ${MAX_PAGES} pages. Re-run --clean to catch any remainder.`);
+      console.warn(
+        `Stopped after ${MAX_PAGES} pages. Re-run --clean to catch any remainder.`
+      );
     }
   }
 
   const matches = owned.filter(
     (listing) =>
       typeof listing.title === 'string' &&
-      (seededTitles.has(listing.title) || listing.title.startsWith(STRESS_PREFIX))
+      (seededTitles.has(listing.title) ||
+        listing.title.startsWith(STRESS_PREFIX))
   );
 
   if (matches.length === 0) {
@@ -398,7 +440,9 @@ async function clean(confirmed) {
     return;
   }
 
-  console.log(`Seeded lots found on @${username} (of ${owned.length} owned):\n`);
+  console.log(
+    `Seeded lots found on @${username} (of ${owned.length} owned):\n`
+  );
   matches.forEach((listing) => {
     console.log(`  ${listing.id}  ${listing.title}`);
   });
@@ -424,7 +468,9 @@ async function clean(confirmed) {
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const countArg = args.find((a) => a.startsWith('--count='));
-const stressCount = countArg ? Number.parseInt(countArg.split('=')[1], 10) : DEFAULT_STRESS_COUNT;
+const stressCount = countArg
+  ? Number.parseInt(countArg.split('=')[1], 10)
+  : DEFAULT_STRESS_COUNT;
 
 if (!Number.isInteger(stressCount) || stressCount < 0) {
   console.error(`--count must be a non-negative integer, got: ${countArg}`);
@@ -438,7 +484,9 @@ if (args.includes('--clean')) {
   await ensureToken();
 
   if (dryRun && args.includes('--yes')) {
-    console.log('--dry-run overrides --yes: listing what would be removed, deleting nothing.\n');
+    console.log(
+      '--dry-run overrides --yes: listing what would be removed, deleting nothing.\n'
+    );
   }
 
   await clean(args.includes('--yes') && !dryRun);

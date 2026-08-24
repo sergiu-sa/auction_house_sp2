@@ -27,15 +27,12 @@ const CATEGORIES: Category[] = [
  * Generate HTML for category filter buttons
  */
 export function renderCategoryFilters(config: CategoryFiltersConfig): string {
-  const {
-    dataAttribute,
-    activeCategory = 'all',
-    variant = 'normal',
-  } = config;
+  const { dataAttribute, activeCategory = 'all', variant = 'normal' } = config;
 
-  const buttonClasses = variant === 'compact'
-    ? 'px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1.5'
-    : 'px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-2';
+  const buttonClasses =
+    variant === 'compact'
+      ? 'px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1.5'
+      : 'px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-2';
 
   const iconSize = variant === 'compact' ? 'text-xs' : 'text-xs';
 
@@ -44,7 +41,9 @@ export function renderCategoryFilters(config: CategoryFiltersConfig): string {
       ${CATEGORIES.map((category) => {
         const isActive = category.value === activeCategory;
         const bgClass = isActive ? 'bg-slate-900' : 'bg-white';
-        const textClass = isActive ? 'text-white' : 'text-slate-700 hover:bg-slate-50';
+        const textClass = isActive
+          ? 'text-white'
+          : 'text-slate-700 hover:bg-slate-50';
         const borderColor = isActive ? '#1e293b' : '#334155';
         const showCheck = isActive && category.value === 'all';
 
@@ -117,7 +116,10 @@ export function initCategoryFilters(dataAttribute: string): void {
 /**
  * Set active category programmatically
  */
-export function setActiveCategory(dataAttribute: string, category: string): void {
+export function setActiveCategory(
+  dataAttribute: string,
+  category: string
+): void {
   const filterButtons = document.querySelectorAll(`[${dataAttribute}]`);
 
   filterButtons.forEach((btn) => {

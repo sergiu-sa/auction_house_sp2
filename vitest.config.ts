@@ -1,4 +1,4 @@
-import { configDefaults, defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -16,8 +16,8 @@ export default defineConfig({
         'src/**/*.test.ts',
         'src/main.ts',
         'src/types/**',
-        'src/pages/**', 
+        'src/pages/**',
       ],
     },
   },
-})
+});

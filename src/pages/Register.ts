@@ -14,12 +14,10 @@ import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
 
-
 export async function initRegisterPage(): Promise<void> {
   // Render header and footer
   await renderHeader();
   renderFooter();
-
 
   redirectIfAuthenticated();
 
@@ -56,19 +54,25 @@ export async function initRegisterPage(): Promise<void> {
 
   const passwordInput = document.getElementById('password') as HTMLInputElement;
   if (passwordInput) {
-    passwordInput.addEventListener('blur', () => validatePasswordField(passwordInput));
+    passwordInput.addEventListener('blur', () =>
+      validatePasswordField(passwordInput)
+    );
     passwordInput.addEventListener('input', () => {
       clearFieldError('password');
       updatePasswordStrength(passwordInput.value);
     });
   }
 
-  const confirmPasswordInput = document.getElementById('confirm-password') as HTMLInputElement;
+  const confirmPasswordInput = document.getElementById(
+    'confirm-password'
+  ) as HTMLInputElement;
   if (confirmPasswordInput && passwordInput) {
     confirmPasswordInput.addEventListener('blur', () =>
       validateConfirmPasswordField(passwordInput, confirmPasswordInput)
     );
-    confirmPasswordInput.addEventListener('input', () => clearFieldError('confirm-password'));
+    confirmPasswordInput.addEventListener('input', () =>
+      clearFieldError('confirm-password')
+    );
   }
 
   // Initialize product showcase animations
@@ -82,9 +86,12 @@ async function initShowcase(): Promise<void> {
   await initProductShowcase({
     pageName: 'register',
     fallbackImages: {
-      featured: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop',
-      tileA: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
-      tileB: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop',
+      featured:
+        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop',
+      tileA:
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
+      tileB:
+        'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop',
     },
     featuredDescriptionLength: 80,
     showFeaturedBid: false,
@@ -117,15 +124,14 @@ function simulateActiveUsersCounter(): void {
 
   let users = 2744;
   setInterval(() => {
-    const change = Math.random() > 0.5
-      ? Math.floor(Math.random() * 5)
-      : -Math.floor(Math.random() * 3);
+    const change =
+      Math.random() > 0.5
+        ? Math.floor(Math.random() * 5)
+        : -Math.floor(Math.random() * 3);
     users = Math.max(2700, Math.min(2800, users + change));
     activeUsers.textContent = users.toLocaleString();
   }, 4000);
 }
-
-
 
 function validateNameField(input: HTMLInputElement): boolean {
   const name = input.value.trim();
@@ -140,16 +146,17 @@ function validateNameField(input: HTMLInputElement): boolean {
     return false;
   }
 
-
   if (!/^[a-zA-Z0-9_]+$/.test(name)) {
-    showFieldError('name', 'Name can only contain letters, numbers, and underscores');
+    showFieldError(
+      'name',
+      'Name can only contain letters, numbers, and underscores'
+    );
     return false;
   }
 
   clearFieldError('name');
   return true;
 }
-
 
 function validateEmailField(input: HTMLInputElement): boolean {
   const email = input.value.trim();
@@ -168,7 +175,6 @@ function validateEmailField(input: HTMLInputElement): boolean {
   return true;
 }
 
-
 function validatePasswordField(input: HTMLInputElement): boolean {
   const password = input.value;
 
@@ -185,7 +191,6 @@ function validatePasswordField(input: HTMLInputElement): boolean {
   clearFieldError('password');
   return true;
 }
-
 
 function validateConfirmPasswordField(
   passwordInput: HTMLInputElement,
@@ -207,7 +212,6 @@ function validateConfirmPasswordField(
   clearFieldError('confirm-password');
   return true;
 }
-
 
 function updatePasswordStrength(password: string): void {
   const strengthIndicator = document.getElementById('password-strength');
@@ -246,7 +250,6 @@ function updatePasswordStrength(password: string): void {
   strengthIndicator.textContent = `Password strength: ${message}`;
 }
 
-
 async function handleRegisterSubmit(e: Event): Promise<void> {
   e.preventDefault();
 
@@ -257,45 +260,44 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
   const email = (formData.get('email') as string).trim();
   const password = formData.get('password') as string;
 
-
   clearFormErrors('register-form');
-
 
   const nameInput = document.getElementById('name') as HTMLInputElement;
   const emailInput = document.getElementById('email') as HTMLInputElement;
   const passwordInput = document.getElementById('password') as HTMLInputElement;
-  const confirmPasswordInput = document.getElementById('confirm-password') as HTMLInputElement;
+  const confirmPasswordInput = document.getElementById(
+    'confirm-password'
+  ) as HTMLInputElement;
 
   let isValid = true;
 
   if (!validateNameField(nameInput)) isValid = false;
   if (!validateEmailField(emailInput)) isValid = false;
   if (!validatePasswordField(passwordInput)) isValid = false;
-  if (!validateConfirmPasswordField(passwordInput, confirmPasswordInput)) isValid = false;
+  if (!validateConfirmPasswordField(passwordInput, confirmPasswordInput))
+    isValid = false;
 
   if (!isValid) return;
 
-
-  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const submitBtn = form.querySelector(
+    'button[type="submit"]'
+  ) as HTMLButtonElement;
   if (!submitBtn) return;
-
 
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+  submitBtn.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
 
   try {
- 
     await register({ name, email, password });
 
-  
     toast.success('Account created successfully! Redirecting to login...');
 
     // Redirect to login after short delay
     setTimeout(() => {
       window.location.href = '/login.html';
     }, 2000);
-
   } catch (error) {
     logError('Registration failed', error);
 
@@ -304,9 +306,15 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
       const errorMessage = error.errors[0]?.message || 'Registration failed';
 
       // Check for specific errors
-      if (errorMessage.toLowerCase().includes('email') || errorMessage.toLowerCase().includes('exist')) {
+      if (
+        errorMessage.toLowerCase().includes('email') ||
+        errorMessage.toLowerCase().includes('exist')
+      ) {
         showFieldError('email', 'This email is already registered');
-      } else if (errorMessage.toLowerCase().includes('name') || errorMessage.toLowerCase().includes('username')) {
+      } else if (
+        errorMessage.toLowerCase().includes('name') ||
+        errorMessage.toLowerCase().includes('username')
+      ) {
         showFieldError('name', 'This username is already taken');
       } else {
         toast.error(errorMessage);

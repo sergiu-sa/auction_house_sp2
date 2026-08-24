@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>Aucto - Brutalist Online Auction Platform | Buy & Sell Unique Items</title>
-    <meta name="title" content="Aucto - Brutalist Online Auction Platform | Buy & Sell Unique Items" />
-    <meta name="description" content="Aucto: A minimal, brutalist auction platform where design follows function. Browse live auctions, place bids, and discover unique items from verified sellers. Strict geometry meets premium functionality." />
-    <meta name="keywords" content="online auction, bidding platform, buy and sell, auction house, brutalist design, live auctions, unique items, student marketplace" />
+    <title>
+      Aucto - Brutalist Online Auction Platform | Buy & Sell Unique Items
+    </title>
+    <meta
+      name="title"
+      content="Aucto - Brutalist Online Auction Platform | Buy & Sell Unique Items"
+    />
+    <meta
+      name="description"
+      content="Aucto: A minimal, brutalist auction platform where design follows function. Browse live auctions, place bids, and discover unique items from verified sellers. Strict geometry meets premium functionality."
+    />
+    <meta
+      name="keywords"
+      content="online auction, bidding platform, buy and sell, auction house, brutalist design, live auctions, unique items, student marketplace"
+    />
     <meta name="author" content="Aucto" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://auctohouse.netlify.app/index.html" />
@@ -16,18 +27,36 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://auctohouse.netlify.app/" />
-    <meta property="og:title" content="Aucto - Brutalist Online Auction Platform" />
-    <meta property="og:description" content="A minimal, brutalist auction platform where design follows function. Browse live auctions and place bids on unique items." />
-    <meta property="og:image" content="https://auctohouse.netlify.app/images/og-cover.svg" />
+    <meta
+      property="og:title"
+      content="Aucto - Brutalist Online Auction Platform"
+    />
+    <meta
+      property="og:description"
+      content="A minimal, brutalist auction platform where design follows function. Browse live auctions and place bids on unique items."
+    />
+    <meta
+      property="og:image"
+      content="https://auctohouse.netlify.app/images/og-cover.svg"
+    />
     <meta property="og:site_name" content="Aucto" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://auctohouse.netlify.app/" />
-    <meta property="twitter:title" content="Aucto - Brutalist Online Auction Platform" />
-    <meta property="twitter:description" content="A minimal, brutalist auction platform where design follows function. Browse live auctions and place bids on unique items." />
-    <meta property="twitter:image" content="https://auctohouse.netlify.app/images/og-cover.svg" />
+    <meta
+      property="twitter:title"
+      content="Aucto - Brutalist Online Auction Platform"
+    />
+    <meta
+      property="twitter:description"
+      content="A minimal, brutalist auction platform where design follows function. Browse live auctions and place bids on unique items."
+    />
+    <meta
+      property="twitter:image"
+      content="https://auctohouse.netlify.app/images/og-cover.svg"
+    />
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1e293b" />
@@ -43,7 +72,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -82,9 +115,14 @@
       />
     </noscript>
   </head>
-  <body class="antialiased bg-aucto-bg" data-page-type="browse">
+  <body class="bg-aucto-bg antialiased" data-page-type="browse">
     <!-- Skip Navigation Link -->
-    <a href="#main-content" class="absolute -top-10 left-0 z-[100] bg-slate-900 text-white px-4 py-2 text-sm font-bold no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2" style="border: 3px solid var(--aucto-border-dark)">Skip to main content</a>
+    <a
+      href="#main-content"
+      class="absolute -top-10 left-0 z-[100] bg-slate-900 px-4 py-2 text-sm font-bold text-white no-underline focus:top-0 focus:outline focus:outline-[3px] focus:outline-offset-2 focus:outline-aucto-red"
+      style="border: 3px solid var(--aucto-border-dark)"
+      >Skip to main content</a
+    >
 
     <!-- Header (rendered by JavaScript) -->
     <div id="header"></div>
@@ -92,8 +130,12 @@
     <!-- Sticky Catalog Filter Bar (appears on scroll, rendered by JavaScript) -->
     <div
       id="sticky-catalog-filters"
-      class="fixed top-0 left-0 right-0 z-30 transition-transform duration-300 -translate-y-full"
-      style="background-color: #f7f7f5; border-bottom: 3px solid #1e293b; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+      class="fixed left-0 right-0 top-0 z-30 -translate-y-full transition-transform duration-300"
+      style="
+        background-color: #f7f7f5;
+        border-bottom: 3px solid #1e293b;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      "
     >
       <!-- Content will be rendered by JavaScript using filter components -->
     </div>
@@ -103,29 +145,29 @@
       <!-- ========================================
            FEED HERO – FEATURED LISTINGS
       ======================================== -->
-      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
+      <section class="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-14">
         <div
-          class="p-8 bg-white md:p-10 lg:p-12"
+          class="bg-white p-8 md:p-10 lg:p-12"
           style="border: 3px solid var(--aucto-border-dark)"
         >
           <div class="grid grid-cols-1 gap-10 lg:grid-cols-[3fr,2fr] lg:gap-12">
             <!-- Left: context + CTA -->
             <div class="flex flex-col justify-center">
-              <div class="flex items-center gap-4 mb-6">
+              <div class="mb-6 flex items-center gap-4">
                 <div class="h-0.5 w-20 bg-aucto-red"></div>
                 <span
-                  class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+                  class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                 >
                   Selling right now
                 </span>
               </div>
               <h1
-                class="mb-6 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl text-slate-900"
+                class="mb-6 text-4xl font-bold leading-tight text-slate-900 md:text-5xl lg:text-6xl"
               >
                 Tonight's most watched auctions
               </h1>
               <p
-                class="max-w-xl mb-8 text-base leading-relaxed md:text-lg text-slate-600"
+                class="mb-8 max-w-xl text-base leading-relaxed text-slate-600 md:text-lg"
               >
                 Browse hand-picked lots that are drawing the most bids right
                 now. Rare finds, last-chance pieces and high value items from
@@ -134,40 +176,46 @@
               <div class="flex flex-wrap gap-4">
                 <a
                   href="/collection.html"
-                  class="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold tracking-wide text-white bg-slate-900 hover:bg-slate-800"
+                  class="inline-flex items-center gap-2 bg-slate-900 px-8 py-4 text-sm font-bold tracking-wide text-white hover:bg-slate-800"
                   style="border: 3px solid var(--aucto-border-dark)"
                 >
-                  <i class="text-sm fa-solid fa-circle-play"></i>
+                  <i class="fa-solid fa-circle-play text-sm"></i>
                   View live auctions
                 </a>
                 <a
                   href="/listing-create.html"
-                  class="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold tracking-wide bg-white text-slate-900 hover:bg-slate-50"
+                  class="inline-flex items-center gap-2 bg-white px-8 py-4 text-sm font-bold tracking-wide text-slate-900 hover:bg-slate-50"
                   style="border: 3px solid var(--aucto-border-dark)"
                   id="create-listing-btn"
                 >
-                  <i class="text-sm fa-solid fa-plus"></i>
+                  <i class="fa-solid fa-plus text-sm"></i>
                   Create new listing
                 </a>
               </div>
-              <div class="flex flex-wrap gap-6 mt-6 text-xs text-slate-500">
+              <div class="mt-6 flex flex-wrap gap-6 text-xs text-slate-500">
                 <div>
                   <div
-                    class="font-bold tracking-[0.18em] uppercase text-slate-500 text-[11px]"
+                    class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                   >
                     Active Auctions
                   </div>
-                  <div class="text-sm font-semibold text-slate-900" id="hero-active-count">
+                  <div
+                    class="text-sm font-semibold text-slate-900"
+                    id="hero-active-count"
+                  >
                     ---
                   </div>
                 </div>
                 <div>
                   <div
-                    class="font-bold tracking-[0.18em] uppercase text-slate-500 text-[11px]"
+                    class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                   >
                     Total Bids Today
                   </div>
-                  <div class="text-sm font-semibold text-slate-900" id="hero-bids-count">
+                  <div
+                    class="text-sm font-semibold text-slate-900"
+                    id="hero-bids-count"
+                  >
                     ---
                   </div>
                 </div>
@@ -186,25 +234,25 @@
       <!-- ========================================
            TRENDING AUCTIONS SECTION
       ======================================== -->
-      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
+      <section class="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-14">
         <div class="mb-12">
-          <div class="flex items-center gap-4 mb-8">
+          <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
               >Hot Right Now</span
             >
           </div>
-          <div class="flex items-center justify-between mb-6">
+          <div class="mb-6 flex items-center justify-between">
             <h2 class="text-4xl font-bold text-slate-900 md:text-5xl">
               Trending Auctions
             </h2>
             <a
               href="/collection.html"
-              class="inline-flex items-center gap-2 font-bold transition-colors text-slate-700 hover:text-slate-900"
+              class="inline-flex items-center gap-2 font-bold text-slate-700 transition-colors hover:text-slate-900"
             >
               View All
-              <i class="text-sm fa-solid fa-arrow-right"></i>
+              <i class="fa-solid fa-arrow-right text-sm"></i>
             </a>
           </div>
         </div>
@@ -217,30 +265,33 @@
       <!-- ========================================
            NEW LISTINGS SECTION
       ======================================== -->
-      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
+      <section class="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-14">
         <div class="mb-12">
-          <div class="flex items-center gap-4 mb-8">
+          <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
               >Fresh Inventory</span
             >
           </div>
-          <div class="flex items-center justify-between mb-6">
+          <div class="mb-6 flex items-center justify-between">
             <h2 class="text-4xl font-bold text-slate-900 md:text-5xl">
               New Listings
             </h2>
             <a
               href="/collection.html"
-              class="inline-flex items-center gap-2 font-bold transition-colors text-slate-700 hover:text-slate-900"
+              class="inline-flex items-center gap-2 font-bold text-slate-700 transition-colors hover:text-slate-900"
             >
               View All
-              <i class="text-sm fa-solid fa-arrow-right"></i>
+              <i class="fa-solid fa-arrow-right text-sm"></i>
             </a>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3" id="new-listings-cards">
+        <div
+          class="grid grid-cols-1 gap-8 md:grid-cols-3"
+          id="new-listings-cards"
+        >
           <!-- Cards rendered by JavaScript -->
         </div>
       </section>
@@ -248,12 +299,12 @@
       <!-- ========================================
            ENDING SOON SECTION
       ======================================== -->
-      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
+      <section class="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-14">
         <div class="mb-12">
-          <div class="flex items-center gap-4 mb-8">
+          <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
               >Last Chance</span
             >
           </div>
@@ -265,7 +316,10 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4" id="ending-soon-cards">
+        <div
+          class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
+          id="ending-soon-cards"
+        >
           <!-- Quick Cards rendered by JavaScript -->
         </div>
       </section>
@@ -273,35 +327,38 @@
       <!-- ========================================
            AUCTION CATALOG SECTION
       ======================================== -->
-      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
+      <section class="mx-auto max-w-7xl px-6 py-10 md:px-8 md:py-14">
         <div class="mb-12">
-          <div class="flex items-center gap-4 mb-8">
+          <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
               >Complete Collection</span
             >
           </div>
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-4xl font-bold text-slate-900 md:text-5xl lg:text-6xl">
+          <div class="mb-6 flex items-center justify-between">
+            <h2
+              class="text-4xl font-bold text-slate-900 md:text-5xl lg:text-6xl"
+            >
               Auction Catalog
             </h2>
             <a
               href="/collection.html"
-              class="inline-flex items-center gap-2 font-bold transition-colors text-slate-700 hover:text-slate-900"
+              class="inline-flex items-center gap-2 font-bold text-slate-700 transition-colors hover:text-slate-900"
             >
               View Full Catalog
-              <i class="text-sm fa-solid fa-arrow-right"></i>
+              <i class="fa-solid fa-arrow-right text-sm"></i>
             </a>
           </div>
           <p class="max-w-2xl text-slate-600">
-            Browse all active listings. Use the search and filters above to find exactly what you're looking for.
+            Browse all active listings. Use the search and filters above to find
+            exactly what you're looking for.
           </p>
         </div>
 
         <!-- Catalog Grid (4 columns) -->
         <div
-          class="grid grid-cols-1 gap-6 mb-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          class="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           id="catalog-cards"
         >
           <!-- Catalog Cards rendered by JavaScript -->

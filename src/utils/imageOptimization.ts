@@ -30,7 +30,6 @@ function generateSrcset(baseUrl: string): string {
   }
 
   if (baseUrl.includes('images.pexels.com')) {
-    
     return `
       ${baseUrl}?w=400&h=400 400w,
       ${baseUrl}?w=600&h=600 600w,
@@ -68,9 +67,9 @@ export function generateResponsiveImageAttrs(
 } {
   // Define dimensions based on aspect ratio for layout stability (CLS prevention)
   const dimensions = {
-    square: { width: 600, height: 600 },      // 1:1 ratio for ProductCard, CollectionCard
-    landscape: { width: 600, height: 450 },   // 4:3 ratio for listing detail
-    compact: { width: 600, height: 400 },     // 3:2 ratio for QuickCard
+    square: { width: 600, height: 600 }, // 1:1 ratio for ProductCard, CollectionCard
+    landscape: { width: 600, height: 450 }, // 4:3 ratio for listing detail
+    compact: { width: 600, height: 400 }, // 3:2 ratio for QuickCard
   };
 
   // Define sizes attribute based on layout breakpoints for better responsive loading
@@ -94,4 +93,3 @@ export function generateResponsiveImageAttrs(
     sizes: sizesMap[aspectRatio],
   };
 }
-

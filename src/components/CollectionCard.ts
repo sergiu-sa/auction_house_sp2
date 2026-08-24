@@ -42,14 +42,16 @@ function renderFavoriteButton(listingId: string, borderStyle: string): string {
   `;
 }
 
-export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list' = 'grid'): string {
+export function createCollectionCard(
+  listing: Listing,
+  viewMode: 'grid' | 'list' = 'grid'
+): string {
   const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
   const bids = listing.bids || [];
-  const highestBid = bids.length > 0
-    ? Math.max(...bids.map(bid => bid.amount))
-    : 0;
+  const highestBid =
+    bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0;
 
   const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
@@ -143,11 +145,15 @@ export function createCollectionCard(listing: Listing, viewMode: 'grid' | 'list'
             </h3>
 
             <!-- Description -->
-            ${listing.description ? `
+            ${
+              listing.description
+                ? `
               <p class="mb-4 text-sm text-slate-600 line-clamp-2">
                 ${escapeHtml(listing.description)}
               </p>
-            ` : ''}
+            `
+                : ''
+            }
 
             <!-- Bid Count -->
             <div class="mb-4 flex items-center gap-2 text-xs text-slate-600">
@@ -313,18 +319,24 @@ export function renderCollectionCards(
     return;
   }
 
-  container.innerHTML = listings.map(listing => createCollectionCard(listing, viewMode)).join('');
+  container.innerHTML = listings
+    .map((listing) => createCollectionCard(listing, viewMode))
+    .join('');
 
   attachCollectionCardEvents(containerId);
 }
 
-export function attachCollectionCardEvents(containerId: string = 'collection-cards-grid'): void {
+export function attachCollectionCardEvents(
+  containerId: string = 'collection-cards-grid'
+): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   // View & Bid buttons
-  const viewBidButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="view-bid"]');
-  viewBidButtons.forEach(button => {
+  const viewBidButtons = container.querySelectorAll<HTMLButtonElement>(
+    '[data-action="view-bid"]'
+  );
+  viewBidButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       const listingId = button.getAttribute('data-listing-id');
@@ -339,8 +351,10 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
   });
 
   // Quick View buttons
-  const quickViewButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="quick-view"]');
-  quickViewButtons.forEach(button => {
+  const quickViewButtons = container.querySelectorAll<HTMLButtonElement>(
+    '[data-action="quick-view"]'
+  );
+  quickViewButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -356,8 +370,10 @@ export function attachCollectionCardEvents(containerId: string = 'collection-car
   });
 
   // Favorite buttons (persist to watchlist in localStorage)
-  const favoriteButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="toggle-favorite"]');
-  favoriteButtons.forEach(button => {
+  const favoriteButtons = container.querySelectorAll<HTMLButtonElement>(
+    '[data-action="toggle-favorite"]'
+  );
+  favoriteButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();

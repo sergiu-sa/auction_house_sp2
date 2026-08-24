@@ -6,13 +6,16 @@
 /**
  * Show a loading overlay for authentication checks
  */
-export function showAuthLoader(message: string = 'Checking authentication...'): void {
+export function showAuthLoader(
+  message: string = 'Checking authentication...'
+): void {
   // Remove existing loader if present
   removeAuthLoader();
 
   const loader = document.createElement('div');
   loader.id = 'auth-loader';
-  loader.className = 'fixed inset-0 bg-white/90 z-50 flex items-center justify-center';
+  loader.className =
+    'fixed inset-0 bg-white/90 z-50 flex items-center justify-center';
   loader.innerHTML = `
     <div class="text-center">
       <i class="fa-solid fa-spinner fa-spin text-4xl text-slate-900 mb-4"></i>
@@ -38,7 +41,8 @@ export function removeAuthLoader(): void {
  */
 export function showSessionExpiredMessage(): void {
   const notification = document.createElement('div');
-  notification.className = 'fixed top-4 right-4 bg-red-50 text-red-800 px-6 py-4 z-50 shadow-lg';
+  notification.className =
+    'fixed top-4 right-4 bg-red-50 text-red-800 px-6 py-4 z-50 shadow-lg';
   notification.style.border = '2px solid #dc2626';
   notification.innerHTML = `
     <div class="flex items-center gap-3">

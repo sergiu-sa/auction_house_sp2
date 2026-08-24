@@ -42,14 +42,14 @@ function listenToNavbarFilters(): void {
   // Category filter from navbar
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
     currentFilters.category = e.detail.category;
-    currentFilters.page = 1; 
+    currentFilters.page = 1;
     applyFilters();
   }) as EventListener);
 
   // Search from navbar
   document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
     currentFilters.search = e.detail.query;
-    currentFilters.page = 1; 
+    currentFilters.page = 1;
     applyFilters();
   }) as EventListener);
 
@@ -66,7 +66,7 @@ function listenToNavbarFilters(): void {
   document.addEventListener('sortChange', ((e: CustomEvent) => {
     currentFilters.sort = e.detail.sort;
     currentFilters.sortOrder = e.detail.order;
-    currentFilters.page = 1; 
+    currentFilters.page = 1;
     applyFilters();
   }) as EventListener);
 }
@@ -80,11 +80,20 @@ function initializeFilters(): void {
   if (gridViewBtn && listViewBtn && listingsGrid) {
     gridViewBtn.addEventListener('click', () => {
       currentFilters.viewMode = 'grid';
-      listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
-      gridViewBtn.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+      listingsGrid.className =
+        'grid grid-cols-1 gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+      gridViewBtn.classList.remove(
+        'bg-white',
+        'text-slate-700',
+        'hover:bg-slate-50'
+      );
       gridViewBtn.classList.add('bg-slate-900', 'text-white');
       listViewBtn.classList.remove('bg-slate-900', 'text-white');
-      listViewBtn.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+      listViewBtn.classList.add(
+        'bg-white',
+        'text-slate-700',
+        'hover:bg-slate-50'
+      );
 
       // Re-render cards in grid mode
       applyFilters();
@@ -93,10 +102,18 @@ function initializeFilters(): void {
     listViewBtn.addEventListener('click', () => {
       currentFilters.viewMode = 'list';
       listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all';
-      listViewBtn.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+      listViewBtn.classList.remove(
+        'bg-white',
+        'text-slate-700',
+        'hover:bg-slate-50'
+      );
       listViewBtn.classList.add('bg-slate-900', 'text-white');
       gridViewBtn.classList.remove('bg-slate-900', 'text-white');
-      gridViewBtn.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+      gridViewBtn.classList.add(
+        'bg-white',
+        'text-slate-700',
+        'hover:bg-slate-50'
+      );
 
       // Re-render cards in list mode
       applyFilters();
@@ -245,10 +262,16 @@ function applyFilters(): void {
   const paginatedListings = filteredListings.slice(startIndex, endIndex);
 
   // Render paginated cards with current view mode
-  renderCollectionCards(paginatedListings, 'collection-cards-grid', currentFilters.viewMode);
+  renderCollectionCards(
+    paginatedListings,
+    'collection-cards-grid',
+    currentFilters.viewMode
+  );
 
   // Render pagination
-  const totalPages = Math.ceil(filteredListings.length / currentFilters.itemsPerPage);
+  const totalPages = Math.ceil(
+    filteredListings.length / currentFilters.itemsPerPage
+  );
   renderPagination({
     containerId: 'pagination',
     currentPage: currentFilters.page,
@@ -287,7 +310,10 @@ function updateResultsInfo(): void {
 
   if (resultsRange) {
     const start = (currentFilters.page - 1) * currentFilters.itemsPerPage + 1;
-    const end = Math.min(currentFilters.page * currentFilters.itemsPerPage, filteredListings.length);
+    const end = Math.min(
+      currentFilters.page * currentFilters.itemsPerPage,
+      filteredListings.length
+    );
 
     if (filteredListings.length === 0) {
       resultsRange.textContent = '0-0';
@@ -317,7 +343,9 @@ async function loadStats(): Promise<void> {
 
     const activeLotsCount = document.getElementById('active-lots-count');
     if (activeLotsCount) {
-      activeLotsCount.textContent = new Intl.NumberFormat('en-US').format(totalActive);
+      activeLotsCount.textContent = new Intl.NumberFormat('en-US').format(
+        totalActive
+      );
     }
 
     // Time until the next close, rather than a count inside a fixed window
@@ -362,7 +390,6 @@ function startNextCloseCountdown(endsAt?: string): void {
   // Minute granularity is enough: the tile never shows units below a minute
   nextCloseInterval = window.setInterval(tick, 60_000);
 }
-
 
 function showError(message: string): void {
   const container = document.getElementById('collection-cards-grid');

@@ -1,10 +1,20 @@
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
-import { renderBreadcrumbInContainer, BREADCRUMB_PRESETS } from '../components/Breadcrumb';
+import {
+  renderBreadcrumbInContainer,
+  BREADCRUMB_PRESETS,
+} from '../components/Breadcrumb';
 import { getListing } from '../api/listings';
 import { placeBid } from '../api/bids';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
-import { formatTimeRemaining, formatTimeAgo, formatDate, formatDateShort, isAuctionActive, getTimeRemaining } from '../utils/formatDate';
+import {
+  formatTimeRemaining,
+  formatTimeAgo,
+  formatDate,
+  formatDateShort,
+  isAuctionActive,
+  getTimeRemaining,
+} from '../utils/formatDate';
 import { isValidBidAmount } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import {
@@ -150,21 +160,25 @@ function renderListingHeader(listing: Listing) {
         <div class="mb-2 text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">
           Status
         </div>
-        ${isActive ? `
+        ${
+          isActive
+            ? `
           <div class="flex items-center justify-end gap-1.5">
             <i class="fa-solid fa-hourglass-end text-${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'red' : 'green'}-700"></i>
             <span class="text-xs font-bold tracking-[0.18em] text-${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'red' : 'green'}-700 uppercase">
               ${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'Ending Soon' : 'Active'}
             </span>
           </div>
-        ` : `
+        `
+            : `
           <div class="flex items-center justify-end gap-1.5">
             <i class="fa-solid fa-circle-xmark text-slate-500"></i>
             <span class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">
               Ended
             </span>
           </div>
-        `}
+        `
+        }
       </div>
     </div>
 
@@ -178,9 +192,15 @@ function renderMediaGallery(listing: Listing) {
   const gallery = document.getElementById('media-gallery');
   if (!gallery) return;
 
-  const media = listing.media && listing.media.length > 0
-    ? listing.media
-    : [{ url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=675&fit=crop', alt: 'No image available' }];
+  const media =
+    listing.media && listing.media.length > 0
+      ? listing.media
+      : [
+          {
+            url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=675&fit=crop',
+            alt: 'No image available',
+          },
+        ];
 
   const mainImage = media[0];
   const thumbnails = media.slice(0, 4);
@@ -210,9 +230,14 @@ function renderMediaGallery(listing: Listing) {
 
     <!-- Thumbnails -->
     <div class="grid grid-cols-4 gap-3">
-      ${thumbnails.map((img, index) => {
-        const thumbAttrs = generateResponsiveImageAttrs(img.url, img.alt || `View ${index + 1}`, 'square');
-        return `
+      ${thumbnails
+        .map((img, index) => {
+          const thumbAttrs = generateResponsiveImageAttrs(
+            img.url,
+            img.alt || `View ${index + 1}`,
+            'square'
+          );
+          return `
         <button
           class="aspect-square bg-slate-100 thumbnail-btn ${index === 0 ? 'opacity-100' : 'opacity-75'} hover:opacity-100 transition"
           style="border: ${index === 0 ? '3px' : '2px'} solid ${index === 0 ? '#1e293b' : '#475569'}"
@@ -231,8 +256,11 @@ function renderMediaGallery(listing: Listing) {
           />
         </button>
       `;
-      }).join('')}
-      ${media.length > 4 ? `
+        })
+        .join('')}
+      ${
+        media.length > 4
+          ? `
         <button
           class="aspect-square bg-slate-100 opacity-75 hover:opacity-100 transition"
           style="border: 2px solid #475569"
@@ -241,7 +269,9 @@ function renderMediaGallery(listing: Listing) {
             +${media.length - 4} more
           </span>
         </button>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
   `;
 
@@ -285,7 +315,9 @@ function renderListingDetails(listing: Listing) {
       Details
     </h3>
     <div class="flex flex-wrap gap-6 text-xs text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
-      ${listing.tags && listing.tags.length > 0 ? `
+      ${
+        listing.tags && listing.tags.length > 0
+          ? `
         <div>
           <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
             <i class="fa-solid fa-layer-group text-xs"></i>
@@ -293,7 +325,9 @@ function renderListingDetails(listing: Listing) {
           </div>
           <div class="text-sm">${escapeHtml(listing.tags.slice(0, 2).join(' · '))}</div>
         </div>
-      ` : ''}
+      `
+          : ''
+      }
       <div>
         <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
           <i class="fa-solid fa-calendar text-xs"></i>
@@ -329,15 +363,18 @@ function renderBidPanel(listing: Listing) {
   const user = getCurrentUser();
   const userLoggedIn = isLoggedIn();
 
-  const highestBid = listing.bids && listing.bids.length > 0
-    ? Math.max(...listing.bids.map(b => b.amount))
-    : 0;
+  const highestBid =
+    listing.bids && listing.bids.length > 0
+      ? Math.max(...listing.bids.map((b) => b.amount))
+      : 0;
   const minimumBid = highestBid + 1;
 
   // Check if user is the highest bidder
-  const isUserHighestBidder = listing.bids && listing.bids.length > 0 && user
-    ? listing.bids.find(b => b.amount === highestBid)?.bidder?.name === user.name
-    : false;
+  const isUserHighestBidder =
+    listing.bids && listing.bids.length > 0 && user
+      ? listing.bids.find((b) => b.amount === highestBid)?.bidder?.name ===
+        user.name
+      : false;
 
   panel.innerHTML = `
     <div class="mb-10">
@@ -346,12 +383,16 @@ function renderBidPanel(listing: Listing) {
       </div>
       <div class="text-4xl font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(highestBid)}</div>
       <div class="text-xs text-slate-500 mt-2">Credits</div>
-      ${isUserHighestBidder ? `
+      ${
+        isUserHighestBidder
+          ? `
         <div class="mt-4 inline-flex items-center gap-2 bg-green-50 px-3 py-2 text-xs font-bold text-green-700" style="border: 2px solid #15803d">
           <i class="fa-solid fa-check-circle"></i>
           <span>You're the highest bidder</span>
         </div>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
 
     <div class="mb-10 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
@@ -364,7 +405,9 @@ function renderBidPanel(listing: Listing) {
       </div>
     </div>
 
-    ${isActive && userLoggedIn ? `
+    ${
+      isActive && userLoggedIn
+        ? `
       <form id="bid-form" class="space-y-6 pt-6">
         <div>
           <label for="bid-amount" class="mb-3 block text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
@@ -383,11 +426,15 @@ function renderBidPanel(listing: Listing) {
           <div class="mt-3 text-xs text-slate-500">
             Minimum bid: ${new Intl.NumberFormat('en-US').format(minimumBid)} credits
           </div>
-          ${user && user.credits !== undefined ? `
+          ${
+            user && user.credits !== undefined
+              ? `
             <div class="mt-2 text-xs text-slate-600">
               Your credits: ${new Intl.NumberFormat('en-US').format(user.credits)}
             </div>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
 
         <button
@@ -404,7 +451,9 @@ function renderBidPanel(listing: Listing) {
           By bidding, you agree to purchase if you win
         </div>
       </form>
-    ` : !userLoggedIn ? `
+    `
+        : !userLoggedIn
+          ? `
       <div class="space-y-4 pt-6">
         <a
           href="/login.html?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}"
@@ -418,12 +467,14 @@ function renderBidPanel(listing: Listing) {
           You must be logged in to place a bid
         </div>
       </div>
-    ` : `
+    `
+          : `
       <div class="bg-slate-100 px-6 py-10 text-center mt-6" style="border: 2px solid var(--aucto-border-mid)">
         <i class="fa-solid fa-circle-xmark text-3xl text-slate-500 mb-4"></i>
         <p class="text-sm font-bold text-slate-700">This auction has ended</p>
       </div>
-    `}
+    `
+    }
   `;
 
   // Initialize bid form
@@ -448,20 +499,26 @@ function initBidForm() {
 
     const bidInput = document.getElementById('bid-amount') as HTMLInputElement;
     const bidAmount = parseInt(bidInput.value);
-    const submitBtn = document.getElementById('place-bid-btn') as HTMLButtonElement;
+    const submitBtn = document.getElementById(
+      'place-bid-btn'
+    ) as HTMLButtonElement;
     const user = getCurrentUser();
 
     // Validation
     const currentBids = currentListing.bids || [];
-    const highestBid = currentBids.length > 0
-      ? Math.max(...currentBids.map(b => b.amount))
-      : 0;
+    const highestBid =
+      currentBids.length > 0
+        ? Math.max(...currentBids.map((b) => b.amount))
+        : 0;
 
     if (!isValidBidAmount(bidAmount, highestBid)) {
       if (!bidAmount || bidAmount <= 0) {
         showToast('Please enter a valid bid amount', 'error');
       } else {
-        showToast(`Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(highestBid)} credits)`, 'error');
+        showToast(
+          `Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(highestBid)} credits)`,
+          'error'
+        );
       }
       return;
     }
@@ -493,7 +550,10 @@ function initBidForm() {
       renderListingMeta(currentListing);
     } catch (error: unknown) {
       logError('Error placing bid', error, { listingId });
-      const errorMessage = getErrorMessage(error, 'Failed to place bid. Please try again.');
+      const errorMessage = getErrorMessage(
+        error,
+        'Failed to place bid. Please try again.'
+      );
       showToast(errorMessage, 'error');
 
       // Re-enable button
@@ -508,11 +568,14 @@ function initBidForm() {
 
 function copyToClipboard(text: string) {
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('Link copied to clipboard!', 'success');
-    }).catch(() => {
-      showToast('Failed to copy link', 'error');
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        showToast('Link copied to clipboard!', 'success');
+      })
+      .catch(() => {
+        showToast('Failed to copy link', 'error');
+      });
   } else {
     // Fallback for older browsers
     const textArea = document.createElement('textarea');
@@ -634,14 +697,18 @@ function renderTags(listing: Listing) {
       Tags
     </div>
     <div class="flex flex-wrap gap-2">
-      ${listing.tags.map(tag => `
+      ${listing.tags
+        .map(
+          (tag) => `
         <span
           class="bg-slate-50 px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-slate-700 uppercase"
           style="border: 2px solid var(--aucto-border-mid)"
         >
           ${escapeHtml(tag)}
         </span>
-      `).join('')}
+      `
+        )
+        .join('')}
     </div>
   `;
 }
@@ -669,11 +736,12 @@ function renderBidHistory(listing: Listing) {
 
   history.innerHTML = `
     <div class="space-y-0 max-h-80 overflow-y-auto">
-      ${sortedBids.map((bid, index) => {
-        const isHighest = bid.amount === highestBid;
-        const isUserBid = user && bid.bidder?.name === user.name;
+      ${sortedBids
+        .map((bid, index) => {
+          const isHighest = bid.amount === highestBid;
+          const isUserBid = user && bid.bidder?.name === user.name;
 
-        return `
+          return `
           <div class="flex items-start justify-between gap-4 py-4 ${index < sortedBids.length - 1 ? 'border-b-2' : ''}" style="border-color: var(--aucto-border-light)">
             <div>
               <div class="text-base font-bold text-slate-900 mb-1">
@@ -683,18 +751,23 @@ function renderBidHistory(listing: Listing) {
                 ${isUserBid ? '@you' : `@${escapeHtml(bid.bidder?.name || 'Anonymous')}`} · ${formatTimeAgo(bid.created)}
               </div>
             </div>
-            ${isHighest ? `
+            ${
+              isHighest
+                ? `
               <div class="bg-green-700 px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] text-white uppercase whitespace-nowrap" style="border: 2px solid #15803d">
                 Leading
               </div>
-            ` : `
+            `
+                : `
               <div class="text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase whitespace-nowrap self-center">
                 Outbid
               </div>
-            `}
+            `
+            }
           </div>
         `;
-      }).join('')}
+        })
+        .join('')}
     </div>
   `;
 }
@@ -719,7 +792,9 @@ function renderSellerProfile(listing: Listing) {
   profile.innerHTML = `
     <div class="mb-6 flex items-center gap-4 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
       <div class="h-16 w-16 bg-slate-100 flex-shrink-0" style="border: 2px solid var(--aucto-border-dark)">
-        ${avatarAttrs ? `
+        ${
+          avatarAttrs
+            ? `
           <img
             src="${escapeHtml(avatarAttrs.src)}"
             alt="${escapeHtml(avatarAttrs.alt)}"
@@ -729,31 +804,41 @@ function renderSellerProfile(listing: Listing) {
             decoding="${avatarAttrs.decoding}"
             class="h-full w-full object-cover"
           />
-        ` : `
+        `
+            : `
           <div class="h-full w-full bg-slate-900 text-white flex items-center justify-center text-2xl font-bold">
             ${escapeHtml(seller.name.charAt(0).toUpperCase())}
           </div>
-        `}
+        `
+        }
       </div>
       <div>
         <div class="text-base font-bold text-slate-900 mb-1 inline-flex items-center gap-1.5">
           <i class="fa-solid fa-user text-sm"></i>
           <a href="/profile.html?user=${encodeURIComponent(seller.name)}" class="hover:text-slate-700 transition-colors">@${escapeHtml(seller.name)}</a>
         </div>
-        ${seller._count ? `
+        ${
+          seller._count
+            ? `
           <div class="text-xs text-slate-500 inline-flex items-center gap-1">
             <i class="fa-solid fa-circle-check text-xs"></i>
             <span>${seller._count.listings || 0} listings · ${seller._count.wins || 0} wins</span>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     </div>
 
-    ${seller.bio ? `
+    ${
+      seller.bio
+        ? `
       <p class="text-sm leading-relaxed text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
         ${escapeHtml(seller.bio)}
       </p>
-    ` : ''}
+    `
+        : ''
+    }
 
     <div class="pt-6" style="border-top: 2px solid var(--aucto-border-light)">
       <a
@@ -773,7 +858,7 @@ function renderListingMeta(listing: Listing) {
 
   const bidCount = listing._count?.bids || listing.bids?.length || 0;
   const uniqueBidders = listing.bids
-    ? new Set(listing.bids.map(b => b.bidder?.name).filter(Boolean)).size
+    ? new Set(listing.bids.map((b) => b.bidder?.name).filter(Boolean)).size
     : 0;
 
   meta.innerHTML = `

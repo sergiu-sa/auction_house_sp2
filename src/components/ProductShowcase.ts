@@ -46,7 +46,9 @@ export interface ProductShowcaseConfig {
  * on a 15-second interval. Network failures are logged but do not surface to
  * the user — the page keeps whatever was last rendered.
  */
-export async function initProductShowcase(config: ProductShowcaseConfig): Promise<void> {
+export async function initProductShowcase(
+  config: ProductShowcaseConfig
+): Promise<void> {
   await loadDynamicListings(config);
 
   setInterval(() => {
@@ -54,7 +56,9 @@ export async function initProductShowcase(config: ProductShowcaseConfig): Promis
   }, REFRESH_INTERVAL_MS);
 }
 
-async function loadDynamicListings(config: ProductShowcaseConfig): Promise<void> {
+async function loadDynamicListings(
+  config: ProductShowcaseConfig
+): Promise<void> {
   try {
     const response = await getListings({
       limit: FEATURED_FETCH_LIMIT,
@@ -67,11 +71,17 @@ async function loadDynamicListings(config: ProductShowcaseConfig): Promise<void>
       updateShowcase(response.data, config);
     }
   } catch (error) {
-    logError(`Failed to load dynamic listings on ${config.pageName} page`, error);
+    logError(
+      `Failed to load dynamic listings on ${config.pageName} page`,
+      error
+    );
   }
 }
 
-function updateShowcase(listings: Listing[], config: ProductShowcaseConfig): void {
+function updateShowcase(
+  listings: Listing[],
+  config: ProductShowcaseConfig
+): void {
   if (listings[0]) {
     updateFeaturedTile(listings[0], config);
   }
@@ -83,8 +93,13 @@ function updateShowcase(listings: Listing[], config: ProductShowcaseConfig): voi
   }
 }
 
-function updateFeaturedTile(listing: Listing, config: ProductShowcaseConfig): void {
-  const article = document.querySelector('[data-tile="featured"]') as HTMLElement | null;
+function updateFeaturedTile(
+  listing: Listing,
+  config: ProductShowcaseConfig
+): void {
+  const article = document.querySelector(
+    '[data-tile="featured"]'
+  ) as HTMLElement | null;
   if (!article) return;
 
   const img = article.querySelector('img') as HTMLImageElement | null;
@@ -96,19 +111,26 @@ function updateFeaturedTile(listing: Listing, config: ProductShowcaseConfig): vo
     };
   }
 
-  const titleElement = article.querySelector('.font-serif') as HTMLElement | null;
+  const titleElement = article.querySelector(
+    '.font-serif'
+  ) as HTMLElement | null;
   if (titleElement) {
     titleElement.textContent = listing.title;
   }
 
-  const descElement = article.querySelector('.text-xs.text-slate-600') as HTMLElement | null;
+  const descElement = article.querySelector(
+    '.text-xs.text-slate-600'
+  ) as HTMLElement | null;
   if (descElement && listing.description) {
     descElement.textContent =
-      listing.description.substring(0, config.featuredDescriptionLength) + '...';
+      listing.description.substring(0, config.featuredDescriptionLength) +
+      '...';
   }
 
   if (config.showFeaturedBid) {
-    const bidElement = article.querySelector('#featured-bid') as HTMLElement | null;
+    const bidElement = article.querySelector(
+      '#featured-bid'
+    ) as HTMLElement | null;
     if (bidElement && listing.bids && listing.bids.length > 0) {
       const highestBid = Math.max(...listing.bids.map((bid) => bid.amount));
       bidElement.textContent = highestBid.toString();
@@ -121,7 +143,9 @@ function updateSmallTile(
   tileId: 'tile-a' | 'tile-b',
   config: ProductShowcaseConfig
 ): void {
-  const article = document.querySelector(`[data-tile="${tileId}"]`) as HTMLElement | null;
+  const article = document.querySelector(
+    `[data-tile="${tileId}"]`
+  ) as HTMLElement | null;
   if (!article) return;
 
   const img = article.querySelector('img') as HTMLImageElement | null;
@@ -129,20 +153,34 @@ function updateSmallTile(
     img.src = listing.media[0].url;
     img.alt = listing.media[0].alt || listing.title;
     img.onerror = () => {
-      img.src = tileId === 'tile-a' ? config.fallbackImages.tileA : config.fallbackImages.tileB;
+      img.src =
+        tileId === 'tile-a'
+          ? config.fallbackImages.tileA
+          : config.fallbackImages.tileB;
     };
   }
 
-  const titleElement = article.querySelector('.text-xs.font-semibold') as HTMLElement | null;
+  const titleElement = article.querySelector(
+    '.text-xs.font-semibold'
+  ) as HTMLElement | null;
   if (titleElement) {
-    const cap = tileId === 'tile-a' ? config.tileATitleMaxLength : config.tileBTitleMaxLength;
+    const cap =
+      tileId === 'tile-a'
+        ? config.tileATitleMaxLength
+        : config.tileBTitleMaxLength;
     titleElement.textContent =
-      listing.title.length > cap ? listing.title.substring(0, cap) + '...' : listing.title;
+      listing.title.length > cap
+        ? listing.title.substring(0, cap) + '...'
+        : listing.title;
   }
 
   if (tileId === 'tile-a' && config.showTileABidAndTime) {
-    const watchBids = article.querySelector('#watch-bids') as HTMLElement | null;
-    const watchTime = article.querySelector('#watch-time') as HTMLElement | null;
+    const watchBids = article.querySelector(
+      '#watch-bids'
+    ) as HTMLElement | null;
+    const watchTime = article.querySelector(
+      '#watch-time'
+    ) as HTMLElement | null;
 
     if (watchBids && listing.bids) {
       watchBids.textContent = listing.bids.length.toString();

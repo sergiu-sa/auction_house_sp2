@@ -13,9 +13,8 @@ export function createProductCard(listing: Listing): string {
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
   const bids = listing.bids || [];
-  const highestBid = bids.length > 0
-    ? Math.max(...bids.map(bid => bid.amount))
-    : 0;
+  const highestBid =
+    bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0;
 
   const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
@@ -168,20 +167,26 @@ export function renderProductCards(
   }
 
   // Render all cards
-  container.innerHTML = listings.map(listing => createProductCard(listing)).join('');
+  container.innerHTML = listings
+    .map((listing) => createProductCard(listing))
+    .join('');
 
   // Attach event listeners for Place Bid buttons
   attachProductCardEvents(containerId);
 }
 
-export function attachProductCardEvents(containerId: string = 'product-cards-grid'): void {
+export function attachProductCardEvents(
+  containerId: string = 'product-cards-grid'
+): void {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   // Place Bid buttons
-  const bidButtons = container.querySelectorAll<HTMLButtonElement>('[data-action="place-bid"]');
+  const bidButtons = container.querySelectorAll<HTMLButtonElement>(
+    '[data-action="place-bid"]'
+  );
 
-  bidButtons.forEach(button => {
+  bidButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       const listingId = button.getAttribute('data-listing-id');

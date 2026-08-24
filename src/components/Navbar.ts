@@ -33,16 +33,44 @@ interface NavLink {
  * Build the four primary nav links (Feed, Catalog, Create, Profile).
  * Guest users get rerouted to /login.html for Create and Profile, with the original destination preserved via a `redirect` query param.
  */
-function getNavLinks(isLoggedIn: boolean, profileLabel: 'Profile' | 'My Profile' = 'Profile'): NavLink[] {
+function getNavLinks(
+  isLoggedIn: boolean,
+  profileLabel: 'Profile' | 'My Profile' = 'Profile'
+): NavLink[] {
   return [
     { href: '/index.html', label: 'Feed', icon: 'fa-house', ariaLabel: 'Feed' },
-    { href: '/collection.html', label: 'Catalog', icon: 'fa-layer-group', ariaLabel: 'Catalog' },
+    {
+      href: '/collection.html',
+      label: 'Catalog',
+      icon: 'fa-layer-group',
+      ariaLabel: 'Catalog',
+    },
     isLoggedIn
-      ? { href: '/listing-create.html', label: 'Create', icon: 'fa-gavel', ariaLabel: 'Create listing' }
-      : { href: '/login.html?redirect=/listing-create.html', label: 'Create', icon: 'fa-gavel', ariaLabel: 'Create listing (login required)' },
+      ? {
+          href: '/listing-create.html',
+          label: 'Create',
+          icon: 'fa-gavel',
+          ariaLabel: 'Create listing',
+        }
+      : {
+          href: '/login.html?redirect=/listing-create.html',
+          label: 'Create',
+          icon: 'fa-gavel',
+          ariaLabel: 'Create listing (login required)',
+        },
     isLoggedIn
-      ? { href: '/profile.html', label: profileLabel, icon: 'fa-user', ariaLabel: profileLabel === 'My Profile' ? 'My profile' : 'Profile' }
-      : { href: '/login.html', label: 'Profile', icon: 'fa-user', ariaLabel: 'Profile (login required)' },
+      ? {
+          href: '/profile.html',
+          label: profileLabel,
+          icon: 'fa-user',
+          ariaLabel: profileLabel === 'My Profile' ? 'My profile' : 'Profile',
+        }
+      : {
+          href: '/login.html',
+          label: 'Profile',
+          icon: 'fa-user',
+          ariaLabel: 'Profile (login required)',
+        },
   ];
 }
 
@@ -87,7 +115,7 @@ export async function renderHeader(): Promise<void> {
   // Fetch fresh user data if logged in to get updated credits (with cache)
   if (isUserLoggedIn && user) {
     const now = Date.now();
-    const cacheValid = profileCache && (now - profileCache.timestamp) < CACHE_TTL;
+    const cacheValid = profileCache && now - profileCache.timestamp < CACHE_TTL;
 
     if (cacheValid) {
       // Use cached data
@@ -169,7 +197,10 @@ function renderMinimalNavbar(): string {
 }
 
 // Simple navbar for user content pages (profile, create/edit listing)
-function renderSimpleNavbar(isUserLoggedIn: boolean, user: User | null): string {
+function renderSimpleNavbar(
+  isUserLoggedIn: boolean,
+  user: User | null
+): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
@@ -651,7 +682,9 @@ function initBrowsePageEvents(): void {
   // Get filter elements
   const filtersBar = document.getElementById('advanced-filters-bar');
   const mobileToggleFilters = document.getElementById('mobile-toggle-filters');
-  const mobileFiltersChevron = document.getElementById('mobile-filters-chevron');
+  const mobileFiltersChevron = document.getElementById(
+    'mobile-filters-chevron'
+  );
 
   // Mobile search toggle
   const mobileSearchBtn = document.getElementById('mobile-search-btn');
@@ -664,7 +697,11 @@ function initBrowsePageEvents(): void {
       mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
 
       // Close filters when closing search bar
-      if (!isExpanded && filtersBar && !filtersBar.classList.contains('hidden')) {
+      if (
+        !isExpanded &&
+        filtersBar &&
+        !filtersBar.classList.contains('hidden')
+      ) {
         filtersBar.classList.add('hidden');
         if (mobileToggleFilters) {
           mobileToggleFilters.setAttribute('aria-expanded', 'false');
@@ -675,7 +712,9 @@ function initBrowsePageEvents(): void {
       }
 
       if (isExpanded) {
-        const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
+        const mobileSearchInput = document.getElementById(
+          'mobile-search-input'
+        ) as HTMLInputElement;
         if (mobileSearchInput) {
           mobileSearchInput.focus();
         }
@@ -688,7 +727,9 @@ function initBrowsePageEvents(): void {
   if (mobileSearchForm) {
     mobileSearchForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const input = mobileSearchForm.querySelector('input[name="q"]') as HTMLInputElement;
+      const input = mobileSearchForm.querySelector(
+        'input[name="q"]'
+      ) as HTMLInputElement;
       const searchTerm = input.value.trim();
 
       if (searchTerm) {
@@ -731,20 +772,30 @@ function initBrowsePageEvents(): void {
 
   // Desktop search form submission
   const headerSearchForm = document.getElementById('header-search-form');
-  const globalSearchInput = document.getElementById('global-search-input') as HTMLInputElement;
+  const globalSearchInput = document.getElementById(
+    'global-search-input'
+  ) as HTMLInputElement;
 
   if (headerSearchForm) {
     headerSearchForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const input = headerSearchForm.querySelector('input[name="q"]') as HTMLInputElement;
+      const input = headerSearchForm.querySelector(
+        'input[name="q"]'
+      ) as HTMLInputElement;
       const searchTerm = input.value.trim();
 
       // Dispatch search event for same-page filtering
-      document.dispatchEvent(new CustomEvent('globalSearchSubmit', { detail: { query: searchTerm } }));
+      document.dispatchEvent(
+        new CustomEvent('globalSearchSubmit', { detail: { query: searchTerm } })
+      );
 
       // For cross-page navigation, only navigate if not on index or collection pages
       const currentPath = window.location.pathname;
-      if (searchTerm && !currentPath.includes('index.html') && !currentPath.includes('collection.html')) {
+      if (
+        searchTerm &&
+        !currentPath.includes('index.html') &&
+        !currentPath.includes('collection.html')
+      ) {
         window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
       }
     });
@@ -757,7 +808,11 @@ function initBrowsePageEvents(): void {
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => {
         const searchTerm = globalSearchInput.value.trim();
-        document.dispatchEvent(new CustomEvent('globalSearchInput', { detail: { query: searchTerm } }));
+        document.dispatchEvent(
+          new CustomEvent('globalSearchInput', {
+            detail: { query: searchTerm },
+          })
+        );
       }, 300); // Debounce
     });
   }

@@ -204,23 +204,33 @@ describe('formatTimeRemainingCompact', () => {
   });
 
   it('should show only the largest unit when days remain', () => {
-    expect(formatTimeRemainingCompact(new Date('2024-01-18T14:30:00'))).toBe('3d');
+    expect(formatTimeRemainingCompact(new Date('2024-01-18T14:30:00'))).toBe(
+      '3d'
+    );
   });
 
   it('should show hours when less than a day remains', () => {
-    expect(formatTimeRemainingCompact(new Date('2024-01-15T15:45:00'))).toBe('3h');
+    expect(formatTimeRemainingCompact(new Date('2024-01-15T15:45:00'))).toBe(
+      '3h'
+    );
   });
 
   it('should show minutes when less than an hour remains', () => {
-    expect(formatTimeRemainingCompact(new Date('2024-01-15T12:45:00'))).toBe('45m');
+    expect(formatTimeRemainingCompact(new Date('2024-01-15T12:45:00'))).toBe(
+      '45m'
+    );
   });
 
   it('should show seconds when less than a minute remains', () => {
-    expect(formatTimeRemainingCompact(new Date('2024-01-15T12:00:30'))).toBe('30s');
+    expect(formatTimeRemainingCompact(new Date('2024-01-15T12:00:30'))).toBe(
+      '30s'
+    );
   });
 
   it('should show "Ended" for past dates', () => {
-    expect(formatTimeRemainingCompact(new Date('2024-01-10T12:00:00'))).toBe('Ended');
+    expect(formatTimeRemainingCompact(new Date('2024-01-10T12:00:00'))).toBe(
+      'Ended'
+    );
   });
 
   it('should handle string dates', () => {

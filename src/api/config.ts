@@ -2,7 +2,8 @@ import type { ApiError } from '../types/api';
 import { clearAuth, getToken } from '../utils/storage';
 import { showSessionExpiredMessage } from '../utils/authLoader';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://v2.api.noroff.dev';
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'https://v2.api.noroff.dev';
 export const API_KEY = import.meta.env.VITE_API_KEY || '';
 
 export class ApiErrorClass extends Error {
@@ -87,14 +88,22 @@ export const api = {
   get: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
     apiClient<T>(endpoint, { ...options, method: 'GET' }),
 
-  post: <T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> =>
+  post: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: RequestInit
+  ): Promise<T> =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'POST',
       body: body ? JSON.stringify(body) : undefined,
     }),
 
-  put: <T>(endpoint: string, body?: unknown, options?: RequestInit): Promise<T> =>
+  put: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: RequestInit
+  ): Promise<T> =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'PUT',
