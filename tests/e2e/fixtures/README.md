@@ -1,6 +1,6 @@
 # Smoke-suite fixtures
 
-Recorded from the live Noroff API on 2026-08-22 and replayed by `tests/e2e/support/mock.ts`. They are the reason the smoke suite can answer "did we break the app?" without a shared third-party API in the loop.
+Recorded from the live Noroff API on 2026-08-22 (`listings-active.json`: 2026-08-24) and replayed by `tests/e2e/support/mock.ts`. They are the reason the smoke suite can answer "did we break the app?" without a shared third-party API in the loop.
 
 Two things were changed from the raw recordings:
 
@@ -42,3 +42,29 @@ Two consequences worth knowing: a fixture holds fewer rows than its own `totalCo
 so pages past the recorded rows come back short — tests stay near the front. And `_tag` can only be
 counted over what was recorded, so a tagged request reports the filtered row count as `totalCount`
 instead of the fixture's.
+
+## Re-recording, and knowing when to
+
+```bash
+npm run fixtures:check     # compare live API shapes with these files, write nothing
+npm run fixtures:record    # re-record all five listings fixtures
+node scripts/record-fixtures.mjs --only=listings-active
+```
+
+`fixtures:check` is the maintenance tool. It fetches each recordable fixture's request and
+compares **field names and types** — not values, which drift constantly on a shared pool — and
+reports anything added, removed or retyped. A differing `totalCount` is normal and is not a
+reason to re-record.
+
+Re-record when the API's *shape* changes, or when the app starts asking a different question.
+Not on a schedule: these files are frozen on purpose, and re-recording for its own sake means
+re-deriving every exact count the suite asserts.
+
+Two things the recorder cannot do. It only covers the five listings fixtures — the profile and
+single-listing ones need a signed-in token, and the derived ones describe states the live pool
+cannot produce. And re-recording moves the `endsAt` values, so `FROZEN_AT` in
+`tests/e2e/support/mock.ts` has to move with them; the script says so when it finishes.
+
+Usernames stay stable across re-records: the recorder rebuilds the alias map by matching listing
+and bid ids that appear in both the live response and the existing files, so a seller keeps the
+same `SellerNN`. New accounts get the next free number.
