@@ -175,6 +175,50 @@ function ok(route: Route, body: unknown): Promise<void> {
   });
 }
 
+interface FixtureListing {
+  tags?: string[];
+}
+
+/**
+ * Serve one page of a fixture, applying `_tag` and rewriting `meta` to describe the whole set rather than the slice.
+ *
+ * The mock has to paginate because the app now does:
+ *  returned whole, page 2 would be identical to page 1 and the pagination assertions would pass on a broken layer.
+ * Recorded fixtures hold fewer rows than their own totalCount (50 of 3,200), so pages past the recorded rows come back short — tests stay near the front.
+ * A tag filter can only be counted over what was recorded, so it replaces totalCount; without one the fixture keeps standing in for the larger set.
+ */
+function listingsPage(fixture: string, q: URLSearchParams): unknown {
+  const body = json(fixture) as {
+    data: FixtureListing[];
+    meta?: { totalCount?: number };
+  };
+
+  const tag = q.get('_tag');
+  const rows = tag
+    ? body.data.filter((listing) =>
+        listing.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
+      )
+    : body.data;
+
+  const limit = Number(q.get('limit') ?? '100') || 100;
+  const page = Number(q.get('page') ?? '1') || 1;
+  const totalCount = tag ? rows.length : (body.meta?.totalCount ?? rows.length);
+  const pageCount = Math.max(1, Math.ceil(totalCount / limit));
+
+  return {
+    data: rows.slice((page - 1) * limit, page * limit),
+    meta: {
+      isFirstPage: page === 1,
+      isLastPage: page >= pageCount,
+      currentPage: page,
+      previousPage: page > 1 ? page - 1 : null,
+      nextPage: page < pageCount ? page + 1 : null,
+      pageCount,
+      totalCount,
+    },
+  };
+}
+
 function serveApi(
   route: Route,
   request: Request,
@@ -197,7 +241,7 @@ function serveApi(
 
   // Before the single-listing regex, which would match id === 'search' and 404.
   if (path === '/auction/listings/search')
-    return ok(route, json('listings-search-hit'));
+    return ok(route, listingsPage('listings-search-hit', q));
 
   // --- single listing -----------------------------------------------------
   const singleMatch = path.match(/^\/auction\/listings\/([^/]+)$/);
@@ -230,7 +274,11 @@ function serveApi(
     if (q.get('sort') === 'endsAt' && q.get('_active') === 'true') {
       return ok(route, json('listings-ending-soon'));
     }
-    return ok(route, json('listings-page'));
+    // The active pool, and any catalog page narrowed to active lots.
+    if (q.get('_active') === 'true') {
+      return ok(route, listingsPage('listings-active', q));
+    }
+    return ok(route, listingsPage('listings-page', q));
   }
 
   // --- profiles -----------------------------------------------------------

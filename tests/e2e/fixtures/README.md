@@ -13,6 +13,7 @@ Two things were changed from the raw recordings:
 | --- | --- |
 | `listings-page.json` | 50 items, `_seller` + `_bids`, totalCount 3199. Only **2** are active at the frozen clock — that is F-001, not a fixture bug. |
 | `listings-ending-soon.json` | 4 items, `_active`, sorted `endsAt` asc, totalCount 52 |
+| `listings-active.json` | **the whole active pool** — 53 items, `_seller` + `_bids`, `created` desc, totalCount 53, `pageCount` 1. Recorded 2026-08-24; every lot in it was also active at the frozen clock. This is what makes the active surfaces assertable: 47 lots carry bids, 128 bids in total. |
 | `listings-stats.json` | 1 item + `meta.totalCount` 52 |
 | `listings-search-hit.json` | 12 items from `/search?q=vintage`, totalCount 116 |
 | `listings-empty.json` | 0 items — the empty-state path |
@@ -30,3 +31,14 @@ These could not be recorded: a bid is a live write to a shared pool, and the acc
 | `listing-own.json` | `profile-listings.json[0]` | `listing-edit.html` calls `requireOwnership(seller.name)`, so it needs a single-listing response the test user owns. |
 | `bid-created.json` | `Bid` in `src/types/api.ts` | The `POST /bids` response. The app awaits it and re-fetches the listing, so only its shape matters. |
 | `error-500.json` | — | The listings-endpoint failure path. |
+
+## Pagination
+
+`mock.ts` slices these fixtures by `page`/`limit` and rewrites `meta`, rather than returning a
+fixture whole. The app asks the API for a page now, so a mock that ignored `page` would make page 2
+identical to page 1 and the pagination assertions would pass against a broken query layer.
+
+Two consequences worth knowing: a fixture holds fewer rows than its own `totalCount` (50 of 3,199),
+so pages past the recorded rows come back short — tests stay near the front. And `_tag` can only be
+counted over what was recorded, so a tagged request reports the filtered row count as `totalCount`
+instead of the fixture's.
