@@ -1,6 +1,6 @@
 import { getCurrentUser } from '../utils/auth';
 import { getProfileWins } from '../api/profile';
-import { getListings } from '../api/listings';
+import { recentlyEnded, trending } from '../api/listingQueries';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
@@ -171,50 +171,19 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
       }
     }
 
-    // If user has no wins, fetch recently ended auctions from the platform
-    const listingsResponse = await getListings({
-      limit: 50,
-      sort: 'endsAt',
-      sortOrder: 'desc',
-      _bids: true,
-      _seller: true,
-    });
+    // If the user has no wins, show the platform's most recent close instead.
+    const [mostRecentlyEnded] = await recentlyEnded(1);
 
-    if (!listingsResponse.data || listingsResponse.data.length === 0) {
-      return null;
+    if (mostRecentlyEnded) {
+      return convertListingToFeaturedWin(mostRecentlyEnded, user.name);
     }
 
-    // Find the most recent ended auction with bids
-    const now = new Date();
-    const endedAuctions = listingsResponse.data.filter((listing) => {
-      const hasEnded = new Date(listing.endsAt) < now;
-      const hasBids = listing.bids && listing.bids.length > 0;
-      return hasEnded && hasBids;
-    });
+    // Nothing has closed with a bid on it — show the busiest live lot.
+    const [mostPopular] = await trending(1);
 
-    if (endedAuctions.length === 0) {
-      // Fallback: Find active auctions with bids as a showcase
-      const activeAuctions = listingsResponse.data.filter((listing) => {
-        const isActive = new Date(listing.endsAt) > now;
-        const hasBids = listing.bids && listing.bids.length > 0;
-        return isActive && hasBids;
-      });
-
-      if (activeAuctions.length === 0) {
-        return null;
-      }
-
-      // Show the active auction with the most bids
-      const mostPopular = activeAuctions.sort(
-        (a, b) => (b.bids?.length || 0) - (a.bids?.length || 0)
-      )[0];
-
-      return convertListingToFeaturedWin(mostPopular, user.name);
-    }
-
-    // Get the most recent ended auction
-    const featuredListing = endedAuctions[0];
-    return convertListingToFeaturedWin(featuredListing, user.name);
+    return mostPopular
+      ? convertListingToFeaturedWin(mostPopular, user.name)
+      : null;
   } catch (error) {
     logError('Failed to fetch featured win', error);
     return null;

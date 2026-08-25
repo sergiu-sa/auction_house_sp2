@@ -5,7 +5,13 @@ import {
   showCollectionCardSkeletons,
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
-import { getListings } from '../api/listings';
+import {
+  activeStats,
+  catalogPage,
+  toSortKey,
+  toSortOrder,
+} from '../api/listingQueries';
+import type { SortKey, SortOrder } from '../api/listingQueries';
 import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
@@ -13,8 +19,8 @@ import type { Listing } from '../types/api';
 // State management
 interface FilterState {
   category: string;
-  sort: string;
-  sortOrder: 'asc' | 'desc';
+  sort: SortKey;
+  sortOrder: SortOrder;
   activeOnly: boolean;
   search: string;
   page: number;
@@ -33,8 +39,9 @@ let currentFilters: FilterState = {
   viewMode: 'grid',
 };
 
-let allListings: Listing[] = [];
-let filteredListings: Listing[] = [];
+// The page the server last returned, kept so a view-mode toggle can re-render it without spending a round trip.
+let currentPageListings: Listing[] = [];
+let resultTotals = { totalCount: 0, pageCount: 1 };
 let loadRequestId = 0;
 let nextCloseInterval: number | null = null;
 
@@ -43,31 +50,30 @@ function listenToNavbarFilters(): void {
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
     currentFilters.category = e.detail.category;
     currentFilters.page = 1;
-    applyFilters();
+    loadListings();
   }) as EventListener);
 
   // Search from navbar
   document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
     currentFilters.search = e.detail.query;
     currentFilters.page = 1;
-    applyFilters();
+    loadListings();
   }) as EventListener);
 
   // Active only checkbox from navbar
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     currentFilters.activeOnly = e.detail.activeOnly;
     currentFilters.page = 1;
-    // Re-query instead of filtering locally: the fetched page holds the newest
-    // listings, most of which have already ended, so a local filter finds almost none.
     loadListings();
   }) as EventListener);
 
   // Sort from navbar
   document.addEventListener('sortChange', ((e: CustomEvent) => {
-    currentFilters.sort = e.detail.sort;
-    currentFilters.sortOrder = e.detail.order;
+    // Narrowed, not trusted: an unknown sort field is a 500 from the API.
+    currentFilters.sort = toSortKey(e.detail.sort);
+    currentFilters.sortOrder = toSortOrder(e.detail.order);
     currentFilters.page = 1;
-    applyFilters();
+    loadListings();
   }) as EventListener);
 }
 
@@ -96,7 +102,7 @@ function initializeFilters(): void {
       );
 
       // Re-render cards in grid mode
-      applyFilters();
+      renderCurrentPage();
     });
 
     listViewBtn.addEventListener('click', () => {
@@ -116,7 +122,7 @@ function initializeFilters(): void {
       );
 
       // Re-render cards in list mode
-      applyFilters();
+      renderCurrentPage();
     });
   }
 
@@ -158,9 +164,8 @@ function initializeFilters(): void {
       // Dispatch events to update navbar UI
       document.dispatchEvent(new CustomEvent('clearAllFilters'));
 
-      // Sort and active-only are both part of the API query, so the pool
-      // itself is stale after a reset — always refetch rather than re-sorting
-      // whatever happened to be loaded.
+      // Sort and active-only are both part of the API query, so the pool itself is stale after a reset;
+      //   always refetch rather than re-sorting whatever happened to be loaded.
       loadListings();
     });
   }
@@ -182,29 +187,40 @@ export async function initCollectionPage(): Promise<void> {
   loadStats();
 }
 
+/**
+ * Fetch one page of the catalog.
+ *
+ * Every filter is part of the query, so the counter and the pagination describe the whole matching set rather than the slice that happened to be fetched.
+ */
 async function loadListings(): Promise<void> {
   const requestId = ++loadRequestId;
 
   try {
     // Show loading skeletons
-    showCollectionCardSkeletons(24, 'collection-cards-grid');
+    showCollectionCardSkeletons(
+      currentFilters.itemsPerPage,
+      'collection-cards-grid'
+    );
 
-    const response = await getListings({
-      limit: 50,
-      _seller: true,
-      _bids: true,
-      _active: currentFilters.activeOnly,
+    const result = await catalogPage({
+      page: currentFilters.page,
+      limit: currentFilters.itemsPerPage,
       sort: currentFilters.sort,
       sortOrder: currentFilters.sortOrder,
+      activeOnly: currentFilters.activeOnly,
+      tag: currentFilters.category,
+      search: currentFilters.search,
     });
 
     // A newer request started while this one was in flight
     if (requestId !== loadRequestId) return;
 
-    if (response.data) {
-      allListings = response.data;
-      applyFilters();
-    }
+    currentPageListings = result.listings;
+    resultTotals = {
+      totalCount: result.totalCount,
+      pageCount: result.pageCount,
+    };
+    renderCurrentPage();
   } catch (error) {
     if (requestId !== loadRequestId) return;
 
@@ -213,72 +229,21 @@ async function loadListings(): Promise<void> {
   }
 }
 
-function applyFilters(): void {
-  let filtered = [...allListings];
-
-  // Filter by category
-  if (currentFilters.category !== 'all') {
-    filtered = filtered.filter((listing) =>
-      listing.tags?.some(
-        (tag) => tag.toLowerCase() === currentFilters.category.toLowerCase()
-      )
-    );
-  }
-
-  // Filter by search
-  if (currentFilters.search) {
-    const searchLower = currentFilters.search.toLowerCase();
-    filtered = filtered.filter(
-      (listing) =>
-        listing.title.toLowerCase().includes(searchLower) ||
-        listing.description?.toLowerCase().includes(searchLower)
-    );
-  }
-
-  // Guard only: the API already returns active listings when this is on.
-  // This drops any lot that expired while the page sat open.
-  if (currentFilters.activeOnly) {
-    const now = new Date();
-    filtered = filtered.filter((listing) => new Date(listing.endsAt) > now);
-  }
-
-  // Sort listings
-  filtered.sort((a, b) => {
-    const aValue = a[currentFilters.sort as keyof Listing] as string;
-    const bValue = b[currentFilters.sort as keyof Listing] as string;
-
-    if (currentFilters.sortOrder === 'asc') {
-      return aValue > bValue ? 1 : -1;
-    } else {
-      return aValue < bValue ? 1 : -1;
-    }
-  });
-
-  filteredListings = filtered;
-
-  // Paginate results
-  const startIndex = (currentFilters.page - 1) * currentFilters.itemsPerPage;
-  const endIndex = startIndex + currentFilters.itemsPerPage;
-  const paginatedListings = filteredListings.slice(startIndex, endIndex);
-
-  // Render paginated cards with current view mode
+/** Draw the page already in hand. No query — the view toggle uses this too. */
+function renderCurrentPage(): void {
   renderCollectionCards(
-    paginatedListings,
+    currentPageListings,
     'collection-cards-grid',
     currentFilters.viewMode
   );
 
-  // Render pagination
-  const totalPages = Math.ceil(
-    filteredListings.length / currentFilters.itemsPerPage
-  );
   renderPagination({
     containerId: 'pagination',
     currentPage: currentFilters.page,
-    totalPages,
+    totalPages: resultTotals.pageCount,
     onPageChange: (page: number) => {
       currentFilters.page = page;
-      applyFilters();
+      loadListings();
 
       // Scroll to top of results
       const resultsHeader = document.querySelector('#collection-cards-grid');
@@ -296,50 +261,31 @@ function updateResultsInfo(): void {
   const resultsRange = document.getElementById('results-range');
   const resultsTotal = document.getElementById('results-total');
 
+  const total = resultTotals.totalCount;
+
   if (resultsCount) {
-    resultsCount.textContent = new Intl.NumberFormat('en-US').format(
-      filteredListings.length
-    );
+    resultsCount.textContent = new Intl.NumberFormat('en-US').format(total);
   }
 
   if (resultsTotal) {
-    resultsTotal.textContent = new Intl.NumberFormat('en-US').format(
-      filteredListings.length
-    );
+    resultsTotal.textContent = new Intl.NumberFormat('en-US').format(total);
   }
 
   if (resultsRange) {
     const start = (currentFilters.page - 1) * currentFilters.itemsPerPage + 1;
-    const end = Math.min(
-      currentFilters.page * currentFilters.itemsPerPage,
-      filteredListings.length
-    );
+    const end = start + currentPageListings.length - 1;
 
-    if (filteredListings.length === 0) {
-      resultsRange.textContent = '0-0';
-    } else {
-      resultsRange.textContent = `${start}-${end}`;
-    }
+    resultsRange.textContent =
+      currentPageListings.length === 0 ? '0-0' : `${start}-${end}`;
   }
 }
 
 /**
- * The stat tiles describe the whole active pool, not the page currently shown,
- * so they get their own query instead of counting the filtered grid.
+ * The stat tiles describe the whole active pool, not the page currently shown, so they get their own query instead of counting the filtered grid.
  */
 async function loadStats(): Promise<void> {
   try {
-    // Both tiles come from one row: meta carries the active total, and sorting
-    // by endsAt puts the next lot to close first. No need to pull the pool.
-    const response = await getListings({
-      limit: 1,
-      _active: true,
-      sort: 'endsAt',
-      sortOrder: 'asc',
-    });
-
-    const activeListings = response.data || [];
-    const totalActive = response.meta?.totalCount ?? activeListings.length;
+    const { totalActive, nextToClose } = await activeStats();
 
     const activeLotsCount = document.getElementById('active-lots-count');
     if (activeLotsCount) {
@@ -348,17 +294,16 @@ async function loadStats(): Promise<void> {
       );
     }
 
-    // Time until the next close, rather than a count inside a fixed window
-    // that sits at zero whenever nothing is closing.
-    startNextCloseCountdown(activeListings[0]?.endsAt);
+    // Time until the next close, rather than a count inside a fixed window that sits at zero whenever nothing is closing.
+    startNextCloseCountdown(nextToClose?.endsAt);
   } catch (error) {
     logError('Failed to load collection stats', error);
   }
 }
 
 /**
- * Keep the "next closes" tile ticking. Without this it would still read the
- * value it was given on page load hours later, for a lot that has since closed.
+ * Keep the "next closes" tile ticking.
+ * Without this it would still read the value it was given on page load hours later, for a lot that has since closed.
  */
 function startNextCloseCountdown(endsAt?: string): void {
   if (nextCloseInterval) {

@@ -27,28 +27,61 @@ test('grid and list views swap the container class, not just the cards', async (
   expect(mock.consoleErrors).toEqual([]);
 });
 
-test('the results header reports the fetched window and the active total', async ({
-  page,
-}) => {
+/**
+ * The counter reads the size of the matching set, from meta.totalCount.
+ * It read "50" — the fetch limit — for every filter alike, next to a tile reading 52 active lots.
+ */
+test('the results header reports the whole matching set', async ({ page }) => {
   await page.goto('/collection.html');
-  // "50" is the fetch limit, not a real count, and it sits next to a tile reading 52 active lots.
-  // Both numbers change once the query is fixed.
-  await expect(page.locator('#results-count')).toHaveText('50');
+
+  await expect(page.locator('#results-count')).toHaveText('3,199');
   await expect(page.locator('#results-range')).toHaveText('1-24');
   await expect(page.locator('#active-lots-count')).toHaveText('52');
 });
 
-/** Search filters client-side over a 50-item window today, so these counts change once it moves to the server. */
+/** Active-only used to reach 50 of the 53 active lots, because the window was 50 wide. */
+test('narrowing to active lots narrows the count with it', async ({ page }) => {
+  await page.goto('/collection.html');
+
+  // The checkbox lives in the collapsed advanced-filters bar.
+  await page.locator('#toggle-advanced-filters').click();
+  await page.locator('#active-only-filter').check();
+
+  await expect(page.locator('#results-count')).toHaveText('53');
+  await expect(page.locator('#collection-cards-grid article')).toHaveCount(24);
+});
+
+/** Pagination is a server query now, so page 2 has to be different listings, not the same slice. */
+test('paging asks the server for the next page', async ({ page }) => {
+  await page.goto('/collection.html');
+  const grid = page.locator('#collection-cards-grid');
+  const firstOnPageOne = await grid.locator('article h3').first().textContent();
+
+  await page.locator('#pagination').getByRole('button', { name: '2' }).click();
+
+  await expect(grid.locator('article')).toHaveCount(24);
+  await expect(page.locator('#results-range')).toHaveText('25-48');
+  await expect(grid.locator('article h3').first()).not.toHaveText(
+    firstOnPageOne ?? ''
+  );
+});
+
+/**
+ * Search goes to /auction/listings/search, which the plain listings endpoint only pretended to support.
+ * It used to match within the fetched 50 and found 2.
+ */
 test('search filters the rendered card set', async ({ page }) => {
   await page.goto('/collection.html');
   const grid = page.locator('#collection-cards-grid');
   await expect(grid.locator('article')).toHaveCount(24);
 
   await page.locator('#global-search-input').fill('vase');
-  await expect(grid.locator('article')).toHaveCount(2);
+  await expect(grid.locator('article')).toHaveCount(12);
+  await expect(page.locator('#results-count')).toHaveText('116');
 
   await page.locator('#global-search-input').fill('');
   await expect(grid.locator('article')).toHaveCount(24);
+  await expect(page.locator('#results-count')).toHaveText('3,199');
 });
 
 test('a 136-character title is clamped instead of overflowing', async ({
