@@ -301,12 +301,13 @@ function setupCreateListingButton(): void {
  *    which is only ~2% active and left every section near-empty.
  */
 async function loadAllData(): Promise<void> {
+  // Started before the pool, not after it: neither reads it, both run their own query, and both handle their own failures.
+  // Queued behind it they would inherit its latency and be blanked by its catch.
+  loadCatalogListings();
+  renderEndingSoonSection();
+
   try {
     const pool = await activePool();
-
-    // The catalog is its own query: it can show closed lots, and it paginates.
-    loadCatalogListings();
-    renderEndingSoonSection();
 
     if (pool.length === 0) {
       showNoListingsMessage();
@@ -387,12 +388,9 @@ function showNoListingsMessage(): void {
     </div>
   `;
 
-  const sections = [
-    'trending-cards',
-    'new-listings-cards',
-    'ending-soon-cards',
-    'catalog-cards',
-  ];
+  // Only the sections fed by the active pool.
+  // Ending Soon and the catalog run their own queries and render their own empty states, and writing here would race them.
+  const sections = ['trending-cards', 'new-listings-cards'];
   sections.forEach((id) => {
     const element = document.getElementById(id);
     if (element) element.innerHTML = noDataHTML;
@@ -425,13 +423,7 @@ function showErrorInSections(): void {
     </div>
   `;
 
-  const sections = [
-    'hero-mosaic',
-    'trending-cards',
-    'new-listings-cards',
-    'ending-soon-cards',
-    'catalog-cards',
-  ];
+  const sections = ['hero-mosaic', 'trending-cards', 'new-listings-cards'];
   sections.forEach((id) => {
     const element = document.getElementById(id);
     if (element) element.innerHTML = errorHTML;
@@ -590,9 +582,11 @@ async function renderNewListingsSection(pool: Listing[]): Promise<void> {
  *  the cards print the real countdown, so nothing is overstated.
  */
 async function renderEndingSoonSection(): Promise<void> {
-  showQuickCardSkeletons(4, 'ending-soon-cards');
-
+  // Inside the try:
+  //  nothing awaits this call, so anything thrown out here would be an unhandled rejection rather than a logged failure.
   try {
+    showQuickCardSkeletons(4, 'ending-soon-cards');
+
     renderQuickCards(await endingSoon(4), 'ending-soon-cards');
   } catch (error) {
     logError('Failed to load ending soon listings', error);

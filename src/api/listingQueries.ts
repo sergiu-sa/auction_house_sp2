@@ -62,29 +62,13 @@ export function toSortOrder(value: string | undefined): SortOrder {
  * Pages beyond the first are followed only if `meta.pageCount` says they exist.
  */
 export async function activePool(): Promise<Listing[]> {
-  const params = {
-    limit: MAX_PAGE_SIZE,
+  return fetchWholeSet({
     _active: true,
     _seller: true,
     _bids: true,
     sort: 'created',
-    sortOrder: 'desc' as const,
-  };
-
-  const first = await getListings(params);
-  const listings = [...(first.data ?? [])];
-
-  const pageCount = first.meta?.pageCount ?? 1;
-  if (pageCount > 1) {
-    const rest = await Promise.all(
-      Array.from({ length: pageCount - 1 }, (_, i) =>
-        getListings({ ...params, page: i + 2 })
-      )
-    );
-    rest.forEach((response) => listings.push(...(response.data ?? [])));
-  }
-
-  return listings;
+    sortOrder: 'desc',
+  });
 }
 
 /** The active total and the next lot to close, from `meta` rather than a row count. */
@@ -163,7 +147,9 @@ export async function newest(
     [];
 
   return [...listings]
-    .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+    .sort(
+      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+    )
     .slice(0, limit);
 }
 
@@ -208,13 +194,14 @@ export async function recentlyEnded(limit: number): Promise<Listing[]> {
 /**
  * One page of the catalog grid, however it is filtered.
  *
- * Three routes, because the API supports three different exact answers:
+ * The search endpoint ignores `_active` and `_tag`.
+ * So wherever a search meets one of those, the smaller set is fetched whole and the other condition applied to it here;
+ *  that is always the filtered side, 53 active lots or 78 for the widest category, against 2,383 rows for a one-letter term.
  *
- * 1. Search, active only — `/search` ignores `_active`, so the small side gets filtered instead: the active pool is 53 lots against 2,383 for a one-letter search term.
- * 2. Search, everything — the search endpoint, paginated server-side.
- *                         It ignores `_tag`, so a chosen category narrows the fetched page rather than the query;
- *                         that combination is the one case the API cannot answer exactly.
- * 3. No search — a plain server query, where `_active` and `_tag` compose.
+ * 1. Search + active only — filter the active pool.
+ * 2. Search + category — filter the tag set, which `_tag` can be asked for exactly.
+ * 3. Search alone — the search endpoint, paginated server-side.
+ * 4. No search — a plain server query, where `_active` and `_tag` compose.
  */
 export async function catalogPage(
   query: CatalogQuery = {}
@@ -234,6 +221,17 @@ export async function catalogPage(
     return paginate(sortListings(matches, sort, sortOrder), page, limit);
   }
 
+  if (term && tag) {
+    const rows = await fetchWholeSet({
+      _tag: tag,
+      _seller: true,
+      _bids: true,
+    });
+    const matches = rows.filter((listing) => matchesTerm(listing, term));
+
+    return paginate(sortListings(matches, sort, sortOrder), page, limit);
+  }
+
   if (term) {
     const response = await searchListings({
       q: term,
@@ -244,10 +242,7 @@ export async function catalogPage(
       _seller: true,
       _bids: true,
     });
-    const rows = response.data ?? [];
-    const listings = tag
-      ? rows.filter((listing) => matchesTag(listing, tag))
-      : rows;
+    const listings = response.data ?? [];
 
     return {
       listings,
@@ -273,6 +268,31 @@ export async function catalogPage(
     totalCount: response.meta?.totalCount ?? listings.length,
     pageCount: response.meta?.pageCount ?? 1,
   };
+}
+
+/**
+ * Fetch every page of a set.
+ *
+ * Only for sets the API can already narrow to something small:
+ *  the active pool (53 of 3,200 lots) and a single tag (78 at the widest). Never the unfiltered pool, which is 32 pages.
+ */
+async function fetchWholeSet(
+  params: Parameters<typeof getListings>[0]
+): Promise<Listing[]> {
+  const first = await getListings({ ...params, limit: MAX_PAGE_SIZE });
+  const rows = [...(first.data ?? [])];
+  const pageCount = first.meta?.pageCount ?? 1;
+
+  if (pageCount > 1) {
+    const rest = await Promise.all(
+      Array.from({ length: pageCount - 1 }, (_, i) =>
+        getListings({ ...params, limit: MAX_PAGE_SIZE, page: i + 2 })
+      )
+    );
+    rest.forEach((response) => rows.push(...(response.data ?? [])));
+  }
+
+  return rows;
 }
 
 function bidCount(listing: Listing): number {

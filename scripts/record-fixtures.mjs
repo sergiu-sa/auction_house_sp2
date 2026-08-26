@@ -45,6 +45,11 @@ const RECORDABLE = {
 /** Fixtures whose rows must all still be running at the frozen clock. */
 const ACTIVE_ONLY = new Set(['listings-active', 'listings-ending-soon']);
 
+/**
+ * Fixtures holding their whole set rather than a window onto it, so dropping a row really does change the total. `listings-ending-soon` is four rows out of ~52, and its meta has to keep describing the set the server counted.
+ */
+const COVERS_WHOLE_SET = new Set(['listings-active']);
+
 function env() {
   const parsed = Object.fromEntries(
     readFileSync('.env', 'utf8')
@@ -166,13 +171,16 @@ function scrubUser(user, alias) {
 function scrubBody(body, alias) {
   return {
     ...body,
+    // Only rewrite what the response actually carried. `listings-stats` is recorded without _seller/_bids, and adding empty ones would stop the fixture mirroring its own request without --check noticing.
     data: (body.data ?? []).map((listing) => ({
       ...listing,
-      seller: scrubUser(listing.seller, alias),
-      bids: (listing.bids ?? []).map((bid) => ({
-        ...bid,
-        bidder: scrubUser(bid.bidder, alias),
-      })),
+      ...(listing.seller && { seller: scrubUser(listing.seller, alias) }),
+      ...(listing.bids && {
+        bids: listing.bids.map((bid) => ({
+          ...bid,
+          bidder: scrubUser(bid.bidder, alias),
+        })),
+      }),
     })),
   };
 }
@@ -291,11 +299,19 @@ for (const name of Object.keys(targets)) {
         `  ${name}: dropped ${body.data.length - kept.length} lot(s) that close before FROZEN_AT`
       );
     }
-    body = {
-      ...body,
-      data: kept,
-      meta: { ...body.meta, totalCount: kept.length },
-    };
+    body = COVERS_WHOLE_SET.has(name)
+      ? {
+          ...body,
+          data: kept,
+          meta: {
+            ...body.meta,
+            totalCount: kept.length,
+            pageCount: 1,
+            isLastPage: true,
+            nextPage: null,
+          },
+        }
+      : { ...body, data: kept };
   }
 
   const scrubbed = scrubBody(body, alias);

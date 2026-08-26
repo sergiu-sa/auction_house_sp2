@@ -87,6 +87,22 @@ describe('listingQueries', () => {
       expect(pool.map((l) => l.id)).toEqual(['a', 'b', 'c']);
     });
 
+    it('walks the whole pool however many pages it spans', async () => {
+      respond(
+        Array.from({ length: 6 }, (_, i) =>
+          page([listing({ id: `p${i + 1}` })], {
+            pageCount: 6,
+            totalCount: 540,
+          })
+        )
+      );
+
+      const pool = await activePool();
+
+      expect(urls()).toHaveLength(6);
+      expect(pool).toHaveLength(6);
+    });
+
     it('does not paginate when one page holds the pool', async () => {
       respond([page([listing({ id: 'a' })], { pageCount: 1, totalCount: 1 })]);
 
@@ -135,9 +151,21 @@ describe('listingQueries', () => {
 
   describe('client-side ranking over the active pool', () => {
     const pool = [
-      listing({ id: 'quiet', _count: { bids: 0 }, created: '2026-05-01T00:00:00.000Z' }),
-      listing({ id: 'hot', _count: { bids: 9 }, created: '2026-01-01T00:00:00.000Z' }),
-      listing({ id: 'warm', _count: { bids: 3 }, created: '2026-03-01T00:00:00.000Z' }),
+      listing({
+        id: 'quiet',
+        _count: { bids: 0 },
+        created: '2026-05-01T00:00:00.000Z',
+      }),
+      listing({
+        id: 'hot',
+        _count: { bids: 9 },
+        created: '2026-01-01T00:00:00.000Z',
+      }),
+      listing({
+        id: 'warm',
+        _count: { bids: 3 },
+        created: '2026-03-01T00:00:00.000Z',
+      }),
     ];
 
     it('trending ranks by bid count and drops lots with no bids', async () => {
@@ -203,12 +231,26 @@ describe('listingQueries', () => {
     });
 
     it('returns the most recently ended lot that has bids', async () => {
-      const bid = [{ id: 'b1', amount: 5, created: '2026-01-01T00:00:00.000Z' }];
+      const bid = [
+        { id: 'b1', amount: 5, created: '2026-01-01T00:00:00.000Z' },
+      ];
       respond([
         page([
-          listing({ id: 'future', endsAt: '2099-01-01T00:00:00.000Z', bids: bid }),
-          listing({ id: 'ended-recent', endsAt: '2020-06-01T00:00:00.000Z', bids: bid }),
-          listing({ id: 'ended-older', endsAt: '2020-01-01T00:00:00.000Z', bids: bid }),
+          listing({
+            id: 'future',
+            endsAt: '2099-01-01T00:00:00.000Z',
+            bids: bid,
+          }),
+          listing({
+            id: 'ended-recent',
+            endsAt: '2020-06-01T00:00:00.000Z',
+            bids: bid,
+          }),
+          listing({
+            id: 'ended-older',
+            endsAt: '2020-01-01T00:00:00.000Z',
+            bids: bid,
+          }),
         ]),
       ]);
 
@@ -220,7 +262,11 @@ describe('listingQueries', () => {
     it('skips ended lots that nobody bid on', async () => {
       respond([
         page([
-          listing({ id: 'ended-no-bids', endsAt: '2020-06-01T00:00:00.000Z', bids: [] }),
+          listing({
+            id: 'ended-no-bids',
+            endsAt: '2020-06-01T00:00:00.000Z',
+            bids: [],
+          }),
           listing({
             id: 'ended-with-bids',
             endsAt: '2020-01-01T00:00:00.000Z',
@@ -268,12 +314,68 @@ describe('listingQueries', () => {
     });
 
     it('sends a search to the search endpoint when browsing everything', async () => {
-      await catalogPage({ search: 'vintage', activeOnly: false, page: 2, limit: 24 });
+      await catalogPage({
+        search: 'vintage',
+        activeOnly: false,
+        page: 2,
+        limit: 24,
+      });
 
       const url = urls()[0];
       expect(url).toContain('/auction/listings/search?');
       expect(url).toContain('q=vintage');
       expect(url).toContain('page=2');
+    });
+
+    it('answers search-plus-category from the tag set, which is the smaller side', async () => {
+      respond([
+        page(
+          [
+            listing({ id: 'hit', title: 'Vintage vase', tags: ['art'] }),
+            listing({ id: 'miss', title: 'Modern lamp', tags: ['art'] }),
+            listing({
+              id: 'desc-hit',
+              title: 'Jug',
+              description: 'vintage',
+              tags: ['art'],
+            }),
+          ],
+          { pageCount: 1, totalCount: 3 }
+        ),
+      ]);
+
+      const result = await catalogPage({
+        search: 'vintage',
+        tag: 'art',
+        activeOnly: false,
+      });
+
+      // /search ignores _tag, so asking it would mean filtering a page of the wrong set and reporting the wrong total.
+      expect(urls()[0]).not.toContain('/search');
+      expect(urls()[0]).toContain('_tag=art');
+      expect(result.listings.map((l) => l.id)).toEqual(['hit', 'desc-hit']);
+      expect(result.totalCount).toBe(2);
+      expect(result.pageCount).toBe(1);
+    });
+
+    it('follows the tag set across pages before filtering', async () => {
+      respond([
+        page([listing({ id: 'a', title: 'vintage a', tags: ['art'] })], {
+          pageCount: 2,
+          totalCount: 120,
+        }),
+        page([listing({ id: 'b', title: 'vintage b', tags: ['art'] })], {
+          pageCount: 2,
+          totalCount: 120,
+        }),
+      ]);
+
+      const result = await catalogPage({ search: 'vintage', tag: 'art' });
+
+      expect(urls()).toHaveLength(2);
+      expect(urls()[1]).toContain('page=2');
+      expect(result.listings.map((l) => l.id)).toEqual(['a', 'b']);
+      expect(result.totalCount).toBe(2);
     });
 
     it('never sends an empty q, which the search endpoint rejects', async () => {
@@ -288,7 +390,11 @@ describe('listingQueries', () => {
         page([
           listing({ id: 'match', title: 'Vintage vase' }),
           listing({ id: 'miss', title: 'Modern lamp' }),
-          listing({ id: 'desc-match', title: 'Jug', description: 'a vintage piece' }),
+          listing({
+            id: 'desc-match',
+            title: 'Jug',
+            description: 'a vintage piece',
+          }),
         ]),
       ]);
 
@@ -340,7 +446,10 @@ describe('listingQueries', () => {
     });
 
     it('keeps an unknown sort out of the request', async () => {
-      await catalogPage({ sort: toSortKey('nonsense'), sortOrder: toSortOrder('nonsense') });
+      await catalogPage({
+        sort: toSortKey('nonsense'),
+        sortOrder: toSortOrder('nonsense'),
+      });
 
       expect(urls()[0]).toContain('sort=created');
       expect(urls()[0]).not.toContain('nonsense');
