@@ -6,7 +6,11 @@ import {
 } from '../api/profile';
 import { formatCurrency } from '../utils/formatCurrency';
 import { logError } from '../utils/logger';
-import type { Bid } from '../types/api';
+import {
+  calculateWinRate,
+  countAuctionsBidOn,
+  calculateActiveBidsValue,
+} from '../utils/biddingStats';
 
 export interface StatsData {
   myListings: number;
@@ -55,32 +59,6 @@ export function renderStatsBar(data: StatsData): string {
       </div>
     </div>
   `;
-}
-
-// Win rate = wins / unique auctions bid on. Multiple bids on the same listing count as one attempt.
-function calculateWinRate(
-  attemptedAuctions: number,
-  totalWins: number
-): number {
-  if (attemptedAuctions === 0) return 0;
-  const rate = (totalWins / attemptedAuctions) * 100;
-  return Math.min(rate, 100);
-}
-
-function countAuctionsBidOn(bids: Bid[]): number {
-  const ids = new Set<string>();
-  for (const bid of bids) {
-    if (bid.listing?.id) ids.add(bid.listing.id);
-  }
-  return ids.size;
-}
-
-// Sum of bids on auctions that haven't ended yet
-function calculateActiveBidsValue(bids: Bid[]): number {
-  const now = new Date();
-  return bids
-    .filter((bid) => bid.listing && new Date(bid.listing.endsAt) > now)
-    .reduce((total, bid) => total + bid.amount, 0);
 }
 
 export async function fetchStats(): Promise<StatsData | null> {
