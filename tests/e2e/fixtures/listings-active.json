@@ -1,0 +1,4270 @@
+{
+  "data": [
+    {
+      "id": "271f9e22-2ddf-4b91-b929-dc609c2d8275",
+      "title": "Travel Picture",
+      "description": "This is a travel illustration someone famous made",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/vector-1774966479893-6757db21ad82?q=80&w=623&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Travel Picture"
+        }
+      ],
+      "tags": [
+        "picture"
+      ],
+      "created": "2026-08-23T08:25:41.514Z",
+      "updated": "2026-08-23T08:25:41.514Z",
+      "endsAt": "2026-09-21T14:00:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller64",
+        "email": "redacted@stud.noroff.no",
+        "bio": "It dosent matter if its sunday",
+        "avatar": {
+          "url": "https://images.unsplash.com/vector-1738292714432-14a17592a8c1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjF8fGFuaW1lfGVufDB8fDB8fHwy",
+          "alt": "Illustration of a shiba dog"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "07d9c428-844b-4a65-b766-c870fd0991cc",
+      "title": "Marina_ TEST [UPDATED]",
+      "description": "DCCDFVDFVF [UPDATED]",
+      "media": [
+        {
+          "url": "https://img.magnific.com/free-psd/collection-six-potted-indoor-plants-green-foliage-home-decor_191095-78779.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://img.magnific.com/free-vector/tropical-plant-transparent-background_1308-60285.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://img.magnific.com/free-psd/elegant-indoor-palm-tree-modern-pot_632498-25513.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-06-03T15:47:11.788Z",
+      "updated": "2026-06-03T15:48:23.664Z",
+      "endsAt": "2026-10-29T19:50:00.000Z",
+      "bids": [
+        {
+          "id": "d6fb46c2-b76f-4fe1-a074-b0daa61a94a7",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller15",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.magnific.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-03T16:04:19.841Z"
+        },
+        {
+          "id": "29d6fc44-dd46-4979-a946-073c96302f7f",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller60",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile bio",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-06-05T10:32:46.647Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller28",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hi there!",
+        "avatar": {
+          "url": "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+          "alt": "Seller28"
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-vector/modern-abstract-gradient-background-with-elegant-elements-vector-illustration_361591-3821.jpg?semt=ais_hybrid&w=740&q=80",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "6201dbcc-2438-4ea9-9ce0-06396f5d5ae7",
+      "title": "Milagros_ TEST [UPDATE]",
+      "description": "DCSSFVVGBGB [UPDATED]",
+      "media": [
+        {
+          "url": "https://img.magnific.com/free-vector/tropical-plant-transparent-background_1308-60285.jpg",
+          "alt": "Milagros_ TEST [UPDATE]"
+        },
+        {
+          "url": "https://img.magnific.com/free-psd/monstera-deliciosa-plant-pot-lush-green-leaves-home-decor-indoor-plant-tropical-foliage-vibrant-green-potted-plant-houseplant-greenery-plant-photography_191095-84025.jpg",
+          "alt": "Milagros_ TEST [UPDATE]"
+        },
+        {
+          "url": "https://img.magnific.com/free-psd/collection-six-potted-indoor-plants-green-foliage-home-decor_191095-78779.jpg",
+          "alt": "Milagros_ TEST [UPDATE]"
+        }
+      ],
+      "tags": [
+        "antiques"
+      ],
+      "created": "2026-06-03T14:33:12.357Z",
+      "updated": "2026-06-03T14:34:25.023Z",
+      "endsAt": "2026-09-16T17:35:00.000Z",
+      "bids": [
+        {
+          "id": "1a514e50-8279-4514-8d18-d26dc5e69fe2",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller40",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hei, jeg heter Tonje.",
+            "avatar": {
+              "url": "https://i.imgur.com/FDCzURD.jpeg",
+              "alt": "Seller40 avatar"
+            },
+            "banner": {
+              "url": "https://i.imgur.com/PYYALIz.jpeg",
+              "alt": "Seller40 banner"
+            }
+          },
+          "created": "2026-06-04T10:39:31.803Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller29",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hi there!",
+        "avatar": {
+          "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "5753c69f-1957-48e2-8881-38252ad9d2ce",
+      "title": "Pee in pools cap",
+      "description": "I really do not want to, but i got told to get rid of this amazing cap of mine. Please treat it with the respect it deserves! \nGood condition, only worn twice and a half.",
+      "media": [
+        {
+          "url": "https://i.ebayimg.com/images/g/6d0AAOSwWPNmmFLm/s-l1200.jpg",
+          "alt": "Funny cap"
+        }
+      ],
+      "tags": [
+        "Vintage",
+        "Fashion"
+      ],
+      "created": "2026-05-09T20:03:39.329Z",
+      "updated": "2026-05-09T20:03:39.329Z",
+      "endsAt": "2026-12-01T06:00:00.000Z",
+      "bids": [
+        {
+          "id": "266e4c04-b1e1-4bc8-920b-60eabe4e85aa",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller106",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I like to buy stuff",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller106 avatar"
+            },
+            "banner": {
+              "url": "https://images.igdb.com/igdb/image/upload/t_original/sc98jj.jpg",
+              "alt": "Seller106 banner"
+            }
+          },
+          "created": "2026-05-10T09:55:12.766Z"
+        },
+        {
+          "id": "7787dd1c-cc43-4175-840a-8997502ccf22",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller106",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I like to buy stuff",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller106 avatar"
+            },
+            "banner": {
+              "url": "https://images.igdb.com/igdb/image/upload/t_original/sc98jj.jpg",
+              "alt": "Seller106 banner"
+            }
+          },
+          "created": "2026-05-10T09:55:15.065Z"
+        },
+        {
+          "id": "3c7f9741-59ab-450d-b183-a36e76e1bbc9",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller106",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I like to buy stuff",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller106 avatar"
+            },
+            "banner": {
+              "url": "https://images.igdb.com/igdb/image/upload/t_original/sc98jj.jpg",
+              "alt": "Seller106 banner"
+            }
+          },
+          "created": "2026-05-10T09:55:16.480Z"
+        },
+        {
+          "id": "6386aaa1-b71b-4630-959c-aa272c14d35e",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller106",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I like to buy stuff",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller106 avatar"
+            },
+            "banner": {
+              "url": "https://images.igdb.com/igdb/image/upload/t_original/sc98jj.jpg",
+              "alt": "Seller106 banner"
+            }
+          },
+          "created": "2026-05-10T10:00:14.624Z"
+        },
+        {
+          "id": "780c80eb-7d7f-46a1-8d08-feb62779769c",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-14T09:30:17.190Z"
+        },
+        {
+          "id": "d9f978b2-b74b-401a-9605-3990cf4da1da",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller107",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I like Darth Maul AND Obi wan NOT ahhha",
+            "avatar": {
+              "url": "https://m.media-amazon.com/images/M/MV5BMmI2ZDc3ZGQtNjlkMy00MWNhLWJkYTgtYjA4ZjMwN2Q2YmE0XkEyXkFqcGc@._V1_.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://i0.wp.com/picjumbo.com/wp-content/uploads/sunset-wallpaper-free-image.jpeg?w=2210&quality=70",
+              "alt": ""
+            }
+          },
+          "created": "2026-08-09T12:50:53.220Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller105",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://sleten.no/cdn/shop/files/sleten_og.png?v=1767784224tropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "Sleten"
+        },
+        "banner": {
+          "url": "https://www.dagbladet.no/images/84049216.webp?imageId=84049216&x=0.00&y=0.00&cropw=100.00&croph=100.00&width=1960&height=1118&format=webptropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Nissene i skjul"
+        }
+      },
+      "_count": {
+        "bids": 6
+      }
+    },
+    {
+      "id": "931a79f0-f38d-4ac6-8d45-227811764fcc",
+      "title": "Vans",
+      "description": "I received the wrong size for my Vans when I ordered them online, so I'm selling them unused here.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1618225747659-433d5a5c6af7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmFucyUyMHNob2VzfGVufDB8fDB8fHwy",
+          "alt": "Vans"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1619646176605-b7417fb53b1e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmFucyUyMHNob2VzfGVufDB8fDB8fHwy",
+          "alt": "Vans"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1612194228259-d240452a64b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dmFucyUyMHNob2VzfGVufDB8fDB8fHwy",
+          "alt": "Vans"
+        }
+      ],
+      "tags": [
+        "Vans",
+        "Shoes",
+        "Skateboard vans"
+      ],
+      "created": "2026-05-08T08:34:28.333Z",
+      "updated": "2026-05-08T08:34:28.333Z",
+      "endsAt": "2026-12-17T09:30:00.000Z",
+      "bids": [
+        {
+          "id": "b941ebbb-81b6-4ed9-84ea-5ca24cce56df",
+          "amount": 11,
+          "bidder": {
+            "name": "Seller109",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello, this is my first time on an auction app.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1464757494038-157e877f60d4?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1464757494038-157e877f60d4?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-08T12:16:39.686Z"
+        },
+        {
+          "id": "982c6613-2cde-47bf-af96-f724526e6132",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller46",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page where I sell useful objects",
+            "avatar": {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Red_billed_gull-02.jpg/120px-Red_billed_gull-02.jpg",
+              "alt": "Seller46's profile picture"
+            },
+            "banner": {
+              "url": "https://plus.unsplash.com/premium_photo-1778339919734-c7aa71d5e709?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller46's banner picture"
+            }
+          },
+          "created": "2026-05-08T09:19:32.584Z"
+        },
+        {
+          "id": "8d67edf1-341b-40b1-8cb3-cec221ea6b43",
+          "amount": 12,
+          "bidder": {
+            "name": "Seller110",
+            "email": "redacted@stud.noroff.no",
+            "bio": "",
+            "avatar": {
+              "url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQgZf2omYKuFy9J_bkHaVu3MlDr1y7AGjzqVupLDxWTcvfQgrw0cjda1Z9LkbsktBS6OWvljrB3Li-3NHtpRJVSXvbTusMXs_QlUPwag4n8mg",
+              "alt": "Seller110 avatar"
+            },
+            "banner": {
+              "url": "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/02/goku-super-saiyan-dragon-ball-daima.jpg?q=70&fit=crop&w=1440&h=990&dpr=1",
+              "alt": "Seller110 banner"
+            }
+          },
+          "created": "2026-06-09T11:34:17.959Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller108",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm a student who 😍🚴‍♀️➕☕ welcome to my auctions 🎉",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1541625390725-39ec9fecaf17?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGN5Y2xpbmd8ZW58MHx8MHx8fDI%3D",
+          "alt": "Seller108's avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNwcmluZ3xlbnwwfHwwfHx8Mg%3D%3D",
+          "alt": "Seller108's banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "d8787abf-9d6b-4249-ba87-59b9393d6a8f",
+      "title": "Vinyl Record Collection",
+      "description": "Large collection of vintage vinyl records featuring a variety of artists and genres.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1604128311556-816dfb846a54?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Vinyl Record Collection"
+        }
+      ],
+      "tags": [
+        "music"
+      ],
+      "created": "2026-04-27T16:48:13.393Z",
+      "updated": "2026-04-27T16:48:13.393Z",
+      "endsAt": "2027-04-07T22:00:00.000Z",
+      "bids": [
+        {
+          "id": "85440406-c34e-4f2e-84e3-4e781a360dac",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-05-09T12:40:26.129Z"
+        },
+        {
+          "id": "c18e7a1d-56ee-4f54-99d0-4c3c489e0aa5",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller20",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my NightNode bio",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Placeholder avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Placeholder banner"
+            }
+          },
+          "created": "2026-05-03T21:22:35.747Z"
+        },
+        {
+          "id": "a779c57a-edc1-4bb1-863d-2eedcaef78b8",
+          "amount": 11,
+          "bidder": {
+            "name": "Seller05",
+            "email": "redacted@stud.noroff.no",
+            "bio": "GONNA SELL SO MUCH STUFF YEAHH!! I LOVE CLOWNS!!",
+            "avatar": {
+              "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771869563/f7xbkk7hhbanuvnelfym.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771869564/ix4sdviodf6cberetttg.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-08-17T20:16:48.706Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller10",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I just started coding again",
+        "avatar": {
+          "url": "https://soenderjyskehh.dk/wp-content/uploads/2025/09/Actionfotos-til-hjemmeside-25-26-5.png",
+          "alt": "Seller10's avatar"
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-photo/glasses-lie-laptop-reflecting-light-from-screen-dark_169016-52267.jpg?semt=ais_hybrid&w=740&q=80",
+          "alt": "Seller10's banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "9e63ce8a-c31c-4a04-ac53-66fafb880e80",
+      "title": "Nintendo 64 Console",
+      "description": "Relive classic gaming with this iconic Nintendo 64 console bundle. The N64 is one of Nintendo’s most beloved retro systems, known for legendary multiplayer experiences and timeless games.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1623762736174-77dccc1e571f?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Nintendo 64 Console"
+        }
+      ],
+      "tags": [
+        "Gaming"
+      ],
+      "created": "2026-04-27T16:46:55.472Z",
+      "updated": "2026-04-27T16:46:55.472Z",
+      "endsAt": "2026-12-15T23:00:00.000Z",
+      "bids": [
+        {
+          "id": "39c0bde1-56be-4e93-a353-59f9caf8866e",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller94",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Interface Design student at Noroff. Selling old gear to fund new projects. Always open to offers. Test test jviosvn ioefjasijwpifjjeofniepam. admaios ndiakd ahu",
+            "avatar": {
+              "url": "https://cdn.dribbble.com/userupload/15744351/file/original-26283634d8cb29b4a2b05f5939275048.png?resize=752x&vertical=center",
+              "alt": "Yellow character"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546928937-641f7ac9bced?q=80&w=939&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Image banner"
+            }
+          },
+          "created": "2026-05-06T20:46:16.212Z"
+        },
+        {
+          "id": "c48cfdd2-f9fa-4d2a-b9f3-01268c634552",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller111",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Barter is platform for auctioning items between NOROFF FED students.",
+            "avatar": {
+              "url": "https://raw.githubusercontent.com/larstp/semesterproject2/main/public/img/logos/logo_full_circle.png",
+              "alt": "Seller111's profile picture"
+            },
+            "banner": {
+              "url": "https://cdn.pixabay.com/photo/2024/07/02/06/57/ai-generated-8866839_1280.jpg",
+              "alt": "Seller111's banner"
+            }
+          },
+          "created": "2026-08-18T11:46:44.334Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller10",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I just started coding again",
+        "avatar": {
+          "url": "https://soenderjyskehh.dk/wp-content/uploads/2025/09/Actionfotos-til-hjemmeside-25-26-5.png",
+          "alt": "Seller10's avatar"
+        },
+        "banner": {
+          "url": "https://img.freepik.com/free-photo/glasses-lie-laptop-reflecting-light-from-screen-dark_169016-52267.jpg?semt=ais_hybrid&w=740&q=80",
+          "alt": "Seller10's banner"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "5e93184e-e28f-469d-b4cd-9c7add33b2b0",
+      "title": "Retro Vintage Television Set",
+      "description": "Classic vintage television with authentic retro design and old-school charm. A unique decorative piece that fits perfectly in vintage-inspired interiors, studios, or creative spaces. Shows natural signs of age that give it character and history.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=728&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Listing image"
+        }
+      ],
+      "tags": [
+        "vintage",
+        "furniture"
+      ],
+      "created": "2026-04-06T12:24:26.758Z",
+      "updated": "2026-05-09T08:43:36.406Z",
+      "endsAt": "2026-10-01T13:00:00.000Z",
+      "bids": [
+        {
+          "id": "d71924ce-75ca-4587-894c-918e1d5b647b",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:14:05.892Z"
+        },
+        {
+          "id": "adb2b748-6cec-4fe4-beed-98aaf068f7d3",
+          "amount": 12,
+          "bidder": {
+            "name": "Seller112",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://i.imghippo.com/files/RlT5213iwI.jpg",
+              "alt": "Seller112's banner"
+            }
+          },
+          "created": "2026-04-27T13:25:45.590Z"
+        },
+        {
+          "id": "72cc0eea-c0a4-4d8b-9663-59f25e2e606a",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller113",
+            "email": "redacted@stud.noroff.no",
+            "bio": "From pres.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": ""
+            }
+          },
+          "created": "2026-06-05T18:52:29.754Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller83",
+        "email": "redacted@stud.noroff.no",
+        "bio": "A 28-year-old student who is passionate about vintage things",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile avatar"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile banner"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "a42eb46b-f378-4ad4-9002-d124f9e93740",
+      "title": "Harlequin 1888-1890 Paul Cezanne",
+      "description": "Over 100 years old beautiful Harlequin painting - Acryl painting by Paul Cezanne Artist, French, 1839 - 1906.",
+      "media": [
+        {
+          "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771876082/csabkov1xjl6casnidka.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771876082/s1px6kkix0xeiu9o9wtb.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771876082/oaqtbpvuao3khogvqt61.jpg",
+          "alt": ""
+        },
+        {
+          "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771876082/pz87bizd46td5kjwr6zj.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [],
+      "created": "2026-02-23T19:47:34.716Z",
+      "updated": "2026-08-17T20:15:41.202Z",
+      "endsAt": "2026-12-01T04:55:00.000Z",
+      "bids": [
+        {
+          "id": "83472c05-0340-48c0-a380-db4e5c61e568",
+          "amount": 150,
+          "bidder": {
+            "name": "Seller114",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hey! Whats up",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+              "alt": "A man"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/v915-red-blue_53876-174923.jpg",
+              "alt": "A banner"
+            }
+          },
+          "created": "2026-03-18T10:50:14.684Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller05",
+        "email": "redacted@stud.noroff.no",
+        "bio": "GONNA SELL SO MUCH STUFF YEAHH!! I LOVE CLOWNS!!",
+        "avatar": {
+          "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771869563/f7xbkk7hhbanuvnelfym.jpg",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://res.cloudinary.com/du6lu8z3k/image/upload/v1771869564/ix4sdviodf6cberetttg.jpg",
+          "alt": ""
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "8d97a4cb-1a59-45f0-929d-ce95511eada1",
+      "title": "Minimalist Rose Gold Watch with Beige Leather Strap",
+      "description": "Minimalist wristwatch with a slim rose gold-tone case, clean white dial, and simple hour markers. Paired with a soft beige leather strap for a modern, understated look. Lightweight and elegant design.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=1099&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:43:04.528Z",
+      "updated": "2026-01-29T08:43:04.528Z",
+      "endsAt": "2026-12-23T09:42:00.000Z",
+      "bids": [
+        {
+          "id": "7225af81-9ce3-4031-993e-210fdb06513e",
+          "amount": 22,
+          "bidder": {
+            "name": "Seller115",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://convertico.com/samples/png/abstract-whale-png.png",
+              "alt": "Seller115's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-01T16:45:08.153Z"
+        },
+        {
+          "id": "b0f2b57f-5551-463e-bd4b-4d2ea30dcdf3",
+          "amount": 900,
+          "bidder": {
+            "name": "Seller116",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-08T22:03:02.160Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller21",
+        "email": "redacted@stud.noroff.no",
+        "bio": "All that sparkles is gold!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "d05b353d-1a04-4325-bc95-b65ea4eb6612",
+      "title": "Rose Gold-Tone Bracelet with Square Link Design",
+      "description": "Stylish rose gold-tone bracelet featuring square links with textured centers and clear stone accents. Structured yet elegant design with a secure clasp. Ideal for dressy or evening wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1720528347585-02ae5d2504bf?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:40:28.621Z",
+      "updated": "2026-01-29T08:40:28.621Z",
+      "endsAt": "2026-12-15T09:40:00.000Z",
+      "bids": [
+        {
+          "id": "93fc6402-3660-4fff-ae78-5e9505a1a7d7",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-04-03T12:12:46.782Z"
+        },
+        {
+          "id": "0cccc68d-97a5-41f2-a69b-3e9ac3da5358",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-09T16:13:30.119Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller21",
+        "email": "redacted@stud.noroff.no",
+        "bio": "All that sparkles is gold!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "9a983eaf-c349-4ade-9446-52f26a2d9b68",
+      "title": "Gold-Tone Rings with Blue and Clear Stones",
+      "description": "Decorative gold-tone ring set featuring blue stones and clear accents in a bold, patterned design. Eye-catching style with a luxurious look, suitable for statement wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:39:54.217Z",
+      "updated": "2026-01-29T08:39:54.217Z",
+      "endsAt": "2026-12-15T09:39:00.000Z",
+      "bids": [
+        {
+          "id": "4e4a6692-e4d2-4b38-99ad-a6152f3041e1",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller95",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my cool story bro.",
+            "avatar": {
+              "url": "https://i.postimg.cc/c4SDxdqV/diego-hernandez-MSepzb-KFz10-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-05T19:25:12.991Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller21",
+        "email": "redacted@stud.noroff.no",
+        "bio": "All that sparkles is gold!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "e225d35c-0657-4fab-b8fa-9be8f1ae4618",
+      "title": "V-Shaped Silver Ring with Pavé Stones",
+      "description": "Elegant V-shaped silver-tone ring adorned with small pavé-set clear stones along the front. Delicate and modern design, perfect worn alone or stacked with other rings. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1561995975-a23cdb019dce?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:39:17.646Z",
+      "updated": "2026-01-29T08:39:17.646Z",
+      "endsAt": "2026-12-23T09:39:00.000Z",
+      "bids": [
+        {
+          "id": "60206d63-8807-4b9a-97b0-49d9d4a0a217",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller117",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-08T16:01:18.306Z"
+        },
+        {
+          "id": "0ce59a18-1ad8-4925-8bb2-c140408509fc",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller111",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Barter is platform for auctioning items between NOROFF FED students.",
+            "avatar": {
+              "url": "https://raw.githubusercontent.com/larstp/semesterproject2/main/public/img/logos/logo_full_circle.png",
+              "alt": "Seller111's profile picture"
+            },
+            "banner": {
+              "url": "https://cdn.pixabay.com/photo/2024/07/02/06/57/ai-generated-8866839_1280.jpg",
+              "alt": "Seller111's banner"
+            }
+          },
+          "created": "2026-02-24T12:29:34.550Z"
+        },
+        {
+          "id": "73ca443d-d6d2-433e-ac6e-30116d9dbc8c",
+          "amount": 200,
+          "bidder": {
+            "name": "Seller118",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-with-online-avatar_23-2151303097.jpg",
+              "alt": "Sigrid"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-24T13:14:29.546Z"
+        },
+        {
+          "id": "9282ba5a-2c34-4f92-a08c-62981e24b88e",
+          "amount": 220,
+          "bidder": {
+            "name": "Seller111",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Barter is platform for auctioning items between NOROFF FED students.",
+            "avatar": {
+              "url": "https://raw.githubusercontent.com/larstp/semesterproject2/main/public/img/logos/logo_full_circle.png",
+              "alt": "Seller111's profile picture"
+            },
+            "banner": {
+              "url": "https://cdn.pixabay.com/photo/2024/07/02/06/57/ai-generated-8866839_1280.jpg",
+              "alt": "Seller111's banner"
+            }
+          },
+          "created": "2026-02-27T16:14:27.729Z"
+        },
+        {
+          "id": "bfd53519-d3b2-485e-894a-d504b53c684c",
+          "amount": 221,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:05:38.965Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller21",
+        "email": "redacted@stud.noroff.no",
+        "bio": "All that sparkles is gold!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 5
+      }
+    },
+    {
+      "id": "f1df1e5a-0e81-4ee2-bb75-ae2e8ab5859d",
+      "title": "Gold-Tone Rope Chain Necklace with Crown Pendant",
+      "description": "Bold gold-tone rope chain necklace featuring a detailed crown pendant with red and clear stone accents. Statement piece with a regal, eye-catching design. Suitable for special occasions or standout styling. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:34:03.487Z",
+      "updated": "2026-01-29T08:34:03.487Z",
+      "endsAt": "2026-12-23T09:33:00.000Z",
+      "bids": [
+        {
+          "id": "8530cbbc-3cc5-40a3-a696-5406d027257d",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller119",
+            "email": "redacted@stud.noroff.no",
+            "bio": "awdawa",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller119 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Seller119 banner"
+            }
+          },
+          "created": "2026-02-17T01:55:48.474Z"
+        },
+        {
+          "id": "b6aa2a8c-8777-4e19-a157-51cbca768356",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller108",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm a student who 😍🚴‍♀️➕☕ welcome to my auctions 🎉",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1541625390725-39ec9fecaf17?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGN5Y2xpbmd8ZW58MHx8MHx8fDI%3D",
+              "alt": "Seller108's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNwcmluZ3xlbnwwfHwwfHx8Mg%3D%3D",
+              "alt": "Seller108's banner"
+            }
+          },
+          "created": "2026-04-28T10:48:30.541Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller21",
+        "email": "redacted@stud.noroff.no",
+        "bio": "All that sparkles is gold!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "25ba1526-7e76-44c2-b017-020f5c9c470c",
+      "title": "Silver Tennis Bracelet with Clear Stones",
+      "description": "Classic silver-tone tennis bracelet set with a continuous row of clear stones. Features a secure box clasp and flexible fit. Timeless design that adds sparkle to both everyday and formal outfits. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1723036520491-fa55aa04a8c9?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:30:35.626Z",
+      "updated": "2026-01-29T08:30:35.626Z",
+      "endsAt": "2026-12-15T09:30:00.000Z",
+      "bids": [
+        {
+          "id": "47432698-c239-4929-bc7a-0fd10db73bcb",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:46:31.295Z"
+        },
+        {
+          "id": "23b44c8c-c11e-4770-b06e-1daffc3701ee",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller56",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi, I'm Emily. I bake.",
+            "avatar": {
+              "url": "https://i.postimg.cc/Qt4gzpqJ/jeffery-erhunse-vp9m-Rauo68c-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T20:48:21.718Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller04",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "72c2500e-ecea-4508-999a-1230f59ab300",
+      "title": "Silver Necklace with Green Stone Charms",
+      "description": "Delicate silver-tone necklace adorned with small green stone charms spaced evenly along the chain. Lightweight and elegant design that adds subtle color and sparkle. Ideal for layering or everyday wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1676329945867-01c9975aa9d1?q=80&w=1233&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:25:58.482Z",
+      "updated": "2026-01-29T08:25:58.482Z",
+      "endsAt": "2026-08-29T09:25:00.000Z",
+      "bids": [
+        {
+          "id": "a2762ce3-8515-4957-b666-c5b241074ff3",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:36:32.969Z"
+        },
+        {
+          "id": "8fae9e28-79ee-4857-a788-a87855c0de64",
+          "amount": 35,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:31:44.845Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller04",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "eef377b6-0956-448c-b2ff-52bd655865d8",
+      "title": "Silver Charm Bracelet with Turquoise-Colored Stones",
+      "description": "Silver-tone charm bracelet featuring multiple small round turquoise-colored stone pendants. Lightweight chain design with subtle movement and adjustable clasp. Fresh, modern look perfect for casual outfits. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1676303679145-8679f5ceeb16?q=80&w=1097&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:25:22.990Z",
+      "updated": "2026-01-29T08:25:22.990Z",
+      "endsAt": "2026-10-22T09:25:00.000Z",
+      "bids": [
+        {
+          "id": "90584486-4f9d-4238-835c-a42418168531",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:46:50.833Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller04",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "67b41bd9-876d-42d6-bec9-65a9657813ff",
+      "title": "Silver Bracelet with Heart Motifs and Pink Stones",
+      "description": "Charming silver-tone bracelet with open heart motifs and round pink stone accents. Adjustable chain with secure clasp. Romantic and playful design suitable for everyday wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1676291055501-286c48bb186f?q=80&w=990&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:20:06.823Z",
+      "updated": "2026-01-29T08:20:06.823Z",
+      "endsAt": "2026-10-05T09:20:00.000Z",
+      "bids": [
+        {
+          "id": "e86203d6-a9fd-435a-a4f7-17a0411ce5d7",
+          "amount": 25,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:47:01.497Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller13",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm fancy, and I wear pants :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "5ef45fe1-9081-46f9-ad22-c12d32825462",
+      "title": "Silver Bracelet with Butterfly Charm and Stones",
+      "description": "Delicate silver-tone bracelet featuring a butterfly charm accented with small clear stones. Includes an adjustable chain clasp for a comfortable fit. Elegant and feminine design, ideal for daily wear or gifting. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1723036520383-f9a40f410cbb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:19:30.129Z",
+      "updated": "2026-01-29T08:19:30.129Z",
+      "endsAt": "2026-10-21T09:19:00.000Z",
+      "bids": [
+        {
+          "id": "90228df6-ec64-4eb0-a257-dd348b434b47",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:47:11.386Z"
+        },
+        {
+          "id": "56f0043b-d773-4b9c-92d1-45af1c9ecaac",
+          "amount": 25,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:33:57.959Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller13",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm fancy, and I wear pants :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "0049e9c4-8b2d-4728-be0d-bb80014204fe",
+      "title": "Solitaire-Style Silver Ring with Clear Stone",
+      "description": "Elegant silver-tone ring featuring a single clear stone in a raised prong setting. Classic solitaire-style design with a slim band, suitable for everyday wear or special occasions. Presented in a ring box. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1677045419465-5c64f8277e4c?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-29T08:18:58.264Z",
+      "updated": "2026-01-29T08:18:58.264Z",
+      "endsAt": "2026-10-14T09:18:00.000Z",
+      "bids": [
+        {
+          "id": "12f049a7-1819-4962-8205-83945cc97946",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller04",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:27:08.416Z"
+        },
+        {
+          "id": "52e906fa-c6dd-42e7-9c7a-bd90ba9f1d8f",
+          "amount": 150,
+          "bidder": {
+            "name": "Seller118",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-with-online-avatar_23-2151303097.jpg",
+              "alt": "Sigrid"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-24T13:14:58.812Z"
+        },
+        {
+          "id": "ad82e301-89c0-4d1a-bf8c-3b926f9bfb53",
+          "amount": 155,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:28:34.151Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller13",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm fancy, and I wear pants :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "df26f338-22a1-429c-bf27-d714b3bc1db4",
+      "title": "Blue Satin Shoulder Bag with Chain Strap",
+      "description": "Compact blue satin shoulder bag with flap closure and silver-tone chain strap. Soft fabric finish with a modern, minimalist design. Lightweight and ideal for evenings or casual outings. Good condition.",
+      "media": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1693222144142-bf72bdbf748c?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-29T08:14:36.163Z",
+      "updated": "2026-01-29T08:14:36.163Z",
+      "endsAt": "2026-10-06T09:14:00.000Z",
+      "bids": [
+        {
+          "id": "9ad09c96-298c-46f1-8333-0e0adb33b87a",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller76",
+            "email": "redacted@stud.noroff.no",
+            "bio": "artist",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/37554083/pexels-photo-37554083.jpeg",
+              "alt": "Seller76"
+            },
+            "banner": {
+              "url": "https://images.pexels.com/photos/36592084/pexels-photo-36592084.jpeg",
+              "alt": ""
+            }
+          },
+          "created": "2026-05-09T16:37:50.253Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller13",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm fancy, and I wear pants :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "3493a610-af8a-4028-bb55-a181f8ab3801",
+      "title": "Woven Handbag with Leather Flap Closure",
+      "description": "Stylish woven handbag with a structured leather flap, top handle, and metal clasp closure. Features a shoulder strap for versatile carrying. Unique texture and warm tone, perfect for spring and summer outfits. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=1038&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-29T08:13:51.036Z",
+      "updated": "2026-01-29T08:13:51.036Z",
+      "endsAt": "2026-08-29T09:13:00.000Z",
+      "bids": [
+        {
+          "id": "71752c4e-5526-4aa4-b47e-5c937a4ca144",
+          "amount": 15,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:46:13.001Z"
+        },
+        {
+          "id": "450b5276-1fad-43de-828f-502415880e6c",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller04",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:26:34.848Z"
+        },
+        {
+          "id": "9a3c3988-a67f-4183-9bb9-a9e42409ed28",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller56",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi, I'm Emily. I bake.",
+            "avatar": {
+              "url": "https://i.postimg.cc/Qt4gzpqJ/jeffery-erhunse-vp9m-Rauo68c-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T21:00:12.313Z"
+        },
+        {
+          "id": "6b424db6-cd21-45b7-ba19-b4ece1249730",
+          "amount": 999,
+          "bidder": {
+            "name": "Seller102",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-10T14:48:19.915Z"
+        },
+        {
+          "id": "a4092a71-5493-42f5-90af-260991928808",
+          "amount": 1000,
+          "bidder": {
+            "name": "Seller22",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/woman-with-braided-hair-illustration_1308-174675.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/gradient-hexagonal-background_52683-62053.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-03-19T09:30:47.305Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller13",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm fancy, and I wear pants :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 5
+      }
+    },
+    {
+      "id": "391a1078-3409-453d-b5fa-c69037231537",
+      "title": "Monogram-Style Handbag with Top Handles",
+      "description": "Structured handbag featuring a classic monogram-style pattern with contrasting trim and top handles. Zip closure and compact shape make it suitable for everyday use. Timeless design with a polished, luxury-inspired look. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1691480288782-142b953cf664?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-29T08:09:50.819Z",
+      "updated": "2026-01-29T08:09:50.819Z",
+      "endsAt": "2026-11-11T09:09:00.000Z",
+      "bids": [
+        {
+          "id": "0a2420be-e0de-4524-8d23-235fd20b75cf",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller13",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm fancy, and I wear pants :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:21:30.661Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller120",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm Mr. Bulldog. Time to get schwifty in here!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "508bc60f-7f40-40e3-9be5-0e75d22032d3",
+      "title": "Red Glitter Clutch with Floral Flap Detail",
+      "description": "Eye-catching red glitter clutch featuring a curved flap with floral print detailing. Slim, envelope-style design ideal for evenings or special occasions. Lightweight and decorative with a bold, statement look. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1569385210018-127685230669?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-29T08:09:12.772Z",
+      "updated": "2026-01-29T08:09:12.772Z",
+      "endsAt": "2026-10-14T09:09:00.000Z",
+      "bids": [
+        {
+          "id": "43a973d6-0f7f-4424-b3bf-51bc69870126",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller13",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm fancy, and I wear pants :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:20:56.274Z"
+        },
+        {
+          "id": "99de69b2-8ca6-459b-9639-d6fd42261bbf",
+          "amount": 45,
+          "bidder": {
+            "name": "Seller04",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:28:05.198Z"
+        },
+        {
+          "id": "1e884f9d-a32f-4811-9711-f93426d4bd23",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller56",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi, I'm Emily. I bake.",
+            "avatar": {
+              "url": "https://i.postimg.cc/Qt4gzpqJ/jeffery-erhunse-vp9m-Rauo68c-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-31T15:16:09.299Z"
+        },
+        {
+          "id": "213c2b0e-c35b-4da4-ac3a-f73f4275766d",
+          "amount": 52,
+          "bidder": {
+            "name": "Seller121",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello! Here is my profile!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-04T20:18:10.078Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller120",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm Mr. Bulldog. Time to get schwifty in here!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 4
+      }
+    },
+    {
+      "id": "053cf209-d0a5-44b7-9892-9c1b46fc356f",
+      "title": "Cream Top-Handle Handbag with Gold-Tone Clasp",
+      "description": "Elegant cream-colored handbag with a structured silhouette, top handle, and gold-tone twist clasp. Smooth finish with subtle stitching and minimalist detailing. A refined piece suitable for formal or everyday wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1606522754091-a3bbf9ad4cb3?q=80&w=1084&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-29T08:08:36.668Z",
+      "updated": "2026-01-29T08:08:36.668Z",
+      "endsAt": "2026-09-25T09:08:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller120",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I'm Mr. Bulldog. Time to get schwifty in here!",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "e4973396-6d0f-49f3-8c76-df354037bb11",
+      "title": "Brown Leather Messenger Bag with Buckle Closure",
+      "description": "Vintage-style brown leather messenger bag with flap closure and buckle straps. Features adjustable shoulder strap and textured leather with natural wear. Timeless design suitable for work or everyday use. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1473188588951-666fce8e7c68?q=80&w=974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T20:02:23.690Z",
+      "updated": "2026-01-28T20:02:23.690Z",
+      "endsAt": "2026-12-16T21:02:00.000Z",
+      "bids": [
+        {
+          "id": "6e22b070-460e-448e-b28c-5d5d85f29089",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller120",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm Mr. Bulldog. Time to get schwifty in here!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:10:10.393Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "c66bc91a-67ff-485a-a46b-feb9bc1618a4",
+      "title": "Brown Leather Duffle Bag with Shoulder Strap",
+      "description": "Spacious brown leather duffle bag with top handles, front pockets, and adjustable shoulder strap. Rich leather finish with metal hardware and classic stitching. Ideal for weekend trips or travel. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1479219136056-56bb6495a005?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T19:25:34.072Z",
+      "updated": "2026-01-28T19:25:34.072Z",
+      "endsAt": "2026-11-18T20:25:00.000Z",
+      "bids": [
+        {
+          "id": "6a60d73b-494a-4037-8d5e-345c5df2b388",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller73",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page. It is alittle here but i am more into bidding than selling",
+            "avatar": {
+              "url": "https://images.voicy.network/Content/Clips/Images/04ad182e-8970-4049-8eba-f072d08799d5-small.png",
+              "alt": "Avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1507752533523-5186b0bc4c43?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Banner"
+            }
+          },
+          "created": "2026-05-07T22:41:27.963Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "fb6c92df-d81f-42f0-8c03-909f3541ff95",
+      "title": "Canvas and Leather Hiking Backpack",
+      "description": "Rugged canvas backpack with leather trim and buckle closures. Features flap top design, front pockets, and adjustable straps. Outdoor-inspired style ideal for travel, hiking, or casual use. Good condition with light wear.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1474376962954-d8a681cc53b2?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T19:24:44.538Z",
+      "updated": "2026-01-28T19:24:44.538Z",
+      "endsAt": "2026-11-17T20:24:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "8a368d15-63dc-45fd-abd7-e2b92f76667e",
+      "title": "Burgundy Leather Backpack with Minimal Design",
+      "description": "Burgundy-toned leather backpack with a clean silhouette and front zip pocket. Features adjustable straps, top handle, and subtle embossed logo detail. Compact yet functional design suitable for daily wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1622560480654-d96214fdc887?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T19:22:27.860Z",
+      "updated": "2026-01-28T19:22:27.860Z",
+      "endsAt": "2026-09-08T20:22:00.000Z",
+      "bids": [
+        {
+          "id": "3445a044-54f2-4ac6-b87e-feb70f28e9cb",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller73",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Welcome to my page. It is alittle here but i am more into bidding than selling",
+            "avatar": {
+              "url": "https://images.voicy.network/Content/Clips/Images/04ad182e-8970-4049-8eba-f072d08799d5-small.png",
+              "alt": "Avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1507752533523-5186b0bc4c43?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Banner"
+            }
+          },
+          "created": "2026-05-07T22:43:19.085Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "9e7c5497-763a-4175-8f72-8b03052102e9",
+      "title": "Brown Leather Backpack with Front Pocket",
+      "description": "Classic brown leather backpack with a structured shape, front zip pocket, and side pockets. Features a top handle, adjustable shoulder straps, and visible natural leather patina. Practical and stylish for everyday use. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1622560257067-108402fcedc0?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T19:21:31.232Z",
+      "updated": "2026-01-28T19:21:31.232Z",
+      "endsAt": "2026-10-28T20:21:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "6b2a58bd-40a0-4237-ba2f-6ef85c04c215",
+      "title": "Black Backpack with Minimalist Design",
+      "description": "Sleek black backpack with a minimalist silhouette and zippered compartments. Features a structured shape, top handle, and subtle logo detail. Modern and practical design for daily use, commuting, or travel. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1622560481979-f5b0174242a0?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T15:13:50.028Z",
+      "updated": "2026-01-28T15:13:50.028Z",
+      "endsAt": "2026-10-31T16:13:00.000Z",
+      "bids": [
+        {
+          "id": "9fe44667-737c-47c2-8ea0-6dc601db6ce8",
+          "amount": 9,
+          "bidder": {
+            "name": "Seller95",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my cool story bro.",
+            "avatar": {
+              "url": "https://i.postimg.cc/c4SDxdqV/diego-hernandez-MSepzb-KFz10-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T06:58:08.656Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "233cb870-735b-437a-9a8e-7e16f80ffcc7",
+      "title": "Black Leather Messenger Bag with Flap Closure",
+      "description": "Classic black leather messenger bag with flap closure and metal clasp details. Rectangular shape with shoulder strap and textured leather surface. Practical and timeless design for everyday or work use. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1682316967717-16b32a406559?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T15:13:16.634Z",
+      "updated": "2026-01-28T15:13:16.634Z",
+      "endsAt": "2026-08-28T16:13:00.000Z",
+      "bids": [
+        {
+          "id": "45774677-2ef3-4aeb-8698-5e9e8c2f035a",
+          "amount": 1,
+          "bidder": {
+            "name": "Oltenks",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my Profile",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+              "alt": "Oltenks monogram"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2026-08-22T14:29:10.375Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "bae68e1c-df40-4f0e-af9a-d4d3f5ca2b59",
+      "title": "Dark Brown Leather Briefcase with Zip Pocket",
+      "description": "Professional dark brown leather briefcase featuring top handles and a front zippered pocket. Textured leather finish with classic stitching and sturdy construction. Suitable for work or business travel. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1667687038826-3d00484bce96?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T15:12:38.950Z",
+      "updated": "2026-01-28T15:12:38.950Z",
+      "endsAt": "2026-09-15T16:12:00.000Z",
+      "bids": [
+        {
+          "id": "8a1a0ddb-c8c1-45a8-88ab-94d8a181b500",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T09:24:47.853Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "d246aa95-a151-4832-9801-f41671ee3666",
+      "title": "Brown Leather Tote Bag with Top Handles",
+      "description": "Simple brown leather tote bag with a clean, unstructured design and sturdy top handles. Minimal detailing with natural leather texture and patina. Ideal for daily errands, work, or casual use. Good condition with natural wear.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1624687943971-e86af76d57de?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T15:11:49.131Z",
+      "updated": "2026-01-28T15:11:49.131Z",
+      "endsAt": "2026-11-10T16:11:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "c6b9668d-26e6-4e30-8129-4f05b4f05df6",
+      "title": "Brown Leather Satchel Handbag with Buckle Details",
+      "description": "Structured brown leather satchel with top handles, decorative buckle straps, and metal hardware. Features a classic silhouette with visible stitching and detachable shoulder strap. Spacious and stylish, suitable for everyday use. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1691480250099-a63081ecfcb8?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "bags"
+      ],
+      "created": "2026-01-28T15:11:10.622Z",
+      "updated": "2026-01-28T15:11:10.622Z",
+      "endsAt": "2026-10-12T16:11:00.000Z",
+      "bids": [],
+      "seller": {
+        "name": "Seller18",
+        "email": "redacted@stud.noroff.no",
+        "bio": "I love bags, can't get enough of 'em! That's why I'm here babyy",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 0
+      }
+    },
+    {
+      "id": "ef060ae9-a31f-4df4-9859-232565ac5fb8",
+      "title": "Mechanical-Style Watch with Open Balance Detail",
+      "description": "Distinctive mechanical-style wristwatch with detailed dial, visible balance window, and classic numerals. Polished metal case paired with a brown leather strap. Eye-catching design with a vintage-inspired feel.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "watches"
+      ],
+      "created": "2026-01-28T15:06:59.170Z",
+      "updated": "2026-01-28T15:06:59.170Z",
+      "endsAt": "2026-11-03T16:06:00.000Z",
+      "bids": [
+        {
+          "id": "7bd66303-49cb-4997-849d-cc4306e43e76",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-04-03T14:40:26.775Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller122",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "c4d2a792-0146-408c-8fcb-814ebab6385a",
+      "title": "Classic Chronograph Watch with Rose Gold Accents",
+      "description": "Elegant chronograph-style wristwatch with light dial, rose gold-tone case, and multiple subdials. Features a brown leather strap and date window. Refined design combining classic and modern elements.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=994&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "watches"
+      ],
+      "created": "2026-01-28T15:06:31.585Z",
+      "updated": "2026-01-28T15:06:31.585Z",
+      "endsAt": "2026-11-03T16:06:00.000Z",
+      "bids": [
+        {
+          "id": "41991278-7d09-4252-86d9-e33ec3a8ed94",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T11:10:44.176Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller122",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "4c4c58b7-5d26-48d3-a0f1-93a8775f81a8",
+      "title": "Smartwatch with Black Mesh Strap",
+      "description": "Modern smartwatch featuring a rectangular touchscreen display and black mesh strap. Digital face with activity indicators and time display. Sleek, contemporary design suitable for everyday use.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1579811216948-6f57c19376a5?q=80&w=996&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "watches"
+      ],
+      "created": "2026-01-28T15:06:01.962Z",
+      "updated": "2026-01-28T15:06:01.962Z",
+      "endsAt": "2026-09-08T16:05:00.000Z",
+      "bids": [
+        {
+          "id": "735cfb3f-2faf-46c3-b582-69082dda1912",
+          "amount": 25,
+          "bidder": {
+            "name": "Seller04",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:26:53.527Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller122",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "edba27a2-0546-47ed-9fe7-ccdeb0468818",
+      "title": "Minimalist Rose Gold Watch with Beige Leather Strap",
+      "description": "Minimalist wristwatch with a slim rose gold-tone case, clean white dial, and simple hour markers. Paired with a soft beige leather strap for a modern, understated look. Lightweight and elegant design.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=1099&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "watches"
+      ],
+      "created": "2026-01-28T15:03:33.819Z",
+      "updated": "2026-01-28T15:03:33.819Z",
+      "endsAt": "2026-10-13T16:03:00.000Z",
+      "bids": [
+        {
+          "id": "cf3ef5ab-8074-4433-9b80-7c5286fb5961",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller95",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my cool story bro.",
+            "avatar": {
+              "url": "https://i.postimg.cc/c4SDxdqV/diego-hernandez-MSepzb-KFz10-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-28T21:03:22.447Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller122",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "e5012940-6581-47b3-bc03-5fd44d367df5",
+      "title": "Silver Chronograph Watch with Roman Numerals",
+      "description": "Classic silver-tone chronograph-style watch with cream dial and black Roman numerals. Features multiple subdials, push-button controls, and a brown leather strap. Traditional design with a refined, slightly vintage look.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1507975456351-a41d6828b9c8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "watches"
+      ],
+      "created": "2026-01-28T15:03:02.340Z",
+      "updated": "2026-01-28T15:03:02.340Z",
+      "endsAt": "2026-09-28T16:02:00.000Z",
+      "bids": [
+        {
+          "id": "4c3679ff-6b49-45a0-979c-150c62946352",
+          "amount": 45,
+          "bidder": {
+            "name": "Seller13",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm fancy, and I wear pants :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:20:33.667Z"
+        },
+        {
+          "id": "e7722347-82e1-4fc3-bc7d-b842d476439f",
+          "amount": 46,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:37:55.610Z"
+        },
+        {
+          "id": "f33d83f1-80e4-4529-b85b-96bbc7144a06",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller113",
+            "email": "redacted@stud.noroff.no",
+            "bio": "From pres.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": ""
+            }
+          },
+          "created": "2026-06-07T20:58:10.286Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller122",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "94a50fec-eeed-4a48-9383-a29d5a271425",
+      "title": "Stainless Steel Watch with Blue Dial",
+      "description": "Modern stainless steel watch with a blue dial and clean markers. Features a sturdy metal bracelet and versatile design suitable for everyday use. Stylish and practical with light signs of wear.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "watches"
+      ],
+      "created": "2026-01-28T14:59:09.617Z",
+      "updated": "2026-01-28T14:59:09.617Z",
+      "endsAt": "2026-09-28T15:59:00.000Z",
+      "bids": [
+        {
+          "id": "9dc87457-00d5-4b93-8ea4-abe2c81d00ef",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller04",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-29T08:26:13.156Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller122",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "25b373f4-337e-4218-a3ed-100985107470",
+      "title": "Gold-Tone Teardrop Earrings with Textured Detail",
+      "description": "Classic gold-tone teardrop earrings with a polished outer finish and textured inner detail. Secure hook closures and timeless design suitable for both casual and formal wear. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1705326453282-e4e1b78f5fea?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-28T14:54:45.488Z",
+      "updated": "2026-01-28T14:54:45.488Z",
+      "endsAt": "2026-09-24T15:54:00.000Z",
+      "bids": [
+        {
+          "id": "132cbb0a-48a2-4cb3-8ac9-f94495b43efa",
+          "amount": 30,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:36:16.761Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller25",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hey! I'm Maddie, and I like frogs :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1617957796155-72d8717ac882?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "e1de6f8f-f2fc-4407-8691-f072013b9a2c",
+      "title": "Rose Gold-Tone Cage Drop Earrings",
+      "description": "Delicate rose gold-tone drop earrings with an open cage design and small clear stones along the base. Lightweight with hook closures, offering subtle sparkle and movement. Elegant and modern style in good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1701777892770-df3bf8006fd8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-28T14:53:56.434Z",
+      "updated": "2026-01-28T14:53:56.434Z",
+      "endsAt": "2026-11-24T15:53:00.000Z",
+      "bids": [
+        {
+          "id": "e545aa87-73de-46d8-9433-d7110742c1f6",
+          "amount": 50,
+          "bidder": {
+            "name": "Seller13",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm fancy, and I wear pants :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:21:43.548Z"
+        },
+        {
+          "id": "8221178c-945c-49b1-a6c3-880cbe0ae97f",
+          "amount": 51,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T09:31:19.663Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller25",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hey! I'm Maddie, and I like frogs :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1617957796155-72d8717ac882?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "e725c69c-d9c7-4adc-9d13-18757df35683",
+      "title": "Gold-Tone Round Drop Earrings with Vintage Motifs",
+      "description": "Unique gold-tone drop earrings featuring round pendants with vintage-style illustrations. Lightweight design with hook closures. Artistic and distinctive, perfect for adding character to everyday or evening outfits. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1707379240697-8a412e2cce84?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-28T14:53:21.551Z",
+      "updated": "2026-01-28T14:53:21.551Z",
+      "endsAt": "2026-11-25T15:53:00.000Z",
+      "bids": [
+        {
+          "id": "80424bdd-dac1-488c-b3ab-68832789f857",
+          "amount": 25,
+          "bidder": {
+            "name": "Seller21",
+            "email": "redacted@stud.noroff.no",
+            "bio": "All that sparkles is gold!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1543295204-2ae345412549?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:35:59.456Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller25",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hey! I'm Maddie, and I like frogs :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1617957796155-72d8717ac882?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "6f256764-bed7-4b54-a29b-b46cfd874e81",
+      "title": "Gold-Tone Flower Pendant Necklace with Pearl Detail",
+      "description": "Elegant flower-shaped pendant necklace featuring white petal details with small green accents and a central stone. Set on a gold-tone chain with a delicate, decorative design. Eye-catching statement piece in good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1685970731571-72ede0cb26ea?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "jewelry"
+      ],
+      "created": "2026-01-28T14:52:44.509Z",
+      "updated": "2026-01-28T14:52:44.509Z",
+      "endsAt": "2026-09-24T15:52:00.000Z",
+      "bids": [
+        {
+          "id": "081e9f69-3aa8-42c8-951c-2d44d502ee05",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-04-04T16:05:13.841Z"
+        },
+        {
+          "id": "82d054b1-b191-4b06-9697-5578a9bfbc2c",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T11:10:15.537Z"
+        },
+        {
+          "id": "ead3fd37-3d46-4126-b1e5-3e72c6026d01",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller51",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello everybody! My name is Carina and I love traveling!",
+            "avatar": {
+              "url": "https://avatars.githubusercontent.com/u/162189617?s=400&u=3c8a47cbe7fc5b75490acc49fd6fd5a0e6e9fa0f&v=4",
+              "alt": "Carina"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1480497490787-505ec076689f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "A snowy landscape."
+            }
+          },
+          "created": "2026-06-05T11:45:52.712Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller25",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hey! I'm Maddie, and I like frogs :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1617957796155-72d8717ac882?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "b2ca3c5e-5d50-4f69-8677-a0d2daf54766",
+      "title": "Black and Grey Leather Mini Crossbody Bag",
+      "description": "Compact leather crossbody bag in black and grey tones with metal hardware and front strap detail. Features a structured shape and chain shoulder strap. Small but eye-catching, ideal for essentials. Good condition.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?q=80&w=1034&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Item image"
+        }
+      ],
+      "tags": [
+        "luxuryauctionhouse",
+        "handbags"
+      ],
+      "created": "2026-01-28T14:49:34.435Z",
+      "updated": "2026-01-28T14:49:34.435Z",
+      "endsAt": "2026-09-02T15:49:00.000Z",
+      "bids": [
+        {
+          "id": "bc63a8d3-f812-416b-bb6c-13f1d1d601d9",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller13",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm fancy, and I wear pants :)",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1685970731194-e27b477e87ba?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile image"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "Profile image"
+            }
+          },
+          "created": "2026-01-29T08:22:03.970Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller25",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hey! I'm Maddie, and I like frogs :)",
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1448582649076-3981753123b5?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1617957796155-72d8717ac882?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Profile image"
+        }
+      },
+      "_count": {
+        "bids": 1
+      }
+    },
+    {
+      "id": "03768e73-7861-4b2c-9bb5-c5dc84209dc6",
+      "title": "test",
+      "description": "testing",
+      "media": [],
+      "tags": [],
+      "created": "2026-01-06T20:24:33.045Z",
+      "updated": "2026-01-06T20:24:33.045Z",
+      "endsAt": "2026-12-25T17:45:00.000Z",
+      "bids": [
+        {
+          "id": "6cbc2dcf-7279-4b26-b30b-590a1e076fff",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller124",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-07T14:06:28.734Z"
+        },
+        {
+          "id": "4594fb61-bb8c-4e06-a436-3858fa6b048f",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller125",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is a super great bio for the great auction",
+            "avatar": {
+              "url": "https://i.postimg.cc/J0q6M2Ys/hufsa.jpg",
+              "alt": "Avatar image"
+            },
+            "banner": {
+              "url": "https://i.postimg.cc/wMGT47xq/hufsa.jpg",
+              "alt": "Banner image"
+            }
+          },
+          "created": "2026-01-09T16:49:37.239Z"
+        },
+        {
+          "id": "fd8a3a20-f832-4697-83a2-4513571993e7",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-03-15T19:31:52.807Z"
+        },
+        {
+          "id": "aa9e5836-6907-4ec7-a18a-2151faaff273",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller126",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://static.vecteezy.com/system/resources/thumbnails/055/581/121/small/default-profile-picture-icon-avatar-photo-placeholder-illustration-vector.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-01T10:29:33.661Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller123",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 4
+      }
+    },
+    {
+      "id": "7d219938-a8d7-441c-985b-94a412f9bf78",
+      "title": "ZST Army of Darkness Series 2 Figures",
+      "description": "Zombie Sailor Toys just announced the tremendous success of their Army of Darkness Ash figure and their series 2 figures will be available next week on Black Friday. Series 2 includes Evil Ash, the Pit Witch, and Mechanical Hand Ash.",
+      "media": [
+        {
+          "url": "https://evildeadarchives.com/figures/zst_aod_black_friday_flyer.jpg",
+          "alt": "Black Friday Flyer"
+        },
+        {
+          "url": "https://evildeadarchives.com/figures/zst_aod_evil_ash_flyer.jpg",
+          "alt": "Evil Ash"
+        },
+        {
+          "url": "https://evildeadarchives.com/figures/zst_aod_pit_witch_flyer.jpg",
+          "alt": "Evil Ash 2"
+        },
+        {
+          "url": "https://evildeadarchives.com/figures/zst_aod_mech_hand_ash_flyer.jpg",
+          "alt": "Ash"
+        }
+      ],
+      "tags": [
+        "evil dead",
+        "figures",
+        "collector"
+      ],
+      "created": "2025-12-18T06:06:36.420Z",
+      "updated": "2025-12-18T06:07:16.229Z",
+      "endsAt": "2026-12-01T06:05:00.000Z",
+      "bids": [
+        {
+          "id": "19f5adc0-7d6e-4032-8320-42fda00be777",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller128",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Nice guy that loves some good auctions! Now, that's what life is all about! Just a good fashion action!",
+            "avatar": {
+              "url": "https://www.ironmaiden-bg.com/web/images/stories/eddie.jpg",
+              "alt": "Seller128's avatar"
+            },
+            "banner": {
+              "url": "https://metaltravels.com/wp-content/uploads/2024/03/cropped-Bakgrunn-sort-logo-3-scaled-1.jpg",
+              "alt": "Seller128's banner"
+            }
+          },
+          "created": "2025-12-18T08:19:40.523Z"
+        },
+        {
+          "id": "b2479b77-88cf-4d6f-82cb-9faa18e84f4b",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller129",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://picsum.photos/id/238/400/400",
+              "alt": "Seller129's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-18T11:40:12.909Z"
+        },
+        {
+          "id": "8519d93d-250e-4670-bec5-2a103255c029",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller130",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi, my name is Ida.",
+            "avatar": {
+              "url": "https://i.postimg.cc/ZKNQX282/IMG-3533.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://i.postimg.cc/HnqbmJtT/IMG-8274.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2025-12-18T12:55:02.088Z"
+        },
+        {
+          "id": "53d566e3-e49b-4c43-acde-8502cf5400ed",
+          "amount": 500,
+          "bidder": {
+            "name": "Seller131",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I have so many things to sell",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-18T18:46:58.585Z"
+        },
+        {
+          "id": "774520ba-ca26-4388-98dd-a73971788d41",
+          "amount": 501,
+          "bidder": {
+            "name": "Seller132",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-20T13:55:26.418Z"
+        },
+        {
+          "id": "70733b43-cfa4-4d4b-8b8a-07b8ca4b328a",
+          "amount": 505,
+          "bidder": {
+            "name": "Seller133",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello! :D nice !:D",
+            "avatar": {
+              "url": "https://i.pinimg.com/736x/46/3f/5a/463f5a0be6a6b9d20216ed5337eea2d3.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://i.pinimg.com/736x/e3/e5/fc/e3e5fc1bd149a007ccc6c9a15ba3debc.jpg",
+              "alt": "Seller133s banner"
+            }
+          },
+          "created": "2025-12-21T19:03:14.318Z"
+        },
+        {
+          "id": "4fd1f8c1-819f-4b00-ad31-f0ae8e562d70",
+          "amount": 506,
+          "bidder": {
+            "name": "Seller134",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Updated Noel's inffor",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+              "alt": "Seller134 alt"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/half-tone-blue-abstract-background-with-text-space_1017-41428.jpg",
+              "alt": "Seller134 alt"
+            }
+          },
+          "created": "2026-01-03T11:34:02.227Z"
+        },
+        {
+          "id": "6cf1beec-a504-4c9c-8828-bc8b5fe4d1ea",
+          "amount": 507,
+          "bidder": {
+            "name": "Seller135",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-01-03T12:25:49.499Z"
+        },
+        {
+          "id": "e07e0c33-4506-4631-b6ed-703ddb44e872",
+          "amount": 600,
+          "bidder": {
+            "name": "Seller136",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there",
+            "avatar": {
+              "url": "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.immediate.co.uk/production/volatile/sites/10/2018/08/2048x1365-Houseplants-with-large-leaves-LI3918027-db59ed3.jpg",
+              "alt": ""
+            }
+          },
+          "created": "2026-01-03T14:38:57.933Z"
+        },
+        {
+          "id": "482f03a1-5a3c-44b5-bf78-c8f7e0fc6de2",
+          "amount": 650,
+          "bidder": {
+            "name": "Seller137",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there...",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+              "alt": "Seller137 alt"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg",
+              "alt": "Seller137 alt"
+            }
+          },
+          "created": "2026-01-05T10:44:51.943Z"
+        },
+        {
+          "id": "80499712-f43d-4ebf-8c53-ff2a66a0cba4",
+          "amount": 655,
+          "bidder": {
+            "name": "Seller138",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi theree!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+              "alt": "Seller138's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-11T13:37:55.880Z"
+        },
+        {
+          "id": "a52ad2df-7344-429d-a0b6-b76bf03c1ae4",
+          "amount": 656,
+          "bidder": {
+            "name": "Seller139",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://helios-i.mashable.com/imagery/articles/040MMJLdogUu9t7WB5h2Vbv/hero-image.fill.size_1248x702.v1740075757.jpg",
+              "alt": "User avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-02-07T14:17:09.625Z"
+        },
+        {
+          "id": "d33335c3-e4b8-4416-95bf-31ac5485c303",
+          "amount": 657,
+          "bidder": {
+            "name": "Seller140",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Checkout my other items for sale.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/vector-1768339220689-2c7550ec5cbb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvbG9yJTIwaG9yaXpvbnRhbHxlbnwwfHwwfHx8MA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2026-02-24T09:03:23.045Z"
+        },
+        {
+          "id": "449a94c4-27e7-42e4-a4d1-cd7cb99bd1e9",
+          "amount": 1000,
+          "bidder": {
+            "name": "Seller141",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hello!",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Portrait photo"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Colourful banner"
+            }
+          },
+          "created": "2026-03-24T17:39:42.240Z"
+        },
+        {
+          "id": "47cec671-3161-4c38-ba36-a2ada416381b",
+          "amount": 1001,
+          "bidder": {
+            "name": "Seller108",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I'm a student who 😍🚴‍♀️➕☕ welcome to my auctions 🎉",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1541625390725-39ec9fecaf17?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGN5Y2xpbmd8ZW58MHx8MHx8fDI%3D",
+              "alt": "Seller108's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNwcmluZ3xlbnwwfHwwfHx8Mg%3D%3D",
+              "alt": "Seller108's banner"
+            }
+          },
+          "created": "2026-04-20T06:29:47.711Z"
+        },
+        {
+          "id": "f224f029-119d-47e3-99c8-f9c4f958ce33",
+          "amount": 1002,
+          "bidder": {
+            "name": "Seller142",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-05-07T18:35:20.000Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller127",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://southparkshop.co.uk/cdn/shop/files/die-cut-magnets-white-4x4-front-6745d3e963ca0_800x.jpg",
+          "alt": "Cartman"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 16
+      }
+    },
+    {
+      "id": "0d140c7c-1563-4652-a731-c71539427438",
+      "title": "The Evil Dead Anthology Blu-Ray",
+      "description": "For the first time in the world, all 4 fantastic Evil Dead films. Included is the original 1981 Evil Dead, Evil Dead 2, Army of Darkness and Evil Dead (2013).",
+      "media": [
+        {
+          "url": "https://evildeadarchives.com/media/films/ed/video_releases/evil_dead_anthology.png",
+          "alt": "Evil Dead 01"
+        },
+        {
+          "url": "https://evildeadarchives.com/media/films/ed/video_releases/evil_dead_anthology_full.jpg",
+          "alt": "Evil Dead 02"
+        },
+        {
+          "url": "https://evildeadarchives.com/media/films/ed/video_releases/evil_dead_anthology_back.jpg",
+          "alt": "Evil Dead 03"
+        }
+      ],
+      "tags": [
+        "movie",
+        "evil dead",
+        "horror"
+      ],
+      "created": "2025-12-18T05:45:47.854Z",
+      "updated": "2025-12-18T05:45:47.854Z",
+      "endsAt": "2026-11-01T05:42:00.000Z",
+      "bids": [
+        {
+          "id": "11f61837-ada9-489d-b710-84bec0fc9567",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller128",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Nice guy that loves some good auctions! Now, that's what life is all about! Just a good fashion action!",
+            "avatar": {
+              "url": "https://www.ironmaiden-bg.com/web/images/stories/eddie.jpg",
+              "alt": "Seller128's avatar"
+            },
+            "banner": {
+              "url": "https://metaltravels.com/wp-content/uploads/2024/03/cropped-Bakgrunn-sort-logo-3-scaled-1.jpg",
+              "alt": "Seller128's banner"
+            }
+          },
+          "created": "2025-12-18T08:19:57.284Z"
+        },
+        {
+          "id": "d160c9ea-3f19-46d5-af7c-e7e7d58f9004",
+          "amount": 10,
+          "bidder": {
+            "name": "Seller128",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Nice guy that loves some good auctions! Now, that's what life is all about! Just a good fashion action!",
+            "avatar": {
+              "url": "https://www.ironmaiden-bg.com/web/images/stories/eddie.jpg",
+              "alt": "Seller128's avatar"
+            },
+            "banner": {
+              "url": "https://metaltravels.com/wp-content/uploads/2024/03/cropped-Bakgrunn-sort-logo-3-scaled-1.jpg",
+              "alt": "Seller128's banner"
+            }
+          },
+          "created": "2025-12-21T03:25:12.455Z"
+        },
+        {
+          "id": "1896103c-15ff-433d-9cab-195c80fadfe0",
+          "amount": 20,
+          "bidder": {
+            "name": "Seller95",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my cool story bro.",
+            "avatar": {
+              "url": "https://i.postimg.cc/c4SDxdqV/diego-hernandez-MSepzb-KFz10-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-29T13:03:44.109Z"
+        },
+        {
+          "id": "bf1b90e1-4b60-4138-9090-a6862b2e3c6a",
+          "amount": 35,
+          "bidder": {
+            "name": "Seller143",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there...AGAIN",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/woman-with-braided-hair-illustration_1308-174675.jpg",
+              "alt": "User avatar"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+              "alt": "User banner"
+            }
+          },
+          "created": "2026-01-05T07:07:39.992Z"
+        },
+        {
+          "id": "191c196c-fc37-4c77-a572-83178c7c0cce",
+          "amount": 100,
+          "bidder": {
+            "name": "Seller95",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my cool story bro.",
+            "avatar": {
+              "url": "https://i.postimg.cc/c4SDxdqV/diego-hernandez-MSepzb-KFz10-unsplash.jpg",
+              "alt": "A blurry multi-colored rainbow background"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-01-11T16:13:17.602Z"
+        },
+        {
+          "id": "f786521c-24b0-47ce-96b9-1e6329c71afc",
+          "amount": 105,
+          "bidder": {
+            "name": "Seller52",
+            "email": "redacted@stud.noroff.no",
+            "bio": null,
+            "avatar": {
+              "url": "https://i.pravatar.cc/150?img=50",
+              "alt": "Seller52 avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-10T15:56:41.015Z"
+        },
+        {
+          "id": "3b7953eb-f8cd-4138-9dfb-eda5339d5e77",
+          "amount": 110,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T08:24:13.391Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller127",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://southparkshop.co.uk/cdn/shop/files/die-cut-magnets-white-4x4-front-6745d3e963ca0_800x.jpg",
+          "alt": "Cartman"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 7
+      }
+    },
+    {
+      "id": "14d77ef6-d3bf-4698-ba34-a72e0e612a4c",
+      "title": "House",
+      "description": "House",
+      "media": [
+        {
+          "url": "https://share.google/FlDyHwqFhhPreOZPy",
+          "alt": "House"
+        }
+      ],
+      "tags": [],
+      "created": "2025-12-17T20:28:32.704Z",
+      "updated": "2025-12-17T20:28:32.704Z",
+      "endsAt": "2026-12-16T22:59:00.000Z",
+      "bids": [
+        {
+          "id": "bcd7e59f-727b-4866-b8bb-711d39589224",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller145",
+            "email": "redacted@stud.noroff.no",
+            "bio": "i am a student, and i love coding coding",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1765718826790-909aa08ac771?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller145's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1765718826790-909aa08ac771?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Seller145's banner"
+            }
+          },
+          "created": "2025-12-17T21:27:36.523Z"
+        },
+        {
+          "id": "1464cf1d-b2d2-46a2-98b7-29a9c1776771",
+          "amount": 2,
+          "bidder": {
+            "name": "Oltenks",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my Profile",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+              "alt": "Oltenks monogram"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2025-12-22T13:16:21.395Z"
+        },
+        {
+          "id": "2bc9f35f-339f-4464-be4b-18d59072bdfd",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T10:00:03.866Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller144",
+        "email": "redacted@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 3
+      }
+    },
+    {
+      "id": "a216f0e6-e43a-43d5-ba2c-efded7fedf10",
+      "title": "Seaside Villa Retreat",
+      "description": "A modern three-bedroom villa overlooking the fjords, featuring floor-to-ceiling windows, private shoreline access, and interior finishes in natural stone and timber. Designed for quiet luxury and panoramic views.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "Real Estate"
+      ],
+      "created": "2025-11-30T13:03:14.021Z",
+      "updated": "2025-12-02T09:17:40.898Z",
+      "endsAt": "2026-09-03T12:03:00.000Z",
+      "bids": [
+        {
+          "id": "6dce44af-e8f9-46ac-aca3-1c22199253ef",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:34.201Z"
+        },
+        {
+          "id": "4e3b790e-61b9-4dfc-94bc-792910b01d35",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:36.230Z"
+        },
+        {
+          "id": "6cd2833f-7b92-4781-91ef-dbb3eb19c527",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:37.977Z"
+        },
+        {
+          "id": "5ac5d1c3-ddc2-4bca-b559-c20f548e03d1",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:39.758Z"
+        },
+        {
+          "id": "f6bc6727-bfd7-4ef2-964b-a4c41edbe5cf",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:41.427Z"
+        },
+        {
+          "id": "c47103ab-6992-45b9-894d-fcf04b796c84",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:43.445Z"
+        },
+        {
+          "id": "ca61eaeb-0296-4b43-b1c5-f21158d47cc7",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:45.347Z"
+        },
+        {
+          "id": "f7a5c50d-002f-4434-8182-930e74cb8711",
+          "amount": 8,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:31:46.992Z"
+        },
+        {
+          "id": "00bcea32-2b3a-4ecd-aae3-d482752f4096",
+          "amount": 12,
+          "bidder": {
+            "name": "Seller146",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my bio, i like turtles. woopity",
+            "avatar": {
+              "url": "https://lumiere-a.akamaihd.net/v1/images/image_3d1186c5.jpeg?region=0,0,540,810&width=480",
+              "alt": "hawkman"
+            },
+            "banner": {
+              "url": "https://wallpapers.com/images/featured/marvel-bte9zcsa9pvyzpvk.jpg",
+              "alt": "marvel avengers"
+            }
+          },
+          "created": "2025-12-05T11:32:07.650Z"
+        },
+        {
+          "id": "5c149d86-761e-4a75-8d59-2046b8def08e",
+          "amount": 13,
+          "bidder": {
+            "name": "Oltenks",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my Profile",
+            "avatar": {
+              "url": "https://images.pexels.com/photos/10160029/pexels-photo-10160029.jpeg",
+              "alt": "Oltenks monogram"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1580656739452-3bf6d7545685?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2025-12-05T20:18:06.507Z"
+        },
+        {
+          "id": "cff42613-0bde-4bb0-bf17-f0b0f9e1f54b",
+          "amount": 14,
+          "bidder": {
+            "name": "Seller147",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Edit bio test 3",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1616449973117-0e1d99c56ed3?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-12-12T12:48:14.799Z"
+        },
+        {
+          "id": "e7702a29-0e72-4525-ba75-e0d6065db23d",
+          "amount": 250,
+          "bidder": {
+            "name": "Seller148",
+            "email": "redacted@stud.noroff.no",
+            "bio": "Hi there!",
+            "avatar": {
+              "url": "https://img.freepik.com/free-vector/woman-with-braided-hair-illustration_1308-174675.jpg",
+              "alt": "Seller148"
+            },
+            "banner": {
+              "url": "https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg",
+              "alt": "Seller148"
+            }
+          },
+          "created": "2026-01-05T08:20:10.787Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller40",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hei, jeg heter Tonje.",
+        "avatar": {
+          "url": "https://i.imgur.com/FDCzURD.jpeg",
+          "alt": "Seller40 avatar"
+        },
+        "banner": {
+          "url": "https://i.imgur.com/PYYALIz.jpeg",
+          "alt": "Seller40 banner"
+        }
+      },
+      "_count": {
+        "bids": 12
+      }
+    },
+    {
+      "id": "25f33dab-27fb-4b74-84c2-251f6923bad8",
+      "title": "Plants",
+      "description": "Everybody needs green plants in their home.",
+      "media": [
+        {
+          "url": "https://images.unsplash.com/photo-1584589167171-541ce45f1eea?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "alt": "Listing image"
+        }
+      ],
+      "tags": [
+        "green",
+        "home",
+        "plant"
+      ],
+      "created": "2025-11-28T11:30:22.833Z",
+      "updated": "2025-11-28T11:30:22.833Z",
+      "endsAt": "2026-11-18T11:00:00.000Z",
+      "bids": [
+        {
+          "id": "64a8f110-652d-4c05-b438-b5804a7a4fb6",
+          "amount": 1,
+          "bidder": {
+            "name": "Seller83",
+            "email": "redacted@stud.noroff.no",
+            "bio": "A 28-year-old student who is passionate about vintage things",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1675261245068-1d1ec567f73a?q=80&w=762&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1528459105426-b9548367069b?q=80&w=664&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": "Profile banner"
+            }
+          },
+          "created": "2026-04-01T19:27:41.519Z"
+        },
+        {
+          "id": "51c6913f-a9db-4b9e-b008-1aaa6998a176",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T10:03:24.816Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller149",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Hun er en båt uten anker hun har hue fult av tanker og et hjerte som banker for ting som hun tror på, hun har ikke sko på..<3",
+        "avatar": {
+          "url": "https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001877.png",
+          "alt": ""
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "_count": {
+        "bids": 2
+      }
+    },
+    {
+      "id": "9fad073d-50a8-47fe-903f-18f49a970829",
+      "title": "Cat Portrait",
+      "description": "In one lovely year, this portrait could be yours... It likely won't be, but maybe!",
+      "media": [
+        {
+          "url": "https://www.publicdomainpictures.net/pictures/590000/nahled/cat-dressed-victorian-portrait.jpg",
+          "alt": ""
+        }
+      ],
+      "tags": [
+        "cats",
+        "cute",
+        "victorian"
+      ],
+      "created": "2025-09-09T23:26:00.524Z",
+      "updated": "2025-09-09T23:26:00.524Z",
+      "endsAt": "2026-09-08T23:23:00.000Z",
+      "bids": [
+        {
+          "id": "96bf9a08-4e1b-4b7d-9b43-eadb0a9ab9af",
+          "amount": 5,
+          "bidder": {
+            "name": "Seller70",
+            "email": "redacted@stud.noroff.no",
+            "bio": "skdjflk dsldkfj lsdjfl jslfj sl dfj lksjflkj slfjsdlfk jsdfjlkksdjlkjfkjdskf slfk j jlkf jslj lkjdsflkj sfdj lksjdf ljsfdl kjflskdjlfsd.",
+            "avatar": {
+              "url": "https://i.postimg.cc/pVn8vkJq/ling.jpg",
+              "alt": "Avatar image"
+            },
+            "banner": {
+              "url": "https://i.postimg.cc/pVn8vkJq/ling.jpg",
+              "alt": "Banner image"
+            }
+          },
+          "created": "2025-09-10T12:49:23.667Z"
+        },
+        {
+          "id": "fa98bc22-1d9e-41a6-b241-91bf003c6a2b",
+          "amount": 3,
+          "bidder": {
+            "name": "Seller151",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I like Kpop Demon Hunters. Derpy is cool and so is Sussie. Love that lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem",
+            "avatar": {
+              "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn1vWt7326h0vsg8OCe0uVnLAvyHAgNZ2oLw&s",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://rollingstonephilippines.com/wp-content/uploads/2025/06/kpop_h.webp",
+              "alt": ""
+            }
+          },
+          "created": "2025-09-10T10:25:45.935Z"
+        },
+        {
+          "id": "f013fbb4-b28d-4e2d-85b1-b417a4ad029b",
+          "amount": 4,
+          "bidder": {
+            "name": "Seller125",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is a super great bio for the great auction",
+            "avatar": {
+              "url": "https://i.postimg.cc/J0q6M2Ys/hufsa.jpg",
+              "alt": "Avatar image"
+            },
+            "banner": {
+              "url": "https://i.postimg.cc/wMGT47xq/hufsa.jpg",
+              "alt": "Banner image"
+            }
+          },
+          "created": "2025-09-10T12:18:52.991Z"
+        },
+        {
+          "id": "551cc0a1-453a-4432-a849-a6b4387d377a",
+          "amount": 2,
+          "bidder": {
+            "name": "Seller152",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love auctions! I am definitely known for overbidding on coffee mugs hehe ☕",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=776&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "alt": ""
+            }
+          },
+          "created": "2025-09-10T08:53:14.901Z"
+        },
+        {
+          "id": "797c62a1-31bd-49a7-a9c1-f3e17986c863",
+          "amount": 6,
+          "bidder": {
+            "name": "Seller153",
+            "email": "redacted@stud.noroff.no",
+            "bio": "hey",
+            "avatar": {
+              "url": "https://i.postimg.cc/zXdK39K6/IMG-1159.jpg",
+              "alt": ""
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2025-10-12T11:39:34.410Z"
+        },
+        {
+          "id": "c853842b-0182-4a78-a7fc-1e6ef97b4c57",
+          "amount": 7,
+          "bidder": {
+            "name": "Seller75",
+            "email": "redacted@stud.noroff.no",
+            "bio": "I love learning. I also like to make money on the side selling things.",
+            "avatar": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+              "alt": "Seller75's avatar"
+            },
+            "banner": {
+              "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+              "alt": "A blurry multi-colored rainbow background"
+            }
+          },
+          "created": "2026-04-13T10:05:00.117Z"
+        },
+        {
+          "id": "4ea1a143-d612-4bd0-b61d-9e6ecf1eec20",
+          "amount": 8,
+          "bidder": {
+            "name": "Seller154",
+            "email": "redacted@stud.noroff.no",
+            "bio": "This is my profile.",
+            "avatar": {
+              "url": "https://play-lh.googleusercontent.com/3ZKfMRp_QrdN-LzsZTbXdXBH-LS1iykSg9ikNq_8T2ppc92ltNbFxS-tORxw2-6kGA",
+              "alt": "Super Mario"
+            },
+            "banner": {
+              "url": "https://m.media-amazon.com/images/S/pv-target-images/22a9cd6e94ea5156a9a4305890699aa64efae8bd96eea0a48116176ed4676a03._SX1080_FMjpg_.jpg",
+              "alt": "Galaxy"
+            }
+          },
+          "created": "2026-05-07T14:53:23.409Z"
+        }
+      ],
+      "seller": {
+        "name": "Seller150",
+        "email": "redacted@stud.noroff.no",
+        "bio": "Lando Norris for WDC 2025! .. maybe <33 .. Starting to fear, but I'll stay hopeful about it regardless!",
+        "avatar": {
+          "url": "https://i.postimg.cc/2S6Nydhh/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f.gif",
+          "alt": "User avatar"
+        },
+        "banner": {
+          "url": "https://mclaren.bloomreach.io/delivery/resources/content/gallery/mclaren-racing/formula-1/2025/nsr/f1-75-live-m/web/mcl39-cover-image.jpg",
+          "alt": "User banner of Lando Norris' car in F1"
+        }
+      },
+      "_count": {
+        "bids": 7
+      }
+    }
+  ],
+  "meta": {
+    "isFirstPage": true,
+    "isLastPage": true,
+    "currentPage": 1,
+    "previousPage": null,
+    "nextPage": null,
+    "pageCount": 1,
+    "totalCount": 53
+  }
+}

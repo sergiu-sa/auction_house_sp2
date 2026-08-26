@@ -2,11 +2,10 @@ import { test, expect } from './support/fixtures';
 
 /**
  * Counts are exact on purpose.
- * Only 2 of the 50 fixture lots are still active, because each surface fetches the newest 50 and filters them client-side;
- *  that is a real bug, recorded here so a fix cannot land unnoticed.
+ * Every section here ranks the active pool, which the `listings-active` fixture records whole: 53 lots, 47 of them with bids, 128 bids in total.
  *
- * When listings are queried properly these numbers rise.
- * Update them then;
+ * They were 2 / 2 / 2 and an active count of 2 while each surface fetched the newest 50 listings and filtered them in the browser.
+ * If these numbers fall back towards 2, the query layer has been bypassed again;
  *  do not loosen the check to "non-zero", which passes the same either way.
  */
 test('home renders every section at its measured card count', async ({
@@ -15,14 +14,24 @@ test('home renders every section at its measured card count', async ({
 }) => {
   await page.goto('/index.html');
 
-  await expect(page.locator('#hero-mosaic article')).toHaveCount(2);
-  await expect(page.locator('#trending-cards article')).toHaveCount(2);
-  await expect(page.locator('#new-listings-cards article')).toHaveCount(2);
+  await expect(page.locator('#hero-mosaic article')).toHaveCount(3);
+  await expect(page.locator('#trending-cards article')).toHaveCount(3);
+  await expect(page.locator('#new-listings-cards article')).toHaveCount(3);
   await expect(page.locator('#ending-soon-cards article')).toHaveCount(4);
   await expect(page.locator('#catalog-cards article')).toHaveCount(12);
 
-  await expect(page.locator('#hero-active-count')).toHaveText('2');
+  // The stats describe the platform, not the fetched window.
+  await expect(page.locator('#hero-active-count')).toHaveText('53');
+  await expect(page.locator('#hero-bids-count')).toHaveText('128');
   expect(mock.consoleErrors).toEqual([]);
+});
+
+/** A search started on another page arrives as ?q= and used to be dropped on landing. */
+test('home applies a search handed to it in the URL', async ({ page }) => {
+  await page.goto('/index.html?q=vintage');
+
+  await expect(page.locator('#global-search-input')).toHaveValue('vintage');
+  await expect(page.locator('#catalog-cards article')).toHaveCount(12);
 });
 
 test.describe('empty catalog', () => {

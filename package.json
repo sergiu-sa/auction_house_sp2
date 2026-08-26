@@ -18,6 +18,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test --project=smoke",
     "test:e2e:visual": "playwright test --project=visual",
+    "fixtures:check": "node scripts/record-fixtures.mjs --check",
+    "fixtures:record": "node scripts/record-fixtures.mjs",
     "test:e2e:visual:update": "playwright test --project=visual --update-snapshots"
   },
   "devDependencies": {

@@ -1,4 +1,14 @@
-import { getListings } from '../api/listings';
+import {
+  activePool,
+  catalogPage,
+  endingSoon,
+  featuredActive,
+  newest,
+  toSortKey,
+  toSortOrder,
+  trending,
+} from '../api/listingQueries';
+import type { SortKey, SortOrder } from '../api/listingQueries';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
@@ -16,7 +26,7 @@ import {
 import { renderPagination } from '../components/PaginationComponent';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
-import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
+import { formatTimeRemaining } from '../utils/formatDate';
 import {
   addStructuredData,
   generateWebsiteStructuredData,
@@ -43,18 +53,14 @@ import { escapeHtml } from '../utils/escapeHtml';
 // State management for catalog section
 interface CatalogState {
   category: string;
-  sort: string;
-  sortOrder: 'asc' | 'desc';
+  sort: SortKey;
+  sortOrder: SortOrder;
   activeOnly: boolean;
   search: string;
   page: number;
   itemsPerPage: number;
 }
 
-// Pool for the hero, trending, new-listings and ending-soon sections
-let allListings: Listing[] = [];
-// Separate pool for the catalog grid. Its active-only filter re-queries the API, which must not disturb the sections above it.
-let catalogListings: Listing[] = [];
 let catalogRequestId = 0;
 const catalogState: CatalogState = {
   category: 'all',
@@ -71,7 +77,7 @@ function listenToNavbarFilters(): void {
   document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
     catalogState.category = e.detail.category;
     catalogState.page = 1; // Reset to first page
-    applyCatalogFilters();
+    loadCatalogListings();
     syncStickyFiltersWithState();
   }) as EventListener);
 
@@ -79,7 +85,7 @@ function listenToNavbarFilters(): void {
   document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
     catalogState.search = e.detail.query;
     catalogState.page = 1; // Reset to first page
-    applyCatalogFilters();
+    loadCatalogListings();
     syncStickyFiltersWithState();
   }) as EventListener);
 
@@ -87,17 +93,17 @@ function listenToNavbarFilters(): void {
   document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
     catalogState.activeOnly = e.detail.activeOnly;
     catalogState.page = 1; // Reset to first page
-    // Re-query instead of filtering locally: the fetched page holds the newest listings, most of which have already ended, so a local filter finds almost none.
     loadCatalogListings();
     syncStickyFiltersWithState();
   }) as EventListener);
 
   // Sort from navbar
   document.addEventListener('sortChange', ((e: CustomEvent) => {
-    catalogState.sort = e.detail.sort;
-    catalogState.sortOrder = e.detail.order;
+    // Narrowed, not trusted: an unknown sort field is a 500 from the API.
+    catalogState.sort = toSortKey(e.detail.sort);
+    catalogState.sortOrder = toSortOrder(e.detail.order);
     catalogState.page = 1; // Reset to first page
-    applyCatalogFilters();
+    loadCatalogListings();
     syncStickyFiltersWithState();
   }) as EventListener);
 }
@@ -255,8 +261,24 @@ async function initHomePage(): Promise<void> {
   // Initialize sticky catalog filters
   initStickyFilterBar();
 
+  applyInitialSearchFromUrl();
+
   // Load all data
   await loadAllData();
+}
+
+/**
+ * A search started on another page arrives as `?q=`.
+ * Without this the navigation lands here, the term is dropped and the catalog renders unfiltered.
+ */
+function applyInitialSearchFromUrl(): void {
+  const query = new URLSearchParams(window.location.search).get('q')?.trim();
+  if (!query) return;
+
+  catalogState.search = query;
+  setSearchFieldValue('sticky-search-input', query);
+  setSearchFieldValue('global-search-input', query);
+  setSearchFieldValue('mobile-search-input', query);
 }
 
 function setupCreateListingButton(): void {
@@ -274,29 +296,27 @@ function setupCreateListingButton(): void {
   }
 }
 
+/**
+ * The hero, trending and new-listings sections all describe live auctions, so they share one fetch of the active pool rather than each ranking a window of the newest listings;
+ *    which is only ~2% active and left every section near-empty.
+ */
 async function loadAllData(): Promise<void> {
+  // Started before the pool, not after it: neither reads it, both run their own query, and both handle their own failures.
+  // Queued behind it they would inherit its latency and be blanked by its catch.
+  loadCatalogListings();
+  renderEndingSoonSection();
+
   try {
-    const response = await getListings({
-      limit: 50,
-      _seller: true,
-      _bids: true,
-      sort: 'created',
-      sortOrder: 'desc',
-    });
+    const pool = await activePool();
 
-    if (response.data && response.data.length > 0) {
-      allListings = response.data;
-      catalogListings = response.data;
-
-      // Render all sections
-      renderHeroSection();
-      renderTrendingSection();
-      renderNewListingsSection();
-      renderEndingSoonSection();
-      renderCatalogSection();
-    } else {
+    if (pool.length === 0) {
       showNoListingsMessage();
+      return;
     }
+
+    await renderHeroSection(pool);
+    await renderTrendingSection(pool);
+    await renderNewListingsSection(pool);
   } catch (error) {
     logError('Failed to load home page data', error);
     toast.error('Failed to load listings. Please refresh the page.');
@@ -306,7 +326,8 @@ async function loadAllData(): Promise<void> {
 
 /**
  * Reload the catalog grid only, leaving the sections above it untouched.
- * Uses the same query as the initial load so clearing the filter restores exactly the original pool.
+ *
+ * Every filter is part of the query now, so each change is a round trip rather than a re-slice of whatever happened to be fetched first.
  */
 async function loadCatalogListings(): Promise<void> {
   const requestId = ++catalogRequestId;
@@ -314,20 +335,21 @@ async function loadCatalogListings(): Promise<void> {
   try {
     showCollectionCardSkeletons(catalogState.itemsPerPage, 'catalog-cards');
 
-    const response = await getListings({
-      limit: 50,
-      _seller: true,
-      _bids: true,
-      _active: catalogState.activeOnly,
-      sort: 'created',
-      sortOrder: 'desc',
+    const result = await catalogPage({
+      page: catalogState.page,
+      limit: catalogState.itemsPerPage,
+      sort: catalogState.sort,
+      sortOrder: catalogState.sortOrder,
+      activeOnly: catalogState.activeOnly,
+      tag: catalogState.category,
+      search: catalogState.search,
     });
 
     // A newer request started while this one was in flight
     if (requestId !== catalogRequestId) return;
 
-    catalogListings = response.data || [];
-    applyCatalogFilters();
+    renderCollectionCards(result.listings, 'catalog-cards');
+    renderCatalogPagination(result.pageCount);
   } catch (error) {
     if (requestId !== catalogRequestId) return;
 
@@ -339,6 +361,24 @@ async function loadCatalogListings(): Promise<void> {
   }
 }
 
+function renderCatalogPagination(totalPages: number): void {
+  renderPagination({
+    containerId: 'catalog-pagination',
+    currentPage: catalogState.page,
+    totalPages,
+    onPageChange: (page: number) => {
+      catalogState.page = page;
+      loadCatalogListings();
+
+      // Scroll to catalog section
+      const catalogSection = document.getElementById('catalog-cards');
+      if (catalogSection) {
+        catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+  });
+}
+
 function showNoListingsMessage(): void {
   const noDataHTML = `
     <div class="col-span-full text-center py-12">
@@ -348,12 +388,9 @@ function showNoListingsMessage(): void {
     </div>
   `;
 
-  const sections = [
-    'trending-cards',
-    'new-listings-cards',
-    'ending-soon-cards',
-    'catalog-cards',
-  ];
+  // Only the sections fed by the active pool.
+  // Ending Soon and the catalog run their own queries and render their own empty states, and writing here would race them.
+  const sections = ['trending-cards', 'new-listings-cards'];
   sections.forEach((id) => {
     const element = document.getElementById(id);
     if (element) element.innerHTML = noDataHTML;
@@ -386,48 +423,34 @@ function showErrorInSections(): void {
     </div>
   `;
 
-  const sections = [
-    'hero-mosaic',
-    'trending-cards',
-    'new-listings-cards',
-    'ending-soon-cards',
-    'catalog-cards',
-  ];
+  const sections = ['hero-mosaic', 'trending-cards', 'new-listings-cards'];
   sections.forEach((id) => {
     const element = document.getElementById(id);
     if (element) element.innerHTML = errorHTML;
   });
 }
 
-function renderHeroSection(): void {
+async function renderHeroSection(pool: Listing[]): Promise<void> {
   const heroMosaic = document.getElementById('hero-mosaic');
   const heroActiveCount = document.getElementById('hero-active-count');
   const heroBidsCount = document.getElementById('hero-bids-count');
 
   if (!heroMosaic) return;
 
-  // Get active listings only
-  const activeListings = allListings.filter((listing) =>
-    isAuctionActive(listing.endsAt)
-  );
-
-  // Update stats
+  // Both stats describe the platform, so they count the whole active pool.
   if (heroActiveCount) {
-    heroActiveCount.textContent = activeListings.length.toLocaleString();
+    heroActiveCount.textContent = pool.length.toLocaleString();
   }
 
   if (heroBidsCount) {
-    const totalBids = allListings.reduce(
+    const totalBids = pool.reduce(
       (sum, listing) => sum + (listing._count?.bids || 0),
       0
     );
     heroBidsCount.textContent = totalBids.toLocaleString();
   }
 
-  // Get 3 featured listings with most bids
-  const featured = [...activeListings]
-    .sort((a, b) => (b._count?.bids || 0) - (a._count?.bids || 0))
-    .slice(0, 3);
+  const featured = await featuredActive(3, pool);
 
   if (featured.length === 0) {
     heroMosaic.innerHTML = `
@@ -531,35 +554,18 @@ function renderHeroSection(): void {
 }
 
 // Trending = active listings sorted by bid count
-function renderTrendingSection(): void {
-  const activeListings = allListings.filter((listing) =>
-    isAuctionActive(listing.endsAt)
-  );
-
-  // Get top 3 listings by bid count
-  const trending = [...activeListings]
-    .filter((listing) => (listing._count?.bids || 0) > 0)
-    .sort((a, b) => (b._count?.bids || 0) - (a._count?.bids || 0))
-    .slice(0, 3);
+async function renderTrendingSection(pool: Listing[]): Promise<void> {
+  const hottest = await trending(3, pool);
 
   showProductCardSkeletons(3, 'trending-cards');
 
   setTimeout(() => {
-    renderProductCards(trending, 'trending-cards');
+    renderProductCards(hottest, 'trending-cards');
   }, 300);
 }
 
-function renderNewListingsSection(): void {
-  const activeListings = allListings.filter((listing) =>
-    isAuctionActive(listing.endsAt)
-  );
-
-  // Get 3 newest listings
-  const newListings = [...activeListings]
-    .sort(
-      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
-    )
-    .slice(0, 3);
+async function renderNewListingsSection(pool: Listing[]): Promise<void> {
+  const newListings = await newest(3, pool);
 
   showProductCardSkeletons(3, 'new-listings-cards');
 
@@ -571,98 +577,21 @@ function renderNewListingsSection(): void {
 /**
  * The active lots closest to closing.
  *
- * This is a rank, not a fixed time window. A window renders empty whenever nothing happens to be closing inside it, which leaves the section dead most of the time;
+ * This is a rank, not a fixed time window.
+ * A window renders empty whenever nothing happens to be closing inside it, which leaves the section dead most of the time;
  *  the cards print the real countdown, so nothing is overstated.
  */
 async function renderEndingSoonSection(): Promise<void> {
-  showQuickCardSkeletons(4, 'ending-soon-cards');
-
+  // Inside the try:
+  //  nothing awaits this call, so anything thrown out here would be an unhandled rejection rather than a logged failure.
   try {
-    const response = await getListings({
-      limit: 4,
-      _seller: true,
-      _bids: true,
-      _active: true,
-      sort: 'endsAt',
-      sortOrder: 'asc',
-    });
+    showQuickCardSkeletons(4, 'ending-soon-cards');
 
-    renderQuickCards(response.data || [], 'ending-soon-cards');
+    renderQuickCards(await endingSoon(4), 'ending-soon-cards');
   } catch (error) {
     logError('Failed to load ending soon listings', error);
     renderQuickCards([], 'ending-soon-cards');
   }
-}
-
-function renderCatalogSection(): void {
-  applyCatalogFilters();
-}
-
-function applyCatalogFilters(): void {
-  let filtered = [...catalogListings];
-
-  // Filter by category
-  if (catalogState.category !== 'all') {
-    filtered = filtered.filter((listing) =>
-      listing.tags?.some(
-        (tag) => tag.toLowerCase() === catalogState.category.toLowerCase()
-      )
-    );
-  }
-
-  // Filter by search
-  if (catalogState.search) {
-    const searchLower = catalogState.search.toLowerCase();
-    filtered = filtered.filter(
-      (listing) =>
-        listing.title.toLowerCase().includes(searchLower) ||
-        listing.description?.toLowerCase().includes(searchLower)
-    );
-  }
-
-  // Guard only: the API already returns active listings when this is on.
-  // This drops any lot that expired while the page sat open.
-  if (catalogState.activeOnly) {
-    filtered = filtered.filter((listing) => isAuctionActive(listing.endsAt));
-  }
-
-  // Sort listings
-  filtered.sort((a, b) => {
-    const aValue = a[catalogState.sort as keyof Listing] as string;
-    const bValue = b[catalogState.sort as keyof Listing] as string;
-
-    if (catalogState.sortOrder === 'asc') {
-      return aValue > bValue ? 1 : -1;
-    } else {
-      return aValue < bValue ? 1 : -1;
-    }
-  });
-
-  // Paginate results
-  const startIndex = (catalogState.page - 1) * catalogState.itemsPerPage;
-  const endIndex = startIndex + catalogState.itemsPerPage;
-  const paginatedListings = filtered.slice(startIndex, endIndex);
-
-  // Render paginated cards
-  renderCollectionCards(paginatedListings, 'catalog-cards');
-
-  // Render pagination
-  const totalPages = Math.ceil(filtered.length / catalogState.itemsPerPage);
-  renderPagination({
-    containerId: 'catalog-pagination',
-    currentPage: catalogState.page,
-    totalPages,
-    onPageChange: (page: number) => {
-      catalogState.page = page;
-      applyCatalogFilters();
-
-      // Scroll to catalog section
-      const catalogSection = document.getElementById('catalog-cards');
-      if (catalogSection) {
-        catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    },
-  });
 }
 
 // Initialize when DOM is ready

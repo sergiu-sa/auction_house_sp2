@@ -677,6 +677,32 @@ function initHeaderEvents(pageType: string): void {
   }
 }
 
+/** Home is served from both `/` and `/index.html`; only matching one strands the search. */
+function isBrowsePage(): boolean {
+  const path = window.location.pathname;
+  return (
+    path === '/' ||
+    path.endsWith('/index.html') ||
+    path.endsWith('/collection.html')
+  );
+}
+
+/**
+ * A page with a catalog filters in place; anywhere else the term travels to the home catalog as `?q=`, which `Home.ts` reads on load.
+ */
+function submitSearch(searchTerm: string): void {
+  if (isBrowsePage()) {
+    document.dispatchEvent(
+      new CustomEvent('globalSearchInput', { detail: { query: searchTerm } })
+    );
+    return;
+  }
+
+  if (searchTerm) {
+    window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
+  }
+}
+
 // Search + filter events, only used on browse pages
 function initBrowsePageEvents(): void {
   // Get filter elements
@@ -730,11 +756,7 @@ function initBrowsePageEvents(): void {
       const input = mobileSearchForm.querySelector(
         'input[name="q"]'
       ) as HTMLInputElement;
-      const searchTerm = input.value.trim();
-
-      if (searchTerm) {
-        window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
-      }
+      submitSearch(input.value.trim());
     });
   }
 
@@ -782,22 +804,7 @@ function initBrowsePageEvents(): void {
       const input = headerSearchForm.querySelector(
         'input[name="q"]'
       ) as HTMLInputElement;
-      const searchTerm = input.value.trim();
-
-      // Dispatch search event for same-page filtering
-      document.dispatchEvent(
-        new CustomEvent('globalSearchSubmit', { detail: { query: searchTerm } })
-      );
-
-      // For cross-page navigation, only navigate if not on index or collection pages
-      const currentPath = window.location.pathname;
-      if (
-        searchTerm &&
-        !currentPath.includes('index.html') &&
-        !currentPath.includes('collection.html')
-      ) {
-        window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
-      }
+      submitSearch(input.value.trim());
     });
   }
 

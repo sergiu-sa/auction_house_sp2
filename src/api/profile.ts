@@ -8,14 +8,16 @@ import type {
 } from '../types/api';
 
 /**
- * Get a profile by username
- * @param username - Profile username
+ * Get a profile by username.
+ *
+ * Every path here encodes the username:
+ *  it arrives from `?user=` in the URL, and `apiClient` concatenates onto the base URL, so unencoded `..` segments normalise and steer the request to a different endpoint.
  */
 export async function getProfile(
   username: string
 ): Promise<ApiResponse<Profile>> {
   return api.get<ApiResponse<Profile>>(
-    `/auction/profiles/${username}?_listings=true&_wins=true`
+    `/auction/profiles/${encodeURIComponent(username)}?_listings=true&_wins=true`
   );
 }
 
@@ -27,7 +29,7 @@ export async function getProfileListings(
   username: string
 ): Promise<ApiResponse<Listing[]>> {
   return api.get<ApiResponse<Listing[]>>(
-    `/auction/profiles/${username}/listings?_bids=true&_seller=true`
+    `/auction/profiles/${encodeURIComponent(username)}/listings?_bids=true&_seller=true`
   );
 }
 
@@ -39,7 +41,7 @@ export async function getProfileBids(
   username: string
 ): Promise<ApiResponse<Bid[]>> {
   return api.get<ApiResponse<Bid[]>>(
-    `/auction/profiles/${username}/bids?_listings=true`
+    `/auction/profiles/${encodeURIComponent(username)}/bids?_listings=true`
   );
 }
 
@@ -51,7 +53,7 @@ export async function getProfileWins(
   username: string
 ): Promise<ApiResponse<Listing[]>> {
   return api.get<ApiResponse<Listing[]>>(
-    `/auction/profiles/${username}/wins?_seller=true&_bids=true`
+    `/auction/profiles/${encodeURIComponent(username)}/wins?_seller=true&_bids=true`
   );
 }
 
@@ -65,7 +67,7 @@ export async function updateProfile(
   profileData: UpdateProfileData
 ): Promise<ApiResponse<Profile>> {
   return api.put<ApiResponse<Profile>>(
-    `/auction/profiles/${username}`,
+    `/auction/profiles/${encodeURIComponent(username)}`,
     profileData
   );
 }

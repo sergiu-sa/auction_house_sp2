@@ -1,14 +1,12 @@
 /**
  * Shared product showcase used on the login and register pages.
  *
- * Both auth pages render three `data-tile` panels in their HTML
- * (`featured`, `tile-a`, `tile-b`). This module fetches the latest listings
- * and pours them into those panels, refreshing every 15 seconds. The exact
- * fields each tile shows differ between login and register — the config
- * object below holds the per-page differences.
+ * Both auth pages render three `data-tile` panels in their HTML (`featured`, `tile-a`, `tile-b`).
+ * This module fetches the latest listings and pours them into those panels, refreshing every 15 seconds.
+ * The exact fields each tile shows differ between login and register — the config object below holds the per-page differences.
  */
 
-import { getListings } from '../api/listings';
+import { newest } from '../api/listingQueries';
 import { formatTimeRemaining } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
@@ -37,14 +35,14 @@ export interface ProductShowcaseConfig {
   showTileABidAndTime: boolean;
   /** When true, write a truncated description into tile-b's `.text-[11px].text-slate-600` slot. */
   showTileBDescription: boolean;
-  /** Character cap for tile-b's description. Ignored unless `showTileBDescription`. */
+  /** Character cap for tile-b's description.
+   * Ignored unless `showTileBDescription`. */
   tileBDescriptionLength: number;
 }
 
 /**
- * Fetch listings and update the showcase tiles. Runs once on init and then
- * on a 15-second interval. Network failures are logged but do not surface to
- * the user — the page keeps whatever was last rendered.
+ * Fetch listings and update the showcase tiles. Runs once on init and then on a 15-second interval.
+ * Network failures are logged but do not surface to the user — the page keeps whatever was last rendered.
  */
 export async function initProductShowcase(
   config: ProductShowcaseConfig
@@ -60,15 +58,11 @@ async function loadDynamicListings(
   config: ProductShowcaseConfig
 ): Promise<void> {
   try {
-    const response = await getListings({
-      limit: FEATURED_FETCH_LIMIT,
-      _bids: true,
-      sort: 'created',
-      sortOrder: 'desc',
-    });
+    // Active only: the newest listings are mostly closed lots, so the tiles used to advertise auctions that had already ended.
+    const listings = await newest(FEATURED_FETCH_LIMIT);
 
-    if (response.data && response.data.length > 0) {
-      updateShowcase(response.data, config);
+    if (listings.length > 0) {
+      updateShowcase(listings, config);
     }
   } catch (error) {
     logError(
@@ -191,9 +185,8 @@ function updateSmallTile(
     }
   }
 
-  // The register page renders combined "X bids · Yh Zm left" text into the
-  // `.text-[11px].text-slate-600` slot — login uses the slot for description
-  // text instead. Each page tells us which to do via its config.
+  // The register page renders combined "X bids · Yh Zm left" text into the `.text-[11px].text-slate-600` slot;
+  //   login uses the slot for description text instead. Each page tells us which to do via its config.
   if (tileId === 'tile-a' && !config.showTileABidAndTime) {
     const metaElement = article.querySelector(
       '.text-\\[11px\\].text-slate-600'
