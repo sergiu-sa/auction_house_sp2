@@ -1,8 +1,7 @@
+import { fetchFreshProfile } from '../utils/profileCache';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
 import { renderGuestBanner } from './GuestBanner';
-import { getProfile } from '../api/profile';
-import { setUser } from '../utils/storage';
 import {
   renderCategoryFilters,
   renderActiveOnlyCheckbox,
@@ -14,13 +13,8 @@ import {
   setActiveOnlyState,
   setSortValue,
 } from './filters';
-import { logError } from '../utils/logger';
 import type { User } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
-
-// 30-second profile cache so credits stay fresh without refetching every page render
-let profileCache: { data: User; timestamp: number } | null = null;
-const CACHE_TTL = 30000;
 
 interface NavLink {
   href: string;
@@ -114,37 +108,9 @@ export async function renderHeader(): Promise<void> {
 
   // Fetch fresh user data if logged in to get updated credits (with cache)
   if (isUserLoggedIn && user) {
-    const now = Date.now();
-    const cacheValid = profileCache && now - profileCache.timestamp < CACHE_TTL;
-
-    if (cacheValid) {
-      // Use cached data
-      user = profileCache!.data;
-    } else {
-      // Fetch fresh data
-      try {
-        const profileResponse = await getProfile(user.name);
-        if (profileResponse.data) {
-          // Update stored user data with fresh profile data
-          const updatedUser = {
-            name: profileResponse.data.name,
-            email: profileResponse.data.email,
-            bio: profileResponse.data.bio,
-            avatar: profileResponse.data.avatar,
-            banner: profileResponse.data.banner,
-            credits: profileResponse.data.credits,
-            _count: profileResponse.data._count,
-          };
-          setUser(updatedUser);
-          user = updatedUser;
-
-          // Update cache
-          profileCache = { data: updatedUser, timestamp: now };
-        }
-      } catch (error) {
-        // If fetch fails, continue with cached user data
-        logError('Failed to fetch fresh user data', error);
-      }
+    const freshUser = await fetchFreshProfile();
+    if (freshUser) {
+      user = freshUser;
     }
   }
 
@@ -354,6 +320,24 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
   `;
 }
 
+/**
+ * Update the credit figures already on screen, for pages that spend credits without navigating.
+ * Re-rendering the whole header instead would re-bind its document-level listeners on every call.
+ */
+export function updateHeaderCredits(credits: number): void {
+  const formatted = new Intl.NumberFormat('en-US').format(credits);
+
+  for (const [id, text] of [
+    ['navbar-credits', formatted],
+    ['navbar-menu-credits', `${formatted} credits`],
+  ]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.textContent = text;
+    el.setAttribute('aria-label', `${formatted} credits`);
+  }
+}
+
 // User section: credits + profile dropdown for logged-in users, auth buttons for guests
 function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
   return `
@@ -365,7 +349,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         <!-- Credits Box -->
         <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 3px solid var(--aucto-border-dark)" aria-label="User credits">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
-          <span class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
+          <span id="navbar-credits" class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
         </div>
 
         <!-- DESKTOP: Profile Button  -->
@@ -510,7 +494,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
           }
           <div>
             <div class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</div>
-            <div class="text-xs text-slate-600" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
+            <div id="navbar-menu-credits" class="text-xs text-slate-600" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
           </div>
         </div>
         <button

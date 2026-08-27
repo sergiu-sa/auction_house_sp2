@@ -1,3 +1,5 @@
+import { invalidateProfileCache } from '../utils/profileCache';
+import { highestBid, isStillRunning } from '../utils/biddingStats';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { getCurrentUser, protectedRoute } from '../utils/auth';
@@ -124,9 +126,7 @@ function renderProfile(
   const container = document.getElementById('profile-content');
   if (!container) return;
 
-  const activeListings = listings.filter(
-    (listing) => new Date(listing.endsAt) > new Date()
-  );
+  const activeListings = listings.filter(isStillRunning);
   const totalBidsPlaced = bids.length;
 
   container.innerHTML = `
@@ -531,9 +531,7 @@ function renderActiveListings(
 function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
   const imageUrl = listing.media?.[0]?.url || '';
   const bidsCount = listing._count?.bids || 0;
-  const highestBid = listing.bids?.length
-    ? Math.max(...listing.bids.map((b) => b.amount))
-    : 0;
+  const currentHighest = highestBid(listing.bids);
   const tag = listing.tags?.[0] || 'General';
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
@@ -574,7 +572,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           Ends ${timeRemaining}
         </div>
         <div class="mb-4 text-2xl font-bold text-slate-900">
-          ${highestBid > 0 ? `${highestBid} Credits` : 'No bids yet'}
+          ${currentHighest > 0 ? `${currentHighest} Credits` : 'No bids yet'}
         </div>
         <div class="flex gap-2">
           <a
@@ -656,9 +654,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
 }
 
 function renderWinItem(win: Listing): string {
-  const highestBid = win.bids?.length
-    ? Math.max(...win.bids.map((b) => b.amount))
-    : 0;
+  const currentHighest = highestBid(win.bids);
   const timeAgo = formatTimeAgo(win.endsAt);
 
   return `
@@ -668,7 +664,7 @@ function renderWinItem(win: Listing): string {
           ${escapeHtml(win.title)}
         </a>
         <div class="text-xs text-slate-500">
-          Won for ${highestBid} credits · ${timeAgo}
+          Won for ${currentHighest} credits · ${timeAgo}
         </div>
       </div>
       <div
@@ -785,6 +781,7 @@ async function handleProfileUpdate(username: string): Promise<void> {
         banner: response.data.banner,
       };
       setUser(updatedUser);
+      invalidateProfileCache();
     }
 
     showToast('Profile updated successfully!', 'success');
