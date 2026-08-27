@@ -1,4 +1,5 @@
 import type { Listing } from '../types/api';
+import { highestBid } from '../utils/biddingStats';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { formatCurrency } from '../utils/formatCurrency';
 import { isLoggedIn } from '../utils/auth';
@@ -13,8 +14,7 @@ export function createProductCard(listing: Listing): string {
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
   const bids = listing.bids || [];
-  const highestBid =
-    bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0;
+  const currentHighest = highestBid(bids);
 
   const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
@@ -103,10 +103,10 @@ export function createProductCard(listing: Listing): string {
           <div class="flex items-center justify-between gap-2">
             <div>
               <div class="mb-1 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-500">
-                ${highestBid > 0 ? 'Current Bid' : 'Starting Bid'}
+                ${currentHighest > 0 ? 'Current Bid' : 'Starting Bid'}
               </div>
               <div class="text-lg sm:text-xl font-bold text-slate-900">
-                ${formatCurrency(highestBid)}
+                ${formatCurrency(currentHighest)}
               </div>
             </div>
             <div class="text-right">

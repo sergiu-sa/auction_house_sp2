@@ -10,6 +10,7 @@ import { newest } from '../api/listingQueries';
 import { formatTimeRemaining } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
+import { highestBid } from '../utils/biddingStats';
 
 const REFRESH_INTERVAL_MS = 15000;
 const FEATURED_FETCH_LIMIT = 3;
@@ -126,8 +127,7 @@ function updateFeaturedTile(
       '#featured-bid'
     ) as HTMLElement | null;
     if (bidElement && listing.bids && listing.bids.length > 0) {
-      const highestBid = Math.max(...listing.bids.map((bid) => bid.amount));
-      bidElement.textContent = highestBid.toString();
+      bidElement.textContent = highestBid(listing.bids).toString();
     }
   }
 }
