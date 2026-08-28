@@ -26,12 +26,27 @@ test('home renders every section at its measured card count', async ({
   expect(mock.consoleErrors).toEqual([]);
 });
 
-/** A search started on another page arrives as ?q= and used to be dropped on landing. */
+/**
+ * A search started on another page arrives as ?q= and used to be dropped on landing.
+ *
+ * Both halves matter and the card count alone proves neither:
+ *  the term has to reach the query (a filtered page is a different set of lots, not a smaller one), and the catalog's own reload must not overwrite the field the term landed in.
+ */
 test('home applies a search handed to it in the URL', async ({ page }) => {
+  await page.goto('/index.html');
+  const unfiltered = await page
+    .locator('#catalog-cards article h3')
+    .first()
+    .textContent();
+
   await page.goto('/index.html?q=vintage');
 
   await expect(page.locator('#global-search-input')).toHaveValue('vintage');
+  await expect(page.locator('#sticky-search-input')).toHaveValue('vintage');
   await expect(page.locator('#catalog-cards article')).toHaveCount(12);
+  await expect(
+    page.locator('#catalog-cards article h3').first()
+  ).not.toHaveText(unfiltered ?? '');
 });
 
 test.describe('empty catalog', () => {

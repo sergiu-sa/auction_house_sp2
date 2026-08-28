@@ -1,14 +1,13 @@
+import { CatalogStateManager } from '../utils/catalogState';
+import { highestBid } from '../utils/biddingStats';
 import {
   activePool,
   catalogPage,
   endingSoon,
   featuredActive,
   newest,
-  toSortKey,
-  toSortOrder,
   trending,
 } from '../api/listingQueries';
-import type { SortKey, SortOrder } from '../api/listingQueries';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
@@ -51,63 +50,11 @@ import {
 import { escapeHtml } from '../utils/escapeHtml';
 
 // State management for catalog section
-interface CatalogState {
-  category: string;
-  sort: SortKey;
-  sortOrder: SortOrder;
-  activeOnly: boolean;
-  search: string;
-  page: number;
-  itemsPerPage: number;
-}
-
+const catalogManager = new CatalogStateManager(
+  { sort: 'endsAt', sortOrder: 'asc' },
+  loadCatalogListings
+);
 let catalogRequestId = 0;
-const catalogState: CatalogState = {
-  category: 'all',
-  sort: 'endsAt',
-  sortOrder: 'asc',
-  activeOnly: false,
-  search: '',
-  page: 1,
-  itemsPerPage: 12,
-};
-
-function listenToNavbarFilters(): void {
-  // Category filter from navbar
-  document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
-    catalogState.category = e.detail.category;
-    catalogState.page = 1; // Reset to first page
-    loadCatalogListings();
-    syncStickyFiltersWithState();
-  }) as EventListener);
-
-  // Search from navbar
-  document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
-    catalogState.search = e.detail.query;
-    catalogState.page = 1; // Reset to first page
-    loadCatalogListings();
-    syncStickyFiltersWithState();
-  }) as EventListener);
-
-  // Active only checkbox from navbar
-  document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
-    catalogState.activeOnly = e.detail.activeOnly;
-    catalogState.page = 1; // Reset to first page
-    loadCatalogListings();
-    syncStickyFiltersWithState();
-  }) as EventListener);
-
-  // Sort from navbar
-  document.addEventListener('sortChange', ((e: CustomEvent) => {
-    // Narrowed, not trusted: an unknown sort field is a 500 from the API.
-    catalogState.sort = toSortKey(e.detail.sort);
-    catalogState.sortOrder = toSortOrder(e.detail.order);
-    catalogState.page = 1; // Reset to first page
-    loadCatalogListings();
-    syncStickyFiltersWithState();
-  }) as EventListener);
-}
-
 function initStickyFilterBar(): void {
   const stickyBar = document.getElementById('sticky-catalog-filters');
   const catalogSection =
@@ -229,18 +176,20 @@ function initStickyFilterEvents(): void {
   }
 }
 
-function syncStickyFiltersWithState(): void {
-  // Sync search input using component
-  setSearchFieldValue('sticky-search-input', catalogState.search);
+function syncFilterBarsWithState(): void {
+  const state = catalogManager.getState();
 
-  // Sync category buttons using component
-  setActiveCategory('data-sticky-filter', catalogState.category);
+  setSearchFieldValue('sticky-search-input', state.search);
+  setActiveCategory('data-sticky-filter', state.category);
+  setActiveOnlyState('sticky-active-only', state.activeOnly);
+  setSortValue('sticky-sort-select', state.sort, state.sortOrder);
 
-  // Sync active only checkbox using component
-  setActiveOnlyState('sticky-active-only', catalogState.activeOnly);
-
-  // Sync sort select using component
-  setSortValue('sticky-sort-select', catalogState.sort, catalogState.sortOrder);
+  // The navbar renders its own copy of these controls with its own defaults, so without this the two visible filter bars disagree;
+  //  from first paint for sort, and after any sticky-bar change for the rest.
+  // Search is deliberately not synced here: the input is debounced, and writing to it mid-type would clobber keystrokes made while a load was in flight.
+  setActiveCategory('data-filter', state.category);
+  setActiveOnlyState('active-only-filter', state.activeOnly);
+  setSortValue('sort-filter-select', state.sort, state.sortOrder);
 }
 
 async function initHomePage(): Promise<void> {
@@ -256,7 +205,7 @@ async function initHomePage(): Promise<void> {
   setupCreateListingButton();
 
   // Listen to navbar filter events
-  listenToNavbarFilters();
+  catalogManager.listenToNavbarFilters();
 
   // Initialize sticky catalog filters
   initStickyFilterBar();
@@ -275,7 +224,7 @@ function applyInitialSearchFromUrl(): void {
   const query = new URLSearchParams(window.location.search).get('q')?.trim();
   if (!query) return;
 
-  catalogState.search = query;
+  catalogManager.seedState({ search: query });
   setSearchFieldValue('sticky-search-input', query);
   setSearchFieldValue('global-search-input', query);
   setSearchFieldValue('mobile-search-input', query);
@@ -330,19 +279,21 @@ async function loadAllData(): Promise<void> {
  * Every filter is part of the query now, so each change is a round trip rather than a re-slice of whatever happened to be fetched first.
  */
 async function loadCatalogListings(): Promise<void> {
+  syncFilterBarsWithState();
   const requestId = ++catalogRequestId;
+  const state = catalogManager.getState();
 
   try {
-    showCollectionCardSkeletons(catalogState.itemsPerPage, 'catalog-cards');
+    showCollectionCardSkeletons(state.itemsPerPage, 'catalog-cards');
 
     const result = await catalogPage({
-      page: catalogState.page,
-      limit: catalogState.itemsPerPage,
-      sort: catalogState.sort,
-      sortOrder: catalogState.sortOrder,
-      activeOnly: catalogState.activeOnly,
-      tag: catalogState.category,
-      search: catalogState.search,
+      page: state.page,
+      limit: state.itemsPerPage,
+      sort: state.sort,
+      sortOrder: state.sortOrder,
+      activeOnly: state.activeOnly,
+      tag: state.category,
+      search: state.search,
     });
 
     // A newer request started while this one was in flight
@@ -364,11 +315,10 @@ async function loadCatalogListings(): Promise<void> {
 function renderCatalogPagination(totalPages: number): void {
   renderPagination({
     containerId: 'catalog-pagination',
-    currentPage: catalogState.page,
+    currentPage: catalogManager.getState().page,
     totalPages,
     onPageChange: (page: number) => {
-      catalogState.page = page;
-      loadCatalogListings();
+      catalogManager.updatePage(page);
 
       // Scroll to catalog section
       const catalogSection = document.getElementById('catalog-cards');
@@ -464,9 +414,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
   // Main featured listing
   const main = featured[0];
   const mainImage = main.media?.[0]?.url || '/images/placeholder.svg';
-  const mainBids = main.bids || [];
-  const mainHighestBid =
-    mainBids.length > 0 ? Math.max(...mainBids.map((b) => b.amount)) : 0;
+  const mainHighestBid = highestBid(main.bids);
   const mainTimeRemaining = formatTimeRemaining(main.endsAt);
 
   let mosaicHTML = `
@@ -520,9 +468,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
     for (let i = 1; i < Math.min(featured.length, 3); i++) {
       const listing = featured[i];
       const image = listing.media?.[0]?.url || '/images/placeholder.svg';
-      const bids = listing.bids || [];
-      const highestBid =
-        bids.length > 0 ? Math.max(...bids.map((b) => b.amount)) : 0;
+      const currentHighest = highestBid(listing.bids);
 
       mosaicHTML += `
         <article class="bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
@@ -541,7 +487,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
                 ${escapeHtml(listing.title.length > 30 ? listing.title.substring(0, 30) + '...' : listing.title)}
               </a>
             </h4>
-            <p class="text-[11px] text-slate-600">${highestBid} credits</p>
+            <p class="text-[11px] text-slate-600">${currentHighest} credits</p>
           </div>
         </article>
       `;

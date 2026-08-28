@@ -1,3 +1,4 @@
+import { CatalogStateManager } from '../utils/catalogState';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
@@ -5,77 +6,21 @@ import {
   showCollectionCardSkeletons,
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
-import {
-  activeStats,
-  catalogPage,
-  toSortKey,
-  toSortOrder,
-} from '../api/listingQueries';
-import type { SortKey, SortOrder } from '../api/listingQueries';
+import { activeStats, catalogPage } from '../api/listingQueries';
 import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 
-// State management
-interface FilterState {
-  category: string;
-  sort: SortKey;
-  sortOrder: SortOrder;
-  activeOnly: boolean;
-  search: string;
-  page: number;
-  itemsPerPage: number;
-  viewMode: 'grid' | 'list';
-}
-
-let currentFilters: FilterState = {
-  category: 'all',
-  sort: 'created',
-  sortOrder: 'desc',
-  activeOnly: false,
-  search: '',
-  page: 1,
-  itemsPerPage: 24,
-  viewMode: 'grid',
-};
+const catalogManager = new CatalogStateManager(
+  { itemsPerPage: 24 },
+  loadListings
+);
 
 // The page the server last returned, kept so a view-mode toggle can re-render it without spending a round trip.
 let currentPageListings: Listing[] = [];
 let resultTotals = { totalCount: 0, pageCount: 1 };
 let loadRequestId = 0;
 let nextCloseInterval: number | null = null;
-
-function listenToNavbarFilters(): void {
-  // Category filter from navbar
-  document.addEventListener('categoryFilterChange', ((e: CustomEvent) => {
-    currentFilters.category = e.detail.category;
-    currentFilters.page = 1;
-    loadListings();
-  }) as EventListener);
-
-  // Search from navbar
-  document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
-    currentFilters.search = e.detail.query;
-    currentFilters.page = 1;
-    loadListings();
-  }) as EventListener);
-
-  // Active only checkbox from navbar
-  document.addEventListener('activeOnlyChange', ((e: CustomEvent) => {
-    currentFilters.activeOnly = e.detail.activeOnly;
-    currentFilters.page = 1;
-    loadListings();
-  }) as EventListener);
-
-  // Sort from navbar
-  document.addEventListener('sortChange', ((e: CustomEvent) => {
-    // Narrowed, not trusted: an unknown sort field is a 500 from the API.
-    currentFilters.sort = toSortKey(e.detail.sort);
-    currentFilters.sortOrder = toSortOrder(e.detail.order);
-    currentFilters.page = 1;
-    loadListings();
-  }) as EventListener);
-}
 
 function initializeFilters(): void {
   // View toggle (grid vs list)
@@ -85,7 +30,7 @@ function initializeFilters(): void {
 
   if (gridViewBtn && listViewBtn && listingsGrid) {
     gridViewBtn.addEventListener('click', () => {
-      currentFilters.viewMode = 'grid';
+      catalogManager.updateViewMode('grid');
       listingsGrid.className =
         'grid grid-cols-1 gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
       gridViewBtn.classList.remove(
@@ -106,7 +51,7 @@ function initializeFilters(): void {
     });
 
     listViewBtn.addEventListener('click', () => {
-      currentFilters.viewMode = 'list';
+      catalogManager.updateViewMode('list');
       listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all';
       listViewBtn.classList.remove(
         'bg-white',
@@ -150,23 +95,10 @@ function initializeFilters(): void {
   if (clearFiltersBtn) {
     clearFiltersBtn.addEventListener('click', () => {
       // Reset filters to default
-      currentFilters = {
-        category: 'all',
-        sort: 'created',
-        sortOrder: 'desc',
-        activeOnly: false,
-        search: '',
-        page: 1,
-        itemsPerPage: 24,
-        viewMode: 'grid',
-      };
+      catalogManager.resetFilters();
 
       // Dispatch events to update navbar UI
       document.dispatchEvent(new CustomEvent('clearAllFilters'));
-
-      // Sort and active-only are both part of the API query, so the pool itself is stale after a reset;
-      //   always refetch rather than re-sorting whatever happened to be loaded.
-      loadListings();
     });
   }
 }
@@ -180,7 +112,7 @@ export async function initCollectionPage(): Promise<void> {
   initializeFilters();
 
   // Listen to navbar filter events
-  listenToNavbarFilters();
+  catalogManager.listenToNavbarFilters();
 
   // Load listings
   loadListings();
@@ -194,22 +126,19 @@ export async function initCollectionPage(): Promise<void> {
  */
 async function loadListings(): Promise<void> {
   const requestId = ++loadRequestId;
+  const state = catalogManager.getState();
 
   try {
-    // Show loading skeletons
-    showCollectionCardSkeletons(
-      currentFilters.itemsPerPage,
-      'collection-cards-grid'
-    );
+    showCollectionCardSkeletons(state.itemsPerPage, 'collection-cards-grid');
 
     const result = await catalogPage({
-      page: currentFilters.page,
-      limit: currentFilters.itemsPerPage,
-      sort: currentFilters.sort,
-      sortOrder: currentFilters.sortOrder,
-      activeOnly: currentFilters.activeOnly,
-      tag: currentFilters.category,
-      search: currentFilters.search,
+      page: state.page,
+      limit: state.itemsPerPage,
+      sort: state.sort,
+      sortOrder: state.sortOrder,
+      activeOnly: state.activeOnly,
+      tag: state.category,
+      search: state.search,
     });
 
     // A newer request started while this one was in flight
@@ -231,19 +160,20 @@ async function loadListings(): Promise<void> {
 
 /** Draw the page already in hand. No query — the view toggle uses this too. */
 function renderCurrentPage(): void {
+  const state = catalogManager.getState();
+
   renderCollectionCards(
     currentPageListings,
     'collection-cards-grid',
-    currentFilters.viewMode
+    state.viewMode
   );
 
   renderPagination({
     containerId: 'pagination',
-    currentPage: currentFilters.page,
+    currentPage: state.page,
     totalPages: resultTotals.pageCount,
     onPageChange: (page: number) => {
-      currentFilters.page = page;
-      loadListings();
+      catalogManager.updatePage(page);
 
       // Scroll to top of results
       const resultsHeader = document.querySelector('#collection-cards-grid');
@@ -272,7 +202,8 @@ function updateResultsInfo(): void {
   }
 
   if (resultsRange) {
-    const start = (currentFilters.page - 1) * currentFilters.itemsPerPage + 1;
+    const { page, itemsPerPage } = catalogManager.getState();
+    const start = (page - 1) * itemsPerPage + 1;
     const end = start + currentPageListings.length - 1;
 
     resultsRange.textContent =
