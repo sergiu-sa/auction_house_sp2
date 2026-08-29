@@ -9,6 +9,9 @@ import {
   isValidFutureDate,
   isValidTitle,
   isValidDescription,
+  isValidJwtShape,
+  isValidUsername,
+  evaluatePasswordStrength,
 } from './validation';
 
 describe('Email Validation', () => {
@@ -216,5 +219,95 @@ describe('Listing Field Validation', () => {
     it('should accept empty description (optional field)', () => {
       expect(isValidDescription('')).toBe(true);
     });
+  });
+});
+
+describe('Token Validation', () => {
+  describe('isValidJwtShape', () => {
+    it('accepts three base64url segments separated by dots', () => {
+      expect(
+        isValidJwtShape(
+          'eyJhbGciOiJIUzI1NiIsInR5cCI.eyJzdWIiOiIxMjM0NTY3ODkwIi.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        )
+      ).toBe(true);
+    });
+
+    it('rejects the junk another localhost project can leave in the token key', () => {
+      expect(isValidJwtShape('')).toBe(false);
+      expect(isValidJwtShape('just-a-random-string')).toBe(false);
+      expect(isValidJwtShape('12345')).toBe(false);
+      expect(isValidJwtShape('a.b')).toBe(false);
+      expect(isValidJwtShape('a.b.c.d')).toBe(false);
+      // All three segments must be present: an empty one is as much a junk value as a missing one.
+      expect(isValidJwtShape('a.b.')).toBe(false);
+      expect(isValidJwtShape('a..c')).toBe(false);
+      expect(isValidJwtShape('.b.c')).toBe(false);
+    });
+
+    it('rejects characters outside the base64url alphabet', () => {
+      expect(
+        isValidJwtShape(
+          'eyJhbGciOiJIUzI1Ni.eyJzdWIiOiIxMjM0NTY3ODkwIi.invalid@characters!'
+        )
+      ).toBe(false);
+    });
+
+    // Shape only: nothing is decoded, so a three-segment string passes even if the segments are meaningless.
+    it('does not attempt to decode the segments', () => {
+      expect(isValidJwtShape('not.a.jwt')).toBe(true);
+    });
+  });
+});
+
+describe('Username Validation', () => {
+  it('accepts letters, numbers and underscores', () => {
+    expect(isValidUsername('bidder')).toBe(true);
+    expect(isValidUsername('bidder_99')).toBe(true);
+    expect(isValidUsername('AB')).toBe(true);
+  });
+
+  it('rejects names under two characters', () => {
+    expect(isValidUsername('')).toBe(false);
+    expect(isValidUsername('a')).toBe(false);
+  });
+
+  it('rejects anything outside the allowed alphabet', () => {
+    expect(isValidUsername('has space')).toBe(false);
+    expect(isValidUsername('has-hyphen')).toBe(false);
+    expect(isValidUsername('has.dot')).toBe(false);
+    expect(isValidUsername('email@host')).toBe(false);
+  });
+});
+
+describe('Password Strength', () => {
+  it('reports nothing for an empty password', () => {
+    expect(evaluatePasswordStrength('')).toEqual({
+      strength: 0,
+      message: '',
+      colorClass: '',
+    });
+  });
+
+  // A short all-lowercase password scores zero but is still a real password the user is typing;
+  //   it has to come back as Weak, not as an empty result.
+  it('calls a scoreless password weak rather than returning nothing', () => {
+    for (const password of ['abc', 'hello', 'secret']) {
+      const result = evaluatePasswordStrength(password);
+      expect(result.strength).toBe(0);
+      expect(result.message).toBe('Weak');
+      expect(result.colorClass).toBe('text-red-600');
+    }
+  });
+
+  it('climbs through the bands as a password gains character classes', () => {
+    expect(evaluatePasswordStrength('abcdefgh').message).toBe('Weak');
+    expect(evaluatePasswordStrength('abcdefghijkl').message).toBe('Weak');
+    expect(evaluatePasswordStrength('abcdefghijkL').message).toBe('Fair');
+    expect(evaluatePasswordStrength('abcdefghijkL1').message).toBe('Good');
+    expect(evaluatePasswordStrength('abcdefghijL1!').message).toBe('Strong');
+  });
+
+  it('caps the score at five', () => {
+    expect(evaluatePasswordStrength('Abcdefghijkl1!@#').strength).toBe(5);
   });
 });

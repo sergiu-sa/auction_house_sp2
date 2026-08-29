@@ -28,7 +28,7 @@ export const test = base.extend<TestOptions & { mock: MockController }>({
       if (auth === 'in') {
         await context.addInitScript(
           ([owner, at]) => {
-            localStorage.setItem('token', 'e2e-token-not-a-real-jwt');
+            localStorage.setItem('token', 'e2e-token.not-a.real-jwt');
             localStorage.setItem('tokenTimestamp', String(at));
             localStorage.setItem(
               'user',

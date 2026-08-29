@@ -149,3 +149,54 @@ export function clearFormErrors(formId: string): void {
     el.classList.add('hidden');
   });
 }
+
+/**
+ * Three base64url segments separated by dots — shape only, nothing is decoded or verified.
+ * Enough to spot a junk value another localhost:5173 project left in `token`, which would otherwise read as a logged-in session.
+ */
+export function isValidJwtShape(token: string): boolean {
+  if (!token) return false;
+  return /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/.test(token);
+}
+
+/** Letters, numbers and underscores only, at least two characters — the Noroff API's own rule. */
+export function isValidUsername(name: string): boolean {
+  if (name.length < 2) return false;
+  return /^[a-zA-Z0-9_]+$/.test(name);
+}
+
+export function evaluatePasswordStrength(password: string): {
+  strength: number;
+  message: string;
+  colorClass: string;
+} {
+  if (!password) {
+    return { strength: 0, message: '', colorClass: '' };
+  }
+
+  let strength = 0;
+  let message = '';
+  let colorClass = '';
+
+  if (password.length >= 8) strength++;
+  if (password.length >= 12) strength++;
+  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+  if (/\d/.test(password)) strength++;
+  if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+  if (strength <= 2) {
+    message = 'Weak';
+    colorClass = 'text-red-600';
+  } else if (strength === 3) {
+    message = 'Fair';
+    colorClass = 'text-yellow-600';
+  } else if (strength === 4) {
+    message = 'Good';
+    colorClass = 'text-blue-600';
+  } else {
+    message = 'Strong';
+    colorClass = 'text-green-600';
+  }
+
+  return { strength, message, colorClass };
+}

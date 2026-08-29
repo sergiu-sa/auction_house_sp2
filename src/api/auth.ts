@@ -26,10 +26,12 @@ export async function register(
 export async function login(credentials: LoginData): Promise<LoginResponse> {
   const response = await api.post<LoginResponse>('/auth/login', credentials);
 
-  // Store token and user data in localStorage with proper timestamp
   if (response.data.accessToken) {
-    setToken(response.data.accessToken);
-    setUser(response.data);
+    // The token is kept out of the stored user deliberately:
+    //  it has its own key, nothing reads a copy inside `user`, and storing it twice only gives the credential a second place to leak from.
+    const { accessToken, ...user } = response.data;
+    setToken(accessToken);
+    setUser(user);
   }
 
   return response;

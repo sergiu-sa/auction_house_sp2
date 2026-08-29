@@ -128,7 +128,9 @@ describe('components are inert against a hostile listing', () => {
 
   it('Navbar, carrying a stored user name and avatar', async () => {
     localStorage.clear();
-    localStorage.setItem('token', 'test-token');
+    // Has to be JWT-shaped:
+    //  isAuthenticated clears a malformed token, and renderHeader would then draw the logged-out navbar, which carries no user data for assertInert to inspect.
+    localStorage.setItem('token', 'header.payload.signature');
     localStorage.setItem('tokenTimestamp', String(Date.now()));
     localStorage.setItem(
       'user',
@@ -144,7 +146,11 @@ describe('components are inert against a hostile listing', () => {
 
     await renderHeader();
 
-    assertInert(document.getElementById('header')!.innerHTML);
+    const markup = document.getElementById('header')!.innerHTML;
+    // The logged-out navbar carries no user data at all, so assertInert would pass on it either way.
+    // Prove the hostile name reached the markup before asserting it landed inert.
+    expect(markup).toContain('Lot&quot;');
+    assertInert(markup);
     localStorage.clear();
   });
 });
