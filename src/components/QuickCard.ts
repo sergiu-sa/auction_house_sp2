@@ -1,4 +1,5 @@
 import type { Listing } from '../types/api';
+import { highestBid } from '../utils/biddingStats';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { formatCurrency } from '../utils/formatCurrency';
 import { isLoggedIn } from '../utils/auth';
@@ -12,9 +13,7 @@ export function createQuickCard(listing: Listing): string {
   const isActive = isAuctionActive(listing.endsAt);
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
-  const bids = listing.bids || [];
-  const highestBid =
-    bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0;
+  const currentHighest = highestBid(listing.bids);
 
   const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
@@ -73,7 +72,7 @@ export function createQuickCard(listing: Listing): string {
             Current Bid
           </div>
           <div class="text-2xl font-bold text-slate-900">
-            ${formatCurrency(highestBid)}
+            ${formatCurrency(currentHighest)}
           </div>
         </div>
 

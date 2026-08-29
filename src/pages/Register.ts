@@ -3,6 +3,8 @@ import { redirectIfAuthenticated } from '../utils/auth';
 import {
   isValidNoroffEmail,
   isValidPassword,
+  isValidUsername,
+  evaluatePasswordStrength,
   showFieldError,
   clearFieldError,
   clearFormErrors,
@@ -146,7 +148,7 @@ function validateNameField(input: HTMLInputElement): boolean {
     return false;
   }
 
-  if (!/^[a-zA-Z0-9_]+$/.test(name)) {
+  if (!isValidUsername(name)) {
     showFieldError(
       'name',
       'Name can only contain letters, numbers, and underscores'
@@ -217,37 +219,15 @@ function updatePasswordStrength(password: string): void {
   const strengthIndicator = document.getElementById('password-strength');
   if (!strengthIndicator) return;
 
+  const evaluation = evaluatePasswordStrength(password);
+
   if (!password) {
     strengthIndicator.className = 'hidden';
     return;
   }
 
-  let strength = 0;
-  let message = '';
-  let colorClass = '';
-
-  if (password.length >= 8) strength++;
-  if (password.length >= 12) strength++;
-  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-  if (/\d/.test(password)) strength++;
-  if (/[^a-zA-Z0-9]/.test(password)) strength++;
-
-  if (strength <= 2) {
-    message = 'Weak';
-    colorClass = 'text-red-600';
-  } else if (strength === 3) {
-    message = 'Fair';
-    colorClass = 'text-yellow-600';
-  } else if (strength === 4) {
-    message = 'Good';
-    colorClass = 'text-blue-600';
-  } else {
-    message = 'Strong';
-    colorClass = 'text-green-600';
-  }
-
-  strengthIndicator.className = `text-sm ${colorClass}`;
-  strengthIndicator.textContent = `Password strength: ${message}`;
+  strengthIndicator.className = `text-sm ${evaluation.colorClass}`;
+  strengthIndicator.textContent = `Password strength: ${evaluation.message}`;
 }
 
 async function handleRegisterSubmit(e: Event): Promise<void> {

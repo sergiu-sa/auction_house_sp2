@@ -3,6 +3,7 @@ import { getProfileWins } from '../api/profile';
 import { recentlyEnded, trending } from '../api/listingQueries';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
+import { highestBid } from '../utils/biddingStats';
 import { escapeHtml } from '../utils/escapeHtml';
 
 export interface FeaturedWinData {
@@ -18,11 +19,6 @@ export interface FeaturedWinData {
   };
   isUserWin: boolean;
   isEnded: boolean;
-}
-
-function getHighestBid(listing: Listing): number {
-  if (!listing.bids || listing.bids.length === 0) return 0;
-  return Math.max(...listing.bids.map((bid) => bid.amount));
 }
 
 function getWinner(listing: Listing) {
@@ -132,14 +128,14 @@ function convertListingToFeaturedWin(
   const winner = getWinner(listing);
   if (!winner) return null;
 
-  const highestBid = getHighestBid(listing);
+  const currentHighest = highestBid(listing.bids);
   const isUserWin = currentUserName ? winner.name === currentUserName : false;
   const isEnded = new Date(listing.endsAt) < new Date();
 
   return {
     lotNumber: getLotNumber(listing.id),
     title: listing.title,
-    finalPrice: highestBid,
+    finalPrice: currentHighest,
     bidCount: listing._count?.bids || listing.bids?.length || 0,
     description:
       listing.description || 'A successful auction with competitive bidding.',

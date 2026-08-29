@@ -1,3 +1,4 @@
+import { isValidJwtShape } from './validation';
 import type { User } from '../types/api';
 
 export function getToken(): string | null {
@@ -61,9 +62,15 @@ export function isTokenExpired(): boolean {
 }
 
 export function isAuthenticated(): boolean {
-  const hasToken = !!getToken();
+  const token = getToken();
+  if (!token) return false;
 
-  if (!hasToken) return false;
+  // A junk value from another project on this origin would otherwise read as a session that cannot be escaped through the UI.
+  if (!isValidJwtShape(token)) {
+    clearAuth();
+    return false;
+  }
+
   if (isTokenExpired()) {
     clearAuth();
     return false;

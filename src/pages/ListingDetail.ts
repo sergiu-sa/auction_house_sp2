@@ -1,4 +1,8 @@
-import { renderHeader } from '../components/Navbar';
+import {
+  fetchFreshProfile,
+  invalidateProfileCache,
+} from '../utils/profileCache';
+import { renderHeader, updateHeaderCredits } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
   renderBreadcrumbInContainer,
@@ -16,6 +20,7 @@ import {
   getTimeRemaining,
 } from '../utils/formatDate';
 import { isValidBidAmount } from '../utils/validation';
+import { highestBid } from '../utils/biddingStats';
 import { showToast } from '../components/Toast';
 import {
   updatePageTitle,
@@ -363,25 +368,22 @@ function renderBidPanel(listing: Listing) {
   const user = getCurrentUser();
   const userLoggedIn = isLoggedIn();
 
-  const highestBid =
-    listing.bids && listing.bids.length > 0
-      ? Math.max(...listing.bids.map((b) => b.amount))
-      : 0;
-  const minimumBid = highestBid + 1;
+  const currentHighest = highestBid(listing.bids);
+  const minimumBid = currentHighest + 1;
 
   // Check if user is the highest bidder
   const isUserHighestBidder =
     listing.bids && listing.bids.length > 0 && user
-      ? listing.bids.find((b) => b.amount === highestBid)?.bidder?.name ===
+      ? listing.bids.find((b) => b.amount === currentHighest)?.bidder?.name ===
         user.name
       : false;
 
   panel.innerHTML = `
     <div class="mb-10">
       <div class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
-        Current ${highestBid > 0 ? 'Bid' : 'Starting Price'}
+        Current ${currentHighest > 0 ? 'Bid' : 'Starting Price'}
       </div>
-      <div class="text-4xl font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(highestBid)}</div>
+      <div class="text-4xl font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(currentHighest)}</div>
       <div class="text-xs text-slate-500 mt-2">Credits</div>
       ${
         isUserHighestBidder
@@ -505,18 +507,14 @@ function initBidForm() {
     const user = getCurrentUser();
 
     // Validation
-    const currentBids = currentListing.bids || [];
-    const highestBid =
-      currentBids.length > 0
-        ? Math.max(...currentBids.map((b) => b.amount))
-        : 0;
+    const currentHighest = highestBid(currentListing.bids);
 
-    if (!isValidBidAmount(bidAmount, highestBid)) {
+    if (!isValidBidAmount(bidAmount, currentHighest)) {
       if (!bidAmount || bidAmount <= 0) {
         showToast('Please enter a valid bid amount', 'error');
       } else {
         showToast(
-          `Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(highestBid)} credits)`,
+          `Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(currentHighest)} credits)`,
           'error'
         );
       }
@@ -540,8 +538,20 @@ function initBidForm() {
       await placeBid(listingId, { amount: bidAmount });
       showToast('Bid placed successfully!', 'success');
 
-      // Reload listing data
-      const response = await getListing(listingId);
+      // The credit guard above reads the stored balance, and renderHeader cached it when the page loaded.
+      // Without dropping that cache first the refetch is a no-op and the next bid validates against the pre-bid balance.
+      // Run alongside the listing reload rather than before it, so the panel does not wait on a profile request to redraw.
+      invalidateProfileCache();
+      const [refreshed, response] = await Promise.all([
+        fetchFreshProfile(),
+        getListing(listingId),
+      ]);
+
+      // Null means the refresh failed; repainting then would show the pre-bid balance as if current.
+      if (refreshed?.credits !== undefined) {
+        updateHeaderCredits(refreshed.credits);
+      }
+
       currentListing = response.data;
 
       // Re-render components
@@ -732,13 +742,13 @@ function renderBidHistory(listing: Listing) {
 
   // Sort bids by amount (highest first)
   const sortedBids = [...bids].sort((a, b) => b.amount - a.amount);
-  const highestBid = sortedBids[0].amount;
+  const topAmount = sortedBids[0].amount;
 
   history.innerHTML = `
     <div class="space-y-0 max-h-80 overflow-y-auto">
       ${sortedBids
         .map((bid, index) => {
-          const isHighest = bid.amount === highestBid;
+          const isHighest = bid.amount === topAmount;
           const isUserBid = user && bid.bidder?.name === user.name;
 
           return `

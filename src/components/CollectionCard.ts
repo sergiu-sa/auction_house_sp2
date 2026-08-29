@@ -1,4 +1,5 @@
 import type { Listing } from '../types/api';
+import { highestBid } from '../utils/biddingStats';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { isWatched, toggleWatched } from '../utils/storage';
@@ -50,8 +51,7 @@ export function createCollectionCard(
   const timeRemaining = formatTimeRemaining(listing.endsAt);
 
   const bids = listing.bids || [];
-  const highestBid =
-    bids.length > 0 ? Math.max(...bids.map((bid) => bid.amount)) : 0;
+  const currentHighest = highestBid(bids);
 
   const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
   const imageAlt = listing.media?.[0]?.alt || listing.title;
@@ -173,7 +173,7 @@ export function createCollectionCard(
           <div class="flex items-center justify-between gap-4 mt-4">
             <!-- Price -->
             <div class="flex items-baseline gap-2">
-              <span class="text-3xl font-bold text-slate-900">${highestBid}</span>
+              <span class="text-3xl font-bold text-slate-900">${currentHighest}</span>
               <span class="text-sm text-slate-500 uppercase tracking-wider">Credits</span>
             </div>
 
@@ -271,7 +271,7 @@ export function createCollectionCard(
 
         <!-- Price -->
         <div class="mb-4 flex items-baseline gap-2">
-          <span class="text-3xl font-bold text-slate-900">${highestBid}</span>
+          <span class="text-3xl font-bold text-slate-900">${currentHighest}</span>
           <span class="text-sm text-slate-500 uppercase tracking-wider">Credits</span>
         </div>
 
