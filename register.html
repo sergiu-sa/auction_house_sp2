@@ -88,9 +88,9 @@
     >
 
     <!-- Header (rendered by JavaScript) -->
-    <div id="header"></div>
+    <header id="header"></header>
 
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
       <!-- BENTO REGISTER LAYOUT -->
       <section class="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-14">
         <div
@@ -153,7 +153,7 @@
                     for="name"
                     class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                   >
-                    <i class="fa-solid fa-user text-xs"></i>
+                    <i class="fa-solid fa-user text-xs" aria-hidden="true"></i>
                     <span>Full name</span>
                   </label>
                   <input
@@ -168,6 +168,7 @@
                   />
                   <div
                     id="name-error"
+                    role="alert"
                     class="mt-2 hidden text-xs text-red-700"
                   ></div>
                 </div>
@@ -177,7 +178,10 @@
                     for="email"
                     class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                   >
-                    <i class="fa-solid fa-envelope text-xs"></i>
+                    <i
+                      class="fa-solid fa-envelope text-xs"
+                      aria-hidden="true"
+                    ></i>
                     <span>Noroff email</span>
                   </label>
                   <input
@@ -195,6 +199,7 @@
                   </p>
                   <div
                     id="email-error"
+                    role="alert"
                     class="mt-2 hidden text-xs text-red-700"
                   ></div>
                 </div>
@@ -205,7 +210,10 @@
                       for="password"
                       class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                     >
-                      <i class="fa-solid fa-lock text-xs"></i>
+                      <i
+                        class="fa-solid fa-lock text-xs"
+                        aria-hidden="true"
+                      ></i>
                       <span>Password</span>
                     </label>
                     <input
@@ -223,6 +231,7 @@
                     </p>
                     <div
                       id="password-error"
+                      role="alert"
                       class="mt-2 hidden text-xs text-red-700"
                     ></div>
                   </div>
@@ -231,7 +240,10 @@
                       for="confirm-password"
                       class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                     >
-                      <i class="fa-solid fa-check-double text-xs"></i>
+                      <i
+                        class="fa-solid fa-check-double text-xs"
+                        aria-hidden="true"
+                      ></i>
                       <span>Confirm password</span>
                     </label>
                     <input
@@ -246,6 +258,7 @@
                     />
                     <div
                       id="confirm-password-error"
+                      role="alert"
                       class="mt-2 hidden text-xs text-red-700"
                     ></div>
                   </div>
@@ -257,7 +270,7 @@
                     class="inline-flex w-full items-center justify-center gap-2 bg-slate-900 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white hover:bg-slate-800"
                     style="border: 3px solid var(--aucto-border-dark)"
                   >
-                    <i class="fa-solid fa-user-plus"></i>
+                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
                     <span>Create account</span>
                   </button>
                   <a
@@ -265,7 +278,10 @@
                     class="inline-flex w-full items-center justify-center gap-2 bg-white py-3 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-slate-900 hover:bg-slate-50"
                     style="border: 3px solid var(--aucto-border-mid)"
                   >
-                    <i class="fa-solid fa-sign-in-alt text-xs"></i>
+                    <i
+                      class="fa-solid fa-sign-in-alt text-xs"
+                      aria-hidden="true"
+                    ></i>
                     Already registered? Log in
                   </a>
                   <button
@@ -274,7 +290,10 @@
                     class="inline-flex w-full items-center justify-center gap-2 bg-slate-50 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 hover:bg-slate-100"
                     style="border: 1px dashed #cbd5e1"
                   >
-                    <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+                    <i
+                      class="fa-solid fa-arrow-right-to-bracket text-xs"
+                      aria-hidden="true"
+                    ></i>
                     Continue as guest
                   </button>
                 </div>

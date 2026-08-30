@@ -82,6 +82,26 @@ export function isValidDescription(description: string): boolean {
 }
 
 /**
+ * `aria-describedby` is a space-separated list and a field may already point at a permanent hint, so error ids are added and removed individually rather than assigned over the top.
+ */
+function addDescribedBy(field: Element, id: string): void {
+  const ids = (field.getAttribute('aria-describedby') || '')
+    .split(/\s+/)
+    .filter(Boolean);
+  if (!ids.includes(id)) ids.push(id);
+  field.setAttribute('aria-describedby', ids.join(' '));
+}
+
+function removeDescribedBy(field: Element, id: string | undefined): void {
+  if (!id) return;
+  const ids = (field.getAttribute('aria-describedby') || '')
+    .split(/\s+/)
+    .filter((value) => value && value !== id);
+  if (ids.length) field.setAttribute('aria-describedby', ids.join(' '));
+  else field.removeAttribute('aria-describedby');
+}
+
+/**
  * Display error message in a form field
  */
 export function showFieldError(
@@ -93,6 +113,12 @@ export function showFieldError(
   const errorElement = document.getElementById(
     errorElementId || `${fieldId}-error`
   );
+
+  if (field && errorElement) {
+    // aria-invalid alone only says "something is wrong"; the description is what says what.
+    // Appended, not assigned: a field may already point at a permanent hint.
+    addDescribedBy(field, errorElement.id);
+  }
 
   if (field) {
     field.classList.add('border-red-500');
@@ -120,6 +146,10 @@ export function clearFieldError(
   if (field) {
     field.classList.remove('border-red-500');
     field.setAttribute('aria-invalid', 'false');
+    // Pointing at an emptied message would describe the field as nothing.
+    // Only the error id goes;
+    //  any permanent hint the field describes stays.
+    removeDescribedBy(field, errorElement?.id);
   }
 
   if (errorElement) {
@@ -140,6 +170,7 @@ export function clearFormErrors(formId: string): void {
   inputs.forEach((input) => {
     input.classList.remove('border-red-500');
     input.setAttribute('aria-invalid', 'false');
+    removeDescribedBy(input, `${input.id}-error`);
   });
 
   // Hide all error messages
