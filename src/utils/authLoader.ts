@@ -18,7 +18,7 @@ export function showAuthLoader(
     'fixed inset-0 bg-white/90 z-50 flex items-center justify-center';
   loader.innerHTML = `
     <div class="text-center">
-      <i class="fa-solid fa-spinner fa-spin text-4xl text-slate-900 mb-4"></i>
+      <i class="fa-solid fa-spinner fa-spin text-4xl text-slate-900 mb-4" aria-hidden="true"></i>
       <p class="text-slate-600 font-medium">${message}</p>
     </div>
   `;
@@ -46,7 +46,7 @@ export function showSessionExpiredMessage(): void {
   notification.style.border = '2px solid #dc2626';
   notification.innerHTML = `
     <div class="flex items-center gap-3">
-      <i class="fa-solid fa-exclamation-circle text-2xl"></i>
+      <i class="fa-solid fa-exclamation-circle text-2xl" aria-hidden="true"></i>
       <div>
         <p class="font-bold">Session Expired</p>
         <p class="text-sm">Please log in again to continue</p>

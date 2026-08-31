@@ -129,7 +129,7 @@ async function handleLoginSubmit(e: Event): Promise<void> {
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
+    '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Logging in...';
 
   try {
     // Call login API

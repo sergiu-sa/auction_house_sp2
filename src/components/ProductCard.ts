@@ -29,27 +29,27 @@ export function createProductCard(listing: Listing): string {
   const getStatusBadge = (): string => {
     if (!isActive) {
       return `
-        <i class="fa-solid fa-hourglass-end text-red-700 text-sm"></i>
+        <i class="fa-solid fa-hourglass-end text-red-700 text-sm" aria-hidden="true"></i>
         <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700">Ended</span>
       `;
     }
 
     if (bids.length > 20) {
       return `
-        <i class="fa-solid fa-fire text-red-700 text-sm"></i>
+        <i class="fa-solid fa-fire text-red-700 text-sm" aria-hidden="true"></i>
         <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700">Hot</span>
       `;
     }
 
     if (bids.length === 0) {
       return `
-        <i class="fa-solid fa-sparkles text-green-700 text-sm"></i>
+        <i class="fa-solid fa-sparkles text-green-700 text-sm" aria-hidden="true"></i>
         <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700">New</span>
       `;
     }
 
     return `
-      <i class="fa-solid fa-arrow-trend-up text-green-700 text-sm"></i>
+      <i class="fa-solid fa-arrow-trend-up text-green-700 text-sm" aria-hidden="true"></i>
       <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-red-700">Leading</span>
     `;
   };
@@ -123,7 +123,7 @@ export function createProductCard(listing: Listing): string {
         <!-- Footer: Bid count + Seller -->
         <div class="mb-3 flex items-center justify-between text-xs text-slate-500">
           <span class="inline-flex items-center gap-1">
-            <i class="fa-solid fa-gavel text-xs"></i>
+            <i class="fa-solid fa-gavel text-xs" aria-hidden="true"></i>
             ${listing._count?.bids || 0} bid${(listing._count?.bids || 0) !== 1 ? 's' : ''}
           </span>
           <span>@${escapeHtml(sellerName)}</span>
@@ -137,7 +137,7 @@ export function createProductCard(listing: Listing): string {
           data-listing-id="${listing.id}"
           ${!isActive ? 'disabled' : ''}
         >
-          <i class="fa-solid fa-gavel text-sm"></i>
+          <i class="fa-solid fa-gavel text-sm" aria-hidden="true"></i>
           ${isActive ? 'Place Bid' : 'Auction Ended'}
         </button>
       </div>
@@ -158,7 +158,7 @@ export function renderProductCards(
   if (listings.length === 0) {
     container.innerHTML = `
       <div class="col-span-full text-center py-12">
-        <i class="fa-solid fa-box-open text-6xl text-slate-300 mb-4"></i>
+        <i class="fa-solid fa-box-open text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
         <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">No Listings Found</h3>
         <p class="text-slate-600">Check back soon for new featured auctions.</p>
       </div>

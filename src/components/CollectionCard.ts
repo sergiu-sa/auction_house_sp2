@@ -82,7 +82,7 @@ export function createCollectionCard(
     if (hours < 6) {
       return `
         <div class="absolute top-3 left-3 bg-red-600 px-3 py-2 text-xs font-bold text-white shadow-lg animate-pulse inline-flex items-center gap-1.5" style="border: 2px solid #991b1b">
-          <i class="fa-solid fa-fire"></i> ${timeRemaining}
+          <i class="fa-solid fa-fire" aria-hidden="true"></i> ${timeRemaining}
         </div>`;
     } else {
       return `
@@ -185,7 +185,7 @@ export function createCollectionCard(
               data-listing-id="${listing.id}"
               ${!isActive ? 'disabled' : ''}
             >
-              <i class="fa-solid fa-eye text-xs"></i>
+              <i class="fa-solid fa-eye text-xs" aria-hidden="true"></i>
               ${isActive ? 'View & Bid' : 'Auction Ended'}
             </button>
           </div>
@@ -283,7 +283,7 @@ export function createCollectionCard(
           data-listing-id="${listing.id}"
           ${!isActive ? 'disabled' : ''}
         >
-          <i class="fa-solid fa-eye text-xs"></i>
+          <i class="fa-solid fa-eye text-xs" aria-hidden="true"></i>
           ${isActive ? 'View & Bid' : 'Auction Ended'}
         </button>
       </div>
