@@ -72,9 +72,9 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
         </span>
       </div>
 
-      <h4 class="mb-4 text-3xl font-bold text-white">
+      <h3 class="mb-4 text-3xl font-bold text-white">
         ${escapeHtml(data.title)}
-      </h4>
+      </h3>
 
       <div class="mb-6 flex items-baseline gap-4">
         <div class="text-4xl font-bold text-white">
@@ -203,7 +203,7 @@ export async function initFeaturedWin(): Promise<void> {
   container.innerHTML = `
     <div class="mb-20 bg-slate-800 p-10 lg:p-12 flex items-center justify-center" style="border: 3px solid var(--aucto-border-mid)">
       <div class="text-slate-400">
-        <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
+        <i class="fa-solid fa-spinner fa-spin text-2xl" aria-hidden="true"></i>
       </div>
     </div>
   `;

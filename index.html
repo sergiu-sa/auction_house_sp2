@@ -125,11 +125,12 @@
     >
 
     <!-- Header (rendered by JavaScript) -->
-    <div id="header"></div>
+    <header id="header"></header>
 
     <!-- Sticky Catalog Filter Bar (appears on scroll, rendered by JavaScript) -->
-    <div
+    <section
       id="sticky-catalog-filters"
+      aria-label="Catalog filters"
       class="fixed left-0 right-0 top-0 z-30 -translate-y-full transition-transform duration-300"
       style="
         background-color: #f7f7f5;
@@ -138,10 +139,10 @@
       "
     >
       <!-- Content will be rendered by JavaScript using filter components -->
-    </div>
+    </section>
 
     <!-- Main Content -->
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
       <!-- ========================================
            FEED HERO – FEATURED LISTINGS
       ======================================== -->
@@ -179,7 +180,10 @@
                   class="inline-flex items-center gap-2 bg-slate-900 px-8 py-4 text-sm font-bold tracking-wide text-white hover:bg-slate-800"
                   style="border: 3px solid var(--aucto-border-dark)"
                 >
-                  <i class="fa-solid fa-circle-play text-sm"></i>
+                  <i
+                    class="fa-solid fa-circle-play text-sm"
+                    aria-hidden="true"
+                  ></i>
                   View live auctions
                 </a>
                 <a
@@ -188,7 +192,7 @@
                   style="border: 3px solid var(--aucto-border-dark)"
                   id="create-listing-btn"
                 >
-                  <i class="fa-solid fa-plus text-sm"></i>
+                  <i class="fa-solid fa-plus text-sm" aria-hidden="true"></i>
                   Create new listing
                 </a>
               </div>
@@ -239,7 +243,7 @@
           <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
               >Hot Right Now</span
             >
           </div>
@@ -252,7 +256,7 @@
               class="inline-flex items-center gap-2 font-bold text-slate-700 transition-colors hover:text-slate-900"
             >
               View All
-              <i class="fa-solid fa-arrow-right text-sm"></i>
+              <i class="fa-solid fa-arrow-right text-sm" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -270,7 +274,7 @@
           <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
               >Fresh Inventory</span
             >
           </div>
@@ -283,7 +287,7 @@
               class="inline-flex items-center gap-2 font-bold text-slate-700 transition-colors hover:text-slate-900"
             >
               View All
-              <i class="fa-solid fa-arrow-right text-sm"></i>
+              <i class="fa-solid fa-arrow-right text-sm" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -304,7 +308,7 @@
           <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
               >Last Chance</span
             >
           </div>
@@ -332,7 +336,7 @@
           <div class="mb-8 flex items-center gap-4">
             <div class="h-0.5 w-16 bg-aucto-red"></div>
             <span
-              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
+              class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
               >Complete Collection</span
             >
           </div>
@@ -347,7 +351,7 @@
               class="inline-flex items-center gap-2 font-bold text-slate-700 transition-colors hover:text-slate-900"
             >
               View Full Catalog
-              <i class="fa-solid fa-arrow-right text-sm"></i>
+              <i class="fa-solid fa-arrow-right text-sm" aria-hidden="true"></i>
             </a>
           </div>
           <p class="max-w-2xl text-slate-600">
