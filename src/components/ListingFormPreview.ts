@@ -106,9 +106,9 @@ export function initListingFormPreview(
 
 function renderEmptyMainPreview(): string {
   return `
-    <div class="w-full h-full flex items-center justify-center text-slate-400">
+    <div class="w-full h-full flex items-center justify-center text-slate-600">
       <div class="text-center">
-        <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400"></i>
+        <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400" aria-hidden="true"></i>
         <p class="text-sm">No image added yet</p>
       </div>
     </div>

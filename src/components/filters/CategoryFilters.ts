@@ -55,7 +55,7 @@ export function renderCategoryFilters(config: CategoryFiltersConfig): string {
             style="border: 2px solid ${borderColor}"
             aria-pressed="${isActive}"
           >
-            <i class="fa-solid ${showCheck ? 'fa-check' : category.icon} ${iconSize}"></i>
+            <i class="fa-solid ${showCheck ? 'fa-check' : category.icon} ${iconSize}" aria-hidden="true"></i>
             <span>${category.label}</span>
           </button>
         `;

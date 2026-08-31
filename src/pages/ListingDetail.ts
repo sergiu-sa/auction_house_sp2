@@ -124,7 +124,7 @@ function showError(message: string) {
       <div class="bg-warm-white py-16">
         <div class="mx-auto max-w-7xl px-6 md:px-8">
           <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
-            <i class="fa-solid fa-exclamation-triangle text-4xl text-red-700 mb-4"></i>
+            <i class="fa-solid fa-exclamation-triangle text-4xl text-red-700 mb-4" aria-hidden="true"></i>
             <h1 class="text-2xl font-bold text-slate-900 mb-2">Error</h1>
             <p class="text-slate-600">${message}</p>
             <a href="/index.html" class="inline-block mt-6 bg-slate-900 px-6 py-3 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800">
@@ -169,7 +169,7 @@ function renderListingHeader(listing: Listing) {
           isActive
             ? `
           <div class="flex items-center justify-end gap-1.5">
-            <i class="fa-solid fa-hourglass-end text-${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'red' : 'green'}-700"></i>
+            <i class="fa-solid fa-hourglass-end text-${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'red' : 'green'}-700" aria-hidden="true"></i>
             <span class="text-xs font-bold tracking-[0.18em] text-${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'red' : 'green'}-700 uppercase">
               ${getTimeRemaining(listing.endsAt).days === 0 && getTimeRemaining(listing.endsAt).hours < 3 ? 'Ending Soon' : 'Active'}
             </span>
@@ -177,7 +177,7 @@ function renderListingHeader(listing: Listing) {
         `
             : `
           <div class="flex items-center justify-end gap-1.5">
-            <i class="fa-solid fa-circle-xmark text-slate-500"></i>
+            <i class="fa-solid fa-circle-xmark text-slate-500" aria-hidden="true"></i>
             <span class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">
               Ended
             </span>
@@ -316,16 +316,16 @@ function renderListingDetails(listing: Listing) {
   if (!details) return;
 
   details.innerHTML = `
-    <h3 class="mb-4 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
+    <h2 class="mb-4 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
       Details
-    </h3>
+    </h2>
     <div class="flex flex-wrap gap-6 text-xs text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
       ${
         listing.tags && listing.tags.length > 0
           ? `
         <div>
           <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
-            <i class="fa-solid fa-layer-group text-xs"></i>
+            <i class="fa-solid fa-layer-group text-xs" aria-hidden="true"></i>
             <span>Category</span>
           </div>
           <div class="text-sm">${escapeHtml(listing.tags.slice(0, 2).join(' · '))}</div>
@@ -335,14 +335,14 @@ function renderListingDetails(listing: Listing) {
       }
       <div>
         <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
-          <i class="fa-solid fa-calendar text-xs"></i>
+          <i class="fa-solid fa-calendar text-xs" aria-hidden="true"></i>
           <span>Created</span>
         </div>
         <div class="text-sm">${formatDateShort(listing.created)}</div>
       </div>
       <div>
         <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
-          <i class="fa-solid fa-clock text-xs"></i>
+          <i class="fa-solid fa-clock text-xs" aria-hidden="true"></i>
           <span>Ends</span>
         </div>
         <div class="text-sm">${formatDateShort(listing.endsAt)}</div>
@@ -350,9 +350,9 @@ function renderListingDetails(listing: Listing) {
     </div>
 
     <div class="flex-grow">
-      <h3 class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
+      <h2 class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
         Description
-      </h3>
+      </h2>
       <div class="text-sm leading-relaxed text-slate-700 line-clamp-6">
         <p>${escapeHtml(listing.description || 'No description provided for this listing.')}</p>
       </div>
@@ -389,7 +389,7 @@ function renderBidPanel(listing: Listing) {
         isUserHighestBidder
           ? `
         <div class="mt-4 inline-flex items-center gap-2 bg-green-50 px-3 py-2 text-xs font-bold text-green-700" style="border: 2px solid #15803d">
-          <i class="fa-solid fa-check-circle"></i>
+          <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
           <span>You're the highest bidder</span>
         </div>
       `
@@ -399,7 +399,7 @@ function renderBidPanel(listing: Listing) {
 
     <div class="mb-10 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
       <div class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
-        <i class="fa-solid fa-clock text-xs ${isActive ? 'text-red-700' : 'text-slate-500'}"></i>
+        <i class="fa-solid fa-clock text-xs ${isActive ? 'text-red-700' : 'text-slate-500'}" aria-hidden="true"></i>
         <span>Time Remaining</span>
       </div>
       <div id="countdown-display" class="text-2xl font-bold ${isActive ? 'text-red-700' : 'text-slate-500'}">
@@ -445,7 +445,7 @@ function renderBidPanel(listing: Listing) {
           class="w-full bg-slate-900 px-6 py-4 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2 mt-2"
           style="border: 2px solid var(--aucto-border-dark)"
         >
-          <i class="fa-solid fa-gavel text-base"></i>
+          <i class="fa-solid fa-gavel text-base" aria-hidden="true"></i>
           <span>Place Bid</span>
         </button>
 
@@ -462,7 +462,7 @@ function renderBidPanel(listing: Listing) {
           class="w-full bg-slate-900 px-6 py-4 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2"
           style="border: 2px solid var(--aucto-border-dark)"
         >
-          <i class="fa-solid fa-right-to-bracket text-base"></i>
+          <i class="fa-solid fa-right-to-bracket text-base" aria-hidden="true"></i>
           <span>Login to Bid</span>
         </a>
         <div class="text-xs text-slate-500 text-center pt-2">
@@ -472,7 +472,7 @@ function renderBidPanel(listing: Listing) {
     `
           : `
       <div class="bg-slate-100 px-6 py-10 text-center mt-6" style="border: 2px solid var(--aucto-border-mid)">
-        <i class="fa-solid fa-circle-xmark text-3xl text-slate-500 mb-4"></i>
+        <i class="fa-solid fa-circle-xmark text-3xl text-slate-500 mb-4" aria-hidden="true"></i>
         <p class="text-sm font-bold text-slate-700">This auction has ended</p>
       </div>
     `
@@ -530,7 +530,7 @@ function initBidForm() {
     // Disable button
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
-      <i class="fa-solid fa-spinner fa-spin text-base"></i>
+      <i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i>
       <span>Placing Bid...</span>
     `;
 
@@ -558,6 +558,14 @@ function initBidForm() {
       renderBidPanel(currentListing);
       renderBidHistory(currentListing);
       renderListingMeta(currentListing);
+
+      // The submit button that had focus was just destroyed by the re-render, which drops focus to
+      // <body> and sends a keyboard user back to the top of the page.
+      const panel = document.getElementById('bid-panel');
+      if (panel) {
+        panel.setAttribute('tabindex', '-1');
+        panel.focus();
+      }
     } catch (error: unknown) {
       logError('Error placing bid', error, { listingId });
       const errorMessage = getErrorMessage(
@@ -569,7 +577,7 @@ function initBidForm() {
       // Re-enable button
       submitBtn.disabled = false;
       submitBtn.innerHTML = `
-        <i class="fa-solid fa-gavel text-base"></i>
+        <i class="fa-solid fa-gavel text-base" aria-hidden="true"></i>
         <span>Place Bid</span>
       `;
     }
@@ -612,7 +620,7 @@ function initQuickActions(listing: Listing) {
   if (watchBtn) {
     const renderWatching = (): void => {
       watchBtn.innerHTML = `
-        <i class="fa-solid fa-bookmark text-sm"></i>
+        <i class="fa-solid fa-bookmark text-sm" aria-hidden="true"></i>
         <span>Watching</span>
       `;
       watchBtn.classList.add('bg-slate-900', 'text-white');
@@ -622,7 +630,7 @@ function initQuickActions(listing: Listing) {
 
     const renderUnwatched = (): void => {
       watchBtn.innerHTML = `
-        <i class="fa-solid fa-bookmark text-sm"></i>
+        <i class="fa-solid fa-bookmark text-sm" aria-hidden="true"></i>
         <span>Watch</span>
       `;
       watchBtn.classList.remove('bg-slate-900', 'text-white');
@@ -733,7 +741,7 @@ function renderBidHistory(listing: Listing) {
   if (bids.length === 0) {
     history.innerHTML = `
       <div class="text-center py-8">
-        <i class="fa-solid fa-gavel text-4xl text-slate-300 mb-3"></i>
+        <i class="fa-solid fa-gavel text-4xl text-slate-300 mb-3" aria-hidden="true"></i>
         <p class="text-sm text-slate-500">No bids yet. Be the first to bid!</p>
       </div>
     `;
@@ -745,7 +753,12 @@ function renderBidHistory(listing: Listing) {
   const topAmount = sortedBids[0].amount;
 
   history.innerHTML = `
-    <div class="space-y-0 max-h-80 overflow-y-auto">
+    <div
+      class="space-y-0 max-h-80 overflow-y-auto"
+      tabindex="0"
+      role="group"
+      aria-label="Bid history, scrollable"
+    >
       ${sortedBids
         .map((bid, index) => {
           const isHighest = bid.amount === topAmount;
@@ -769,7 +782,7 @@ function renderBidHistory(listing: Listing) {
               </div>
             `
                 : `
-              <div class="text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase whitespace-nowrap self-center">
+              <div class="text-[10px] font-bold tracking-[0.18em] text-slate-500 uppercase whitespace-nowrap self-center">
                 Outbid
               </div>
             `
@@ -824,14 +837,14 @@ function renderSellerProfile(listing: Listing) {
       </div>
       <div>
         <div class="text-base font-bold text-slate-900 mb-1 inline-flex items-center gap-1.5">
-          <i class="fa-solid fa-user text-sm"></i>
+          <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
           <a href="/profile.html?user=${encodeURIComponent(seller.name)}" class="hover:text-slate-700 transition-colors">@${escapeHtml(seller.name)}</a>
         </div>
         ${
           seller._count
             ? `
           <div class="text-xs text-slate-500 inline-flex items-center gap-1">
-            <i class="fa-solid fa-circle-check text-xs"></i>
+            <i class="fa-solid fa-circle-check text-xs" aria-hidden="true"></i>
             <span>${seller._count.listings || 0} listings · ${seller._count.wins || 0} wins</span>
           </div>
         `
@@ -855,7 +868,7 @@ function renderSellerProfile(listing: Listing) {
         href="/profile.html?user=${encodeURIComponent(seller.name)}"
         class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-slate-700 transition-colors"
       >
-        <i class="fa-solid fa-arrow-right text-xs"></i>
+        <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
         <span>View Seller Profile</span>
       </a>
     </div>

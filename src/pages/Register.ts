@@ -267,7 +267,7 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+    '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Creating Account...';
 
   try {
     await register({ name, email, password });

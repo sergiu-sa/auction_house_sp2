@@ -64,7 +64,7 @@ export function renderPagination(config: PaginationConfig): void {
       data-page="${currentPage - 1}"
       aria-label="Previous page"
     >
-      <i class="fa-solid fa-chevron-left text-xs"></i>
+      <i class="fa-solid fa-chevron-left text-xs" aria-hidden="true"></i>
       <span class="hidden sm:inline">PREV</span>
     </button>
   `;
@@ -120,7 +120,7 @@ export function renderPagination(config: PaginationConfig): void {
       aria-label="Next page"
     >
       <span class="hidden sm:inline">NEXT</span>
-      <i class="fa-solid fa-chevron-right text-xs"></i>
+      <i class="fa-solid fa-chevron-right text-xs" aria-hidden="true"></i>
     </button>
   `;
 

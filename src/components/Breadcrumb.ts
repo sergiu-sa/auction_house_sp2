@@ -29,7 +29,7 @@ export function renderBreadcrumb(config: BreadcrumbConfig): string {
 
             // Render item
             const itemHtml = item.href
-              ? `<a href="${escapeHtml(item.href)}" class="text-slate-500 hover:text-slate-900 transition-colors">${escapeHtml(item.label)}</a>`
+              ? `<a href="${escapeHtml(item.href)}" class="text-slate-600 hover:text-slate-900 transition-colors">${escapeHtml(item.label)}</a>`
               : `<span class="text-slate-900">${escapeHtml(item.label)}</span>`;
 
             // Add separator unless it's the last item

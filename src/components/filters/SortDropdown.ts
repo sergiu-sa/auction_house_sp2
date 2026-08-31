@@ -3,10 +3,14 @@
  * Reusable sort dropdown that dispatches sortChange event
  */
 
+import { escapeHtml } from '../../utils/escapeHtml';
+
 export interface SortDropdownConfig {
   id: string;
   defaultValue?: string;
   variant?: 'normal' | 'compact';
+  /** Accessible name. The visible arrow is decorative, so the select has no visible label. */
+  label?: string;
 }
 
 export interface SortOption {
@@ -38,7 +42,12 @@ const SORT_OPTIONS: SortOption[] = [
  * Generate HTML for sort dropdown
  */
 export function renderSortDropdown(config: SortDropdownConfig): string {
-  const { id, defaultValue = 'created-desc', variant = 'normal' } = config;
+  const {
+    id,
+    defaultValue = 'created-desc',
+    variant = 'normal',
+    label = 'Sort listings',
+  } = config;
 
   const selectClasses =
     variant === 'compact'
@@ -56,6 +65,7 @@ export function renderSortDropdown(config: SortDropdownConfig): string {
     <div class="relative">
       <select
         id="${id}"
+        aria-label="${escapeHtml(label)}"
         class="${selectClasses}"
         style="border: 2px solid var(--aucto-border-mid)"
       >

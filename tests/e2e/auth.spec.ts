@@ -55,7 +55,10 @@ test.describe('logged in', () => {
     await page.locator('#bid-amount').fill('150');
     await page.locator('#place-bid-btn').click();
 
-    await expect(page.getByText('Bid placed successfully!')).toBeVisible();
+    // Scoped to the toast: the same text is also written to the page's live region.
+    await expect(
+      page.locator('#toast-container').getByText('Bid placed successfully!')
+    ).toBeVisible();
     expect(mock.apiWrites).toContain(
       `POST /auction/listings/${IDS.lowBid}/bids`
     );
@@ -73,7 +76,10 @@ test.describe('logged in', () => {
     await page.locator('#bid-amount').fill('1001');
     await page.locator('#place-bid-btn').click();
 
-    await expect(page.getByText('Insufficient credits')).toBeVisible();
+    // Scoped to the toast: the same text is also written to the page's live region.
+    await expect(
+      page.locator('#toast-container').getByText('Insufficient credits')
+    ).toBeVisible();
     expect(mock.apiWrites).toEqual([]);
   });
 });

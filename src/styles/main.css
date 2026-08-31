@@ -48,6 +48,47 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+ * Honour the OS setting.
+ * People who turn this on often do so because motion makes them ill, so this covers the whole app rather than the handful of animations we happen to know about:
+ * scroll jumps become instant and every transition collapses to a duration the eye cannot track.
+ * 0.01ms rather than 0, so transitionend still fires and nothing waiting on it stalls.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * The sticky catalog bar hides by sliding above the viewport, which leaves its controls focusable and unreachable;
+ * you cannot scroll a position:fixed element into view.
+ * visibility:hidden takes them out of the tab order; the 300ms delay lets the slide finish before it applies, so hiding still animates.
+ * Showing is immediate.
+ */
+#sticky-catalog-filters {
+  visibility: hidden;
+  transition:
+    transform 300ms,
+    visibility 0s 300ms;
+}
+
+#sticky-catalog-filters.translate-y-0 {
+  visibility: visible;
+  transition:
+    transform 300ms,
+    visibility 0s 0s;
+}
+
 /* Disabled-control affordance */
 button:disabled,
 input:disabled,

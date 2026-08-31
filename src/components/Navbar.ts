@@ -1,4 +1,6 @@
 import { fetchFreshProfile } from '../utils/profileCache';
+import { mountAnnouncer } from '../utils/announce';
+import { trapFocus } from '../utils/focusTrap';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
 import { renderGuestBanner } from './GuestBanner';
@@ -97,6 +99,8 @@ function renderMobileNavLinks(isLoggedIn: boolean): string {
 }
 
 export async function renderHeader(): Promise<void> {
+  mountAnnouncer();
+
   const header = document.getElementById('header');
   if (!header) return;
 
@@ -248,7 +252,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
             aria-label="Toggle search"
             aria-expanded="false"
           >
-            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            <i class="fa-solid fa-magnifying-glass text-sm" aria-hidden="true"></i>
           </button>
 
           <!-- DESKTOP: Primary nav links (≥1024px) -->
@@ -309,7 +313,7 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
             <!-- Filters + Sort -->
             <div class="flex flex-wrap items-center gap-3 text-sm">
               ${renderActiveOnlyCheckbox({ id: 'active-only-filter', variant: 'normal' })}
-              ${renderSortDropdown({ id: 'sort-filter-select', variant: 'normal' })}
+              ${renderSortDropdown({ id: 'sort-filter-select', variant: 'normal', label: 'Sort listings' })}
             </div>
           </div>
         </div>
@@ -359,12 +363,11 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
             class="flex items-center gap-2 bg-white px-4 py-2 hover:bg-slate-50 transition-colors"
             style="border: 3px solid var(--aucto-border-dark)"
             aria-expanded="false"
-            aria-haspopup="true"
-            aria-label="Open profile menu"
+            aria-controls="profile-dropdown-menu"
           >
             ${
               user.avatar?.url
-                ? `<img src="${escapeHtml(user.avatar.url)}" alt="${escapeHtml(user.name)} avatar" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
+                ? `<img src="${escapeHtml(user.avatar.url)}" alt="" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
                 : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${escapeHtml(user.name.charAt(0).toUpperCase())}</div>`
             }
             <span class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</span>
@@ -376,16 +379,14 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
             id="profile-dropdown-menu"
             class="hidden absolute right-0 mt-2 w-56 bg-white shadow-2xl z-50 transform origin-top-right transition-all"
             style="border: 3px solid var(--aucto-border-dark)"
-            role="menu"
-            aria-label="Profile menu"
           >
             <!-- Menu items -->
             <div class="py-1">
-              <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors" role="menuitem">
+              <a href="/profile.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors">
                 <i class="fa-solid fa-user w-5 text-slate-600" aria-hidden="true"></i>
                 <span>My Profile</span>
               </a>
-              <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors border-t" style="border-color: var(--aucto-border-light)" role="menuitem">
+              <a href="/listing-create.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-slate-50 transition-colors border-t" style="border-color: var(--aucto-border-light)">
                 <i class="fa-solid fa-plus w-5 text-slate-600" aria-hidden="true"></i>
                 <span>Create Listing</span>
               </a>
@@ -393,7 +394,6 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
                 id="logout-btn"
                 class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 transition-colors border-t"
                 style="border-color: var(--aucto-border-light)"
-                role="menuitem"
               >
                 <i class="fa-solid fa-sign-out-alt w-5" aria-hidden="true"></i>
                 <span>Logout</span>
@@ -411,7 +411,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           aria-expanded="false"
           aria-label="Toggle menu"
         >
-          <i class="fa-solid fa-bars text-white text-base"></i>
+          <i class="fa-solid fa-bars text-white text-base" aria-hidden="true"></i>
         </button>
       `
           : `
@@ -457,7 +457,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
           aria-expanded="false"
           aria-label="Toggle menu"
         >
-          <i class="fa-solid fa-bars text-white text-base"></i>
+          <i class="fa-solid fa-bars text-white text-base" aria-hidden="true"></i>
         </button>
       `
       }
@@ -503,7 +503,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
           class="text-slate-600 hover:text-slate-900"
           aria-label="Close menu"
         >
-          <i class="fa-solid fa-xmark text-xl"></i>
+          <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -535,7 +535,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
           class="text-slate-600 hover:text-slate-900"
           aria-label="Close menu"
         >
-          <i class="fa-solid fa-xmark text-xl"></i>
+          <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -573,12 +573,20 @@ function initHeaderEvents(pageType: string): void {
   const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
   const mobileMenuClose = document.getElementById('mobile-menu-close');
 
+  let releaseDrawerTrap: (() => void) | null = null;
+
   function openMobileMenu() {
     if (mobileMenuDrawer && mobileMenuOverlay && mobileMenuBtn) {
       mobileMenuDrawer.classList.remove('hidden');
       mobileMenuOverlay.classList.remove('hidden');
       mobileMenuBtn.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+      // The drawer carries aria-modal="true";
+      //  without this the page behind stays tabbable and that claim is a lie.
+      releaseDrawerTrap = trapFocus(mobileMenuDrawer, {
+        initialFocus: mobileMenuClose,
+        onClose: () => closeMobileMenu(),
+      });
     }
   }
 
@@ -588,6 +596,8 @@ function initHeaderEvents(pageType: string): void {
       mobileMenuOverlay.classList.add('hidden');
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+      releaseDrawerTrap?.();
+      releaseDrawerTrap = null;
     }
   }
 
@@ -625,17 +635,26 @@ function initHeaderEvents(pageType: string): void {
       }
     });
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', () => {
-      if (!profileDropdownMenu.classList.contains('hidden')) {
-        profileDropdownMenu.classList.add('hidden');
-        profileMenuBtn.setAttribute('aria-expanded', 'false');
+    const closeProfileMenu = (returnFocus: boolean): void => {
+      if (profileDropdownMenu.classList.contains('hidden')) return;
 
-        // Reset chevron rotation
-        if (profileMenuChevron) {
-          profileMenuChevron.classList.remove('rotate-180');
-        }
+      profileDropdownMenu.classList.add('hidden');
+      profileMenuBtn.setAttribute('aria-expanded', 'false');
+
+      // Reset chevron rotation
+      if (profileMenuChevron) {
+        profileMenuChevron.classList.remove('rotate-180');
       }
+
+      // Only on Escape. Doing it on an outside click would steal focus from whatever was clicked.
+      if (returnFocus) profileMenuBtn.focus();
+    };
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => closeProfileMenu(false));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeProfileMenu(true);
     });
   }
 

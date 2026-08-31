@@ -161,7 +161,7 @@ export async function initStatsBar(): Promise<void> {
           () => `
         <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
           <div class="mb-2 text-4xl font-bold text-slate-700">
-            <i class="fa-solid fa-spinner fa-spin"></i>
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
           </div>
           <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
             Loading...

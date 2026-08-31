@@ -1,4 +1,5 @@
 import { invalidateProfileCache } from '../utils/profileCache';
+import { prefersReducedMotion } from '../utils/motion';
 import { highestBid, isStillRunning } from '../utils/biddingStats';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
@@ -87,7 +88,7 @@ async function loadProfileData(
   container.innerHTML = `
     <div class="flex items-center justify-center py-20">
       <div class="text-center">
-        <i class="fa-solid fa-spinner fa-spin text-4xl text-slate-400 mb-4"></i>
+        <i class="fa-solid fa-spinner fa-spin text-4xl text-slate-400 mb-4" aria-hidden="true"></i>
         <p class="text-slate-600">Loading profile...</p>
       </div>
     </div>
@@ -161,7 +162,7 @@ function renderProfileHero(
       <nav aria-label="Breadcrumb">
         <ol class="flex items-center text-xs font-bold tracking-[0.18em] uppercase">
           <li>
-            <a href="/index.html" class="text-slate-500 hover:text-slate-900">Home</a>
+            <a href="/index.html" class="text-slate-600 hover:text-slate-900">Home</a>
           </li>
           <li class="mx-2 text-slate-400">/</li>
           <li>
@@ -223,18 +224,18 @@ function renderProfileHero(
             <div
               class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1"
             >
-              <i class="fa-solid fa-user text-xs"></i>
+              <i class="fa-solid fa-user text-xs" aria-hidden="true"></i>
               <span>@${escapeHtml(profile.name)}</span>
             </div>
             <div class="flex flex-wrap items-center gap-4">
-              <h1
+              <h2
                 class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight"
               >
                 ${escapeHtml(profile.name)}
-              </h1>
+              </h2>
             </div>
             <div class="mt-1 text-sm text-slate-600 inline-flex items-center gap-2">
-              <i class="fa-solid fa-envelope text-sm"></i>
+              <i class="fa-solid fa-envelope text-sm" aria-hidden="true"></i>
               <span>${escapeHtml(profile.email)}</span>
             </div>
             ${
@@ -255,7 +256,7 @@ function renderProfileHero(
               class="bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center gap-2"
               style="border: 2px solid var(--aucto-border-dark)"
             >
-              <i class="fa-solid fa-pen-to-square text-sm"></i>
+              <i class="fa-solid fa-pen-to-square text-sm" aria-hidden="true"></i>
               <span>Edit profile</span>
             </button>
             <a
@@ -263,7 +264,7 @@ function renderProfileHero(
               class="bg-white px-6 py-3 text-xs font-bold tracking-wide text-slate-900 hover:bg-slate-50 inline-flex items-center gap-2 justify-center"
               style="border: 2px solid var(--aucto-border-mid)"
             >
-              <i class="fa-solid fa-plus text-sm"></i>
+              <i class="fa-solid fa-plus text-sm" aria-hidden="true"></i>
               <span>Create listing</span>
             </a>
           </div>`
@@ -281,7 +282,7 @@ function renderProfileHero(
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
           >
-            <i class="fa-solid fa-coins text-xs"></i>
+            <i class="fa-solid fa-coins text-xs" aria-hidden="true"></i>
             <span>Credits available</span>
           </div>
           <div class="text-3xl font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(credits)}</div>
@@ -293,7 +294,7 @@ function renderProfileHero(
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
           >
-            <i class="fa-solid fa-fire text-xs text-red-600"></i>
+            <i class="fa-solid fa-fire text-xs text-red-600" aria-hidden="true"></i>
             <span>Active listings</span>
           </div>
           <div class="text-3xl font-bold text-slate-900">${activeListingsCount}</div>
@@ -305,7 +306,7 @@ function renderProfileHero(
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
           >
-            <i class="fa-solid fa-trophy text-xs text-amber-600"></i>
+            <i class="fa-solid fa-trophy text-xs text-amber-600" aria-hidden="true"></i>
             <span>Auctions won</span>
           </div>
           <div class="text-3xl font-bold text-slate-900">${winsCount}</div>
@@ -317,7 +318,7 @@ function renderProfileHero(
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
           >
-            <i class="fa-solid fa-gavel text-xs"></i>
+            <i class="fa-solid fa-gavel text-xs" aria-hidden="true"></i>
             <span>Bids placed</span>
           </div>
           <div class="text-3xl font-bold text-slate-900">${bidsCount}</div>
@@ -442,7 +443,7 @@ function renderAboutAndSettings(
               class="mt-4 w-full bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
               style="border: 2px solid var(--aucto-border-dark)"
             >
-              <i class="fa-solid fa-floppy-disk text-base"></i>
+              <i class="fa-solid fa-floppy-disk text-base" aria-hidden="true"></i>
               <span>Save profile changes</span>
             </button>
           </form>
@@ -476,14 +477,14 @@ function renderActiveListings(
               class="inline-flex items-center gap-2 bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
               style="border: 2px solid var(--aucto-border-dark)"
             >
-              <i class="fa-solid fa-plus text-sm"></i>
+              <i class="fa-solid fa-plus text-sm" aria-hidden="true"></i>
               <span>Create listing</span>
             </a>`
                 : ''
             }
           </div>
           <div class="text-center py-12">
-            <i class="fa-solid fa-box text-6xl text-slate-300 mb-4"></i>
+            <i class="fa-solid fa-box text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
             <p class="text-slate-600">${isOwnProfile ? 'Start by creating your first listing' : 'No listings to display'}</p>
           </div>
         </div>
@@ -513,7 +514,7 @@ function renderActiveListings(
             class="inline-flex items-center gap-2 bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
             style="border: 2px solid var(--aucto-border-dark)"
           >
-            <i class="fa-solid fa-plus text-sm"></i>
+            <i class="fa-solid fa-plus text-sm" aria-hidden="true"></i>
             <span>Create listing</span>
           </a>`
               : ''
@@ -554,7 +555,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           referrerpolicy="no-referrer"
         />`
             : `<div class="h-full w-full flex items-center justify-center">
-          <i class="fa-solid fa-image text-6xl text-slate-300"></i>
+          <i class="fa-solid fa-image text-6xl text-slate-300" aria-hidden="true"></i>
         </div>`
         }
       </div>
@@ -580,7 +581,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
             class="flex-1 bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
             style="border: 2px solid var(--aucto-border-dark)"
           >
-            <i class="fa-solid fa-eye text-sm"></i>
+            <i class="fa-solid fa-eye text-sm" aria-hidden="true"></i>
             <span>View</span>
           </a>
           ${
@@ -591,7 +592,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
             style="border: 2px solid var(--aucto-border-mid)"
             title="Edit listing"
           >
-            <i class="fa-solid fa-pen text-sm"></i>
+            <i class="fa-solid fa-pen text-sm" aria-hidden="true"></i>
           </a>`
               : ''
           }
@@ -614,7 +615,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
           ${
             wins.length === 0
               ? `<div class="text-center py-8">
-              <i class="fa-solid fa-trophy text-6xl text-slate-300 mb-4"></i>
+              <i class="fa-solid fa-trophy text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
               <p class="text-slate-600">Your won items will appear here</p>
             </div>`
               : `<div class="space-y-4 text-sm text-slate-700">
@@ -637,7 +638,7 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
           ${
             bids.length === 0
               ? `<div class="text-center py-8">
-              <i class="fa-solid fa-gavel text-6xl text-slate-300 mb-4"></i>
+              <i class="fa-solid fa-gavel text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
               <p class="text-slate-600">Your bids will appear here</p>
             </div>`
               : `<div class="space-y-4 text-sm text-slate-700">
@@ -707,7 +708,10 @@ function setupEventListeners(profile: Profile): void {
     editBtn.addEventListener('click', () => {
       const settingsSection = document.querySelector('#profile-form');
       if (settingsSection) {
-        settingsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        settingsSection.scrollIntoView({
+          behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+          block: 'center',
+        });
       }
     });
   }
@@ -766,7 +770,7 @@ async function handleProfileUpdate(username: string): Promise<void> {
   const originalBtnContent = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin text-base"></i> <span>Saving...</span>';
+    '<i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i> <span>Saving...</span>';
 
   try {
     const response = await updateProfile(username, updateData);
@@ -808,7 +812,7 @@ function showError(message: string): void {
 
   container.innerHTML = `
     <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
-      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
+      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
       <p class="text-slate-600 mb-4">${message}</p>
       <a

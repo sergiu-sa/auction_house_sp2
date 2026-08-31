@@ -6,6 +6,7 @@ import {
 } from '../components/Breadcrumb';
 import { initListingFormPreview } from '../components/ListingFormPreview';
 import { protectedRoute, requireOwnership } from '../utils/auth';
+import { trapFocus } from '../utils/focusTrap';
 import { getListing, updateListing, deleteListing } from '../api/listings';
 import { toast } from '../components/Toast';
 import { logError } from '../utils/logger';
@@ -115,11 +116,11 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
       <!-- INFORMATIONAL BANNER -->
       <div class="mb-10 bg-slate-50 border-2 border-slate-300 p-6">
         <div class="flex items-start gap-4">
-          <i class="fa-solid fa-pen-to-square text-2xl text-blue-600 flex-shrink-0"></i>
+          <i class="fa-solid fa-pen-to-square text-2xl text-blue-600 flex-shrink-0" aria-hidden="true"></i>
           <div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">
+            <h2 class="text-lg font-bold text-slate-900 mb-2">
               Editing Your Listing
-            </h3>
+            </h2>
             <p class="text-sm text-slate-700 leading-relaxed">
               Update your listing details to attract more bidders. Any changes will be reflected immediately.
               Preview your updates on the right before saving. ${hasBids ? '<strong class="text-red-700">Note: This listing has active bids. Some fields may be restricted.</strong>' : ''}
@@ -135,6 +136,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- TITLE -->
           <div>
             <label
+              for="title"
               class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
             >
               Title *
@@ -154,6 +156,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- DESCRIPTION -->
           <div>
             <label
+              for="description"
               class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
             >
               Description *
@@ -170,6 +173,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- IMAGES -->
           <div>
             <label
+              for="imageUrls"
               class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
             >
               Image URLs
@@ -188,6 +192,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- TAGS -->
           <div>
             <label
+              for="tags"
               class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
             >
               Tags (Optional)
@@ -208,6 +213,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           <!-- END DATE -->
           <div>
             <label
+              for="endDate"
               class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
             >
               End date *
@@ -227,7 +233,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
             type="submit"
             class="w-full bg-slate-900 text-white py-3 font-bold tracking-[0.18em] uppercase border-2 border-slate-900 hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2"
           >
-            <i class="fa-solid fa-floppy-disk text-base"></i>
+            <i class="fa-solid fa-floppy-disk text-base" aria-hidden="true"></i>
             <span>Save changes</span>
           </button>
         </form>
@@ -259,9 +265,9 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               />
             `
                 : `
-              <div class="w-full h-full flex items-center justify-center text-slate-400">
+              <div class="w-full h-full flex items-center justify-center text-slate-600">
                 <div class="text-center">
-                  <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400"></i>
+                  <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400" aria-hidden="true"></i>
                   <p class="text-sm">No image added yet</p>
                 </div>
               </div>
@@ -338,7 +344,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                 hasBids
                   ? `
                 <div class="bg-red-100 border border-red-300 p-3 text-xs text-red-800 rounded flex items-start gap-2">
-                  <i class="fa-solid fa-triangle-exclamation text-red-700 flex-shrink-0 mt-0.5"></i>
+                  <i class="fa-solid fa-triangle-exclamation text-red-700 flex-shrink-0 mt-0.5" aria-hidden="true"></i>
                   <div>
                     <strong>Warning:</strong> This listing currently has
                     <span class="font-bold">${listing._count?.bids || 0} bid${(listing._count?.bids || 0) !== 1 ? 's' : ''}</span>.
@@ -354,7 +360,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               id="deleteButton"
               class="inline-flex items-center justify-center gap-2 bg-red-700 text-white px-6 py-3 font-bold tracking-[0.18em] uppercase border-2 border-red-700 hover:bg-red-800 transition-colors w-full md:w-auto md:whitespace-nowrap md:flex-shrink-0"
             >
-              <i class="fa-solid fa-trash text-base"></i>
+              <i class="fa-solid fa-trash text-base" aria-hidden="true"></i>
               <span>Delete listing</span>
             </button>
           </div>
@@ -426,7 +432,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       ) as HTMLButtonElement;
       submitButton.disabled = true;
       submitButton.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin text-base"></i><span>Saving...</span>';
+        '<i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i><span>Saving...</span>';
 
       // Update listing via API
       await updateListing(listingId, updateData);
@@ -445,7 +451,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       ) as HTMLButtonElement;
       submitButton.disabled = false;
       submitButton.innerHTML =
-        '<i class="fa-solid fa-floppy-disk text-base"></i><span>Save changes</span>';
+        '<i class="fa-solid fa-floppy-disk text-base" aria-hidden="true"></i><span>Save changes</span>';
 
       logError('Failed to update listing', error, { listingId });
       const errorMessage = getErrorMessage(
@@ -472,14 +478,23 @@ function initializeDeleteModal(listingId: string): void {
 
   if (!deleteButton || !deleteModal || !cancelDelete || !confirmDelete) return;
 
+  let releaseTrap: (() => void) | null = null;
+
   const openModal = (): void => {
     deleteModal.classList.remove('hidden');
     deleteModal.classList.add('flex');
+    // Cancel, not Delete Forever: the safe choice should be the one under your hands.
+    releaseTrap = trapFocus(deleteModal, {
+      initialFocus: cancelDelete,
+      onClose: () => closeModal(),
+    });
   };
 
   const closeModal = (): void => {
     deleteModal.classList.remove('flex');
     deleteModal.classList.add('hidden');
+    releaseTrap?.();
+    releaseTrap = null;
   };
 
   deleteButton.addEventListener('click', openModal);
@@ -492,13 +507,18 @@ function initializeDeleteModal(listingId: string): void {
       const deleteBtn = confirmDelete as HTMLButtonElement;
       deleteBtn.disabled = true;
       deleteBtn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
+        '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Deleting...';
 
       // Delete listing via API
       await deleteListing(listingId);
 
       // Show success message
       toast.success('Listing deleted successfully');
+
+      // The dialog deliberately stays open showing "Deleting…" until the redirect, so the trap
+      // stays with it. Releasing here would put focus on the delete button *behind* the overlay
+      // and let Tab walk the page underneath for the whole 1.5s — the defect the trap exists for.
+      // Navigation tears the listener down.
 
       // Redirect to profile page
       setTimeout(() => {
@@ -534,7 +554,7 @@ function showError(message: string): void {
 
   container.innerHTML = `
     <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
-      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
+      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
       <p class="text-slate-600 mb-4">${message}</p>
       <button

@@ -1,3 +1,5 @@
+import { announce } from '../utils/announce';
+
 /**
  * Toast notification types
  */
@@ -7,12 +9,12 @@ type ToastType = 'success' | 'error' | 'info' | 'warning';
  * Show a toast notification
  * @param message - Message to display
  * @param type - Toast type (success, error, info, warning)
- * @param duration - Duration in milliseconds (default: 3000)
+ * @param duration - Duration in milliseconds (errors and warnings get 6000, the rest 3000)
  */
 export function showToast(
   message: string,
   type: ToastType = 'info',
-  duration: number = 3000
+  duration: number = type === 'error' || type === 'warning' ? 6000 : 3000
 ): void {
   // Create toast container if it doesn't exist
   let container = document.getElementById('toast-container');
@@ -30,8 +32,14 @@ export function showToast(
     transform transition-all duration-300 ease-in-out
     ${getToastColors(type)}
   `;
-  toast.setAttribute('role', 'alert');
-  toast.setAttribute('aria-live', 'polite');
+  // No role/aria-live here on purpose.
+  // A toast is created with its text already inside, and that is the one mutation a live region cannot announce.
+  // The message goes through the region mounted at page load instead.
+  // Not aria-hidden either — the close button below has to stay reachable.
+  announce(
+    message,
+    type === 'error' || type === 'warning' ? 'assertive' : 'polite'
+  );
 
   // Add icon
   const icon = document.createElement('i');
@@ -47,7 +55,8 @@ export function showToast(
   // Add close button
   const closeBtn = document.createElement('button');
   closeBtn.className = 'flex-shrink-0 transition-opacity hover:opacity-70';
-  closeBtn.innerHTML = '<i class="fa-solid fa-times text-sm"></i>';
+  closeBtn.innerHTML =
+    '<i class="fa-solid fa-times text-sm" aria-hidden="true"></i>';
   closeBtn.setAttribute('aria-label', 'Close notification');
   closeBtn.onclick = () => removeToast(toast);
   toast.appendChild(closeBtn);

@@ -1,4 +1,5 @@
 import { CatalogStateManager } from '../utils/catalogState';
+import { prefersReducedMotion } from '../utils/motion';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
@@ -175,10 +176,16 @@ function renderCurrentPage(): void {
     onPageChange: (page: number) => {
       catalogManager.updatePage(page);
 
-      // Scroll to top of results
-      const resultsHeader = document.querySelector('#collection-cards-grid');
+      // Scroll to top of results, and take focus with it;
+      //  the pagination button that was focused gets replaced by the re-render, which otherwise drops focus to <body>.
+      const resultsHeader = document.getElementById('collection-cards-grid');
       if (resultsHeader) {
-        resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsHeader.scrollIntoView({
+          behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+          block: 'start',
+        });
+        resultsHeader.setAttribute('tabindex', '-1');
+        resultsHeader.focus({ preventScroll: true });
       }
     },
   });
@@ -273,7 +280,7 @@ function showError(message: string): void {
 
   container.innerHTML = `
     <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid var(--aucto-border-dark)">
-      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4"></i>
+      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
       <p class="text-slate-600 mb-4">${message}</p>
       <button

@@ -1,4 +1,6 @@
 import { CatalogStateManager } from '../utils/catalogState';
+import { announce } from '../utils/announce';
+import { prefersReducedMotion } from '../utils/motion';
 import { highestBid } from '../utils/biddingStats';
 import {
   activePool,
@@ -69,7 +71,7 @@ function initStickyFilterBar(): void {
         <!-- Left: Label + Search -->
         <div class="flex items-center gap-3 flex-1">
           <div class="flex items-center gap-2">
-            <i class="fa-solid fa-layer-group text-slate-700"></i>
+            <i class="fa-solid fa-layer-group text-slate-700" aria-hidden="true"></i>
             <span class="text-sm font-bold text-slate-900">Catalog Filters</span>
           </div>
           <div class="max-w-md">
@@ -83,7 +85,7 @@ function initStickyFilterBar(): void {
 
           <div class="flex flex-wrap items-center gap-3 text-sm">
             ${renderActiveOnlyCheckbox({ id: 'sticky-active-only', variant: 'compact' })}
-            ${renderSortDropdown({ id: 'sticky-sort-select', variant: 'compact' })}
+            ${renderSortDropdown({ id: 'sticky-sort-select', variant: 'compact', label: 'Sort listings, sticky filter bar' })}
 
             <!-- Close button -->
             <button
@@ -92,7 +94,7 @@ function initStickyFilterBar(): void {
               class="lg:hidden text-slate-500 hover:text-slate-900 px-2"
               aria-label="Close filters"
             >
-              <i class="fa-solid fa-xmark text-lg"></i>
+              <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
             </button>
           </div>
         </div>
@@ -301,6 +303,12 @@ async function loadCatalogListings(): Promise<void> {
 
     renderCollectionCards(result.listings, 'catalog-cards');
     renderCatalogPagination(result.pageCount);
+
+    // The catalog swaps out without a page load, so nothing here is otherwise announced.
+    const total = new Intl.NumberFormat('en-US').format(result.totalCount);
+    announce(
+      `${total} ${result.totalCount === 1 ? 'listing' : 'listings'} found. Page ${state.page} of ${result.pageCount || 1}.`
+    );
   } catch (error) {
     if (requestId !== catalogRequestId) return;
 
@@ -320,10 +328,15 @@ function renderCatalogPagination(totalPages: number): void {
     onPageChange: (page: number) => {
       catalogManager.updatePage(page);
 
-      // Scroll to catalog section
+      // Scroll to catalog section, and take focus with it — see Collection.ts.
       const catalogSection = document.getElementById('catalog-cards');
       if (catalogSection) {
-        catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        catalogSection.scrollIntoView({
+          behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+          block: 'start',
+        });
+        catalogSection.setAttribute('tabindex', '-1');
+        catalogSection.focus({ preventScroll: true });
       }
     },
   });
@@ -332,7 +345,7 @@ function renderCatalogPagination(totalPages: number): void {
 function showNoListingsMessage(): void {
   const noDataHTML = `
     <div class="col-span-full text-center py-12">
-      <i class="fa-solid fa-box-open text-6xl text-slate-300 mb-4"></i>
+      <i class="fa-solid fa-box-open text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">No Listings Available</h3>
       <p class="text-slate-600">Check back soon for new auctions.</p>
     </div>
@@ -360,7 +373,7 @@ function showNoListingsMessage(): void {
 function showErrorInSections(): void {
   const errorHTML = `
     <div class="col-span-full text-center py-12">
-      <i class="fa-solid fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+      <i class="fa-solid fa-exclamation-triangle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Failed to Load</h3>
       <p class="text-slate-600 mb-4">Unable to fetch auction listings. Please try again later.</p>
       <button
@@ -417,7 +430,11 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
   const mainHighestBid = highestBid(main.bids);
   const mainTimeRemaining = formatTimeRemaining(main.endsAt);
 
+  // The mosaic's card titles are h3, directly under the hero h1.
+  // Naming the group restores the level the outline was skipping;
+  //  it is sr-only because the hero already reads as one visually.
   let mosaicHTML = `
+    <h2 class="sr-only">Featured auctions</h2>
     <!-- Main featured lot -->
     <article class="row-span-1 bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
       <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
@@ -429,7 +446,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
           />
         </a>
         <div class="absolute left-4 top-4 bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-white inline-flex items-center gap-1.5">
-          <i class="fa-solid fa-fire text-amber-400"></i>
+          <i class="fa-solid fa-fire text-amber-400" aria-hidden="true"></i>
           <span>Hot</span>
         </div>
         <div class="absolute right-4 bottom-4 bg-white px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-900" style="border: 2px solid var(--aucto-border-dark)">
@@ -445,12 +462,12 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
         <p class="mb-4 text-xs text-slate-600">
           Current bid
           <span class="font-semibold text-slate-900 inline-flex items-center gap-1">
-            <i class="fa-solid fa-coins text-xs"></i>
+            <i class="fa-solid fa-coins text-xs" aria-hidden="true"></i>
             <span>${mainHighestBid} credits</span>
           </span>
           ·
           <span class="inline-flex items-center gap-1">
-            <i class="fa-solid fa-gavel text-xs"></i>
+            <i class="fa-solid fa-gavel text-xs" aria-hidden="true"></i>
             <span>${main._count?.bids || 0} bids</span>
           </span>
         </p>

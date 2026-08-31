@@ -51,7 +51,7 @@ function renderCreateForm(): void {
           href="/profile.html"
           class="text-[12px] font-bold uppercase tracking-[0.18em] text-slate-700 hover:text-slate-900 inline-flex items-center gap-2"
         >
-          <i class="fa-solid fa-arrow-left text-xs"></i>
+          <i class="fa-solid fa-arrow-left text-xs" aria-hidden="true"></i>
           <span>Back to profile</span>
         </a>
       </div>
@@ -59,11 +59,11 @@ function renderCreateForm(): void {
       <!-- Info Banner -->
       <div class="mb-8 md:mb-10 bg-slate-50 border-2 border-slate-300 p-4 md:p-6">
         <div class="flex items-start gap-4">
-          <i class="fa-solid fa-circle-info text-xl md:text-2xl text-blue-600 flex-shrink-0"></i>
+          <i class="fa-solid fa-circle-info text-xl md:text-2xl text-blue-600 flex-shrink-0" aria-hidden="true"></i>
           <div>
-            <h3 class="text-base md:text-lg font-bold text-slate-900 mb-2">
+            <h2 class="text-base md:text-lg font-bold text-slate-900 mb-2">
               Creating Your Listing
-            </h3>
+            </h2>
             <p class="text-sm text-slate-700 leading-relaxed">
               Add a clear title, detailed description, and quality images to attract bidders.
               Set an end date for your auction. You can add multiple images by entering one URL per line.
@@ -160,7 +160,7 @@ function renderCreateForm(): void {
             type="submit"
             class="w-full bg-slate-900 text-white py-3 px-4 font-bold text-sm tracking-[0.18em] uppercase border-2 border-slate-900 hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2"
           >
-            <i class="fa-solid fa-paper-plane text-base"></i>
+            <i class="fa-solid fa-paper-plane text-base" aria-hidden="true"></i>
             <span>Publish listing</span>
           </button>
         </form>
@@ -182,9 +182,9 @@ function renderCreateForm(): void {
             style="border: 3px solid var(--aucto-border-dark)"
             id="mainPreview"
           >
-            <div class="w-full h-full flex items-center justify-center text-slate-400">
+            <div class="w-full h-full flex items-center justify-center text-slate-600">
               <div class="text-center">
-                <i class="fa-solid fa-image text-5xl md:text-6xl mb-2 block text-slate-400"></i>
+                <i class="fa-solid fa-image text-5xl md:text-6xl mb-2 block text-slate-400" aria-hidden="true"></i>
                 <p class="text-sm">No image added yet</p>
               </div>
             </div>
@@ -252,7 +252,7 @@ async function handleFormSubmit(event: Event): Promise<void> {
   // Disable submit button
   submitBtn.disabled = true;
   submitBtn.innerHTML = `
-    <i class="fa-solid fa-spinner fa-spin text-base"></i>
+    <i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i>
     <span>Creating...</span>
   `;
 
@@ -305,7 +305,7 @@ async function handleFormSubmit(event: Event): Promise<void> {
     // Re-enable submit button
     submitBtn.disabled = false;
     submitBtn.innerHTML = `
-      <i class="fa-solid fa-paper-plane text-base"></i>
+      <i class="fa-solid fa-paper-plane text-base" aria-hidden="true"></i>
       <span>Publish listing</span>
     `;
   }

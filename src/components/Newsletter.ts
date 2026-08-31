@@ -35,11 +35,11 @@ export function renderNewsletter(): string {
           class="w-full bg-slate-900 py-4 text-sm font-bold tracking-wide text-white transition-colors hover:bg-slate-800 inline-flex items-center justify-center gap-2"
           style="border: 3px solid var(--aucto-border-dark)"
         >
-          <i class="fa-solid fa-bell text-sm"></i>
+          <i class="fa-solid fa-bell text-sm" aria-hidden="true"></i>
           Subscribe to Alerts
         </button>
       </form>
-      <p class="mt-4 text-xs text-slate-500">
+      <p class="mt-4 text-xs text-slate-400">
         Unsubscribe anytime. We respect your privacy.
       </p>
     </div>
@@ -83,7 +83,7 @@ export function initNewsletter(): void {
     const originalBtnContent = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
-      <i class="fa-solid fa-spinner fa-spin text-sm"></i>
+      <i class="fa-solid fa-spinner fa-spin text-sm" aria-hidden="true"></i>
       Subscribing...
     `;
 
@@ -93,7 +93,7 @@ export function initNewsletter(): void {
 
       // Success state
       submitBtn.innerHTML = `
-        <i class="fa-solid fa-check text-sm"></i>
+        <i class="fa-solid fa-check text-sm" aria-hidden="true"></i>
         Subscribed!
       `;
       submitBtn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
