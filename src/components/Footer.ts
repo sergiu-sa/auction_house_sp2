@@ -67,7 +67,7 @@ export function renderFooter(): void {
               href="/collection.html"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-list text-xs text-slate-500"></i>Browse
+              <i class="fa-solid fa-list text-xs text-slate-500" aria-hidden="true"></i>Browse
               Catalog
             </a>
           </li>
@@ -76,7 +76,7 @@ export function renderFooter(): void {
               href="/collection.html"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-tower-broadcast text-xs text-slate-500"></i
+              <i class="fa-solid fa-tower-broadcast text-xs text-slate-500" aria-hidden="true"></i
               >Live Auctions
             </a>
           </li>
@@ -86,7 +86,7 @@ export function renderFooter(): void {
               id="footer-sell-item-link"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-plus text-xs text-slate-500"></i>Sell an
+              <i class="fa-solid fa-plus text-xs text-slate-500" aria-hidden="true"></i>Sell an
               Item
             </a>
           </li>
@@ -96,7 +96,7 @@ export function renderFooter(): void {
               id="footer-my-account-link"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-user text-xs text-slate-500"></i>My Account
+              <i class="fa-solid fa-user text-xs text-slate-500" aria-hidden="true"></i>My Account
             </a>
           </li>
         </ul>
@@ -112,37 +112,33 @@ export function renderFooter(): void {
         <ul class="space-y-3 text-sm">
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-circle-question text-xs text-slate-500"></i
+              <i class="fa-solid fa-circle-question text-xs text-slate-500" aria-hidden="true"></i
               >How Bidding Works
             </a>
           </li>
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-book text-xs text-slate-500"></i>Seller's
+              <i class="fa-solid fa-book text-xs text-slate-500" aria-hidden="true"></i>Seller's
               Guide
             </a>
           </li>
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-shield text-xs text-slate-500"></i
+              <i class="fa-solid fa-shield text-xs text-slate-500" aria-hidden="true"></i
               >Authentication
             </a>
           </li>
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-headset text-xs text-slate-500"></i>Help
+              <i class="fa-solid fa-headset text-xs text-slate-500" aria-hidden="true"></i>Help
               Center
             </a>
           </li>
@@ -159,28 +155,25 @@ export function renderFooter(): void {
         <ul class="space-y-3 text-sm mb-6">
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-file-contract text-xs text-slate-500"></i
+              <i class="fa-solid fa-file-contract text-xs text-slate-500" aria-hidden="true"></i
               >Terms of Service
             </a>
           </li>
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-lock text-xs text-slate-500"></i>Privacy
+              <i class="fa-solid fa-lock text-xs text-slate-500" aria-hidden="true"></i>Privacy
               Policy
             </a>
           </li>
           <li>
             <a
-              href="#"
               class="transition-colors hover:text-white inline-flex items-center gap-2"
             >
-              <i class="fa-solid fa-cookie text-xs text-slate-500"></i>Cookie
+              <i class="fa-solid fa-cookie text-xs text-slate-500" aria-hidden="true"></i>Cookie
               Policy
             </a>
           </li>
@@ -214,36 +207,32 @@ export function renderFooter(): void {
         </div>
         <div class="flex gap-3">
           <a
-            href="#"
             class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
             style="border: 2px solid #475569"
             title="Follow us on Twitter"
           >
-            <i class="fa-brands fa-twitter text-sm"></i>
+            <i class="fa-brands fa-twitter text-sm" aria-hidden="true"></i>
           </a>
           <a
-            href="#"
             class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
             style="border: 2px solid #475569"
             title="Follow us on Instagram"
           >
-            <i class="fa-brands fa-instagram text-sm"></i>
+            <i class="fa-brands fa-instagram text-sm" aria-hidden="true"></i>
           </a>
           <a
-            href="#"
             class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
             style="border: 2px solid #475569"
             title="Follow us on LinkedIn"
           >
-            <i class="fa-brands fa-linkedin text-sm"></i>
+            <i class="fa-brands fa-linkedin text-sm" aria-hidden="true"></i>
           </a>
           <a
-            href="#"
             class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
             style="border: 2px solid #475569"
             title="Follow us on Facebook"
           >
-            <i class="fa-brands fa-facebook text-sm"></i>
+            <i class="fa-brands fa-facebook text-sm" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -254,11 +243,11 @@ export function renderFooter(): void {
       class="flex flex-col items-center justify-between gap-8 pt-12 md:flex-row"
       style="border-top: 2px solid var(--aucto-border-mid)"
     >
-      <div class="text-sm text-slate-500">
+      <div class="text-sm text-slate-400">
         &copy; 2025 Aucto. All rights reserved.
       </div>
       <div
-        class="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500"
+        class="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400"
       >
         <span class="hidden sm:inline"
           >Built for Noroff Front-End Development</span
@@ -266,7 +255,7 @@ export function renderFooter(): void {
         <span class="hidden sm:inline">•</span>
         <span>Oslo, Norway</span>
         <span>•</span>
-        <a href="#" class="transition-colors hover:text-slate-300"
+        <a class="transition-colors hover:text-slate-300"
           >Student Project</a
         >
       </div>
