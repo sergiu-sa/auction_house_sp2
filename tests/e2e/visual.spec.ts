@@ -22,12 +22,13 @@ const MASKS = { register: ['#active-users'] };
  *  Home defers sections behind setTimeouts and the footer counts numbers up.
  * Sample the text until it settles.
  */
-async function settle(page: import('@playwright/test').Page): Promise<void> {
-  await page.waitForLoadState('networkidle');
-  await page.evaluate(() => document.fonts.ready);
-
-  // Cards use loading="lazy".
-  // A fullPage screenshot starts those loads but does not wait, so below-the-fold cards captured blank or decoded at random.
+/**
+ * Cards use loading="lazy". A fullPage screenshot starts those loads but does not wait, so
+ * below-the-fold cards captured blank or decoded at random.
+ */
+async function awaitImages(
+  page: import('@playwright/test').Page
+): Promise<void> {
   await page.evaluate(async () => {
     const images = [...document.querySelectorAll('img')];
     images.forEach((img) => {
@@ -44,13 +45,26 @@ async function settle(page: import('@playwright/test').Page): Promise<void> {
       )
     );
   });
+}
+
+async function settle(page: import('@playwright/test').Page): Promise<void> {
+  await page.waitForLoadState('networkidle');
+  await page.evaluate(() => document.fonts.ready);
+
+  await awaitImages(page);
 
   // null seed and a non-empty requirement:
   //  an empty first sample would look "stable" and get photographed blank.
   let previous: string | null = null;
   for (let attempt = 0; attempt < 20; attempt += 1) {
     const current = await page.evaluate(() => document.body.innerText);
-    if (current.length > 0 && current === previous) return;
+    if (current.length > 0 && current === previous) {
+      // ProductShowcase swaps each tile's img.src while the text is still settling, so the wait above finished before those loads even started.
+      // Whether they landed decided whether the tile showed the real image or its onerror placeholder;
+      //  the login and register baselines were recorded on opposite sides of that race.
+      await awaitImages(page);
+      return;
+    }
     previous = current;
     await page.waitForTimeout(250);
   }
