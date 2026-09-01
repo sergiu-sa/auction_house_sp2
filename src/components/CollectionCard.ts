@@ -127,7 +127,7 @@ export function createCollectionCard(
         </div>
 
         <!-- Content Section -->
-        <div class="flex-1 p-6 flex flex-col justify-between">
+        <div class="min-w-0 flex-1 p-6 flex flex-col justify-between">
           <div>
             <!-- Lot Number + Category Badge -->
             <div class="mb-3 flex items-center gap-3 text-[11px] font-bold tracking-[0.18em] uppercase">
@@ -414,7 +414,37 @@ export function attachCollectionCardEvents(
   });
 }
 
-export function createCollectionCardSkeleton(): string {
+/**
+ * The skeleton has to follow the view mode for the same reason the card does: `sm:aspect-square`
+ * in a list container's single 1216px column resolves to a 1210x1210 media box, which took the
+ * document from 9,487px to 37,775px on every refetch.
+ */
+export function createCollectionCardSkeleton(
+  viewMode: 'grid' | 'list' = 'grid'
+): string {
+  if (viewMode === 'list') {
+    return `
+      <div class="bg-white animate-pulse flex flex-col sm:flex-row" style="border: 3px solid var(--aucto-border-dark)">
+        <div class="relative overflow-hidden sm:w-64 flex-shrink-0">
+          <div class="aspect-square sm:h-full bg-slate-200"></div>
+        </div>
+        <div class="min-w-0 flex-1 p-6">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="h-3 bg-slate-200 rounded w-16"></div>
+            <div class="h-5 bg-slate-200 rounded w-16"></div>
+          </div>
+          <div class="h-7 bg-slate-200 rounded mb-3 w-2/3"></div>
+          <div class="h-4 bg-slate-200 rounded mb-4 w-full"></div>
+          <div class="h-4 bg-slate-200 rounded mb-4 w-20"></div>
+          <div class="flex items-center justify-between gap-4">
+            <div class="h-8 bg-slate-200 rounded w-24"></div>
+            <div class="h-10 bg-slate-200 rounded w-36"></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   return `
     <div class="bg-white animate-pulse" style="border: 3px solid var(--aucto-border-dark)">
       <div class="aspect-[3/2] sm:aspect-square bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)"></div>
@@ -434,7 +464,8 @@ export function createCollectionCardSkeleton(): string {
 
 export function showCollectionCardSkeletons(
   count: number = 8,
-  containerId: string = 'collection-cards-grid'
+  containerId: string = 'collection-cards-grid',
+  viewMode: 'grid' | 'list' = 'grid'
 ): void {
   const container = document.getElementById(containerId);
   if (!container) {
@@ -444,7 +475,7 @@ export function showCollectionCardSkeletons(
 
   const skeletons = Array(count)
     .fill(null)
-    .map(() => createCollectionCardSkeleton())
+    .map(() => createCollectionCardSkeleton(viewMode))
     .join('');
 
   container.innerHTML = skeletons;

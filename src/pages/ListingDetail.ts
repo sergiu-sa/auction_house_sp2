@@ -152,12 +152,12 @@ function renderListingHeader(listing: Listing) {
 
   header.innerHTML = `
     <div class="mb-4 flex items-start justify-between gap-4">
-      <div class="space-y-2 flex-1">
-        <div class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">
+      <div class="min-w-0 flex-1 space-y-2">
+        <div class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase break-words">
           Listing ID: ${listing.id.substring(0, 8)}
           ${listing.tags && listing.tags.length > 0 ? ` · ${escapeHtml(listing.tags[0])}` : ''}
         </div>
-        <h1 class="text-4xl md:text-5xl font-bold leading-tight text-slate-900">
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight text-slate-900 break-words">
           ${escapeHtml(listing.title)}
         </h1>
       </div>
@@ -187,7 +187,7 @@ function renderListingHeader(listing: Listing) {
       </div>
     </div>
 
-    <p class="max-w-2xl text-sm md:text-base leading-relaxed text-slate-600">
+    <p class="max-w-2xl text-sm md:text-base leading-relaxed text-slate-600 break-words">
       ${escapeHtml(listing.description || 'No description provided.')}
     </p>
   `;
@@ -323,12 +323,12 @@ function renderListingDetails(listing: Listing) {
       ${
         listing.tags && listing.tags.length > 0
           ? `
-        <div>
+        <div class="min-w-0">
           <div class="mb-1 font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1">
             <i class="fa-solid fa-layer-group text-xs" aria-hidden="true"></i>
             <span>Category</span>
           </div>
-          <div class="text-sm">${escapeHtml(listing.tags.slice(0, 2).join(' · '))}</div>
+          <div class="text-sm break-all">${escapeHtml(listing.tags.slice(0, 2).join(' · '))}</div>
         </div>
       `
           : ''
@@ -353,7 +353,7 @@ function renderListingDetails(listing: Listing) {
       <h2 class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
         Description
       </h2>
-      <div class="text-sm leading-relaxed text-slate-700 line-clamp-6">
+      <div class="text-sm leading-relaxed text-slate-700 line-clamp-6 break-words">
         <p>${escapeHtml(listing.description || 'No description provided for this listing.')}</p>
       </div>
     </div>
@@ -719,7 +719,7 @@ function renderTags(listing: Listing) {
         .map(
           (tag) => `
         <span
-          class="bg-slate-50 px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-slate-700 uppercase"
+          class="bg-slate-50 px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-slate-700 uppercase break-all"
           style="border: 2px solid var(--aucto-border-mid)"
         >
           ${escapeHtml(tag)}
@@ -836,9 +836,9 @@ function renderSellerProfile(listing: Listing) {
         }
       </div>
       <div>
-        <div class="text-base font-bold text-slate-900 mb-1 inline-flex items-center gap-1.5">
+        <div class="text-base font-bold text-slate-900 mb-1 inline-flex max-w-full items-center gap-1.5">
           <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
-          <a href="/profile.html?user=${encodeURIComponent(seller.name)}" class="hover:text-slate-700 transition-colors">@${escapeHtml(seller.name)}</a>
+          <a href="/profile.html?user=${encodeURIComponent(seller.name)}" class="hover:text-slate-700 transition-colors break-all">@${escapeHtml(seller.name)}</a>
         </div>
         ${
           seller._count
@@ -856,7 +856,7 @@ function renderSellerProfile(listing: Listing) {
     ${
       seller.bio
         ? `
-      <p class="text-sm leading-relaxed text-slate-600 mb-6 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
+      <p class="text-sm leading-relaxed text-slate-600 mb-6 pb-6 break-words" style="border-bottom: 2px solid var(--aucto-border-light)">
         ${escapeHtml(seller.bio)}
       </p>
     `

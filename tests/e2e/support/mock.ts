@@ -25,8 +25,12 @@ export const IDS = {
   missing: '00000000-0000-4000-8000-000000000000',
 };
 
-const json = (name: string): unknown =>
-  JSON.parse(readFileSync(join(FIXTURES, `${name}.json`), 'utf8'));
+/** One recorded fixture, parsed. Exported so a spec overriding a route reads from the same place this server does, rather than re-deriving the path. */
+export function loadFixture<T = unknown>(name: string): T {
+  return JSON.parse(readFileSync(join(FIXTURES, `${name}.json`), 'utf8')) as T;
+}
+
+const json = (name: string): unknown => loadFixture(name);
 
 /** 1x1 #e2e8f0 PNG behind every listing image.
  * Grey, not the copy-paste "transparent" pixel, which is half-opaque green and floods the baselines. */
