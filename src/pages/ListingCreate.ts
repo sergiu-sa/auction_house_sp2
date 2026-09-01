@@ -74,7 +74,7 @@ function renderCreateForm(): void {
       </div>
 
       <!-- Form and Preview Grid -->
-      <div class="grid lg:grid-cols-[1.5fr,1fr] gap-8 md:gap-12">
+      <div class="grid grid-cols-1 lg:grid-cols-[1.5fr,1fr] gap-8 md:gap-12">
         <!-- Form -->
         <form id="create-listing-form" class="space-y-6 md:space-y-8">
           <!-- Title -->
@@ -192,10 +192,10 @@ function renderCreateForm(): void {
 
           <!-- Preview Info Card -->
           <div class="bg-slate-50 border-2 border-slate-300 p-4">
-            <h3 id="previewTitle" class="font-bold text-slate-900 mb-2 text-base md:text-lg">
+            <h3 id="previewTitle" class="font-bold text-slate-900 mb-2 text-base md:text-lg break-words">
               Your listing title
             </h3>
-            <p id="previewDescription" class="text-sm text-slate-700">
+            <p id="previewDescription" class="text-sm text-slate-700 break-words">
               Your description will appear here…
             </p>
             <div class="mt-4 pt-4 border-t border-slate-300">

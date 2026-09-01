@@ -130,7 +130,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
       </div>
 
       <!-- GRID -->
-      <div class="grid lg:grid-cols-[2fr,1.4fr] gap-12">
+      <div class="grid grid-cols-1 lg:grid-cols-[2fr,1.4fr] gap-12">
         <!-- FORM -->
         <form id="editForm" class="space-y-8">
           <!-- TITLE -->
@@ -277,10 +277,10 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
 
           <!-- PREVIEW INFO -->
           <div class="bg-slate-50 border-2 border-slate-300 p-4">
-            <h3 id="previewTitle" class="font-bold text-slate-900 mb-2 text-lg">
+            <h3 id="previewTitle" class="font-bold text-slate-900 mb-2 text-lg break-words">
               ${escapeHtml(listing.title)}
             </h3>
-            <p id="previewDescription" class="text-sm text-slate-700">
+            <p id="previewDescription" class="text-sm text-slate-700 break-words">
               ${escapeHtml(listing.description || 'No description provided.')}
             </p>
             <div class="mt-4 pt-4 border-t border-slate-300">
@@ -332,7 +332,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
 
         <div class="bg-red-50 border-2 border-red-300 p-6">
           <div class="flex flex-col md:flex-row items-start md:justify-between gap-6">
-            <div class="flex-1">
+            <div class="min-w-0 flex-1">
               <h3 class="text-lg font-bold text-red-900 mb-2">
                 Delete this listing
               </h3>

@@ -220,27 +220,27 @@ function renderProfileHero(
           </div>
 
           <!-- Info section -->
-          <div class="flex-1">
+          <div class="w-full min-w-0 flex-1">
             <div
-              class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center gap-1"
+              class="mb-1 inline-flex max-w-full items-center gap-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
             >
               <i class="fa-solid fa-user text-xs" aria-hidden="true"></i>
-              <span>@${escapeHtml(profile.name)}</span>
+              <span class="break-all">@${escapeHtml(profile.name)}</span>
             </div>
             <div class="flex flex-wrap items-center gap-4">
               <h2
-                class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight"
+                class="min-w-0 break-all text-3xl font-bold leading-tight text-slate-900 md:text-4xl"
               >
                 ${escapeHtml(profile.name)}
               </h2>
             </div>
-            <div class="mt-1 text-sm text-slate-600 inline-flex items-center gap-2">
+            <div class="mt-1 inline-flex max-w-full items-center gap-2 text-sm text-slate-600">
               <i class="fa-solid fa-envelope text-sm" aria-hidden="true"></i>
-              <span>${escapeHtml(profile.email)}</span>
+              <span class="break-all">${escapeHtml(profile.email)}</span>
             </div>
             ${
               profile.bio
-                ? `<p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
+                ? `<p class="mt-3 max-w-2xl break-words text-sm leading-relaxed text-slate-600">
               ${escapeHtml(profile.bio)}
             </p>`
                 : ''
@@ -274,7 +274,7 @@ function renderProfileHero(
       </div>
 
       <!-- Stats bar -->
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div
           class="bg-white px-6 py-5 text-center"
           style="border: 3px solid var(--aucto-border-dark)"
@@ -334,23 +334,23 @@ function renderAboutAndSettings(
 ): string {
   return `
     <section>
-      <div class="grid gap-6 ${isOwnProfile ? 'lg:grid-cols-2' : 'lg:grid-cols-1'}">
+      <div class="grid grid-cols-1 gap-6 ${isOwnProfile ? 'lg:grid-cols-2' : ''}">
         <!-- About card -->
         <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-3xl font-bold text-slate-900">
             About this seller
           </h2>
-          <p class="mb-4 text-sm leading-relaxed text-slate-600">
+          <p class="mb-4 break-words text-sm leading-relaxed text-slate-600">
             ${escapeHtml(profile.bio || 'No bio provided yet.')}
           </p>
-          <div class="mt-6 grid gap-4 text-sm text-slate-600 sm:grid-cols-2">
+          <div class="mt-6 grid grid-cols-1 gap-4 text-sm text-slate-600 sm:grid-cols-2">
             <div>
               <div
                 class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
               >
                 Email
               </div>
-              <div>${escapeHtml(profile.email)}</div>
+              <div class="break-all">${escapeHtml(profile.email)}</div>
             </div>
             <div>
               <div
@@ -358,7 +358,7 @@ function renderAboutAndSettings(
               >
                 Username
               </div>
-              <div>@${escapeHtml(profile.name)}</div>
+              <div class="break-all">@${escapeHtml(profile.name)}</div>
             </div>
             <div>
               <div
@@ -521,7 +521,7 @@ function renderActiveListings(
           }
         </div>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           ${listingCards}
         </div>
       </div>
@@ -605,7 +605,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
 function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
   return `
     <section>
-      <div class="grid gap-6 lg:grid-cols-2">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <!-- Wins -->
         <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-2xl font-bold text-slate-900">Recent wins</h2>

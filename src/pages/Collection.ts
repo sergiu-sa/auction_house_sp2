@@ -23,53 +23,40 @@ let resultTotals = { totalCount: 0, pageCount: 1 };
 let loadRequestId = 0;
 let nextCloseInterval: number | null = null;
 
+/** List view is one column; grid view adds these back. Everything else the container needs
+ * stays declared in collection.html, so there is only one copy of it. */
+const GRID_COLUMNS = ['sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4'];
+
+/**
+ * The container's columns and the toggle's pressed state are functions of the view mode, not side effects of clicking.
+ * Deriving them is what stops grid-shaped children (cards, or skeletons), being laid out in a single list-width column, which blew a card up to 1216x1462.
+ */
+function applyViewMode(viewMode: 'grid' | 'list'): void {
+  const container = document.getElementById('collection-cards-grid');
+  for (const columns of GRID_COLUMNS) {
+    container?.classList.toggle(columns, viewMode === 'grid');
+  }
+
+  const active = document.getElementById(`${viewMode}-view-btn`);
+  const inactive = document.getElementById(
+    `${viewMode === 'grid' ? 'list' : 'grid'}-view-btn`
+  );
+  active?.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+  active?.classList.add('bg-slate-900', 'text-white');
+  inactive?.classList.remove('bg-slate-900', 'text-white');
+  inactive?.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+}
+
 function initializeFilters(): void {
-  // View toggle (grid vs list)
-  const gridViewBtn = document.getElementById('grid-view-btn');
-  const listViewBtn = document.getElementById('list-view-btn');
-  const listingsGrid = document.getElementById('collection-cards-grid');
-
-  if (gridViewBtn && listViewBtn && listingsGrid) {
-    gridViewBtn.addEventListener('click', () => {
-      catalogManager.updateViewMode('grid');
-      listingsGrid.className =
-        'grid grid-cols-1 gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
-      gridViewBtn.classList.remove(
-        'bg-white',
-        'text-slate-700',
-        'hover:bg-slate-50'
-      );
-      gridViewBtn.classList.add('bg-slate-900', 'text-white');
-      listViewBtn.classList.remove('bg-slate-900', 'text-white');
-      listViewBtn.classList.add(
-        'bg-white',
-        'text-slate-700',
-        'hover:bg-slate-50'
-      );
-
-      // Re-render cards in grid mode
-      renderCurrentPage();
-    });
-
-    listViewBtn.addEventListener('click', () => {
-      catalogManager.updateViewMode('list');
-      listingsGrid.className = 'grid grid-cols-1 gap-6 mb-12 transition-all';
-      listViewBtn.classList.remove(
-        'bg-white',
-        'text-slate-700',
-        'hover:bg-slate-50'
-      );
-      listViewBtn.classList.add('bg-slate-900', 'text-white');
-      gridViewBtn.classList.remove('bg-slate-900', 'text-white');
-      gridViewBtn.classList.add(
-        'bg-white',
-        'text-slate-700',
-        'hover:bg-slate-50'
-      );
-
-      // Re-render cards in list mode
-      renderCurrentPage();
-    });
+  // View toggle (grid vs list).
+  //  Both buttons do the same thing to a different mode, and applyViewMode() draws the result, so there is nothing left to write out twice.
+  for (const viewMode of ['grid', 'list'] as const) {
+    document
+      .getElementById(`${viewMode}-view-btn`)
+      ?.addEventListener('click', () => {
+        catalogManager.updateViewMode(viewMode);
+        renderCurrentPage();
+      });
   }
 
   // Refresh listings button
@@ -130,7 +117,12 @@ async function loadListings(): Promise<void> {
   const state = catalogManager.getState();
 
   try {
-    showCollectionCardSkeletons(state.itemsPerPage, 'collection-cards-grid');
+    applyViewMode(state.viewMode);
+    showCollectionCardSkeletons(
+      state.itemsPerPage,
+      'collection-cards-grid',
+      state.viewMode
+    );
 
     const result = await catalogPage({
       page: state.page,
@@ -163,6 +155,7 @@ async function loadListings(): Promise<void> {
 function renderCurrentPage(): void {
   const state = catalogManager.getState();
 
+  applyViewMode(state.viewMode);
   renderCollectionCards(
     currentPageListings,
     'collection-cards-grid',

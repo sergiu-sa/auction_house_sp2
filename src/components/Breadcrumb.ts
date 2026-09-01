@@ -30,14 +30,17 @@ export function renderBreadcrumb(config: BreadcrumbConfig): string {
             // Render item
             const itemHtml = item.href
               ? `<a href="${escapeHtml(item.href)}" class="text-slate-600 hover:text-slate-900 transition-colors">${escapeHtml(item.label)}</a>`
-              : `<span class="text-slate-900">${escapeHtml(item.label)}</span>`;
+              : `<span class="text-slate-900 break-words">${escapeHtml(item.label)}</span>`;
 
             // Add separator unless it's the last item
             const separator = isLast
               ? ''
-              : '<li class="mx-2 text-slate-400">/</li>';
+              : '<li class="mx-2 flex-shrink-0 text-slate-400">/</li>';
 
-            return `<li>${itemHtml}</li>${separator}`;
+            // Only the crumb carrying user data may be squeezed, and only it can break:
+            //  the linked crumbs are short and fixed, and letting them shrink printed their text over the separators rather than wrapping it.
+            // Keyed off `href` like the markup above, so a preset with a linked final crumb cannot end up shrinkable and unbreakable at once.
+            return `<li class="${item.href ? 'flex-shrink-0' : 'min-w-0'}">${itemHtml}</li>${separator}`;
           })
           .join('')}
       </ol>
