@@ -49,12 +49,16 @@ function generateSrcset(baseUrl: string): string {
  * @param imageUrl - The image URL
  * @param imageAlt - The alt text
  * @param aspectRatio - The aspect ratio class (e.g., 'aspect-square', 'h-48')
+ * @param sizesOverride - Layouts the three presets do not describe, such as the home hero mosaic, whose tiles are a third of a column rather than a card.
+ * Getting `sizes` wrong is what makes the browser fetch a 1074px original for a 133px box.
+ * Callers write this into an attribute unescaped, as they do the presets, so it must be a literal and never user data.
  * @returns Object with image attributes
  */
 export function generateResponsiveImageAttrs(
   imageUrl: string,
   imageAlt: string,
-  aspectRatio: 'square' | 'landscape' | 'compact'
+  aspectRatio: 'square' | 'landscape' | 'compact',
+  sizesOverride?: string
 ): {
   src: string;
   srcset?: string;
@@ -90,6 +94,6 @@ export function generateResponsiveImageAttrs(
     decoding: 'async',
     width: dimensions[aspectRatio].width,
     height: dimensions[aspectRatio].height,
-    sizes: sizesMap[aspectRatio],
+    sizes: sizesOverride ?? sizesMap[aspectRatio],
   };
 }
