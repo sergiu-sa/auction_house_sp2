@@ -94,7 +94,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/icon_only_v2.svg" />
   </head>
-  <body class="antialiased bg-aucto-bg" data-page-type="browse">
+  <body class="bg-aucto-bg antialiased" data-page-type="browse">
     <!-- Skip Navigation Link -->
     <a
       href="#main-content"
@@ -110,12 +110,12 @@
     <main id="main-content" tabindex="-1">
       <!-- CATALOG HERO -->
       <section
-        class="relative px-6 py-8 overflow-hidden bg-slate-900 md:px-8 md:py-10"
+        class="relative overflow-hidden bg-slate-900 px-6 py-8 md:px-8 md:py-10"
       >
         <div class="relative z-10 mx-auto max-w-7xl">
           <div class="flex flex-wrap items-center justify-between gap-6">
             <div class="min-w-[280px] flex-1">
-              <div class="flex items-center gap-3 mb-3">
+              <div class="mb-3 flex items-center gap-3">
                 <div class="h-0.5 w-12 bg-green-500"></div>
                 <span
                   class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400"
@@ -180,7 +180,7 @@
                   style="border: 3px solid var(--aucto-border-mid)"
                   title="Refresh listings"
                 >
-                  <i class="text-sm fa-solid fa-rotate" aria-hidden="true"></i>
+                  <i class="fa-solid fa-rotate text-sm" aria-hidden="true"></i>
                   <span class="hidden sm:inline">Refresh</span>
                 </button>
                 <button
@@ -190,7 +190,7 @@
                   title="Clear all filters"
                 >
                   <i
-                    class="text-sm fa-solid fa-filter-circle-xmark"
+                    class="fa-solid fa-filter-circle-xmark text-sm"
                     aria-hidden="true"
                   ></i>
                   <span class="hidden sm:inline">Clear</span>
@@ -202,7 +202,7 @@
       </section>
 
       <!-- FILTERS & RESULTS -->
-      <section class="px-6 py-10 mx-auto max-w-7xl md:px-8">
+      <section class="mx-auto max-w-7xl px-6 py-10 md:px-8">
         <div class="mb-8">
           <p class="text-lg text-slate-600">
             Use the search and filters in the navigation bar above to refine
@@ -212,7 +212,7 @@
 
         <!-- Results Header -->
         <div
-          class="flex flex-wrap items-center justify-between gap-6 p-6 mb-8 bg-white"
+          class="mb-8 flex flex-wrap items-center justify-between gap-6 bg-white p-6"
           style="border: 3px solid var(--aucto-border-dark)"
         >
           <div>
@@ -232,21 +232,21 @@
 
           <div class="flex flex-wrap items-center gap-3">
             <!-- View Toggle (Hidden on mobile since grid/list look the same) -->
-            <div class="items-center hidden gap-2 sm:flex">
+            <div class="hidden items-center gap-2 sm:flex">
               <span
-                class="hidden text-xs font-bold tracking-wider uppercase text-slate-500 md:inline"
+                class="hidden text-xs font-bold uppercase tracking-wider text-slate-500 md:inline"
               >
                 View:
               </span>
               <button
                 id="grid-view-btn"
-                class="flex items-center gap-2 px-4 py-3 text-xs font-bold text-white transition-all bg-slate-900"
+                class="flex items-center gap-2 bg-slate-900 px-4 py-3 text-xs font-bold text-white transition-all"
                 style="border: 3px solid var(--aucto-border-dark)"
                 title="Grid view"
                 aria-pressed="true"
               >
                 <svg
-                  class="w-4 h-4"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -262,13 +262,13 @@
               </button>
               <button
                 id="list-view-btn"
-                class="flex items-center gap-2 px-4 py-3 text-xs font-bold transition-all bg-white text-slate-700 hover:bg-slate-50"
+                class="flex items-center gap-2 bg-white px-4 py-3 text-xs font-bold text-slate-700 transition-all hover:bg-slate-50"
                 style="border: 3px solid var(--aucto-border-mid)"
                 title="List view"
                 aria-pressed="false"
               >
                 <svg
-                  class="w-4 h-4"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -289,7 +289,7 @@
         <!-- LISTINGS GRID -->
         <div
           id="collection-cards-grid"
-          class="grid grid-cols-1 gap-6 mb-12 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          class="mb-12 grid grid-cols-1 gap-6 transition-all sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           <!-- Cards rendere by JavaScript -->
         </div>
@@ -301,7 +301,7 @@
 
         <!-- Help CTA -->
         <div
-          class="relative p-12 overflow-hidden text-center md:p-16"
+          class="relative overflow-hidden p-12 text-center md:p-16"
           style="background-color: #1e293b; border: 3px solid #334155"
         >
           <div class="relative z-10">
@@ -315,7 +315,7 @@
               "
             >
               <svg
-                class="w-3 h-3"
+                class="h-3 w-3"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -339,20 +339,20 @@
 
             <!-- Description -->
             <p
-              class="max-w-2xl mx-auto mb-8 text-base leading-relaxed text-slate-300"
+              class="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-slate-300"
             >
               Set up personalized alerts for specific items, or reach out to our
               team for expert recommendations tailored to your interests.
             </p>
 
             <!-- Buttons -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
+            <div class="mb-12 flex flex-wrap justify-center gap-3">
               <button
-                class="flex items-center gap-2 px-8 py-3 text-sm font-bold tracking-wide transition-all bg-white text-slate-900 hover:bg-slate-100"
+                class="flex items-center gap-2 bg-white px-8 py-3 text-sm font-bold tracking-wide text-slate-900 transition-all hover:bg-slate-100"
                 style="border: 3px solid var(--aucto-border-mid)"
               >
                 <svg
-                  class="w-4 h-4"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -367,11 +367,11 @@
                 Create Alert
               </button>
               <button
-                class="flex items-center gap-2 px-8 py-3 text-sm font-bold tracking-wide text-white transition-all bg-slate-800 hover:bg-slate-700"
+                class="flex items-center gap-2 bg-slate-800 px-8 py-3 text-sm font-bold tracking-wide text-white transition-all hover:bg-slate-700"
                 style="border: 3px solid var(--aucto-border-mid)"
               >
                 <svg
-                  class="w-4 h-4"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -394,19 +394,19 @@
             >
               <div>
                 <div class="mb-1 text-2xl font-bold text-white">&lt; 2min</div>
-                <div class="text-xs tracking-wider uppercase text-slate-400">
+                <div class="text-xs uppercase tracking-wider text-slate-400">
                   AVG RESPONSE TIME
                 </div>
               </div>
               <div>
                 <div class="mb-1 text-2xl font-bold text-white">24/7</div>
-                <div class="text-xs tracking-wider uppercase text-slate-400">
+                <div class="text-xs uppercase tracking-wider text-slate-400">
                   SUPPORT AVAILABLE
                 </div>
               </div>
               <div>
                 <div class="mb-1 text-2xl font-bold text-white">98%</div>
-                <div class="text-xs tracking-wider uppercase text-slate-400">
+                <div class="text-xs uppercase tracking-wider text-slate-400">
                   SATISFACTION RATE
                 </div>
               </div>
