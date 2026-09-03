@@ -11,6 +11,13 @@ import { getListing, updateListing, deleteListing } from '../api/listings';
 import { toast } from '../components/Toast';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
+import {
+  formatMediaUrls,
+  formatTags,
+  parseMediaUrls,
+  parseTags,
+  toDateTimeLocal,
+} from '../utils/listingForm';
 import type { Listing, UpdateListingData } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
 
@@ -18,7 +25,7 @@ let currentListing: Listing | null = null;
 
 export async function initListingEditPage(): Promise<void> {
   // Render header and footer
-  await renderHeader();
+  renderHeader();
   renderFooter();
 
   // Check authentication first
@@ -84,15 +91,12 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
   const container = document.getElementById('edit-listing-content');
   if (!container) return;
 
-  // Format the end date for datetime-local input
   const endsAt = new Date(listing.endsAt);
-  const formattedDate = endsAt.toISOString().slice(0, 16);
+  const endsAtIsValid = !Number.isNaN(endsAt.getTime());
+  const formattedDate = toDateTimeLocal(endsAt);
 
-  // Extract image URLs from media array
-  const imageUrls = listing.media?.map((m) => m.url).join('\n') || '';
-
-  // Extract tags
-  const tags = listing.tags?.join(', ') || '';
+  const imageUrls = formatMediaUrls(listing.media);
+  const tags = formatTags(listing.tags);
 
   container.innerHTML = `
     <div class="bg-white p-10" style="border: 3px solid var(--aucto-border-dark)">
@@ -216,16 +220,20 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
               for="endDate"
               class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
             >
-              End date *
+              End date
             </label>
             <input
               type="datetime-local"
               id="endDate"
               name="endsAt"
               value="${formattedDate}"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-              required
+              class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
+              readonly
+              aria-describedby="endDateHint"
             />
+            <p id="endDateHint" class="mt-2 text-xs text-slate-500">
+              Fixed when the listing was published and cannot be changed.
+            </p>
           </div>
 
           <!-- SAVE BUTTON -->
@@ -291,13 +299,17 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                 Ends
               </p>
               <p id="previewEndDate" class="text-sm text-slate-700 mt-1">
-                ${endsAt.toLocaleString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                  hour: 'numeric',
-                  minute: '2-digit',
-                })}
+                ${
+                  endsAtIsValid
+                    ? endsAt.toLocaleString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                      })
+                    : 'No end date set'
+                }
               </p>
             </div>
           </div>
@@ -391,44 +403,28 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       'imageUrls'
     ) as HTMLTextAreaElement;
     const tagsInput = document.getElementById('tags') as HTMLInputElement;
-    const endDateInput = document.getElementById('endDate') as HTMLInputElement;
 
-    // Validate form
-    if (
-      !titleInput.value.trim() ||
-      !descriptionInput.value.trim() ||
-      !endDateInput.value
-    ) {
+    // The end date is not here:
+    //  PUT /auction/listings/<id> has no endsAt, so the field is read-only and there is nothing for the user to fill in or for us to send.
+    if (!titleInput.value.trim() || !descriptionInput.value.trim()) {
       toast.error('Please fill in all required fields');
       return;
     }
 
-    // Parse image URLs
-    const imageUrls = imageUrlsInput.value
-      .split('\n')
-      .map((url) => url.trim())
-      .filter((url) => url !== '');
+    const imageUrls = parseMediaUrls(imageUrlsInput.value);
+    const tags = parseTags(tagsInput.value);
 
-    // Parse tags
-    const tags = tagsInput.value
-      .split(',')
-      .map((tag) => tag.trim())
-      .filter((tag) => tag !== '');
-
-    // Prepare update data
+    // tags is sent even when empty, so clearing the field removes them.
+    // Omitting it on empty made the old ones survive the save and reappear on reload.
     const updateData: UpdateListingData = {
       description: descriptionInput.value.trim(),
       media: imageUrls.map((url) => ({ url, alt: titleInput.value })),
+      tags,
     };
 
     // Only include title if listing has no bids
     if (!hasBids) {
       updateData.title = titleInput.value.trim();
-    }
-
-    // Only include tags if they exist
-    if (tags.length > 0) {
-      updateData.tags = tags;
     }
 
     try {
@@ -470,10 +466,9 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
 }
 
 function initializePreview(): void {
-  initListingFormPreview({
-    mediaInputId: 'imageUrls',
-    endDateInputId: 'endDate',
-  });
+  // No endDateInputId: the end date is read-only now, so it never fires `input` and the preview's listener for it could never run.
+  // #previewEndDate is painted at render time.
+  initListingFormPreview({ mediaInputId: 'imageUrls' });
 }
 
 function initializeDeleteModal(listingId: string): void {

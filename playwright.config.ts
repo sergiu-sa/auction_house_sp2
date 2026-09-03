@@ -25,6 +25,15 @@ export default defineConfig<TestOptions>({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
 
+    /*
+     * The frozen clock (FROZEN_AT) fixes *when* the pages think it is; this fixes *where*.
+     * Without it every render that formats an absolute local time, the edit form's datetime-local value, formatDate's output;
+     *   depends on the machine's zone, so the same assertion passes locally and fails on a UTC runner.
+     * Europe/Oslo because that is the zone the baselines were captured in;
+     *  the point is that it is now stated rather than inherited.
+     */
+    timezoneId: 'Europe/Oslo',
+
     // E2E_OFFLINE=1 blackholes every host but localhost.
     // Routing happens before DNS, so a green run under it proves the mocking is complete.
     launchOptions: process.env.E2E_OFFLINE

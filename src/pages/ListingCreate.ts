@@ -10,11 +10,16 @@ import { protectedRoute } from '../utils/auth';
 import { toast } from '../components/Toast';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
+import {
+  parseMediaUrls,
+  parseTags,
+  toDateTimeLocal,
+} from '../utils/listingForm';
 import type { CreateListingData } from '../types/api';
 
-export async function initListingCreatePage(): Promise<void> {
+export function initListingCreatePage(): void {
   // Render header and footer
-  await renderHeader();
+  renderHeader();
   renderFooter();
 
   // Check if user is logged in and redirect if not
@@ -231,7 +236,7 @@ function initFormHandlers(): void {
   if (endDateInput) {
     const minDate = new Date();
     minDate.setHours(minDate.getHours() + 1);
-    endDateInput.min = minDate.toISOString().slice(0, 16);
+    endDateInput.min = toDateTimeLocal(minDate);
   }
 
   initListingFormPreview({ mediaInputId: 'media', endDateInputId: 'endsAt' });
@@ -261,18 +266,10 @@ async function handleFormSubmit(event: Event): Promise<void> {
     const formData = new FormData(form);
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
-    const mediaUrls = (formData.get('media') as string)
-      .split('\n')
-      .map((url) => url.trim())
-      .filter((url) => url !== '')
-      .map((url) => ({ url, alt: '' }));
-    const tagsInput = formData.get('tags') as string;
-    const tags = tagsInput
-      ? tagsInput
-          .split(',')
-          .map((tag) => tag.trim())
-          .filter((tag) => tag !== '')
-      : [];
+    const mediaUrls = parseMediaUrls(formData.get('media') as string).map(
+      (url) => ({ url, alt: '' })
+    );
+    const tags = parseTags(formData.get('tags') as string);
     const endsAt = new Date(formData.get('endsAt') as string).toISOString();
 
     // Validate end date
