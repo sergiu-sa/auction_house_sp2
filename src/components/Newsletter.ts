@@ -9,9 +9,9 @@ export function renderNewsletter(): string {
           Never Miss
         </span>
       </div>
-      <h3 class="mb-6 text-4xl font-bold text-white">
+      <h2 class="mb-6 text-4xl font-bold text-white">
         Get notified of new premium lots
-      </h3>
+      </h2>
       <p class="mb-8 max-w-2xl text-sm leading-relaxed text-slate-300">
         Join 8,921 collectors receiving weekly curated auction alerts.
       </p>
