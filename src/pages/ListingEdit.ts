@@ -562,9 +562,9 @@ function showError(message: string): void {
     <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
       <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
-      <p class="text-slate-600 mb-4">${message}</p>
+      <p class="text-slate-600 mb-4">${escapeHtml(message)}</p>
       <button
-        onclick="window.history.back()"
+        data-error-back
         class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
         style="border: 2px solid var(--aucto-border-dark)"
       >
@@ -572,6 +572,10 @@ function showError(message: string): void {
       </button>
     </div>
   `;
+
+  container
+    .querySelector('[data-error-back]')
+    ?.addEventListener('click', () => window.history.back());
 }
 
 // Initialize when DOM is ready

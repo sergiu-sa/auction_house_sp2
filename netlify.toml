@@ -17,25 +17,30 @@
     Referrer-Policy = "no-referrer"
     X-XSS-Protection = "1; mode=block"
 
-    # script-src has to keep 'unsafe-inline': every page loads its stylesheets with media="print" onload="this.media='all'", and CSP cannot allow an inline event handler by hash or nonce.
-    # Drop it and the site renders with no icons and no display face.
-    # So this policy is NOT an XSS backstop; object-src, base-uri, form-action, frame-ancestors and connect-src are what it actually buys. 
+    # cdnjs is gone from both policies: the icon font is subsetted and self-hosted, so nothing loads from it.
+    #
+    # script-src still has to keep 'unsafe-inline', but for one reason now instead of two.
+    # Self-hosting the icons removed 8 of the 17 inline onload="this.media='all'" handlers — Font Awesome's, one per page.
+    # The 9 that remain are all Google Fonts, one per page plus 404.html, and CSP cannot allow an inline event handler by hash or nonce.
+    # Drop it before those go and every page renders with no display face.
+    # So this policy is still NOT an XSS backstop; object-src, base-uri, form-action, frame-ancestors and connect-src are what it actually buys.
     # Escaping is the defence.
     #
-    # style-src is the same story for 165 inline style="" attributes, which hashes do not cover either.
+    # style-src is the same story for 163 inline style="" attributes, which hashes do not cover either.
     #
     # img-src cannot be allowlisted at all: listing media are arbitrary user-supplied URLs.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
     # Same policy, but with the script-src we actually want, reporting only.
-    # Every violation it logs is an inline handler that has to go before the enforced policy above can drop 'unsafe-inline' from script-src.
-    # Read them in the browser console on a deploy preview.
+    # It should now report exactly one violation per page — the Google Fonts handler — where it used to report two.
+    # That count going to zero is what lets the enforced policy above drop 'unsafe-inline' from script-src.
+    # Read them in the browser console on a deploy preview, with info-level messages shown: report-only violations are logged at info, so an error-and-warning filter shows nothing and looks like a pass.
     #
     # style-src deliberately keeps 'unsafe-inline' here too.
-    # Tightening it as well reports ~230 violations per page instead of 2;
+    # Tightening it as well reports ~230 violations per page instead of 1;
     # — one for every inline style attribute, all of them known and none of them going anywhere;
     # — and an instrument nobody can read is an instrument nobody uses.
-    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 [[headers]]
   for = "/*.js"
@@ -54,6 +59,14 @@
 
 [[headers]]
   for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# The icon font is self-hosted and content-hashed, so it is immutable by construction.
+# Without this it matches no rule above and falls through to /*, which sets no Cache-Control at all —
+# and Netlify then revalidates it on every navigation, which would undo most of the point of self-hosting it.
+[[headers]]
+  for = "/*.woff2"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 

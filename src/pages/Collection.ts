@@ -10,6 +10,7 @@ import { renderPagination } from '../components/PaginationComponent';
 import { activeStats, catalogPage } from '../api/listingQueries';
 import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
+import { escapeHtml } from '../utils/escapeHtml';
 import type { Listing } from '../types/api';
 
 const catalogManager = new CatalogStateManager(
@@ -280,9 +281,9 @@ function showError(message: string): void {
     <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid var(--aucto-border-dark)">
       <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
-      <p class="text-slate-600 mb-4">${message}</p>
+      <p class="text-slate-600 mb-4">${escapeHtml(message)}</p>
       <button
-        onclick="window.location.reload()"
+        data-error-reload
         class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
         style="border: 2px solid var(--aucto-border-dark)"
       >
@@ -290,6 +291,10 @@ function showError(message: string): void {
       </button>
     </div>
   `;
+
+  container
+    .querySelector('[data-error-reload]')
+    ?.addEventListener('click', () => window.location.reload());
 }
 
 // Initialize when DOM is ready

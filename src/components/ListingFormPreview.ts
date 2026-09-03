@@ -10,6 +10,7 @@
  */
 
 import { escapeHtml } from '../utils/escapeHtml';
+import { initImageFallbacks } from '../utils/imageFallback';
 
 export interface ListingFormPreviewOptions {
   /** ID of the textarea holding newline-separated image URLs. */
@@ -88,6 +89,9 @@ export function initListingFormPreview(
       }
 
       mainPreview.innerHTML = renderMainPreviewImage(urls[0]);
+      initImageFallbacks(mainPreview, (img) =>
+        replaceWithBrokenImageNotice(img, 'main')
+      );
 
       if (urls.length > 1) {
         showAdditional(additionalImages);
@@ -95,6 +99,9 @@ export function initListingFormPreview(
           .slice(1, 4)
           .map((url, index) => renderAdditionalImage(url, index))
           .join('');
+        initImageFallbacks(additionalImages, (img) =>
+          replaceWithBrokenImageNotice(img, 'thumb')
+        );
       } else {
         hideAdditional(additionalImages);
       }
@@ -124,9 +131,45 @@ function renderMainPreviewImage(url: string): string {
       loading="lazy"
       decoding="async"
       referrerpolicy="no-referrer"
-      onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-slate-400\\'><div class=\\'text-center\\'><i class=\\'fa-solid fa-circle-xmark text-6xl mb-2 block text-red-500\\'></i><p class=\\'text-sm\\'>Invalid image URL</p></div></div>'"
+      data-fallback
     />
   `;
+}
+
+/**
+ * The URL here is whatever the author has typed so far, so most keystrokes produce a broken image.
+ * Built as DOM nodes rather than as an innerHTML string:
+ *   the markup this replaced carried its own hand-escaped quotes inside an inline handler, which is the shape F-034 was filed for.
+ */
+function replaceWithBrokenImageNotice(
+  img: HTMLImageElement,
+  size: 'main' | 'thumb'
+): void {
+  const parent = img.parentElement;
+  if (!parent) return;
+
+  const box = document.createElement('div');
+  box.className =
+    size === 'main'
+      ? 'w-full h-full flex flex-col items-center justify-center text-center text-slate-400'
+      : 'w-full h-24 flex items-center justify-center bg-slate-200 text-slate-400';
+
+  const icon = document.createElement('i');
+  icon.className =
+    size === 'main'
+      ? 'fa-solid fa-circle-xmark text-6xl mb-2 block text-red-500'
+      : 'fa-solid fa-circle-xmark text-red-500';
+  icon.setAttribute('aria-hidden', 'true');
+  box.append(icon);
+
+  if (size === 'main') {
+    const label = document.createElement('p');
+    label.className = 'text-sm';
+    label.textContent = 'Invalid image URL';
+    box.append(label);
+  }
+
+  parent.replaceChildren(box);
 }
 
 function renderAdditionalImage(url: string, index: number): string {
@@ -139,7 +182,7 @@ function renderAdditionalImage(url: string, index: number): string {
         loading="lazy"
         decoding="async"
         referrerpolicy="no-referrer"
-        onerror="this.parentElement.innerHTML='<div class=\\'w-full h-24 flex items-center justify-center bg-slate-200 text-slate-400\\'><i class=\\'fa-solid fa-circle-xmark text-red-500\\'></i></div>'"
+        data-fallback
       />
     </div>
   `;

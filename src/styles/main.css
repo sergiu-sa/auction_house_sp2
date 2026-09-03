@@ -1,5 +1,19 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
+
+/*
+ * Imported rather than <link>ed so Vite fingerprints both this and the woff2 it references.
+ * A stable filename under public/ would inherit netlify.toml's `max-age=31536000, immutable` on /*.css and pin a stale icon set for a year after the next regeneration.
+ * It also means no extra request:
+ * these rules land in the stylesheet every page already blocks on.
+ *
+ * Before the utilities, and that position is load-bearing.
+ * Font Awesome used to arrive as its own <link>, and Vite injects this stylesheet after it, so Tailwind's text-size utilities have always won the line-height on any icon carrying one while Font Awesome's line-height:1 applied to the rest.
+ * Importing after the utilities inverts that and shrinks every sized icon;
+ *   20px to 14px at text-sm — which moved 106 elements on the home page.
+ */
+@import './icons.css';
+
 @import 'tailwindcss/utilities';
 
 /*
