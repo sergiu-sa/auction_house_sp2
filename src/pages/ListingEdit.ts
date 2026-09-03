@@ -262,6 +262,9 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                 src="${escapeHtml(listing.media[0].url)}"
                 class="w-full h-full object-cover"
                 alt="Preview"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
               />
             `
                 : `
@@ -311,6 +314,9 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                   src="${escapeHtml(media.url)}"
                   class="w-full h-24 object-cover"
                   alt="Additional preview"
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
                 />
               </div>
             `
