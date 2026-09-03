@@ -25,33 +25,32 @@
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1e293b" />
 
+    <!-- Display faces, self-hosted and same-origin.
+         The stylesheet declaring them is render-blocking, so without a preload
+         the request cannot start until that CSS has parsed.
+         crossorigin is required even same-origin: fonts load in CORS mode.
+         Only the latin faces: preloading latin-ext would defeat its unicode-range. -->
+    <link
+      rel="preload"
+      href="/fonts/cormorant-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/source-sans-3-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <!-- Tailwind CSS -->
     <link rel="preload" href="/src/styles/main.css" as="style" />
     <link rel="stylesheet" href="/src/styles/main.css" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/icon_only_v2.svg" />
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
   </head>
   <body class="bg-aucto-bg antialiased" data-page-type="auth">
     <!-- Skip Navigation Link -->

@@ -7,6 +7,7 @@ export declare const OUT_CSS: string;
 export declare const OUT_FONT: string;
 export declare const OUT_MANIFEST: string;
 export declare const NON_ICON_CLASSES: Set<string>;
+export declare const SCAN_FILES: string[];
 
 export declare function sourceFiles(): string[];
 export declare function scanIconUsage(): Map<string, string[]>;

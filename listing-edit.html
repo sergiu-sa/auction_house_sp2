@@ -25,35 +25,34 @@
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1e293b" />
 
+    <!-- Display faces, self-hosted and same-origin.
+         The stylesheet declaring them is render-blocking, so without a preload
+         the request cannot start until that CSS has parsed.
+         crossorigin is required even same-origin: fonts load in CORS mode.
+         Only the latin faces: preloading latin-ext would defeat its unicode-range. -->
+    <link
+      rel="preload"
+      href="/fonts/cormorant-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/source-sans-3-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <!-- Tailwind CSS -->
     <link rel="preload" href="/src/styles/main.css" as="style" />
     <link rel="stylesheet" href="/src/styles/main.css" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/icon_only_v2.svg" />
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
   </head>
-  <body class="bg-aucto-bg antialiased" data-page-type="user-content">
+  <body class="antialiased bg-aucto-bg" data-page-type="user-content">
     <!-- Skip Navigation Link -->
     <a
       href="#main-content"
@@ -67,7 +66,7 @@
 
     <!-- Main Content -->
     <main id="main-content" tabindex="-1">
-      <section class="mx-auto max-w-7xl px-6 py-14 md:px-8">
+      <section class="px-6 mx-auto max-w-7xl py-14 md:px-8">
         <!-- Breadcrumbs (rendered by JavaScript) -->
         <div id="breadcrumb-nav" class="mb-6"></div>
 
@@ -77,7 +76,7 @@
           <div class="flex items-center justify-center py-20">
             <div class="text-center">
               <i
-                class="fa-solid fa-spinner fa-spin mb-4 text-4xl text-slate-400"
+                class="mb-4 text-4xl fa-solid fa-spinner fa-spin text-slate-400"
                 aria-hidden="true"
               ></i>
               <p class="text-slate-600">Loading listing...</p>
@@ -93,19 +92,19 @@
     <!-- Delete Confirmation Modal -->
     <div
       id="deleteModal"
-      class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 px-4"
+      class="fixed inset-0 z-50 items-center justify-center hidden px-4 bg-black bg-opacity-50"
       role="dialog"
       aria-modal="true"
       aria-labelledby="deleteModalTitle"
       aria-describedby="deleteModalDescription"
     >
       <div
-        class="w-full max-w-md bg-white p-8"
+        class="w-full max-w-md p-8 bg-white"
         style="border: 3px solid var(--aucto-border-dark)"
       >
-        <div class="mb-6 flex items-center gap-3">
+        <div class="flex items-center gap-3 mb-6">
           <i
-            class="fa-solid fa-triangle-exclamation text-3xl text-red-600"
+            class="text-3xl text-red-600 fa-solid fa-triangle-exclamation"
             aria-hidden="true"
           ></i>
           <h2 id="deleteModalTitle" class="text-2xl font-bold text-slate-900">
@@ -118,7 +117,7 @@
           is permanent and cannot be undone.
         </p>
 
-        <div class="mb-6 border-2 border-red-300 bg-red-50 p-4">
+        <div class="p-4 mb-6 border-2 border-red-300 bg-red-50">
           <p class="text-sm text-red-800">
             <strong>This will:</strong><br />
             • Remove the listing permanently<br />

@@ -14,6 +14,10 @@
  */
 @import './icons.css';
 
+/* Same reasoning, and the same position: before the utilities, so nothing here outranks a
+   Tailwind class a component actually carries. */
+@import './fonts.css';
+
 @import 'tailwindcss/utilities';
 
 /*

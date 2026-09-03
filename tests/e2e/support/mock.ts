@@ -6,7 +6,6 @@ import type { Page, Route, Request } from '@playwright/test';
 
 // From the repo root: avoids __dirname/import.meta ambiguity in an ESM package.
 const FIXTURES = join(process.cwd(), 'tests', 'e2e', 'fixtures');
-const ASSETS = join(process.cwd(), 'tests', 'e2e', 'assets');
 
 /**
  * When the fixtures were recorded.
@@ -85,12 +84,6 @@ export async function installMocks(
     const url = request.url();
     if (LOCAL.test(url)) return route.continue();
 
-    const path = new URL(url).pathname;
-
-    // Vendored assets, referenced relatively from the stylesheets below.
-    if (path.startsWith('/e2e-assets/'))
-      return serveAsset(route, path.slice('/e2e-assets/'.length));
-
     if (request.resourceType() === 'image') {
       return route.fulfill({
         status: 200,
@@ -110,23 +103,12 @@ export async function installMocks(
     return route.fulfill({ status: 200, contentType: 'text/plain', body: '' });
   });
 
-  await page.route('**/fonts.googleapis.com/**', (route) =>
-    route.fulfill({
-      status: 200,
-      contentType: 'text/css',
-      body: readFileSync(join(ASSETS, 'gf-latin.css')),
-    })
-  );
-
-  // No cdnjs route: the icon font is self-hosted and same-origin, so the preview server serves it.
-  // `fa-all.min.css` and `fa-solid-900.woff2` stay in ASSETS;
+  // No font or stylesheet routes at all any more.
+  // The icon font and both display faces are self-hosted and same-origin, so the preview server serves them and the catch-all above never sees them.
+  // A request to cdnjs or fonts.googleapis.com would now land in `unexpected` and fail the test, which is the assertion we want.
+  //
+  // `fa-all.min.css` and `fa-solid-900.woff2` stay in tests/e2e/assets but are never served:
   //   they are what scripts/build-icon-font.mjs subsets and what tests/icons.test.ts resolves names against.
-
-  // After the host handlers so it wins for them:
-  //  the stylesheets reference these relatively, so requests land on cdnjs/gstatic rather than our own origin.
-  await page.route('**/e2e-assets/**', (route, request) =>
-    serveAsset(route, new URL(request.url()).pathname.split('/e2e-assets/')[1])
-  );
 
   const api = (route: Route, request: Request): Promise<void> => {
     if (request.method() !== 'GET') {
@@ -142,21 +124,6 @@ export async function installMocks(
   await page.route('**/auction/**', api);
 
   return controller;
-}
-
-function serveAsset(route: Route, file: string): Promise<void> {
-  const contentType = file.endsWith('.css') ? 'text/css' : 'font/woff2';
-  try {
-    return route.fulfill({
-      status: 200,
-      contentType,
-      body: readFileSync(join(ASSETS, file)),
-    });
-  } catch {
-    // FA references faces we did not vendor.
-    // An empty 200 is silent; abort is not.
-    return route.fulfill({ status: 200, contentType, body: Buffer.alloc(0) });
-  }
 }
 
 function ok(route: Route, body: unknown): Promise<void> {

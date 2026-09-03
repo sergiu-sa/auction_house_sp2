@@ -15,32 +15,22 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer"
-    X-XSS-Protection = "1; mode=block"
+    # X-XSS-Protection is deliberately absent: every current browser ignores it, and its
+    # filtering mode was itself exploitable. Content-Security-Policy is what does this job.
 
-    # cdnjs is gone from both policies: the icon font is subsetted and self-hosted, so nothing loads from it.
+    # script-src is 'self' with no escape hatch, which is the point of the whole exercise.
+    # Reaching it took removing all 17 inline onload="this.media='all'" handlers: 8 with the icon font, 9 with these two display faces.
+    # CSP cannot allow an inline event handler by hash or nonce, so while any remained this policy could not be an XSS backstop, only a set of narrower closures.
+    # It now blocks inline script. Escaping is still the primary defence and this is the second line, not a replacement for it.
     #
-    # script-src still has to keep 'unsafe-inline', but for one reason now instead of two.
-    # Self-hosting the icons removed 8 of the 17 inline onload="this.media='all'" handlers — Font Awesome's, one per page.
-    # The 9 that remain are all Google Fonts, one per page plus 404.html, and CSP cannot allow an inline event handler by hash or nonce.
-    # Drop it before those go and every page renders with no display face.
-    # So this policy is still NOT an XSS backstop; object-src, base-uri, form-action, frame-ancestors and connect-src are what it actually buys.
-    # Escaping is the defence.
+    # Nothing is loaded from a third-party origin any more: the icon font, both display faces, every script and every stylesheet are same-origin.
+    # The only cross-origin thing left is the API, in connect-src, and listing images, which cannot be allowlisted because they are arbitrary user-supplied URLs (F-022).
     #
-    # style-src is the same story for 163 inline style="" attributes, which hashes do not cover either.
-    #
-    # img-src cannot be allowlisted at all: listing media are arbitrary user-supplied URLs.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    # style-src keeps 'unsafe-inline' for 163 inline style="" attributes, which hashes do not cover — that is style-src-attr, and removing them would change pixels for no gain the escaping layer does not already provide.
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
-    # Same policy, but with the script-src we actually want, reporting only.
-    # It should now report exactly one violation per page — the Google Fonts handler — where it used to report two.
-    # That count going to zero is what lets the enforced policy above drop 'unsafe-inline' from script-src.
-    # Read them in the browser console on a deploy preview, with info-level messages shown: report-only violations are logged at info, so an error-and-warning filter shows nothing and looks like a pass.
-    #
-    # style-src deliberately keeps 'unsafe-inline' here too.
-    # Tightening it as well reports ~230 violations per page instead of 1;
-    # — one for every inline style attribute, all of them known and none of them going anywhere;
-    # — and an instrument nobody can read is an instrument nobody uses.
-    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://v2.api.noroff.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    # The report-only policy is gone: it existed to count the inline handlers standing between us and script-src 'self', and that count is now zero.
+    # Reintroduce one only to stage a specific tightening — style-src is the obvious candidate — and delete it again once that lands.
 
 [[headers]]
   for = "/*.js"
@@ -62,9 +52,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# The icon font is self-hosted and content-hashed, so it is immutable by construction.
-# Without this it matches no rule above and falls through to /*, which sets no Cache-Control at all —
-# and Netlify then revalidates it on every navigation, which would undo most of the point of self-hosting it.
+# Without this, every woff2 matches no rule above and falls through to /*, which sets no Cache-Control at all —
+# Netlify then revalidates on every navigation, undoing most of the point of self-hosting them.
+#
+# Two kinds of file land here and only one is immutable by construction.
+# src/styles/fonts/aucto-icons.woff2 is generated and content-hashed by Vite, so a new subset gets a new URL.
+# public/fonts/*.woff2 are vendored releases under stable names: re-vendoring one under the same name serves the stale face for up to a year.
+# If you replace one, change its filename.
 [[headers]]
   for = "/*.woff2"
   [headers.values]
