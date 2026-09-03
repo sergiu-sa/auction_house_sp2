@@ -36,7 +36,7 @@ export function renderSearchField(config: SearchFieldConfig): string {
         class="${inputClasses}"
         style="border: 2px solid var(--aucto-border-mid)"
       />
-      <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
+      <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
     </div>
   `;
 }

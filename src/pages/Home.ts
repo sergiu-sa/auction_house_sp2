@@ -394,7 +394,7 @@ function showErrorInSections(): void {
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Failed to Load</h3>
       <p class="text-slate-600 mb-4">Unable to fetch auction listings. Please try again later.</p>
       <button
-        onclick="window.location.reload()"
+        data-error-reload
         class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
         style="border: 2px solid var(--aucto-border-dark)"
       >
@@ -406,7 +406,12 @@ function showErrorInSections(): void {
   const sections = ['hero-mosaic', 'trending-cards', 'new-listings-cards'];
   sections.forEach((id) => {
     const element = document.getElementById(id);
-    if (element) element.innerHTML = errorHTML;
+    if (!element) return;
+    element.innerHTML = errorHTML;
+    // Per element, not by id: the same markup goes into all three sections.
+    element
+      .querySelector('[data-error-reload]')
+      ?.addEventListener('click', () => window.location.reload());
   });
 }
 

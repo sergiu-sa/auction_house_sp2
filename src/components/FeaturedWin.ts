@@ -5,6 +5,7 @@ import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import { highestBid } from '../utils/biddingStats';
 import { escapeHtml } from '../utils/escapeHtml';
+import { initImageFallbacks } from '../utils/imageFallback';
 
 export interface FeaturedWinData {
   lotNumber: string;
@@ -102,7 +103,7 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
                 decoding="async"
                 referrerpolicy="no-referrer"
                 style="border: 2px solid #475569"
-                onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                data-fallback
               />
               <div class="h-10 w-10 bg-slate-700 items-center justify-center text-white font-bold text-sm hidden" style="border: 2px solid #475569; display: none;">
                 ${escapeHtml(data.winner.username.charAt(0).toUpperCase())}
@@ -221,4 +222,11 @@ export async function initFeaturedWin(): Promise<void> {
   }
 
   container.innerHTML = renderFeaturedWin(data);
+
+  // The avatar's initial-letter substitute is the sibling already sitting behind it.
+  initImageFallbacks(container, (img) => {
+    img.style.display = 'none';
+    const initial = img.nextElementSibling;
+    if (initial instanceof HTMLElement) initial.style.display = 'flex';
+  });
 }

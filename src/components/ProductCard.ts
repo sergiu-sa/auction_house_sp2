@@ -43,7 +43,7 @@ export function createProductCard(listing: Listing): string {
 
     if (bids.length === 0) {
       return `
-        <i class="fa-solid fa-sparkles text-green-700 text-sm" aria-hidden="true"></i>
+        <i class="fa-solid fa-wand-magic-sparkles text-green-700 text-sm" aria-hidden="true"></i>
         <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-green-700">New</span>
       `;
     }

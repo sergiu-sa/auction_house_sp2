@@ -118,21 +118,9 @@ export async function installMocks(
     })
   );
 
-  // The Font Awesome stylesheet pulls its webfonts from cdnjs, and six pages preload the solid face.
-  await page.route('**/cdnjs.cloudflare.com/**/webfonts/*', (route, request) =>
-    serveAsset(
-      route,
-      new URL(request.url()).pathname.split('/').pop() as string
-    )
-  );
-
-  await page.route('**/cdnjs.cloudflare.com/**/all.min.css', (route) =>
-    route.fulfill({
-      status: 200,
-      contentType: 'text/css',
-      body: readFileSync(join(ASSETS, 'fa-all.min.css')),
-    })
-  );
+  // No cdnjs route: the icon font is self-hosted and same-origin, so the preview server serves it.
+  // `fa-all.min.css` and `fa-solid-900.woff2` stay in ASSETS;
+  //   they are what scripts/build-icon-font.mjs subsets and what tests/icons.test.ts resolves names against.
 
   // After the host handlers so it wins for them:
   //  the stylesheets reference these relatively, so requests land on cdnjs/gstatic rather than our own origin.
