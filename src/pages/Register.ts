@@ -16,12 +16,14 @@ import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
 
-export async function initRegisterPage(): Promise<void> {
-  // Render header and footer
-  await renderHeader();
-  renderFooter();
+export function initRegisterPage(): void {
+  // Returns true once it has started the navigation.
+  // Stop there: a signed-in visitor should not pay for a navbar and a profile refresh on a page they are being sent away from.
+  if (redirectIfAuthenticated()) return;
 
-  redirectIfAuthenticated();
+  // Render header and footer
+  renderHeader();
+  renderFooter();
 
   // Get form element
   const form = document.getElementById('register-form') as HTMLFormElement;

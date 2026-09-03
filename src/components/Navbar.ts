@@ -98,7 +98,13 @@ function renderMobileNavLinks(isLoggedIn: boolean): string {
     .join('');
 }
 
-export async function renderHeader(): Promise<void> {
+/**
+ * Render the navbar from the stored user, and refresh the credit figure afterwards.
+ *
+ * It used to await the profile fetch, which every page then awaited before starting its own requests.
+ * `localStorage` already holds the name, avatar and credits this markup needs, and they are the values the last fetch wrote, so the fresh response usually paints the same number.
+ */
+export function renderHeader(): void {
   mountAnnouncer();
 
   const header = document.getElementById('header');
@@ -108,19 +114,11 @@ export async function renderHeader(): Promise<void> {
   const pageType = document.body.getAttribute('data-page-type') || 'browse';
 
   const isUserLoggedIn = isLoggedIn();
-  let user = getCurrentUser();
+  const user = getCurrentUser();
 
-  // Before the profile fetch below, not after it:
-  //   main.css reserves the header's height from this  attribute, and leaving it unset across a network round trip holds the page on the guest reservation and then collapses it, which is a bigger shift than the one being avoided.
+  // Before the markup below, not after it:
+  //   main.css reserves the header's height from this  attribute, and leaving it unset until the markup lands holds the page on the guest reservation and then collapses it, which is a bigger shift than the one being avoided.
   document.documentElement.dataset.auth = isUserLoggedIn ? 'in' : 'out';
-
-  // Fetch fresh user data if logged in to get updated credits (with cache)
-  if (isUserLoggedIn && user) {
-    const freshUser = await fetchFreshProfile();
-    if (freshUser) {
-      user = freshUser;
-    }
-  }
 
   // Render appropriate navbar variant based on page type
   let navbarHTML = '';
@@ -141,6 +139,25 @@ export async function renderHeader(): Promise<void> {
 
   // Initialize event listeners
   initHeaderEvents(pageType);
+
+  // Not on auth pages:
+  //  renderMinimalNavbar draws no credit figures, so the response would have nowhere to land.
+  if (isUserLoggedIn && user && pageType !== 'auth') {
+    void refreshHeaderCredits();
+  }
+}
+
+/**
+ * Repaint the credit figure once the server's number arrives, without holding up the page.
+ *
+ * Only credits:
+ *  the name cannot change and the avatar is written to storage by the page that edits it, so the synchronous render above already has both.
+ */
+async function refreshHeaderCredits(): Promise<void> {
+  const freshUser = await fetchFreshProfile();
+  if (freshUser) {
+    updateHeaderCredits(freshUser.credits || 0);
+  }
 }
 
 // Minimal navbar for auth pages (login, register)
@@ -570,6 +587,43 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
   `;
 }
 
+/**
+ * Close the desktop profile dropdown.
+ *
+ * The elements are looked up on every call rather than captured, because `renderHeader()`
+ * replaces the whole of `#header`
+ */
+function closeProfileMenu(returnFocus: boolean): void {
+  const btn = document.getElementById('profile-menu-btn');
+  const menu = document.getElementById('profile-dropdown-menu');
+  if (!btn || !menu || menu.classList.contains('hidden')) return;
+
+  menu.classList.add('hidden');
+  btn.setAttribute('aria-expanded', 'false');
+  document
+    .getElementById('profile-menu-chevron')
+    ?.classList.remove('rotate-180');
+
+  // Only on Escape. Doing it on an outside click would steal focus from whatever was clicked.
+  if (returnFocus) btn.focus();
+}
+
+// Document-level listeners are bound for the page's lifetime, not per render.
+//  ProfilePage calls renderHeader() again after a profile save, and binding these inside the init functions leaked one of each per call.
+let profileMenuDocumentEventsBound = false;
+let clearFiltersEventBound = false;
+
+function bindProfileMenuDocumentEvents(): void {
+  if (profileMenuDocumentEventsBound) return;
+  profileMenuDocumentEventsBound = true;
+
+  document.addEventListener('click', () => closeProfileMenu(false));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeProfileMenu(true);
+  });
+}
+
 function initHeaderEvents(pageType: string): void {
   // Mobile menu drawer
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -639,27 +693,8 @@ function initHeaderEvents(pageType: string): void {
       }
     });
 
-    const closeProfileMenu = (returnFocus: boolean): void => {
-      if (profileDropdownMenu.classList.contains('hidden')) return;
-
-      profileDropdownMenu.classList.add('hidden');
-      profileMenuBtn.setAttribute('aria-expanded', 'false');
-
-      // Reset chevron rotation
-      if (profileMenuChevron) {
-        profileMenuChevron.classList.remove('rotate-180');
-      }
-
-      // Only on Escape. Doing it on an outside click would steal focus from whatever was clicked.
-      if (returnFocus) profileMenuBtn.focus();
-    };
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', () => closeProfileMenu(false));
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeProfileMenu(true);
-    });
+    // Closes on an outside click and on Escape; bound once, outside this function.
+    bindProfileMenuDocumentEvents();
   }
 
   // Desktop logout button
@@ -684,9 +719,13 @@ function initHeaderEvents(pageType: string): void {
   }
 }
 
-/** Home is served from both `/` and `/index.html`; only matching one strands the search. */
-function isBrowsePage(): boolean {
-  const path = window.location.pathname;
+/**
+ * Whether `path` is a page that holds a catalog listener, so a search term can be applied in place instead of navigating.
+ *
+ * Home is served from both `/` and `/index.html`; matching only one of them strands the search.
+ * Takes the path rather than reading `location` so it can be tested without a stubbed browser.
+ */
+export function isBrowsePage(path: string): boolean {
   return (
     path === '/' ||
     path.endsWith('/index.html') ||
@@ -698,7 +737,7 @@ function isBrowsePage(): boolean {
  * A page with a catalog filters in place; anywhere else the term travels to the home catalog as `?q=`, which `Home.ts` reads on load.
  */
 function submitSearch(searchTerm: string): void {
-  if (isBrowsePage()) {
+  if (isBrowsePage(window.location.pathname)) {
     document.dispatchEvent(
       new CustomEvent('globalSearchInput', { detail: { query: searchTerm } })
     );
@@ -839,13 +878,22 @@ function initBrowsePageEvents(): void {
 
   // A page clearing its filters resets this bar back to its defaults.
   // These setters only touch the UI, so they cannot loop back into the page.
-  document.addEventListener('clearAllFilters', () => {
-    setActiveCategory('data-filter', 'all');
-    setActiveOnlyState('active-only-filter', false);
-    setSortValue('sort-filter-select', 'created', 'desc');
+  // Bound once, and the input is resolved inside the handler:
+  //  a re-render replaces it, so the one captured above would be detached by the time this fires.
+  if (!clearFiltersEventBound) {
+    clearFiltersEventBound = true;
 
-    if (globalSearchInput) {
-      globalSearchInput.value = '';
-    }
-  });
+    document.addEventListener('clearAllFilters', () => {
+      setActiveCategory('data-filter', 'all');
+      setActiveOnlyState('active-only-filter', false);
+      setSortValue('sort-filter-select', 'created', 'desc');
+
+      const searchInput = document.getElementById(
+        'global-search-input'
+      ) as HTMLInputElement | null;
+      if (searchInput) {
+        searchInput.value = '';
+      }
+    });
+  }
 }

@@ -12,6 +12,7 @@ import {
   isValidJwtShape,
   isValidUsername,
   evaluatePasswordStrength,
+  safeRedirectPath,
 } from './validation';
 
 describe('Email Validation', () => {
@@ -309,5 +310,74 @@ describe('Password Strength', () => {
 
   it('caps the score at five', () => {
     expect(evaluatePasswordStrength('Abcdefghijkl1!@#').strength).toBe(5);
+  });
+});
+
+describe('safeRedirectPath', () => {
+  it('keeps a same-origin path', () => {
+    expect(safeRedirectPath('/profile.html', '/index.html')).toBe(
+      '/profile.html'
+    );
+    expect(safeRedirectPath('/listing.html?id=abc&x=1', '/index.html')).toBe(
+      '/listing.html?id=abc&x=1'
+    );
+  });
+
+  it('falls back when there is nothing to honour', () => {
+    expect(safeRedirectPath(null, '/index.html')).toBe('/index.html');
+    expect(safeRedirectPath(undefined, '/index.html')).toBe('/index.html');
+    expect(safeRedirectPath('', '/index.html')).toBe('/index.html');
+  });
+
+  it('refuses another origin', () => {
+    expect(safeRedirectPath('https://evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+    expect(safeRedirectPath('http://evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+    // Protocol-relative, and the backslash form some parsers treat the same way.
+    expect(safeRedirectPath('//evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+    expect(safeRedirectPath('/\\evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+  });
+
+  // The bypass a prefix check misses: the URL parser strips ASCII tab and newline before
+  // parsing, so `/%09/evil.example` decodes to a string that starts with a single slash and
+  // is then parsed as the protocol-relative `//evil.example`.
+  it('refuses a path smuggling tab or newline past the leading slash', () => {
+    expect(safeRedirectPath('/\t/evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+    expect(safeRedirectPath('/\n/evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+    expect(safeRedirectPath('/\r/evil.example', '/index.html')).toBe(
+      '/index.html'
+    );
+  });
+
+  it('keeps an encoded slash as a path, since it never becomes a host', () => {
+    expect(safeRedirectPath('/%2f%2fevil.example', '/index.html')).toBe(
+      '/%2f%2fevil.example'
+    );
+  });
+
+  // The one that makes this more than an open redirect: assigning a javascript: URL to
+  // location.href runs it in this document, where localStorage.token is readable. The CSP
+  // blocks it in production; the dev server sends no CSP header.
+  it('refuses a javascript: URL', () => {
+    expect(safeRedirectPath('javascript:alert(1)', '/index.html')).toBe(
+      '/index.html'
+    );
+    expect(safeRedirectPath('JaVaScRiPt:alert(1)', '/index.html')).toBe(
+      '/index.html'
+    );
+    expect(safeRedirectPath('data:text/html,<script>', '/index.html')).toBe(
+      '/index.html'
+    );
   });
 });

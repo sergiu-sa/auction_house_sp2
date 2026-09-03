@@ -44,7 +44,7 @@ let countdownInterval: number | null = null;
 
 async function init() {
   // Render header and footer
-  await renderHeader();
+  renderHeader();
   renderFooter();
 
   // Get listing ID from URL
@@ -126,7 +126,7 @@ function showError(message: string) {
           <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
             <i class="fa-solid fa-exclamation-triangle text-4xl text-red-700 mb-4" aria-hidden="true"></i>
             <h1 class="text-2xl font-bold text-slate-900 mb-2">Error</h1>
-            <p class="text-slate-600">${message}</p>
+            <p class="text-slate-600">${escapeHtml(message)}</p>
             <a href="/index.html" class="inline-block mt-6 bg-slate-900 px-6 py-3 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800">
               Back to Listings
             </a>

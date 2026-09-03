@@ -5,6 +5,7 @@ import {
   showFieldError,
   clearFieldError,
   clearFormErrors,
+  safeRedirectPath,
 } from '../utils/validation';
 import { toast } from '../components/Toast';
 import { renderHeader } from '../components/Navbar';
@@ -13,13 +14,14 @@ import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
 
-export async function initLoginPage(): Promise<void> {
-  // Render header and footer
-  await renderHeader();
-  renderFooter();
+export function initLoginPage(): void {
+  // Returns true once it has started the navigation.
+  // Stop there: a signed-in visitor should not pay for a navbar and a profile refresh on a page they are being sent away from.
+  if (redirectIfAuthenticated()) return;
 
-  // Redirect if already authenticated
-  redirectIfAuthenticated();
+  // Render header and footer
+  renderHeader();
+  renderFooter();
 
   // Get form element
   const form = document.getElementById('login-form') as HTMLFormElement;
@@ -141,8 +143,10 @@ async function handleLoginSubmit(e: Event): Promise<void> {
     // Redirect after short delay
     setTimeout(() => {
       const urlParams = new URLSearchParams(window.location.search);
-      const redirect = urlParams.get('redirect') || '/index.html';
-      window.location.href = redirect;
+      window.location.href = safeRedirectPath(
+        urlParams.get('redirect'),
+        '/index.html'
+      );
     }, 1000);
   } catch (error) {
     logError('Login failed', error);
