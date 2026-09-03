@@ -56,6 +56,16 @@ describe('profile paths encode the username', () => {
   it('leaves an ordinary username readable', async () => {
     await getProfile('Oltenks');
 
-    expect(requestedUrl()).toContain('/auction/profiles/Oltenks?');
+    expect(requestedUrl().endsWith('/auction/profiles/Oltenks')).toBe(true);
+  });
+
+  // `_listings` and `_wins` used to ride along on every call.
+  // Nothing ever read either array;
+  // the profile page fetches both from their own endpoints, and this call runs on every page load through the navbar's profile cache.
+  it('does not ask for listings or wins it will not read', async () => {
+    await getProfile('Oltenks');
+
+    expect(requestedUrl()).not.toContain('_listings');
+    expect(requestedUrl()).not.toContain('_wins');
   });
 });
