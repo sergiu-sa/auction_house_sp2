@@ -86,7 +86,7 @@ export function createCollectionCard(
         </div>`;
     } else {
       return `
-        <div class="absolute top-3 left-3 bg-green-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #15803d">
+        <div class="absolute top-3 left-3 bg-green-700 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #166534">
           ${timeRemaining}
         </div>`;
     }

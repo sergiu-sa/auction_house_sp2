@@ -110,6 +110,10 @@ export async function renderHeader(): Promise<void> {
   const isUserLoggedIn = isLoggedIn();
   let user = getCurrentUser();
 
+  // Before the profile fetch below, not after it:
+  //   main.css reserves the header's height from this  attribute, and leaving it unset across a network round trip holds the page on the guest reservation and then collapses it, which is a bigger shift than the one being avoided.
+  document.documentElement.dataset.auth = isUserLoggedIn ? 'in' : 'out';
+
   // Fetch fresh user data if logged in to get updated credits (with cache)
   if (isUserLoggedIn && user) {
     const freshUser = await fetchFreshProfile();

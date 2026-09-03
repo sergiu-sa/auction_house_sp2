@@ -118,7 +118,7 @@ export async function installMocks(
     })
   );
 
-  // Every page preloads fa-solid-900.woff2 from cdnjs directly.
+  // The Font Awesome stylesheet pulls its webfonts from cdnjs, and six pages preload the solid face.
   await page.route('**/cdnjs.cloudflare.com/**/webfonts/*', (route, request) =>
     serveAsset(
       route,

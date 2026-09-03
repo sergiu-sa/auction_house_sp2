@@ -103,3 +103,67 @@ select:disabled,
 textarea:disabled {
   background-color: var(--aucto-bg);
 }
+
+/*
+ * Reserve the header's height before it exists.
+ *
+ * `<header id="header">` ships empty and `renderHeader()` fills it after the module script runs, so everything below it dropped by the navbar's height at about 20ms.
+ * That single event was the largest layout shift on every page: it accounted for 0.208 of home's 0.213 CLS and 1.000 of collection's 1.365, reproducible to three decimals across three runs.
+ *
+ * Every value below is measured on the built site with getBoundingClientRect, not estimated.
+ * Three things move it:
+ *    the width, the page type (auth pages get a minimal navbar), and whether the guest banner is present, which `renderHeader()` reports by stamping `data-auth` on <html> just before it writes the markup.
+ * One frame later than a pre-paint script would, and worth it:
+ *  any parser-blocking <script> in <head> measured ~450ms of FCP and two Lighthouse points here.
+ * Under-reserving only leaves a smaller shift; over-reserving would open a visible gap, so where a value is uncertain the smaller one is the safe one.
+ * 360px is not a Tailwind breakpoint: it is where the guest banner's sentence stops wrapping.
+ */
+#header {
+  min-height: 183px;
+}
+
+@media (min-width: 360px) {
+  #header {
+    min-height: 163px;
+  }
+}
+
+@media (min-width: 640px) {
+  #header {
+    min-height: 143px;
+  }
+}
+
+@media (min-width: 768px) {
+  #header {
+    min-height: 147px;
+  }
+}
+
+/* Auth pages render the minimal navbar and never the guest banner. */
+body[data-page-type='auth'] #header {
+  min-height: 101px;
+}
+
+@media (min-width: 360px) {
+  body[data-page-type='auth'] #header {
+    min-height: 81px;
+  }
+}
+
+/* Signed in: no guest banner, and the navbar itself grows a little at the wider layouts. */
+[data-auth='in'] #header {
+  min-height: 73px;
+}
+
+@media (min-width: 640px) {
+  [data-auth='in'] #header {
+    min-height: 83px;
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-auth='in'] #header {
+    min-height: 91px;
+  }
+}

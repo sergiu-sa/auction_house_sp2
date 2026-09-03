@@ -17,7 +17,7 @@ export async function getProfile(
   username: string
 ): Promise<ApiResponse<Profile>> {
   return api.get<ApiResponse<Profile>>(
-    `/auction/profiles/${encodeURIComponent(username)}?_listings=true&_wins=true`
+    `/auction/profiles/${encodeURIComponent(username)}`
   );
 }
 

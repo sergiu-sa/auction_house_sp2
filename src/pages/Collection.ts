@@ -45,6 +45,11 @@ function applyViewMode(viewMode: 'grid' | 'list'): void {
   active?.classList.add('bg-slate-900', 'text-white');
   inactive?.classList.remove('bg-slate-900', 'text-white');
   inactive?.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50');
+
+  // The colour swap above is the only thing that used to say which view is on, so the state was  visible and unannounced.
+  // Set here rather than in the click handlers, so the initial paint  and every later change go through one place.
+  active?.setAttribute('aria-pressed', 'true');
+  inactive?.setAttribute('aria-pressed', 'false');
 }
 
 function initializeFilters(): void {

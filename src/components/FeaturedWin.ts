@@ -96,6 +96,11 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
                 src="${escapeHtml(data.winner.avatar)}"
                 alt="${escapeHtml(data.winner.username)}"
                 class="h-10 w-10 object-cover"
+                width="40"
+                height="40"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
                 style="border: 2px solid #475569"
                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';"
               />

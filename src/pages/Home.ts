@@ -28,6 +28,7 @@ import { renderPagination } from '../components/PaginationComponent';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
+import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import {
   addStructuredData,
   generateWebsiteStructuredData,
@@ -50,6 +51,20 @@ import {
   setSortValue,
 } from '../components/filters';
 import { escapeHtml } from '../utils/escapeHtml';
+
+/**
+ * The hero mosaic is not a card, so none of the three presets in `imageOptimization.ts` describes it:
+ *   its tiles are a third of a column, not a full-width item.
+ * Measured rendered widths — main 196/288/612/420 and tile 87/133/295/199 at 320/412/768/1440, so the defaults' `100vw` was asking for a 1074px original to fill a 133px box.
+ *
+ * These images take no `width`/`height`, unlike the cards: the container fixes both dimensions and the image is `h-full w-full object-cover`, so the attributes would never apply, and the presets' numbers describe a squarer box than either of these actually is.
+ * The main tile also overrides the helper's `lazy`, as `ListingDetail` does for its own main image:
+ *  it sits inside the initial viewport above `lg`, which is the one case `lazy` is not for.
+ */
+const HERO_MAIN_SIZES =
+  '(max-width: 1023px) 80vw, (max-width: 1279px) 32vw, 420px';
+const HERO_TILE_SIZES =
+  '(max-width: 1023px) 40vw, (max-width: 1279px) 15vw, 200px';
 
 // State management for catalog section
 const catalogManager = new CatalogStateManager(
@@ -124,13 +139,15 @@ function initStickyFilterBar(): void {
     }
   }
 
-  // Throttle scroll event for better performance
-  let scrollTimeout: ReturnType<typeof setTimeout>;
+  // Throttle the scroll handler:
+  //  run on the leading edge, then ignore events until the window passes.
+  // Clearing and re-arming instead would be a debounce, and scroll events arrive about once a frame;
+  //  — on a 120Hz display that is every 8ms, so the timer would be cleared before it ever fired and the sticky bar would only appear once the user stopped scrolling.
+  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
   window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-      window.cancelAnimationFrame(scrollTimeout as unknown as number);
-    }
+    if (scrollTimeout !== null) return;
     scrollTimeout = setTimeout(() => {
+      scrollTimeout = null;
       window.requestAnimationFrame(handleScroll);
     }, 10);
   });
@@ -427,6 +444,12 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
   // Main featured listing
   const main = featured[0];
   const mainImage = main.media?.[0]?.url || '/images/placeholder.svg';
+  const mainImgAttrs = generateResponsiveImageAttrs(
+    mainImage,
+    main.title,
+    'landscape',
+    HERO_MAIN_SIZES
+  );
   const mainHighestBid = highestBid(main.bids);
   const mainTimeRemaining = formatTimeRemaining(main.endsAt);
 
@@ -440,9 +463,14 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
       <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${main.id}" class="block h-full">
           <img
-            src="${escapeHtml(mainImage)}"
-            alt="${escapeHtml(main.title)}"
+            src="${escapeHtml(mainImgAttrs.src)}"
+            ${mainImgAttrs.srcset ? `srcset="${escapeHtml(mainImgAttrs.srcset)}"` : ''}
+            alt="${escapeHtml(mainImgAttrs.alt)}"
+            sizes="${mainImgAttrs.sizes}"
+            loading="eager"
+            decoding="${mainImgAttrs.decoding}"
             class="h-full w-full object-cover"
+            referrerpolicy="no-referrer"
           />
         </a>
         <div class="absolute left-4 top-4 bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-white inline-flex items-center gap-1.5">
@@ -485,6 +513,12 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
     for (let i = 1; i < Math.min(featured.length, 3); i++) {
       const listing = featured[i];
       const image = listing.media?.[0]?.url || '/images/placeholder.svg';
+      const tileImgAttrs = generateResponsiveImageAttrs(
+        image,
+        listing.title,
+        'square',
+        HERO_TILE_SIZES
+      );
       const currentHighest = highestBid(listing.bids);
 
       mosaicHTML += `
@@ -492,9 +526,14 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
           <div class="h-48 sm:h-52 md:h-56 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
             <a href="/listing.html?id=${listing.id}" class="block h-full">
               <img
-                src="${escapeHtml(image)}"
-                alt="${escapeHtml(listing.title)}"
+                src="${escapeHtml(tileImgAttrs.src)}"
+                ${tileImgAttrs.srcset ? `srcset="${escapeHtml(tileImgAttrs.srcset)}"` : ''}
+                alt="${escapeHtml(tileImgAttrs.alt)}"
+                sizes="${tileImgAttrs.sizes}"
+                loading="${tileImgAttrs.loading}"
+                decoding="${tileImgAttrs.decoding}"
                 class="h-full w-full object-cover"
+                referrerpolicy="no-referrer"
               />
             </a>
           </div>

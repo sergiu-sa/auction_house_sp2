@@ -551,7 +551,10 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           src="${escapeHtml(imageUrl)}"
           alt="${escapeHtml(listing.title)}"
           class="h-full w-full object-cover"
+          width="600"
+          height="600"
           loading="lazy"
+          decoding="async"
           referrerpolicy="no-referrer"
         />`
             : `<div class="h-full w-full flex items-center justify-center">
