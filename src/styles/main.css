@@ -116,11 +116,12 @@ textarea:disabled {
  * One frame later than a pre-paint script would, and worth it:
  *  any parser-blocking <script> in <head> measured ~450ms of FCP and two Lighthouse points here.
  * Under-reserving only leaves a smaller shift; over-reserving would open a visible gap, so where a value is uncertain the smaller one is the safe one.
- * 326, 360 and 564 are not Tailwind breakpoints: they are the three widths where the guest banner's sentence rewraps, found by sweeping every pixel from 320 to 1440.
+ * 326, 355 and 564 are not Tailwind breakpoints: they are the widths where the banner's sentence rewraps, found by sweeping every pixel from 320 to 1440.
  *
- * Measure with the icon font applied, after document.fonts.ready.
- * The first set of values was taken before it resolved and every one of them was 8px short, because the navbar's icon buttons are 20px tall without their glyphs and 40px with them.
- * The same page reads 163px with Font Awesome blocked and 171px with it loaded.
+ * Two things make these easy to measure wrong, and both have happened here:
+ *  the icon font, which the values must be taken after, the navbar's icon buttons are 20px tall without their glyphs and 40px with them, so a pre-font reading is 8px short;
+ *  and the reservation itself, which clamps getBoundingClientRect, so an over-reserved band reads back as a perfect match and a wrong value can survive a full-width sweep.
+ * Set min-height to 0 before measuring, or the number you get is the one you already wrote.
  */
 #header {
   min-height: 191px;
@@ -128,23 +129,11 @@ textarea:disabled {
 
 @media (min-width: 326px) {
   #header {
-    min-height: 183px;
-  }
-}
-
-@media (min-width: 360px) {
-  #header {
     min-height: 171px;
   }
 }
 
 @media (min-width: 564px) {
-  #header {
-    min-height: 163px;
-  }
-}
-
-@media (min-width: 640px) {
   #header {
     min-height: 151px;
   }
@@ -161,7 +150,7 @@ body[data-page-type='auth'] #header {
   min-height: 101px;
 }
 
-@media (min-width: 360px) {
+@media (min-width: 355px) {
   body[data-page-type='auth'] #header {
     min-height: 81px;
   }
@@ -191,22 +180,26 @@ body[data-page-type='auth'] #header {
  * The hero is a two-column grid with a centred left column, so the text beside it drops by half that — 152px — carrying every section below it down.
  * That is the whole of home's 0.093 desktop CLS; blocking Font Awesome leaves it unchanged, so unlike the header this one really is content arriving.
  *
- * Values are the smallest settled height measured across each band, sweeping every 4px from 320 to 1440, so no width over-reserves.
- * 1024-1120px settles at 746px and keeps a 50px shift: the next band down is 696px and taking the larger number would open a gap on every width above 1123.
+ * Values are the smallest natural height measured across each band, sweeping every pixel from 320 to 1440, so no width over-reserves.
+ * 1024-1122px settles at 746px and keeps a 50px shift: the next band down is 696px and taking the larger number would open a gap on every width above 1122.
  * Tile count does not enter into it — the grid measures the same with one article or three.
+ *
+ * `:empty` scopes this to the pre-render state, which is the only state that needs it.
+ * The mosaic is not always filled with a mosaic: both `showNoDataInSections()` and `showErrorInSections()` write a single small box into it, and an unconditional reservation stretched those by up to 428px.
+ * `:empty` is why the element is written with nothing at all between its tags — a stray newline or comment in there is a child node and silently drops the reservation.
  */
-#hero-mosaic {
+#hero-mosaic:empty {
   min-height: 584px;
 }
 
 @media (min-width: 640px) {
-  #hero-mosaic {
+  #hero-mosaic:empty {
     min-height: 648px;
   }
 }
 
 @media (min-width: 768px) {
-  #hero-mosaic {
+  #hero-mosaic:empty {
     min-height: 696px;
   }
 }
