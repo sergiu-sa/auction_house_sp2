@@ -116,13 +116,29 @@ textarea:disabled {
  * One frame later than a pre-paint script would, and worth it:
  *  any parser-blocking <script> in <head> measured ~450ms of FCP and two Lighthouse points here.
  * Under-reserving only leaves a smaller shift; over-reserving would open a visible gap, so where a value is uncertain the smaller one is the safe one.
- * 360px is not a Tailwind breakpoint: it is where the guest banner's sentence stops wrapping.
+ * 326, 360 and 564 are not Tailwind breakpoints: they are the three widths where the guest banner's sentence rewraps, found by sweeping every pixel from 320 to 1440.
+ *
+ * Measure with the icon font applied, after document.fonts.ready.
+ * The first set of values was taken before it resolved and every one of them was 8px short, because the navbar's icon buttons are 20px tall without their glyphs and 40px with them.
+ * The same page reads 163px with Font Awesome blocked and 171px with it loaded.
  */
 #header {
-  min-height: 183px;
+  min-height: 191px;
+}
+
+@media (min-width: 326px) {
+  #header {
+    min-height: 183px;
+  }
 }
 
 @media (min-width: 360px) {
+  #header {
+    min-height: 171px;
+  }
+}
+
+@media (min-width: 564px) {
   #header {
     min-height: 163px;
   }
@@ -130,11 +146,11 @@ textarea:disabled {
 
 @media (min-width: 640px) {
   #header {
-    min-height: 143px;
+    min-height: 151px;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   #header {
     min-height: 147px;
   }
@@ -153,7 +169,7 @@ body[data-page-type='auth'] #header {
 
 /* Signed in: no guest banner, and the navbar itself grows a little at the wider layouts. */
 [data-auth='in'] #header {
-  min-height: 73px;
+  min-height: 81px;
 }
 
 @media (min-width: 640px) {
@@ -165,5 +181,32 @@ body[data-page-type='auth'] #header {
 @media (min-width: 1024px) {
   [data-auth='in'] #header {
     min-height: 91px;
+  }
+}
+
+/*
+ * Reserve the hero mosaic, for the same reason and one level down.
+ *
+ * `#hero-mosaic` ships empty and `renderHeroSection()` fills it, growing it from 391px to 696px at desktop.
+ * The hero is a two-column grid with a centred left column, so the text beside it drops by half that — 152px — carrying every section below it down.
+ * That is the whole of home's 0.093 desktop CLS; blocking Font Awesome leaves it unchanged, so unlike the header this one really is content arriving.
+ *
+ * Values are the smallest settled height measured across each band, sweeping every 4px from 320 to 1440, so no width over-reserves.
+ * 1024-1120px settles at 746px and keeps a 50px shift: the next band down is 696px and taking the larger number would open a gap on every width above 1123.
+ * Tile count does not enter into it — the grid measures the same with one article or three.
+ */
+#hero-mosaic {
+  min-height: 584px;
+}
+
+@media (min-width: 640px) {
+  #hero-mosaic {
+    min-height: 648px;
+  }
+}
+
+@media (min-width: 768px) {
+  #hero-mosaic {
+    min-height: 696px;
   }
 }
