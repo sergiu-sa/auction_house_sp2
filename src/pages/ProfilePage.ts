@@ -20,9 +20,9 @@ import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
 import { escapeHtml } from '../utils/escapeHtml';
 
-export async function initProfilePage(): Promise<void> {
+export function initProfilePage(): void {
   // Render header and footer
-  await renderHeader();
+  renderHeader();
   renderFooter();
 
   // Get username from URL parameter (e.g., profile.html?user=johndoe)
@@ -796,8 +796,10 @@ async function handleProfileUpdate(username: string): Promise<void> {
     // Reload profile and header after a short delay
     setTimeout(async () => {
       await loadProfileData(username, true);
-      // Refresh the header to show updated avatar/banner in navbar
-      await renderHeader();
+      // Repaints the navbar avatar: setUser() above stored the new one and renderHeader()
+      // reads storage, so the avatar itself costs nothing. The credit refresh it kicks off
+      // does spend a request, because invalidateProfileCache() above left the cache cold.
+      renderHeader();
     }, 1000);
   } catch (error) {
     logError('Failed to update profile', error, { username });
@@ -817,7 +819,7 @@ function showError(message: string): void {
     <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
       <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
       <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
-      <p class="text-slate-600 mb-4">${message}</p>
+      <p class="text-slate-600 mb-4">${escapeHtml(message)}</p>
       <a
         href="/index.html"
         class="inline-block bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"

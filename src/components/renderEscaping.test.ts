@@ -144,7 +144,7 @@ describe('components are inert against a hostile listing', () => {
     document.body.innerHTML = '<div id="header"></div>';
     document.body.setAttribute('data-page-type', 'browse');
 
-    await renderHeader();
+    renderHeader();
 
     const markup = document.getElementById('header')!.innerHTML;
     // The logged-out navbar carries no user data at all, so assertInert would pass on it either way.

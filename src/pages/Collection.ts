@@ -97,9 +97,9 @@ function initializeFilters(): void {
   }
 }
 
-export async function initCollectionPage(): Promise<void> {
+export function initCollectionPage(): void {
   // Render header and footer
-  await renderHeader();
+  renderHeader();
   renderFooter();
 
   // Initialize view toggle filters

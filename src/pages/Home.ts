@@ -213,7 +213,7 @@ function syncFilterBarsWithState(): void {
 
 async function initHomePage(): Promise<void> {
   // Render header and footer (header includes guest banner)
-  await renderHeader();
+  renderHeader();
   renderFooter();
 
   // Add structured data for SEO
