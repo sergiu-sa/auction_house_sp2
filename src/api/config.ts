@@ -1,6 +1,6 @@
 import type { ApiError } from '../types/api';
 import { clearAuth, getToken } from '../utils/storage';
-import { showSessionExpiredMessage } from '../utils/authLoader';
+import { showSessionExpiredMessage } from '../utils/sessionExpired';
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'https://v2.api.noroff.dev';

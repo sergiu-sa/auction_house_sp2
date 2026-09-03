@@ -12,12 +12,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'clover', 'json'],
       include: ['src/**/*.ts'],
-      exclude: [
-        'src/**/*.test.ts',
-        'src/main.ts',
-        'src/types/**',
-        'src/pages/**',
-      ],
+      exclude: ['src/**/*.test.ts', 'src/types/**', 'src/pages/**'],
     },
   },
 });
