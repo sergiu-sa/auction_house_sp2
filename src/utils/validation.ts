@@ -231,3 +231,37 @@ export function evaluatePasswordStrength(password: string): {
 
   return { strength, message, colorClass };
 }
+
+/**
+ * A `?redirect=` value, but only when it stays on this site.
+ *
+ * Parsed with the URL parser rather than checked by prefix, because the parser is what
+ * `location.href` will use and it does things a prefix check does not: it strips ASCII tab and
+ * newline first, so `/%09/evil.example` arrives here as `/<tab>/evil.example`, passes any
+ * "starts with a single slash" test, and is then parsed as the protocol-relative
+ * `//evil.example`. Resolving against a fixed base and comparing origins catches that, the
+ * `//` and `/\` forms, and every scheme including `javascript:` — which would otherwise run in
+ * this document, where the token is readable from localStorage.
+ *
+ * A fixed dummy base rather than `location.origin` keeps this a pure function; the only thing
+ * being asked is "does this stay put", which any origin answers identically.
+ *
+ * Everything that writes this parameter - `protectedRoute`, `handleUnauthorized` - produces a
+ * same-origin path, so refusing the rest costs nothing.
+ */
+const REDIRECT_BASE = 'https://aucto.invalid';
+
+export function safeRedirectPath(
+  raw: string | null | undefined,
+  fallback: string
+): string {
+  if (!raw) return fallback;
+
+  try {
+    const url = new URL(raw, REDIRECT_BASE);
+    if (url.origin !== REDIRECT_BASE) return fallback;
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return fallback;
+  }
+}
