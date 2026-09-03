@@ -47,8 +47,27 @@ export default defineConfig<TestOptions>({
 
   expect: {
     toHaveScreenshot: {
-      // Absorbs font rasterisation jitter; anything larger is a real change.
-      maxDiffPixelRatio: 0.01,
+      /*
+       * Zero tolerance, all three, because the previous settings twice reported green over a real
+       * change: ~17,000 px a page of Phase 4 contrast work (F-084), and every sized icon rendering
+       * 6 px short across 106 elements on the home page.
+       *
+       * `maxDiffPixelRatio` alone is not zero tolerance and that is what made both invisible —
+       * `threshold` is a separate per-pixel colour tolerance defaulting to 0.2, so a colour could
+       * change on every pixel of a region and still count as matching.
+       *
+       * Safe to be this strict here in a way it would not be in CI: the renders are deterministic
+       * (mocked fixtures, a frozen clock, animations off), and this project is excluded from CI
+       * because Playwright keys snapshots by platform. Measured across two builds and a toolchain
+       * bump that moved esbuild three minors: 14/14 exact, a dozen runs, no false positive.
+       *
+       * When it does legitimately fail — a macOS font rasterisation change is the likely cause —
+       * every baseline fails at once. Regenerate deliberately with
+       * `npm run test:e2e:visual:update` and say so in the PR; do not loosen these back.
+       */
+      maxDiffPixelRatio: 0,
+      maxDiffPixels: 0,
+      threshold: 0,
       animations: 'disabled',
       caret: 'hide',
     },
