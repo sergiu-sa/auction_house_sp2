@@ -42,7 +42,8 @@ export const OUT_MANIFEST = join(REPO_ROOT, 'src/styles/icons.manifest.json');
 export const NON_ICON_CLASSES = new Set(['fa-solid', 'fa-spin']);
 
 const SCAN_DIRS = ['src'];
-const SCAN_FILES = [
+/** Every top-level HTML page, including the 404 that Vite copies verbatim. */
+export const SCAN_FILES = [
   'index.html',
   'collection.html',
   'listing.html',
