@@ -6,13 +6,10 @@ import { createProductCard } from './ProductCard';
 import { renderFeaturedWin } from './FeaturedWin';
 import { renderBreadcrumb, BREADCRUMB_PRESETS } from './Breadcrumb';
 import { renderHeader } from './Navbar';
+import { renderAvatar } from './Avatar';
 
-/**
- * The tripwire for the escaping work: every component that renders user-controlled data is fed a hostile listing and the resulting DOM is inspected.
- * A sink added later without escaping fails here rather than in production.
- */
-
-// Breaks out of a quoted attribute AND injects a script in text context, so one string exercises both contexts wherever it lands.
+// Hostile listing catches escaping failures before production.
+// Payload breaks out of attributes AND injects scripts to exercise both contexts.
 const PAYLOAD =
   'Lot" onerror="window.__XSS=1" data-pwned="1"><script>window.__XSS=1</script>';
 
@@ -87,6 +84,44 @@ describe('components are inert against a hostile listing', () => {
 
   afterEach(() => {
     globalThis.__XSS = undefined;
+  });
+
+  it('Avatar, with a hostile picture url and name', () => {
+    // Every identity surface routes through this now, so it is the one sink for all of them.
+    assertInert(
+      renderAvatar({
+        url: '" onerror="globalThis.__XSS = 1" data-x="',
+        name: '"><script>globalThis.__XSS = 1</script>',
+        sizeClass: 'h-10 w-10',
+        textClass: 'text-sm',
+        borderStyle: 'border: 2px solid #475569',
+      })
+    );
+  });
+
+  it('Avatar, with no picture at all', () => {
+    assertInert(
+      renderAvatar({
+        url: undefined,
+        name: '"><img src=x onerror="globalThis.__XSS = 1">',
+        sizeClass: 'h-10 w-10',
+        textClass: 'text-sm',
+      })
+    );
+  });
+
+  it('Avatar, with a hostile alt', () => {
+    // The one field the first pass of these tests missed:
+    //  `alt` is caller-supplied, but two of the five call sites hand it a seller or winner name straight from the API.
+    assertInert(
+      renderAvatar({
+        url: 'https://example.test/a.jpg',
+        name: 'Seller',
+        sizeClass: 'h-10 w-10',
+        textClass: 'text-sm',
+        alt: '" onerror="globalThis.__XSS = 1" data-x="',
+      })
+    );
   });
 
   it('CollectionCard, grid variant', () => {
