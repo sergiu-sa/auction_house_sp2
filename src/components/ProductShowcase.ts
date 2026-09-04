@@ -11,6 +11,7 @@ import { formatTimeRemaining } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import { highestBid } from '../utils/biddingStats';
+import { lotImageSource, setLotImageSource } from '../utils/listingImage';
 
 const REFRESH_INTERVAL_MS = 15000;
 const FEATURED_FETCH_LIMIT = 3;
@@ -18,12 +19,6 @@ const FEATURED_FETCH_LIMIT = 3;
 export interface ProductShowcaseConfig {
   /** Used in error log context only. */
   pageName: 'login' | 'register';
-  /** Fallback hero images for each tile if the API media URL fails to load. */
-  fallbackImages: {
-    featured: string;
-    tileA: string;
-    tileB: string;
-  };
   /** Character cap for the description on the featured tile. */
   featuredDescriptionLength: number;
   /** When true, write the highest bid into `#featured-bid` on the featured tile. */
@@ -98,12 +93,9 @@ function updateFeaturedTile(
   if (!article) return;
 
   const img = article.querySelector('img') as HTMLImageElement | null;
-  if (img && listing.media && listing.media.length > 0) {
-    img.src = listing.media[0].url;
-    img.alt = listing.media[0].alt || listing.title;
-    img.onerror = () => {
-      img.src = config.fallbackImages.featured;
-    };
+  if (img) {
+    const source = lotImageSource(listing.media, listing.title);
+    setLotImageSource(img, source.src, source.alt);
   }
 
   const titleElement = article.querySelector(
@@ -143,15 +135,9 @@ function updateSmallTile(
   if (!article) return;
 
   const img = article.querySelector('img') as HTMLImageElement | null;
-  if (img && listing.media && listing.media.length > 0) {
-    img.src = listing.media[0].url;
-    img.alt = listing.media[0].alt || listing.title;
-    img.onerror = () => {
-      img.src =
-        tileId === 'tile-a'
-          ? config.fallbackImages.tileA
-          : config.fallbackImages.tileB;
-    };
+  if (img) {
+    const source = lotImageSource(listing.media, listing.title);
+    setLotImageSource(img, source.src, source.alt);
   }
 
   const titleElement = article.querySelector(

@@ -7,6 +7,7 @@ import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
+import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 
 // Product Card — use for featured sections, trending auctions, highlighted items.
 export function createProductCard(listing: Listing): string {
@@ -16,8 +17,10 @@ export function createProductCard(listing: Listing): string {
   const bids = listing.bids || [];
   const currentHighest = highestBid(bids);
 
-  const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
-  const imageAlt = listing.media?.[0]?.alt || listing.title;
+  const { src: imageUrl, alt: imageAlt } = lotImageSource(
+    listing.media,
+    listing.title
+  );
 
   // Generate responsive image attributes
   const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'square');
@@ -70,6 +73,7 @@ export function createProductCard(listing: Listing): string {
             decoding="${imgAttrs.decoding}"
             class="h-full w-full object-cover"
             referrerpolicy="no-referrer"
+            data-lot-image
           />
         </a>
       </div>
@@ -180,6 +184,8 @@ export function attachProductCardEvents(
 ): void {
   const container = document.getElementById(containerId);
   if (!container) return;
+
+  initLotImageFallbacks(container);
 
   // Place Bid buttons
   const bidButtons = container.querySelectorAll<HTMLButtonElement>(
