@@ -6,7 +6,7 @@ import {
   activePool,
   catalogPage,
   endingSoon,
-  featuredActive,
+  featuredWithImages,
   newest,
   trending,
 } from '../api/listingQueries';
@@ -50,21 +50,17 @@ import {
   setActiveOnlyState,
   setSortValue,
 } from '../components/filters';
+import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 import { escapeHtml } from '../utils/escapeHtml';
 
-/**
- * The hero mosaic is not a card, so none of the three presets in `imageOptimization.ts` describes it:
- *   its tiles are a third of a column, not a full-width item.
- * Measured rendered widths — main 196/288/612/420 and tile 87/133/295/199 at 320/412/768/1440, so the defaults' `100vw` was asking for a 1074px original to fill a 133px box.
- *
- * These images take no `width`/`height`, unlike the cards: the container fixes both dimensions and the image is `h-full w-full object-cover`, so the attributes would never apply, and the presets' numbers describe a squarer box than either of these actually is.
- * The main tile also overrides the helper's `lazy`, as `ListingDetail` does for its own main image:
- *  it sits inside the initial viewport above `lg`, which is the one case `lazy` is not for.
- */
+// Hero mosaic sizes: tiles are third of column, not full-width card presets.
 const HERO_MAIN_SIZES =
   '(max-width: 1023px) 80vw, (max-width: 1279px) 32vw, 420px';
 const HERO_TILE_SIZES =
   '(max-width: 1023px) 40vw, (max-width: 1279px) 15vw, 200px';
+
+// One wide lot and two tiles beneath; height stays constant.
+const HERO_TILE_COUNT = 3;
 
 // State management for catalog section
 const catalogManager = new CatalogStateManager(
@@ -79,7 +75,6 @@ function initStickyFilterBar(): void {
 
   if (!stickyBar || !catalogSection) return;
 
-  // Render sticky filter bar content using components
   stickyBar.innerHTML = `
     <div class="mx-auto max-w-7xl px-6 py-4 md:px-8">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -282,9 +277,11 @@ async function loadAllData(): Promise<void> {
       return;
     }
 
-    await renderHeroSection(pool);
+    // Hero last: it verifies each candidate's photograph over the network, while these two need
+    //  nothing but `pool` and would sit as skeletons behind it.
     await renderTrendingSection(pool);
     await renderNewListingsSection(pool);
+    await renderHeroSection(pool);
   } catch (error) {
     logError('Failed to load home page data', error);
     toast.error('Failed to load listings. Please refresh the page.');
@@ -435,7 +432,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
     heroBidsCount.textContent = totalBids.toLocaleString();
   }
 
-  const featured = await featuredActive(3, pool);
+  const featured = await featuredWithImages(HERO_TILE_COUNT, pool);
 
   if (featured.length === 0) {
     heroMosaic.innerHTML = `
@@ -448,10 +445,11 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
 
   // Main featured listing
   const main = featured[0];
-  const mainImage = main.media?.[0]?.url || '/images/placeholder.svg';
+  const secondary = featured.slice(1);
+  const mainSource = lotImageSource(main.media, main.title);
   const mainImgAttrs = generateResponsiveImageAttrs(
-    mainImage,
-    main.title,
+    mainSource.src,
+    mainSource.alt,
     'landscape',
     HERO_MAIN_SIZES
   );
@@ -464,7 +462,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
   let mosaicHTML = `
     <h2 class="sr-only">Featured auctions</h2>
     <!-- Main featured lot -->
-    <article class="row-span-1 bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
+    <article class="${secondary.length === 0 ? 'row-span-2' : 'row-span-1'} bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
       <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
         <a href="/listing.html?id=${main.id}" class="block h-full">
           <img
@@ -476,6 +474,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
             decoding="${mainImgAttrs.decoding}"
             class="h-full w-full object-cover"
             referrerpolicy="no-referrer"
+            data-lot-image
           />
         </a>
         <div class="absolute left-4 top-4 bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-white inline-flex items-center gap-1.5">
@@ -511,16 +510,16 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
     </article>
   `;
 
-  // Two secondary listings
-  if (featured.length >= 2) {
-    mosaicHTML += `<div class="grid grid-cols-2 gap-4">`;
+  // The secondary tiles, however many came back. One of them must not sit in a two-column
+  //  track with a hole beside it, and none of them means the main lot takes both rows.
+  if (secondary.length > 0) {
+    mosaicHTML += `<div class="grid ${secondary.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-4">`;
 
-    for (let i = 1; i < Math.min(featured.length, 3); i++) {
-      const listing = featured[i];
-      const image = listing.media?.[0]?.url || '/images/placeholder.svg';
+    for (const listing of secondary) {
+      const tileSource = lotImageSource(listing.media, listing.title);
       const tileImgAttrs = generateResponsiveImageAttrs(
-        image,
-        listing.title,
+        tileSource.src,
+        tileSource.alt,
         'square',
         HERO_TILE_SIZES
       );
@@ -539,6 +538,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
                 decoding="${tileImgAttrs.decoding}"
                 class="h-full w-full object-cover"
                 referrerpolicy="no-referrer"
+                data-lot-image
               />
             </a>
           </div>
@@ -558,6 +558,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
   }
 
   heroMosaic.innerHTML = mosaicHTML;
+  initLotImageFallbacks(heroMosaic);
 }
 
 // Trending = active listings sorted by bid count

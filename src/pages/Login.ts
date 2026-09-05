@@ -56,14 +56,6 @@ export function initLoginPage(): void {
   // Initialize product showcase animations
   initProductShowcase({
     pageName: 'login',
-    fallbackImages: {
-      featured:
-        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=600&fit=crop',
-      tileA:
-        'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=400&fit=crop',
-      tileB:
-        'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=400&fit=crop',
-    },
     featuredDescriptionLength: 60,
     showFeaturedBid: true,
     tileATitleMaxLength: 25,

@@ -37,17 +37,22 @@ import { isWatched, toggleWatched } from '../utils/storage';
 import type { Listing } from '../types/api';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { escapeHtml } from '../utils/escapeHtml';
+import { renderAvatar } from '../components/Avatar';
+import {
+  LISTING_PLACEHOLDER,
+  initIdentityFallbacks,
+  initLotImageFallbacks,
+  lotImageSource,
+  setLotImageSource,
+} from '../utils/listingImage';
 
-// Current listing data
 let currentListing: Listing | null = null;
 let countdownInterval: number | null = null;
 
 async function init() {
-  // Render header and footer
   renderHeader();
   renderFooter();
 
-  // Get listing ID from URL
   const urlParams = new URLSearchParams(window.location.search);
   const listingId = urlParams.get('id');
 
@@ -57,14 +62,10 @@ async function init() {
   }
 
   try {
-    // Fetch listing data
     const response = await getListing(listingId);
     currentListing = response.data;
 
-    // Update SEO meta tags dynamically
     updateDynamicSEO(currentListing);
-
-    // Render all sections
     renderBreadcrumb(currentListing);
     renderListingHeader(currentListing);
     renderMediaGallery(currentListing);
@@ -106,6 +107,8 @@ function updateDynamicSEO(listing: Listing) {
   updatePageDescription(description);
 
   // Update OG image
+  // Only when the lot has a real photograph.
+  // A share card with no picture keeps the branded og-cover.svg the page ships, which reads better than "NO IMAGE" in a social preview.
   if (listing.media && listing.media.length > 0) {
     updateOgImage(listing.media[0].url);
   }
@@ -197,23 +200,23 @@ function renderMediaGallery(listing: Listing) {
   const gallery = document.getElementById('media-gallery');
   if (!gallery) return;
 
+  // A lot with no photograph says so, with the same placeholder every other surface uses.
+  // This used to substitute a hardcoded Unsplash photograph of a pair of headphones, so every  unphotographed lot on the site showed a picture of something else.
+  //
+  // One entry, not none:
+  //  the loading skeleton in listing.html reserves a thumbnail row, and a gallery that rendered no row would collapse it and shift the page.
+  // The placeholder is named explicitly rather than left as an empty string, so the thumbnail's click handler still has a url to swap in and the control is not inert.
   const media =
     listing.media && listing.media.length > 0
       ? listing.media
-      : [
-          {
-            url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&h=675&fit=crop',
-            alt: 'No image available',
-          },
-        ];
+      : [{ url: LISTING_PLACEHOLDER }];
 
-  const mainImage = media[0];
   const thumbnails = media.slice(0, 4);
 
-  // Generate responsive attributes for main image
+  const mainSource = lotImageSource(media, listing.title);
   const mainImgAttrs = generateResponsiveImageAttrs(
-    mainImage.url,
-    mainImage.alt || listing.title,
+    mainSource.src,
+    mainSource.alt,
     'landscape'
   );
 
@@ -230,6 +233,7 @@ function renderMediaGallery(listing: Listing) {
         loading="eager"
         decoding="${mainImgAttrs.decoding}"
         class="h-full w-full object-cover"
+        data-lot-image
       />
     </div>
 
@@ -237,9 +241,10 @@ function renderMediaGallery(listing: Listing) {
     <div class="grid grid-cols-4 gap-3">
       ${thumbnails
         .map((img, index) => {
+          const thumbSource = lotImageSource([img], `View ${index + 1}`);
           const thumbAttrs = generateResponsiveImageAttrs(
-            img.url,
-            img.alt || `View ${index + 1}`,
+            thumbSource.src,
+            thumbSource.alt,
             'square'
           );
           return `
@@ -258,6 +263,7 @@ function renderMediaGallery(listing: Listing) {
             loading="lazy"
             decoding="${thumbAttrs.decoding}"
             class="h-full w-full object-cover"
+            data-lot-image
           />
         </button>
       `;
@@ -280,6 +286,8 @@ function renderMediaGallery(listing: Listing) {
     </div>
   `;
 
+  initLotImageFallbacks(gallery);
+
   // Add thumbnail click handlers
   initGallery();
 }
@@ -294,8 +302,9 @@ function initGallery() {
       const imageAlt = btn.getAttribute('data-image-alt');
 
       if (mainImage && imageUrl) {
-        mainImage.src = imageUrl;
-        mainImage.alt = imageAlt || '';
+        // Through the helper, not a bare assignment:
+        //  the fallback is one-shot so it cannot loop, which means a second dead image needs it re-armed.
+        setLotImageSource(mainImage, imageUrl, imageAlt || '');
 
         // Update active state
         thumbnails.forEach((t) => {
@@ -807,33 +816,16 @@ function renderSellerProfile(listing: Listing) {
     return;
   }
 
-  // Generate avatar image attributes if avatar exists
-  const avatarAttrs = seller.avatar?.url
-    ? generateResponsiveImageAttrs(seller.avatar.url, seller.name, 'square')
-    : null;
-
   profile.innerHTML = `
     <div class="mb-6 flex items-center gap-4 pb-6" style="border-bottom: 2px solid var(--aucto-border-light)">
       <div class="h-16 w-16 bg-slate-100 flex-shrink-0" style="border: 2px solid var(--aucto-border-dark)">
-        ${
-          avatarAttrs
-            ? `
-          <img
-            src="${escapeHtml(avatarAttrs.src)}"
-            alt="${escapeHtml(avatarAttrs.alt)}"
-            width="64"
-            height="64"
-            loading="lazy"
-            decoding="${avatarAttrs.decoding}"
-            class="h-full w-full object-cover"
-          />
-        `
-            : `
-          <div class="h-full w-full bg-slate-900 text-white flex items-center justify-center text-2xl font-bold">
-            ${escapeHtml(seller.name.charAt(0).toUpperCase())}
-          </div>
-        `
-        }
+        ${renderAvatar({
+          url: seller.avatar?.url,
+          name: seller.name,
+          sizeClass: 'h-full w-full',
+          textClass: 'text-2xl',
+          alt: seller.name,
+        })}
       </div>
       <div>
         <div class="text-base font-bold text-slate-900 mb-1 inline-flex max-w-full items-center gap-1.5">
@@ -873,6 +865,8 @@ function renderSellerProfile(listing: Listing) {
       </a>
     </div>
   `;
+
+  initIdentityFallbacks(profile);
 }
 
 function renderListingMeta(listing: Listing) {
