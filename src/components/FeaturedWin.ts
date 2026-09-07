@@ -5,7 +5,8 @@ import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import { highestBid } from '../utils/biddingStats';
 import { escapeHtml } from '../utils/escapeHtml';
-import { initImageFallbacks } from '../utils/imageFallback';
+import { initIdentityFallbacks } from '../utils/listingImage';
+import { renderAvatar } from './Avatar';
 
 export interface FeaturedWinData {
   lotNumber: string;
@@ -36,7 +37,6 @@ function getLotNumber(listingId: string): string {
 }
 
 export function renderFeaturedWin(data: FeaturedWinData): string {
-  // Label and status based on auction state
   let labelText: string;
   let statusText: string;
   let statusColor: string;
@@ -91,27 +91,15 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
       </p>
 
       <div class="flex items-center gap-3 pt-6" style="border-top: 2px solid #475569">
-        ${
-          data.winner.avatar
-            ? `<img
-                src="${escapeHtml(data.winner.avatar)}"
-                alt="${escapeHtml(data.winner.username)}"
-                class="h-10 w-10 object-cover"
-                width="40"
-                height="40"
-                loading="lazy"
-                decoding="async"
-                referrerpolicy="no-referrer"
-                style="border: 2px solid #475569"
-                data-fallback
-              />
-              <div class="h-10 w-10 bg-slate-700 items-center justify-center text-white font-bold text-sm hidden" style="border: 2px solid #475569; display: none;">
-                ${escapeHtml(data.winner.username.charAt(0).toUpperCase())}
-              </div>`
-            : `<div class="h-10 w-10 bg-slate-700 flex items-center justify-center text-white font-bold text-sm" style="border: 2px solid #475569">
-                ${escapeHtml(data.winner.username.charAt(0).toUpperCase())}
-              </div>`
-        }
+        ${renderAvatar({
+          url: data.winner.avatar,
+          name: data.winner.username,
+          sizeClass: 'h-10 w-10',
+          textClass: 'text-sm',
+          bgClass: 'bg-slate-700',
+          borderStyle: 'border: 2px solid #475569',
+          alt: data.winner.username,
+        })}
         <div>
           <div class="text-sm font-bold text-white">${escapeHtml(data.winner.username)}</div>
           <div class="text-xs text-slate-400">${
@@ -161,11 +149,9 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
     const user = getCurrentUser();
     if (!user) return null;
 
-    // Try to get user's most recent win first
     const winsResponse = await getProfileWins(user.name);
 
     if (winsResponse.data && winsResponse.data.length > 0) {
-      // Get the most recent win
       const mostRecentWin = winsResponse.data[0];
       const winData = convertListingToFeaturedWin(mostRecentWin, user.name);
       if (winData) {
@@ -173,7 +159,7 @@ export async function fetchFeaturedWin(): Promise<FeaturedWinData | null> {
       }
     }
 
-    // If the user has no wins, show the platform's most recent close instead.
+    // Fall back to platform's most recent closed auction.
     const [mostRecentlyEnded] = await recentlyEnded(1);
 
     if (mostRecentlyEnded) {
@@ -222,11 +208,5 @@ export async function initFeaturedWin(): Promise<void> {
   }
 
   container.innerHTML = renderFeaturedWin(data);
-
-  // The avatar's initial-letter substitute is the sibling already sitting behind it.
-  initImageFallbacks(container, (img) => {
-    img.style.display = 'none';
-    const initial = img.nextElementSibling;
-    if (initial instanceof HTMLElement) initial.style.display = 'flex';
-  });
+  initIdentityFallbacks(container);
 }

@@ -1,19 +1,11 @@
 import { getListings, searchListings } from './listings';
 import type { Listing } from '../types/api';
+import { probeImages } from '../utils/imageProbe';
+import { probeVariant } from '../utils/imageOptimization';
 
-/**
- * Named queries over the listings endpoints.
- *
- * Surfaces ask for intent — "the active pool", "what is closing next" — instead of assembling parameters.
- * That exists because every surface used to fetch the newest 50 listings and filter them in the browser, and only ~2% of the pool is active, so each one was wrong in its own way.
- *
- * Four API behaviours are measured, not assumed, and shape everything below:
- *
- * - The whole active pool fits in one request (53 of 3,200 lots, cap 100 per page).
- * - `_active=false` is ignored and returns the entire pool, so it is never sent, and there is no way to ask for ended lots directly.
- * - An unknown `sort` field is a 500, not a silent ignore — hence `toSortKey`.
- * - `/auction/listings/search` honours `q`, `sort`, `page` and the includes, but ignores `_active` and `_tag`.
- */
+// Named queries express intent instead of assembling parameters.
+// API behaviours: active pool fits in one request; _active=false is ignored;
+// unknown sort is 500; search ignores _active and _tag.
 
 /** The API's own ceiling: `limit=101` is a 400. */
 const MAX_PAGE_SIZE = 100;
@@ -55,12 +47,7 @@ export function toSortOrder(value: string | undefined): SortOrder {
   return value === 'asc' ? 'asc' : 'desc';
 }
 
-/**
- * Every currently-running auction.
- *
- * One request covers it, and the pool is small enough that ranking it in memory is both exact and cheaper than asking the server per surface.
- * Pages beyond the first are followed only if `meta.pageCount` says they exist.
- */
+// One request covers all active lots; small enough to rank in memory cheaply.
 export async function activePool(): Promise<Listing[]> {
   return fetchWholeSet({
     _active: true,
@@ -105,12 +92,7 @@ export async function endingSoon(limit: number): Promise<Listing[]> {
   return response.data ?? [];
 }
 
-/**
- * Active lots with the most bids. The API cannot sort by bid count;
- *   every spelling of it is a 500 — so this ranks the pool here.
- *
- * Pass `pool` when the caller already has it; a page rendering several rankings should fetch once.
- */
+// Ranked by bids (API cannot sort by bid count). Pass pool to avoid refetching.
 export async function trending(
   limit: number,
   pool?: Listing[]
@@ -123,11 +105,7 @@ export async function trending(
     .slice(0, limit);
 }
 
-/**
- * The most recently created active lots.
- *
- * Unlike the bid-ranked queries this one the server can answer exactly, so without a pool it asks for just the rows it needs rather than pulling all of them.
- */
+// Server can sort by created; fetches only needed rows when no pool provided.
 export async function newest(
   limit: number,
   pool?: Listing[]
@@ -165,12 +143,124 @@ export async function featuredActive(
     .slice(0, limit);
 }
 
-/**
- * The lots that closed most recently, with at least one bid.
- *
- * There is no "ended" filter, so this sorts by `endsAt` descending and reads past the active lots at the head.
- * The window has to clear the whole active pool — at `limit: 50` it never did, and the caller silently fell back forever.
- */
+// Extra candidates to choose between; kept small to avoid wasted bandwidth.
+const HERO_PROBE_MARGIN = 2;
+
+// Measured on slow 4G; tighter budget produced a one-tile hero (worse than placeholder).
+const HERO_PROBE_BUDGET_MS = 2500;
+
+// Timeout is a macrotask; too little time left = all failures with no chance for hosts to answer.
+const HERO_MIN_WAVE_MS = 250;
+
+/** Under this a photograph is upscaled in any hero tile, so it is only used if nothing better verified. */
+const HERO_MIN_GOOD_WIDTH = 600;
+
+/** The main tile is roughly 3:1, so it wants a wide photograph rather than merely a large one. */
+const HERO_MAIN_MIN_WIDTH = 800;
+
+// Lots verified to have working photos; unverified ones filled from plain ranking.
+// No placeholder here (unlike catalog); missing photo reads as page failure, not lot.
+export async function featuredWithImages(
+  limit: number,
+  pool?: Listing[]
+): Promise<Listing[]> {
+  const ranked = await featuredActive(MAX_PAGE_SIZE, pool);
+  const deadline = Date.now() + HERO_PROBE_BUDGET_MS;
+
+  const chosen: HeroCandidate[] = [];
+  const dead = new Set<Listing>();
+  let next = 0;
+
+  while (
+    chosen.length < limit &&
+    next < ranked.length &&
+    deadline - Date.now() >= HERO_MIN_WAVE_MS
+  ) {
+    const need = limit - chosen.length;
+    const wave = ranked.slice(next, next + need + HERO_PROBE_MARGIN);
+    next += wave.length;
+
+    const variants = wave.map((listing) =>
+      probeVariant(listing.media?.[0]?.url ?? '')
+    );
+    const results = await probeImages(
+      variants.map((variant) => variant.url),
+      deadline - Date.now()
+    );
+
+    const verified: HeroCandidate[] = [];
+    wave.forEach((listing, index) => {
+      if (!results[index].ok) {
+        // Timeout means budget ran out, not missing photo; stay eligible for fill.
+        if (!results[index].timedOut) dead.add(listing);
+        return;
+      }
+      verified.push({
+        listing,
+        width: results[index].width,
+        height: results[index].height,
+        resizable: variants[index].resizable,
+      });
+    });
+
+    // Sort by sharpness (stable); prefer big photos but fill empty tiles anyway.
+    verified.sort((a, b) => Number(isSharp(b)) - Number(isSharp(a)));
+    chosen.push(...verified.slice(0, need));
+  }
+
+  // Settle mosaic wide tile before fill; unprobed lots can't judge aspect ratio.
+  const widest = widestIndex(chosen);
+  if (widest > 0) {
+    const [main] = chosen.splice(widest, 1);
+    chosen.unshift(main);
+  }
+
+  const featured = chosen.map((candidate) => candidate.listing);
+
+  // Fill from ranking; unverified lots are what tiles used to be anyway.
+  for (const listing of ranked) {
+    if (featured.length >= limit) break;
+    if (featured.includes(listing) || dead.has(listing)) continue;
+    featured.push(listing);
+  }
+
+  // Empty hero would claim nothing's on; show ranking and let placeholder speak.
+  if (featured.length === 0) return ranked.slice(0, limit);
+
+  return featured;
+}
+
+interface HeroCandidate {
+  listing: Listing;
+  width: number;
+  height: number;
+  /** The probe asked a CDN for a small variant, so its width says nothing about the source. */
+  resizable: boolean;
+}
+
+function isSharp(candidate: HeroCandidate): boolean {
+  return candidate.resizable || candidate.width >= HERO_MIN_GOOD_WIDTH;
+}
+
+// Which candidate for the wide tile, or -1 to leave alone. Only arrangement changes.
+function widestIndex(candidates: HeroCandidate[]): number {
+  let best = -1;
+  let bestAspect = 0;
+
+  candidates.forEach((candidate, index) => {
+    // A resized variant keeps the source's aspect, which is the only thing being compared here.
+    if (!candidate.resizable && candidate.width < HERO_MAIN_MIN_WIDTH) return;
+    const aspect = candidate.width / candidate.height;
+    if (aspect > bestAspect) {
+      bestAspect = aspect;
+      best = index;
+    }
+  });
+
+  return best;
+}
+
+// No "ended" filter, so sort descending by endsAt and skip active lots at the head.
 export async function recentlyEnded(limit: number): Promise<Listing[]> {
   const response = await getListings({
     limit: MAX_PAGE_SIZE,
@@ -191,18 +281,7 @@ export async function recentlyEnded(limit: number): Promise<Listing[]> {
     .slice(0, limit);
 }
 
-/**
- * One page of the catalog grid, however it is filtered.
- *
- * The search endpoint ignores `_active` and `_tag`.
- * So wherever a search meets one of those, the smaller set is fetched whole and the other condition applied to it here;
- *  that is always the filtered side, 53 active lots or 78 for the widest category, against 2,383 rows for a one-letter term.
- *
- * 1. Search + active only — filter the active pool.
- * 2. Search + category — filter the tag set, which `_tag` can be asked for exactly.
- * 3. Search alone — the search endpoint, paginated server-side.
- * 4. No search — a plain server query, where `_active` and `_tag` compose.
- */
+// Search endpoint ignores _active and _tag; fetch smaller set and filter here when both present.
 export async function catalogPage(
   query: CatalogQuery = {}
 ): Promise<CatalogResult> {
@@ -270,12 +349,7 @@ export async function catalogPage(
   };
 }
 
-/**
- * Fetch every page of a set.
- *
- * Only for sets the API can already narrow to something small:
- *  the active pool (53 of 3,200 lots) and a single tag (78 at the widest). Never the unfiltered pool, which is 32 pages.
- */
+// Fetch all pages of a pre-filtered set (active pool, single tag). Not for unfiltered pool.
 async function fetchWholeSet(
   params: Parameters<typeof getListings>[0]
 ): Promise<Listing[]> {

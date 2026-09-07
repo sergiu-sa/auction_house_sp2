@@ -1,22 +1,21 @@
-/**
- * Image Optimization Utilities
- * Helper functions for responsive images and lazy loading
- */
+// Which resizing CDN a URL is served by, or null. Matched on hostname to avoid substring spoofs.
+function resizableHost(url: string): 'unsplash' | 'pexels' | null {
+  let hostname: string;
+  try {
+    hostname = new URL(url).hostname;
+  } catch {
+    return null;
+  }
+  if (hostname === 'images.unsplash.com') return 'unsplash';
+  if (hostname === 'images.pexels.com') return 'pexels';
+  return null;
+}
 
-/**
- * Generate srcset for responsive images
- * Creates multiple image widths for better performance
- *
- * @param baseUrl - The base image URL
- * @returns srcset string with multiple widths
- */
+// Generate srcset for CDNs that support width parameters.
 function generateSrcset(baseUrl: string): string {
-  // For external images, I can't generate different sizes
-  // But I can add srcset hints for browser to handle better
-  // Most modern image CDNs (like Unsplash, Pexels) support width parameters
+  const host = resizableHost(baseUrl);
 
-  // Detect common image CDN patterns
-  if (baseUrl.includes('images.unsplash.com')) {
+  if (host === 'unsplash') {
     // Unsplash supports ?w= parameter
     const baseWithoutParams = baseUrl.split('?')[0];
     const existingParams = baseUrl.includes('?') ? baseUrl.split('?')[1] : '';
@@ -29,12 +28,16 @@ function generateSrcset(baseUrl: string): string {
     `.trim();
   }
 
-  if (baseUrl.includes('images.pexels.com')) {
+  if (host === 'pexels') {
+    // Split like the branch above rather than appending to the whole URL.
+    // Pexels URLs in the live pool already carry `?w=1260&h=750&dpr=1`, so `${baseUrl}?w=400` produced a second `?`, the  intended width was swallowed into the previous parameter's value, and all four candidates served the byte-identical original while advertising 400w to 1200w.
+    const [pexelsBase, pexelsParams] = baseUrl.split('?');
+    const pexelsSuffix = pexelsParams ? `&${pexelsParams}` : '';
     return `
-      ${baseUrl}?w=400&h=400 400w,
-      ${baseUrl}?w=600&h=600 600w,
-      ${baseUrl}?w=800&h=800 800w,
-      ${baseUrl}?w=1200&h=1200 1200w
+      ${pexelsBase}?w=400&h=400${pexelsSuffix} 400w,
+      ${pexelsBase}?w=600&h=600${pexelsSuffix} 600w,
+      ${pexelsBase}?w=800&h=800${pexelsSuffix} 800w,
+      ${pexelsBase}?w=1200&h=1200${pexelsSuffix} 1200w
     `.trim();
   }
 
@@ -42,18 +45,21 @@ function generateSrcset(baseUrl: string): string {
   return '';
 }
 
-/**
- * Generate responsive image attributes for external images
- * Since images come from external URLs (API), we use browser-native responsive image techniques
- *
- * @param imageUrl - The image URL
- * @param imageAlt - The alt text
- * @param aspectRatio - The aspect ratio class (e.g., 'aspect-square', 'h-48')
- * @param sizesOverride - Layouts the three presets do not describe, such as the home hero mosaic, whose tiles are a third of a column rather than a card.
- * Getting `sizes` wrong is what makes the browser fetch a 1074px original for a 133px box.
- * Callers write this into an attribute unescaped, as they do the presets, so it must be a literal and never user data.
- * @returns Object with image attributes
- */
+// 400px is the smallest srcset candidate; the probe reuses this fetch.
+const PROBE_WIDTH = 400;
+
+// CDN variant for cheap probing; resizable=true means dimensions are from the variant, not the original.
+export function probeVariant(url: string): { url: string; resizable: boolean } {
+  if (resizableHost(url) === null) {
+    return { url, resizable: false };
+  }
+
+  const [base, params] = url.split('?');
+  const suffix = params ? `&${params}` : '';
+  return { url: `${base}?w=${PROBE_WIDTH}${suffix}`, resizable: true };
+}
+
+// Generate responsive image attributes. sizesOverride for layouts not in the preset (e.g., hero mosaic).
 export function generateResponsiveImageAttrs(
   imageUrl: string,
   imageAlt: string,
@@ -69,21 +75,18 @@ export function generateResponsiveImageAttrs(
   height: number;
   sizes: string;
 } {
-  // Define dimensions based on aspect ratio for layout stability (CLS prevention)
   const dimensions = {
-    square: { width: 600, height: 600 }, // 1:1 ratio for ProductCard, CollectionCard
-    landscape: { width: 600, height: 450 }, // 4:3 ratio for listing detail
-    compact: { width: 600, height: 400 }, // 3:2 ratio for QuickCard
+    square: { width: 600, height: 600 },
+    landscape: { width: 600, height: 450 },
+    compact: { width: 600, height: 400 },
   };
 
-  // Define sizes attribute based on layout breakpoints for better responsive loading
   const sizesMap = {
     square: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
     landscape: '(max-width: 768px) 100vw, 50vw',
     compact: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw',
   };
 
-  // Generate srcset for supported CDNs
   const srcset = generateSrcset(imageUrl);
 
   return {

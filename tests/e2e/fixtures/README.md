@@ -31,6 +31,9 @@ These could not be recorded: a bid is a live write to a shared pool, and the acc
 | `listing-own.json` | `profile-listings.json[0]` | `listing-edit.html` calls `requireOwnership(seller.name)`, so it needs a single-listing response the test user owns. |
 | `bid-created.json` | `Bid` in `src/types/api.ts` | The `POST /bids` response. The app awaits it and re-fetches the listing, so only its shape matters. |
 | `error-500.json` | — | The listings-endpoint failure path. |
+| `listing-broken-image.json` | `listing-single.json`, with every `media[0].url` **and** the seller's avatar pointed at `BROKEN_IMAGE_URL` | One lot that exercises both fallback conventions at once — the branded placeholder for the lot, the initial letter for the person. |
+| `listing-no-media.json` | `listing-single.json`, `media: []` | The lot that used to render a hardcoded Unsplash photograph of a pair of headphones (F-089). |
+| `grey-1200x800.png` | — | The flat `#e2e8f0` stand-in served for every non-local image request. **1200x800 on purpose**: the hero reads `naturalWidth` to decide which lots it can feature, and a 1x1 made every fixture photograph look too small, so the hero reordered around an artefact of the mock. Solid colour, so it renders identically under `object-cover` and moves no screenshot. It lives here rather than in `assets/` because it is served; `tests/csp.test.ts` asserts `assets/` holds only what the icon build reads. |
 
 ## Pagination
 

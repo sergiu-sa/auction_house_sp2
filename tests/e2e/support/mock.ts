@@ -7,10 +7,7 @@ import type { Page, Route, Request } from '@playwright/test';
 // From the repo root: avoids __dirname/import.meta ambiguity in an ESM package.
 const FIXTURES = join(process.cwd(), 'tests', 'e2e', 'fixtures');
 
-/**
- * When the fixtures were recorded.
- * Every test freezes the page clock here, which stops the recorded `endsAt` values decaying and keeps countdowns constant.
- */
+// When fixtures were recorded; tests freeze the clock here to keep countdowns constant.
 export const FROZEN_AT = new Date('2026-08-22T15:30:00.000Z');
 
 export const IDS = {
@@ -22,7 +19,14 @@ export const IDS = {
   own: '1b22b753-d3d0-418f-8ec1-b6a1e344cbb3',
   /** In no fixture; exercises the 404 branch. */
   missing: '00000000-0000-4000-8000-000000000000',
+  /** Every media URL points at BROKEN_IMAGE_URL. Derived fixture. */
+  brokenImage: 'deadbeef-2222-4333-8444-555566667777',
+  /** `media: []`. Derived fixture. */
+  noMedia: 'deadbeef-3333-4444-8555-666677778888',
 };
+
+// 200 with HTML body (not 404) to match real failures; Chromium logs nothing for 200.
+export const BROKEN_IMAGE_URL = 'https://broken.invalid/lot-image-that-404s.jpg';
 
 /** One recorded fixture, parsed. Exported so a spec overriding a route reads from the same place this server does, rather than re-deriving the path. */
 export function loadFixture<T = unknown>(name: string): T {
@@ -31,12 +35,8 @@ export function loadFixture<T = unknown>(name: string): T {
 
 const json = (name: string): unknown => loadFixture(name);
 
-/** 1x1 #e2e8f0 PNG behind every listing image.
- * Grey, not the copy-paste "transparent" pixel, which is half-opaque green and floods the baselines. */
-const PIXEL = Buffer.from(
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADklEQVR4AWJ69OLDfwAAAAD//w4k+LAAAAAGSURBVAMACS4DvBBD42oAAAAASUVORK5CYII=',
-  'base64'
-);
+// 1200x800 grey PNG (not 1x1) so hero can judge naturalWidth correctly.
+const PIXEL = readFileSync(join(FIXTURES, 'grey-1200x800.png'));
 
 export type ListingsMode = 'default' | 'empty' | 'error';
 
@@ -55,12 +55,7 @@ interface Options {
 
 const LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//;
 
-/**
- * Serve every request from disk.
- * Two rules keep this trustworthy:
- * fulfil, never abort (an aborted subresource logs a console error and would  trip the zero-console-errors assertion);
- *  and record anything unclaimed in `unexpected`, which fails the test on teardown.
- */
+// Serve all requests from disk; fulfil never abort. Record unclaimed requests to fail the test.
 export async function installMocks(
   page: Page,
   options: Options = {}
@@ -85,6 +80,13 @@ export async function installMocks(
     if (LOCAL.test(url)) return route.continue();
 
     if (request.resourceType() === 'image') {
+      if (url === BROKEN_IMAGE_URL) {
+        return route.fulfill({
+          status: 200,
+          contentType: 'text/html',
+          body: '<html><body>not an image</body></html>',
+        });
+      }
       return route.fulfill({
         status: 200,
         contentType: 'image/png',
@@ -103,12 +105,7 @@ export async function installMocks(
     return route.fulfill({ status: 200, contentType: 'text/plain', body: '' });
   });
 
-  // No font or stylesheet routes at all any more.
-  // The icon font and both display faces are self-hosted and same-origin, so the preview server serves them and the catch-all above never sees them.
-  // A request to cdnjs or fonts.googleapis.com would now land in `unexpected` and fail the test, which is the assertion we want.
-  //
-  // `fa-all.min.css` and `fa-solid-900.woff2` stay in tests/e2e/assets but are never served:
-  //   they are what scripts/build-icon-font.mjs subsets and what tests/icons.test.ts resolves names against.
+  // Self-hosted fonts are served by preview server; external CDNs would land in `unexpected`.
 
   const api = (route: Route, request: Request): Promise<void> => {
     if (request.method() !== 'GET') {
@@ -262,5 +259,7 @@ function listingById(id: string): unknown | null {
   if (id === IDS.otherSeller) return json('listing-single');
   if (id === IDS.lowBid) return json('listing-lowbid');
   if (id === IDS.own) return json('listing-own');
+  if (id === IDS.brokenImage) return json('listing-broken-image');
+  if (id === IDS.noMedia) return json('listing-no-media');
   return null;
 }

@@ -19,6 +19,13 @@ import { setUser } from '../utils/storage';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
 import { escapeHtml } from '../utils/escapeHtml';
+import {
+  initIdentityFallbacks,
+  initLotImageFallbacks,
+  lotImageSource,
+} from '../utils/listingImage';
+import { renderAvatar } from '../components/Avatar';
+import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
 export function initProfilePage(): void {
   // Render header and footer
@@ -139,6 +146,9 @@ function renderProfile(
     </div>
   `;
 
+  initLotImageFallbacks(container);
+  initIdentityFallbacks(container);
+
   // Add event listeners (only if own profile)
   if (isOwnProfile) {
     setupEventListeners(profile);
@@ -189,6 +199,7 @@ function renderProfileHero(
               fetchpriority="high"
               decoding="async"
               referrerpolicy="no-referrer"
+              data-identity-image
             />`
               : ''
           }
@@ -201,22 +212,14 @@ function renderProfileHero(
             class="w-28 h-28 flex-shrink-0 bg-white"
             style="border: 3px solid var(--aucto-border-dark);"
           >
-            ${
-              avatarUrl
-                ? `<img
-                src="${escapeHtml(avatarUrl)}"
-                alt="Profile avatar"
-                class="h-full w-full object-cover"
-                width="112"
-                height="112"
-                loading="eager"
-                decoding="async"
-                referrerpolicy="no-referrer"
-              />`
-                : `<div class="h-full w-full bg-slate-900 text-white flex items-center justify-center font-bold text-4xl">
-                ${escapeHtml(profile.name.charAt(0).toUpperCase())}
-              </div>`
-            }
+            ${renderAvatar({
+              url: avatarUrl || undefined,
+              name: profile.name,
+              sizeClass: 'h-full w-full',
+              textClass: 'text-4xl',
+              alt: 'Profile avatar',
+              loading: 'eager',
+            })}
           </div>
 
           <!-- Info section -->
@@ -530,7 +533,10 @@ function renderActiveListings(
 }
 
 function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
-  const imageUrl = listing.media?.[0]?.url || '';
+  const image = lotImageSource(listing.media, listing.title);
+  // Through the shared preset, not hand-written attributes: without it this grid emitted no
+  //  srcset or sizes, so every CDN-hosted lot downloaded its original into a 600px box.
+  const imgAttrs = generateResponsiveImageAttrs(image.src, image.alt, 'square');
   const bidsCount = listing._count?.bids || 0;
   const currentHighest = highestBid(listing.bids);
   const tag = listing.tags?.[0] || 'General';
@@ -545,22 +551,19 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
         class="aspect-square bg-slate-100"
         style="border-bottom: 2px solid var(--aucto-border-dark)"
       >
-        ${
-          imageUrl
-            ? `<img
-          src="${escapeHtml(imageUrl)}"
-          alt="${escapeHtml(listing.title)}"
+        <img
+          src="${escapeHtml(imgAttrs.src)}"
+          ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
+          alt="${escapeHtml(imgAttrs.alt)}"
+          width="${imgAttrs.width}"
+          height="${imgAttrs.height}"
+          sizes="${imgAttrs.sizes}"
+          loading="${imgAttrs.loading}"
+          decoding="${imgAttrs.decoding}"
           class="h-full w-full object-cover"
-          width="600"
-          height="600"
-          loading="lazy"
-          decoding="async"
           referrerpolicy="no-referrer"
-        />`
-            : `<div class="h-full w-full flex items-center justify-center">
-          <i class="fa-solid fa-image text-6xl text-slate-300" aria-hidden="true"></i>
-        </div>`
-        }
+          data-lot-image
+        />
       </div>
       <div class="p-5">
         <div

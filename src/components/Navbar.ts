@@ -17,6 +17,8 @@ import {
 } from './filters';
 import type { User } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
+import { initIdentityFallbacks } from '../utils/listingImage';
+import { renderAvatar } from './Avatar';
 
 interface NavLink {
   href: string;
@@ -25,10 +27,7 @@ interface NavLink {
   ariaLabel: string;
 }
 
-/**
- * Build the four primary nav links (Feed, Catalog, Create, Profile).
- * Guest users get rerouted to /login.html for Create and Profile, with the original destination preserved via a `redirect` query param.
- */
+// Guest users rerouted to login for Create and Profile, with redirect preserved.
 function getNavLinks(
   isLoggedIn: boolean,
   profileLabel: 'Profile' | 'My Profile' = 'Profile'
@@ -136,6 +135,8 @@ export function renderHeader(): void {
     ${!isUserLoggedIn && pageType !== 'auth' ? renderGuestBanner() : ''}
     ${navbarHTML}
   `;
+
+  initIdentityFallbacks(header);
 
   // Initialize event listeners
   initHeaderEvents(pageType);
@@ -386,11 +387,15 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
             aria-expanded="false"
             aria-controls="profile-dropdown-menu"
           >
-            ${
-              user.avatar?.url
-                ? `<img src="${escapeHtml(user.avatar.url)}" alt="" class="h-8 w-8 object-cover" width="32" height="32" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
-                : `<div class="h-8 w-8 bg-slate-900 text-white flex items-center justify-center font-bold text-sm" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${escapeHtml(user.name.charAt(0).toUpperCase())}</div>`
-            }
+            ${renderAvatar({
+              url: user.avatar?.url,
+              name: user.name,
+              sizeClass: 'h-8 w-8',
+              textClass: 'text-sm',
+              borderStyle: 'border: 2px solid var(--aucto-border-dark)',
+              // The button names itself from the visible username beside this.
+              alt: '',
+            })}
             <span class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</span>
             <i class="fa-solid fa-chevron-down text-xs text-slate-500 transition-transform" id="profile-menu-chevron" aria-hidden="true"></i>
           </button>
@@ -508,11 +513,13 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
       <!-- Mobile Menu Header - Logged In -->
       <div class="flex items-center justify-between p-4" style="border-bottom: 2px solid var(--aucto-border-light)">
         <div class="flex items-center gap-2">
-          ${
-            user.avatar?.url
-              ? `<img src="${escapeHtml(user.avatar.url)}" alt="${escapeHtml(user.name)} avatar" class="h-10 w-10 object-cover" width="40" height="40" loading="lazy" referrerpolicy="no-referrer" style="border: 2px solid var(--aucto-border-dark)" />`
-              : `<div class="h-10 w-10 bg-slate-900 text-white flex items-center justify-center font-bold" style="border: 2px solid var(--aucto-border-dark)" aria-hidden="true">${escapeHtml(user.name.charAt(0).toUpperCase())}</div>`
-          }
+          ${renderAvatar({
+            url: user.avatar?.url,
+            name: user.name,
+            sizeClass: 'h-10 w-10',
+            textClass: '',
+            borderStyle: 'border: 2px solid var(--aucto-border-dark)',
+          })}
           <div>
             <div class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</div>
             <div id="navbar-menu-credits" class="text-xs text-slate-600" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>

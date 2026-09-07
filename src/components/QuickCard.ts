@@ -7,6 +7,7 @@ import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
+import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 
 // Quick Card — use for ending-soon sections, urgent listings, compact displays.
 export function createQuickCard(listing: Listing): string {
@@ -15,8 +16,10 @@ export function createQuickCard(listing: Listing): string {
 
   const currentHighest = highestBid(listing.bids);
 
-  const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
-  const imageAlt = listing.media?.[0]?.alt || listing.title;
+  const { src: imageUrl, alt: imageAlt } = lotImageSource(
+    listing.media,
+    listing.title
+  );
 
   // Generate responsive image attributes
   const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'compact');
@@ -40,6 +43,7 @@ export function createQuickCard(listing: Listing): string {
             decoding="${imgAttrs.decoding}"
             class="h-full w-full object-cover"
             referrerpolicy="no-referrer"
+            data-lot-image
           />
         </a>
       </div>
@@ -132,6 +136,8 @@ export function attachQuickCardEvents(
 ): void {
   const container = document.getElementById(containerId);
   if (!container) return;
+
+  initLotImageFallbacks(container);
 
   // Place Bid buttons
   const bidButtons = container.querySelectorAll<HTMLButtonElement>(

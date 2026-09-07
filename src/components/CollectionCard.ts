@@ -5,6 +5,7 @@ import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { isWatched, toggleWatched } from '../utils/storage';
 import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
+import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 
 function renderFavoriteButton(listingId: string, borderStyle: string): string {
   const watched = isWatched(listingId);
@@ -53,8 +54,10 @@ export function createCollectionCard(
   const bids = listing.bids || [];
   const currentHighest = highestBid(bids);
 
-  const imageUrl = listing.media?.[0]?.url || '/images/placeholder.svg';
-  const imageAlt = listing.media?.[0]?.alt || listing.title;
+  const { src: imageUrl, alt: imageAlt } = lotImageSource(
+    listing.media,
+    listing.title
+  );
 
   const imgAttrs = generateResponsiveImageAttrs(imageUrl, imageAlt, 'square');
 
@@ -115,6 +118,7 @@ export function createCollectionCard(
                 decoding="${imgAttrs.decoding}"
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 referrerpolicy="no-referrer"
+                data-lot-image
               />
             </a>
 
@@ -216,6 +220,7 @@ export function createCollectionCard(
               decoding="${imgAttrs.decoding}"
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               referrerpolicy="no-referrer"
+              data-lot-image
             />
           </a>
 
@@ -332,6 +337,8 @@ export function attachCollectionCardEvents(
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  initLotImageFallbacks(container);
+
   // View & Bid buttons
   const viewBidButtons = container.querySelectorAll<HTMLButtonElement>(
     '[data-action="view-bid"]'
@@ -414,11 +421,7 @@ export function attachCollectionCardEvents(
   });
 }
 
-/**
- * The skeleton has to follow the view mode for the same reason the card does: `sm:aspect-square`
- * in a list container's single 1216px column resolves to a 1210x1210 media box, which took the
- * document from 9,487px to 37,775px on every refetch.
- */
+// Skeleton must match view mode to prevent large CLS shifts.
 export function createCollectionCardSkeleton(
   viewMode: 'grid' | 'list' = 'grid'
 ): string {

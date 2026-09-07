@@ -89,14 +89,6 @@ async function initShowcase(): Promise<void> {
 
   await initProductShowcase({
     pageName: 'register',
-    fallbackImages: {
-      featured:
-        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=600&fit=crop',
-      tileA:
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
-      tileB:
-        'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=400&fit=crop',
-    },
     featuredDescriptionLength: 80,
     showFeaturedBid: false,
     tileATitleMaxLength: 30,
