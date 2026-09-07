@@ -8,6 +8,8 @@ import {
   featuredActive,
   recentlyEnded,
   catalogPage,
+  getTopTags,
+  profileListings,
   toSortKey,
   toSortOrder,
 } from './listingQueries';
@@ -453,6 +455,106 @@ describe('listingQueries', () => {
 
       expect(urls()[0]).toContain('sort=created');
       expect(urls()[0]).not.toContain('nonsense');
+    });
+  });
+
+  describe('getTopTags', () => {
+    it('derives the top tags from the active pool', async () => {
+      respond([
+        page([
+          listing({ id: '1', tags: ['jewelry', 'watches'] }),
+          listing({ id: '2', tags: ['jewelry', 'bags'] }),
+          listing({ id: '3', tags: ['bags'] }),
+          listing({ id: '4', tags: ['art'] }),
+        ]),
+      ]);
+
+      const tags = await getTopTags(4);
+
+      expect(urls()[0]).toContain('limit=100');
+      expect(urls()[0]).toContain('_active=true');
+      expect(tags).toEqual([
+        { tag: 'jewelry', count: 2 },
+        { tag: 'bags', count: 2 },
+      ]);
+    });
+
+    it('filters out single-item tags (noise)', async () => {
+      respond([
+        page([
+          listing({ id: '1', tags: ['luxury', 'jewelry', 'watch'] }),
+          listing({ id: '2', tags: ['luxury', 'bags'] }),
+          listing({ id: '3', tags: ['luxury'] }),
+        ]),
+      ]);
+
+      const tags = await getTopTags(4);
+
+      expect(tags).toEqual([{ tag: 'luxury', count: 3 }]);
+      expect(tags.map((t) => t.tag)).not.toContain('jewelry');
+      expect(tags.map((t) => t.tag)).not.toContain('watch');
+      expect(tags.map((t) => t.tag)).not.toContain('bags');
+    });
+
+    it('respects the limit', async () => {
+      respond([
+        page([
+          listing({ id: '1', tags: ['a', 'b', 'c', 'd', 'e'] }),
+          listing({ id: '2', tags: ['a', 'b', 'c', 'd'] }),
+          listing({ id: '3', tags: ['a', 'b', 'c'] }),
+          listing({ id: '4', tags: ['a', 'b'] }),
+          listing({ id: '5', tags: ['a'] }),
+        ]),
+      ]);
+
+      const tags = await getTopTags(2);
+
+      expect(tags).toHaveLength(2);
+      expect(tags[0].tag).toBe('a');
+      expect(tags[1].tag).toBe('b');
+    });
+  });
+
+  describe('profileListings', () => {
+    it('fetches a seller\'s listings with pagination', async () => {
+      respond([
+        page(
+          [
+            listing({ id: '1', title: 'Running lot' }),
+            listing({
+              id: '2',
+              title: 'Ended lot',
+              endsAt: '2020-01-01T00:00:00.000Z',
+            }),
+          ],
+          { totalCount: 24, pageCount: 1 }
+        ),
+      ]);
+
+      const result = await profileListings('seller-name', 1);
+
+      expect(urls()[0]).toContain('/auction/profiles/seller-name/listings');
+      expect(urls()[0]).toContain('limit=24');
+      expect(result.listings).toHaveLength(2);
+      expect(result.totalCount).toBe(24);
+      expect(result.pageCount).toBe(1);
+    });
+
+    it('defaults to page 1', async () => {
+      respond([page([listing({ id: '1' })])]);
+
+      const result = await profileListings('testuser');
+
+      expect(urls()[0]).toContain('page=1');
+      expect(result.listings).toHaveLength(1);
+    });
+
+    it('requests a specific page', async () => {
+      respond([page([listing({ id: '1' })])]);
+
+      await profileListings('testuser', 2);
+
+      expect(urls()[0]).toContain('page=2');
     });
   });
 });

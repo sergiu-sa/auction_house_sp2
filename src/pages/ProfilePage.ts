@@ -1,6 +1,6 @@
 import { invalidateProfileCache } from '../utils/profileCache';
 import { prefersReducedMotion } from '../utils/motion';
-import { highestBid, isStillRunning } from '../utils/biddingStats';
+import { highestBid } from '../utils/biddingStats';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import { getCurrentUser, protectedRoute } from '../utils/auth';
@@ -134,14 +134,14 @@ function renderProfile(
   const container = document.getElementById('profile-content');
   if (!container) return;
 
-  const activeListings = listings.filter(isStillRunning);
+  const allListingsCount = listings.length;
   const totalBidsPlaced = bids.length;
 
   container.innerHTML = `
     <div class="space-y-8">
-      ${renderProfileHero(profile, activeListings.length, wins.length, totalBidsPlaced, isOwnProfile)}
+      ${renderProfileHero(profile, allListingsCount, wins.length, totalBidsPlaced, isOwnProfile)}
       ${renderAboutAndSettings(profile, isOwnProfile)}
-      ${renderActiveListings(activeListings, isOwnProfile)}
+      ${renderAllListings(listings, isOwnProfile)}
       ${renderWinsAndBids(wins, bids)}
     </div>
   `;
@@ -237,10 +237,14 @@ function renderProfileHero(
                 ${escapeHtml(profile.name)}
               </h2>
             </div>
-            <div class="mt-1 inline-flex max-w-full items-center gap-2 text-sm text-slate-600">
+            ${
+              isOwnProfile
+                ? `<div class="mt-1 inline-flex max-w-full items-center gap-2 text-sm text-slate-600">
               <i class="fa-solid fa-envelope text-sm" aria-hidden="true"></i>
               <span class="break-all">${escapeHtml(profile.email)}</span>
-            </div>
+            </div>`
+                : ''
+            }
             ${
               profile.bio
                 ? `<p class="mt-3 max-w-2xl break-words text-sm leading-relaxed text-slate-600">
@@ -347,14 +351,18 @@ function renderAboutAndSettings(
             ${escapeHtml(profile.bio || 'No bio provided yet.')}
           </p>
           <div class="mt-6 grid grid-cols-1 gap-4 text-sm text-slate-600 sm:grid-cols-2">
-            <div>
+            ${
+              isOwnProfile
+                ? `<div>
               <div
                 class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
               >
                 Email
               </div>
               <div class="break-all">${escapeHtml(profile.email)}</div>
-            </div>
+            </div>`
+                : ''
+            }
             <div>
               <div
                 class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
@@ -458,7 +466,7 @@ function renderAboutAndSettings(
   `;
 }
 
-function renderActiveListings(
+function renderAllListings(
   listings: Listing[],
   isOwnProfile: boolean
 ): string {
@@ -468,9 +476,9 @@ function renderActiveListings(
         <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <div class="mb-6 flex flex-wrap items-baseline justify-between gap-4">
             <div>
-              <h2 class="text-3xl font-bold text-slate-900">Active listings</h2>
+              <h2 class="text-3xl font-bold text-slate-900">Listings</h2>
               <p class="mt-1 text-sm text-slate-600">
-                ${isOwnProfile ? "You don't have any active listings yet" : 'This seller has no active listings'}
+                ${isOwnProfile ? "You don't have any listings yet" : 'This seller has no listings'}
               </p>
             </div>
             ${
@@ -495,8 +503,10 @@ function renderActiveListings(
     `;
   }
 
-  const listingCards = listings
-    .slice(0, 6)
+  // Limit to first 6 for performance; pagination can be added via profileListings() query
+  const displayLimit = 6;
+  const displayedListings = listings.slice(0, displayLimit);
+  const listingCards = displayedListings
     .map((listing) => renderListingCard(listing, isOwnProfile))
     .join('');
 
@@ -505,9 +515,9 @@ function renderActiveListings(
       <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
         <div class="mb-6 flex flex-wrap items-baseline justify-between gap-4">
           <div>
-            <h2 class="text-3xl font-bold text-slate-900">Active listings</h2>
+            <h2 class="text-3xl font-bold text-slate-900">Listings</h2>
             <p class="mt-1 text-sm text-slate-600">
-              ${listings.length} active ${listings.length === 1 ? 'listing' : 'listings'}
+              Showing ${displayedListings.length} of ${listings.length} ${listings.length === 1 ? 'listing' : 'listings'}
             </p>
           </div>
           ${
