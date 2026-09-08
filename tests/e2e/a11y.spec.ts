@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { test, expect } from './support/fixtures';
-import { IDS } from './support/mock';
+import { IDS, loadFixture } from './support/mock';
 
 /**
  * The accessibility tripwire.
@@ -97,6 +97,44 @@ test.describe('axe — logged out', () => {
       expect(describe(violations), `${page_.name}, logged out`).toBe('');
     });
   }
+});
+
+/**
+ * The profile's pager renders only for a seller with more lots than one page holds, and no recorded fixture produces one;
+ *   so without this override axe never sees these controls at all.
+ */
+test.describe('axe — the profile pager', () => {
+  test.use({ auth: 'in' });
+
+  test('a profile with a second page has no violations', async ({ page }) => {
+    await page.route(/\/auction\/profiles\/[^/]+\/listings/, (route) => {
+      const template = loadFixture<{ data: Record<string, unknown>[] }>(
+        'profile-listings'
+      ).data[0];
+
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          data: Array.from({ length: 6 }, (_, i) => ({
+            ...template,
+            id: `pager-lot-${i}`,
+          })),
+          meta: { currentPage: 1, pageCount: 3, totalCount: 18 },
+        }),
+      });
+    });
+
+    await page.goto('/profile.html');
+    // PREV, 1, 2, 3, NEXT — proves the controls exist before axe is asked about them.
+    await expect(
+      page.locator('#profile-listings-pagination button')
+    ).toHaveCount(5);
+    await page.waitForTimeout(700);
+
+    const violations = await axeViolations(page);
+    expect(describe(violations), 'profile with a pager').toBe('');
+  });
 });
 
 test.describe('axe — logged in', () => {
