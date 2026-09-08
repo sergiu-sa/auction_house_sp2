@@ -1,4 +1,5 @@
 import { test, expect } from './support/fixtures';
+import { SAFE } from '../placeholderGeometry';
 import type { Page } from '@playwright/test';
 import { BROKEN_IMAGE_URL, IDS, loadFixture } from './support/mock';
 
@@ -8,7 +9,7 @@ import { BROKEN_IMAGE_URL, IDS, loadFixture } from './support/mock';
  * The mock answers BROKEN_IMAGE_URL with 200 and an HTML body, which fires the image's `error` event exactly as a 404 does without logging a console error.
  */
 
-const PLACEHOLDER = '/images/placeholder.svg';
+const PLACEHOLDER = '/images/placeholder_v2.svg';
 
 interface ActivePool {
   data: Array<Record<string, unknown>>;
@@ -76,10 +77,7 @@ test('the detail gallery falls back on the main image and every thumbnail', asyn
 }) => {
   await page.goto(`/listing.html?id=${IDS.brokenImage}`);
 
-  await expect(page.locator('#main-image')).toHaveAttribute(
-    'src',
-    PLACEHOLDER
-  );
+  await expect(page.locator('#main-image')).toHaveAttribute('src', PLACEHOLDER);
   const thumbs = page.locator('.thumbnail-btn img');
   await expect(thumbs).toHaveCount(2);
   for (let i = 0; i < 2; i++) {
@@ -99,10 +97,7 @@ test('clicking a thumbnail whose image is dead still falls back', async ({
 
   await page.locator('.thumbnail-btn').nth(1).click();
 
-  await expect(page.locator('#main-image')).toHaveAttribute(
-    'src',
-    PLACEHOLDER
-  );
+  await expect(page.locator('#main-image')).toHaveAttribute('src', PLACEHOLDER);
 
   expect(mock.consoleErrors).toEqual([]);
 });
@@ -178,8 +173,7 @@ test('no image anywhere on home is left rendering as alt text', async ({
       broken: all.filter((i) => i.complete && i.naturalWidth === 0).length,
       heroPlaceholders: [
         ...document.querySelectorAll<HTMLImageElement>('#hero-mosaic img'),
-      ].filter((i) => i.getAttribute('src') === placeholder)
-        .length,
+      ].filter((i) => i.getAttribute('src') === placeholder).length,
       // A working photograph must not be swapped out:
       //  `complete` turns true before the dimensions are known, and reading that as failure replaced one card in ten with the placeholder.
       swappedButFine: all.filter(
@@ -249,4 +243,92 @@ test('a pool with one active lot gives the whole mosaic to it', async ({
   );
 
   expect(mock.consoleErrors).toEqual([]);
+});
+
+/**
+ * Half of the placeholder's safe-zone guarantee: `placeholder.test.ts` asserts the drawing stays
+ * inside SAFE, this asserts SAFE stays inside the crop the live layout produces. SAFE is a
+ * recorded measurement, so a layout change invalidates it with every static check still green.
+ */
+test('every box that can show the placeholder leaves it its safe zone', async ({
+  page,
+}) => {
+  let widest = { ratio: 0, width: 0, box: '', where: '' };
+  let narrowest = { ratio: Infinity, width: 0, box: '', where: '' };
+
+  /**
+   * Both surfaces that render this drawing at an extreme ratio. The hero holds both extremes
+   * today; the auth showcase is ~5% behind on the wide end and genuinely shows the placeholder,
+   * because `updateShowcase` overwrites a tile only when `listings[i]` exists.
+   */
+  const surfaces = [
+    {
+      url: '/index.html',
+      ready: '#hero-mosaic article',
+      images: '#hero-mosaic article img',
+    },
+    { url: '/login.html', ready: '[data-tile]', images: '[data-tile] img' },
+  ];
+
+  for (const width of [320, 640, 768, 900, 1000, 1016, 1023, 1200, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+
+    for (const surface of surfaces) {
+      await page.goto(surface.url);
+      await expect(page.locator(surface.ready).first()).toBeVisible();
+
+      // Every tile, not `.first()`: nothing pins render order, and measuring a narrow side tile
+      // by accident records ~0.46 and passes while a wide one runs away.
+      const tiles = await page.locator(surface.images).evaluateAll((images) =>
+        images
+          .map((img) => img.getBoundingClientRect())
+          .filter((r) => r.width > 0 && r.height > 0)
+          .map((r) => ({
+            ratio: r.width / r.height,
+            box: `${Math.round(r.width)}x${Math.round(r.height)}`,
+          }))
+      );
+
+      for (const { ratio, box } of tiles) {
+        if (ratio > widest.ratio)
+          widest = { ratio, width, box, where: surface.url };
+        if (ratio < narrowest.ratio)
+          narrowest = { ratio, width, box, where: surface.url };
+      }
+    }
+  }
+
+  expect(
+    widest.ratio,
+    'no placeholder-capable box was measured'
+  ).toBeGreaterThan(0);
+
+  // The widest box decides the vertical band, the narrowest the horizontal one.
+  const crop = {
+    yMin: 300 - 300 / widest.ratio,
+    yMax: 300 + 300 / widest.ratio,
+    xMin: 300 - 300 * narrowest.ratio,
+    xMax: 300 + 300 * narrowest.ratio,
+  };
+
+  const widestSaid = `widest box ${widest.box} (${widest.ratio.toFixed(2)}:1) on ${widest.where} at ${widest.width}px`;
+  const narrowestSaid = `narrowest box ${narrowest.box} (${narrowest.ratio.toFixed(2)}:1) on ${narrowest.where} at ${narrowest.width}px`;
+  const remeasure = 're-measure SAFE in tests/placeholderGeometry.ts';
+
+  expect(
+    crop.yMax,
+    `${widestSaid} crops to y<=${crop.yMax.toFixed(1)}, below SAFE.yMax ${SAFE.yMax} — ${remeasure}`
+  ).toBeGreaterThanOrEqual(SAFE.yMax);
+  expect(
+    crop.yMin,
+    `${widestSaid} crops to y>=${crop.yMin.toFixed(1)}, above SAFE.yMin ${SAFE.yMin} — ${remeasure}`
+  ).toBeLessThanOrEqual(SAFE.yMin);
+  expect(
+    crop.xMax,
+    `${narrowestSaid} crops to x<=${crop.xMax.toFixed(1)}, below SAFE.xMax ${SAFE.xMax} — ${remeasure}`
+  ).toBeGreaterThanOrEqual(SAFE.xMax);
+  expect(
+    crop.xMin,
+    `${narrowestSaid} crops to x>=${crop.xMin.toFixed(1)}, above SAFE.xMin ${SAFE.xMin} — ${remeasure}`
+  ).toBeLessThanOrEqual(SAFE.xMin);
 });
