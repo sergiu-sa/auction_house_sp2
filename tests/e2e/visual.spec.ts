@@ -77,6 +77,10 @@ const PUBLIC = [
   { name: 'home', url: '/index.html' },
   { name: 'collection', url: '/collection.html' },
   { name: 'listing', url: `/listing.html?id=${IDS.otherSeller}` },
+  // Every other listing here has media, so no baseline covered the placeholder in the detail
+  // gallery — the one box where it renders largest, and the one where its thumbnails render
+  // smallest. A redraw was reviewed against card-shaped boxes only because of that gap.
+  { name: 'listing-no-media', url: `/listing.html?id=${IDS.noMedia}` },
   { name: 'login', url: '/login.html' },
   { name: 'register', url: '/register.html' },
 ];
