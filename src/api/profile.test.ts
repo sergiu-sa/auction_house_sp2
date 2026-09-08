@@ -53,6 +53,19 @@ describe('profile paths encode the username', () => {
     }
   });
 
+  it('sends page and limit only when a caller asks for them', async () => {
+    await getProfileListings('Oltenks');
+
+    expect(requestedUrl()).not.toContain('page=');
+    expect(requestedUrl()).not.toContain('limit=');
+
+    fetchMock.mockClear();
+    await getProfileListings('Oltenks', { page: 2, limit: 6 });
+
+    expect(requestedUrl()).toContain('page=2');
+    expect(requestedUrl()).toContain('limit=6');
+  });
+
   it('leaves an ordinary username readable', async () => {
     await getProfile('Oltenks');
 

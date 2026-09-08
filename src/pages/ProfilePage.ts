@@ -6,13 +6,18 @@ import { renderFooter } from '../components/Footer';
 import { getCurrentUser, protectedRoute } from '../utils/auth';
 import {
   getProfile,
-  getProfileListings,
   getProfileBids,
   getProfileWins,
   updateProfile,
 } from '../api/profile';
+import { profileListings } from '../api/listingQueries';
+import type { CatalogResult } from '../api/listingQueries';
 import type { Profile, Listing, Bid, UpdateProfileData } from '../types/api';
-import { formatTimeAgo, formatTimeRemaining } from '../utils/formatDate';
+import {
+  formatTimeAgo,
+  formatTimeRemaining,
+  isAuctionActive,
+} from '../utils/formatDate';
 import { isValidUrl } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import { setUser } from '../utils/storage';
@@ -25,7 +30,12 @@ import {
   lotImageSource,
 } from '../utils/listingImage';
 import { renderAvatar } from '../components/Avatar';
+import { renderPagination } from '../components/PaginationComponent';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
+
+const LISTINGS_PER_PAGE = 6;
+
+let listingsRequestId = 0;
 
 export function initProfilePage(): void {
   // Render header and footer
@@ -103,21 +113,20 @@ async function loadProfileData(
 
   try {
     // Fetch profile data
-    const [profileResponse, listingsResponse, bidsResponse, winsResponse] =
+    const [profileResponse, listingsResult, bidsResponse, winsResponse] =
       await Promise.all([
         getProfile(username),
-        getProfileListings(username),
+        profileListings(username, 1, LISTINGS_PER_PAGE),
         getProfileBids(username),
         getProfileWins(username),
       ]);
 
     const profile = profileResponse.data;
-    const listings = listingsResponse.data;
     const bids = bidsResponse.data;
     const wins = winsResponse.data;
 
     // Render profile
-    renderProfile(profile, listings, bids, wins, isOwnProfile);
+    renderProfile(profile, listingsResult, bids, wins, isOwnProfile);
   } catch (error) {
     logError('Failed to load profile data', error);
     showError('Failed to load profile data');
@@ -126,7 +135,7 @@ async function loadProfileData(
 
 function renderProfile(
   profile: Profile,
-  listings: Listing[],
+  listings: CatalogResult,
   bids: Bid[],
   wins: Listing[],
   isOwnProfile: boolean
@@ -134,20 +143,20 @@ function renderProfile(
   const container = document.getElementById('profile-content');
   if (!container) return;
 
-  const allListingsCount = listings.length;
   const totalBidsPlaced = bids.length;
 
   container.innerHTML = `
     <div class="space-y-8">
-      ${renderProfileHero(profile, allListingsCount, wins.length, totalBidsPlaced, isOwnProfile)}
+      ${renderProfileHero(profile, listings.totalCount, wins.length, totalBidsPlaced, isOwnProfile)}
       ${renderAboutAndSettings(profile, isOwnProfile)}
-      ${renderAllListings(listings, isOwnProfile)}
+      ${renderListingsSection(listings, isOwnProfile, 1)}
       ${renderWinsAndBids(wins, bids)}
     </div>
   `;
 
   initLotImageFallbacks(container);
   initIdentityFallbacks(container);
+  mountListingsPagination(profile.name, isOwnProfile, listings, 1);
 
   // Add event listeners (only if own profile)
   if (isOwnProfile) {
@@ -157,7 +166,7 @@ function renderProfile(
 
 function renderProfileHero(
   profile: Profile,
-  activeListingsCount: number,
+  listingsCount: number,
   winsCount: number,
   bidsCount: number,
   isOwnProfile: boolean
@@ -301,10 +310,10 @@ function renderProfileHero(
           <div
             class="mb-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500 inline-flex items-center justify-center gap-1"
           >
-            <i class="fa-solid fa-fire text-xs text-red-600" aria-hidden="true"></i>
-            <span>Active listings</span>
+            <i class="fa-solid fa-box text-xs" aria-hidden="true"></i>
+            <span>Listings</span>
           </div>
-          <div class="text-3xl font-bold text-slate-900">${activeListingsCount}</div>
+          <div class="text-3xl font-bold text-slate-900">${listingsCount}</div>
         </div>
         <div
           class="bg-white px-6 py-5 text-center"
@@ -466,59 +475,49 @@ function renderAboutAndSettings(
   `;
 }
 
-function renderAllListings(
-  listings: Listing[],
-  isOwnProfile: boolean
+function renderListingsSection(
+  result: CatalogResult,
+  isOwnProfile: boolean,
+  page: number
 ): string {
-  if (listings.length === 0) {
-    return `
-      <section>
-        <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
-          <div class="mb-6 flex flex-wrap items-baseline justify-between gap-4">
-            <div>
-              <h2 class="text-3xl font-bold text-slate-900">Listings</h2>
-              <p class="mt-1 text-sm text-slate-600">
-                ${isOwnProfile ? "You don't have any listings yet" : 'This seller has no listings'}
-              </p>
-            </div>
-            ${
-              isOwnProfile
-                ? `<a
-              href="/listing-create.html"
-              class="inline-flex items-center gap-2 bg-slate-900 px-6 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800"
-              style="border: 2px solid var(--aucto-border-dark)"
-            >
-              <i class="fa-solid fa-plus text-sm" aria-hidden="true"></i>
-              <span>Create listing</span>
-            </a>`
-                : ''
-            }
-          </div>
-          <div class="text-center py-12">
+  return `
+    <section id="profile-listings">
+      ${renderListingsPanel(result, isOwnProfile, page)}
+    </section>
+  `;
+}
+
+function renderListingsPanel(
+  result: CatalogResult,
+  isOwnProfile: boolean,
+  page: number
+): string {
+  const isEmpty = result.listings.length === 0;
+  const start = (page - 1) * LISTINGS_PER_PAGE + 1;
+  const end = start + result.listings.length - 1;
+  const noun = result.totalCount === 1 ? 'listing' : 'listings';
+
+  const subtitle = isEmpty
+    ? isOwnProfile
+      ? "You don't have any listings yet"
+      : 'This seller has no listings'
+    : `Showing ${start}-${end} of ${result.totalCount} ${noun}`;
+
+  const body = isEmpty
+    ? `<div class="text-center py-12">
             <i class="fa-solid fa-box text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
             <p class="text-slate-600">${isOwnProfile ? 'Start by creating your first listing' : 'No listings to display'}</p>
-          </div>
-        </div>
-      </section>
-    `;
-  }
-
-  // Limit to first 6 for performance; pagination can be added via profileListings() query
-  const displayLimit = 6;
-  const displayedListings = listings.slice(0, displayLimit);
-  const listingCards = displayedListings
-    .map((listing) => renderListingCard(listing, isOwnProfile))
-    .join('');
+          </div>`
+    : `<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            ${result.listings.map((listing) => renderListingCard(listing, isOwnProfile)).join('')}
+          </div>`;
 
   return `
-    <section>
       <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
         <div class="mb-6 flex flex-wrap items-baseline justify-between gap-4">
           <div>
             <h2 class="text-3xl font-bold text-slate-900">Listings</h2>
-            <p class="mt-1 text-sm text-slate-600">
-              Showing ${displayedListings.length} of ${listings.length} ${listings.length === 1 ? 'listing' : 'listings'}
-            </p>
+            <p class="mt-1 text-sm text-slate-600">${subtitle}</p>
           </div>
           ${
             isOwnProfile
@@ -533,13 +532,65 @@ function renderAllListings(
               : ''
           }
         </div>
-
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          ${listingCards}
-        </div>
+        ${body}
+        <div id="profile-listings-pagination" class="mt-8 empty:hidden"></div>
       </div>
-    </section>
   `;
+}
+
+function mountListingsPagination(
+  username: string,
+  isOwnProfile: boolean,
+  result: CatalogResult,
+  page: number
+): void {
+  renderPagination({
+    containerId: 'profile-listings-pagination',
+    currentPage: page,
+    totalPages: result.pageCount,
+    onPageChange: (next: number) => {
+      void goToListingsPage(username, isOwnProfile, next);
+    },
+  });
+}
+
+/** Repaint the listings panel alone — the hero, wins and bids do not change with the page. */
+async function goToListingsPage(
+  username: string,
+  isOwnProfile: boolean,
+  page: number
+): Promise<void> {
+  const section = document.getElementById('profile-listings');
+  if (!section) return;
+
+  const requestId = ++listingsRequestId;
+
+  try {
+    const result = await profileListings(username, page, LISTINGS_PER_PAGE);
+
+    // A newer page was asked for while this one was in flight.
+    if (requestId !== listingsRequestId) return;
+
+    section.innerHTML = renderListingsPanel(result, isOwnProfile, page);
+    initLotImageFallbacks(section);
+    mountListingsPagination(username, isOwnProfile, result, page);
+
+    // The repaint destroys the button that was focused, which would otherwise drop focus to <body>.
+    const heading = section.querySelector<HTMLElement>('h2');
+    if (heading) {
+      heading.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    }
+  } catch (error) {
+    if (requestId !== listingsRequestId) return;
+
+    logError('Failed to load profile listings page', error);
+    showToast('Could not load that page of listings', 'error');
+  }
 }
 
 function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
@@ -551,6 +602,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
   const currentHighest = highestBid(listing.bids);
   const tag = listing.tags?.[0] || 'General';
   const timeRemaining = formatTimeRemaining(listing.endsAt);
+  const isActive = isAuctionActive(listing.endsAt);
 
   return `
     <article
@@ -558,9 +610,16 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
       style="border: 2px solid var(--aucto-border-dark)"
     >
       <div
-        class="aspect-square bg-slate-100"
+        class="relative aspect-square bg-slate-100"
         style="border-bottom: 2px solid var(--aucto-border-dark)"
       >
+        ${
+          isActive
+            ? ''
+            : `<div class="absolute top-3 left-3 bg-slate-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #475569">
+          ENDED
+        </div>`
+        }
         <img
           src="${escapeHtml(imgAttrs.src)}"
           ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
@@ -586,7 +645,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           ${escapeHtml(listing.title)}
         </h3>
         <div class="mb-3 text-xs text-slate-600">
-          Ends ${timeRemaining}
+          ${isActive ? `Ends ${timeRemaining}` : 'Ended'}
         </div>
         <div class="mb-4 text-2xl font-bold text-slate-900">
           ${currentHighest > 0 ? `${currentHighest} Credits` : 'No bids yet'}

@@ -26,10 +26,15 @@ export async function getProfile(
  * @param username - Profile username
  */
 export async function getProfileListings(
-  username: string
+  username: string,
+  params: { page?: number; limit?: number } = {}
 ): Promise<ApiResponse<Listing[]>> {
+  const query = new URLSearchParams({ _bids: 'true', _seller: 'true' });
+  if (params.page) query.set('page', String(params.page));
+  if (params.limit) query.set('limit', String(params.limit));
+
   return api.get<ApiResponse<Listing[]>>(
-    `/auction/profiles/${encodeURIComponent(username)}/listings?_bids=true&_seller=true`
+    `/auction/profiles/${encodeURIComponent(username)}/listings?${query.toString()}`
   );
 }
 

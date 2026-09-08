@@ -1,5 +1,6 @@
 import { getListings, searchListings } from './listings';
-import type { Listing, ApiResponse } from '../types/api';
+import { getProfileListings } from './profile';
+import type { Listing } from '../types/api';
 import { probeImages } from '../utils/imageProbe';
 import { probeVariant } from '../utils/imageOptimization';
 
@@ -423,61 +424,20 @@ function paginate(
 }
 
 /**
- * Get the top N tags from the active pool, ordered by frequency.
- * Used to derive dynamic category filters from real data.
- * Excludes tags that appear on only one item (noise).
- */
-export async function getTopTags(
-  limit: number = 4
-): Promise<{ tag: string; count: number }[]> {
-  const listings = await activePool();
-
-  // Aggregate tag counts
-  const tagCounts: Record<string, number> = {};
-  listings.forEach((listing) => {
-    if (listing.tags && Array.isArray(listing.tags)) {
-      listing.tags.forEach((tag) => {
-        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-      });
-    }
-  });
-
-  // Filter out single-item tags (noise) and sort by count descending
-  const topTags = Object.entries(tagCounts)
-    .filter(([, count]) => count > 1)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, limit)
-    .map(([tag, count]) => ({ tag, count }));
-
-  return topTags;
-}
-
-/**
- * Get a seller's listings (all, including ended/closed).
- * Paginated to handle sellers with many items.
- * Uses the profile listings endpoint which includes pagination support.
- * @param username - Seller username
- * @param page - Page number (default 1)
+ * One page of a seller's listings, running and ended together.
+ * The endpoint has no active-only mode, so the caller decides how a closed lot reads.
  */
 export async function profileListings(
   username: string,
-  page: number = 1
+  page: number = 1,
+  limit: number = DEFAULT_PAGE_SIZE
 ): Promise<CatalogResult> {
-  // Import here to avoid circular dependency
-  const { api } = await import('./config');
-  const queryParams = new URLSearchParams();
-  queryParams.append('page', page.toString());
-  queryParams.append('limit', DEFAULT_PAGE_SIZE.toString());
-  queryParams.append('_bids', 'true');
-  queryParams.append('_seller', 'true');
-
-  const response = await api.get<ApiResponse<Listing[]>>(
-    `/auction/profiles/${encodeURIComponent(username)}/listings?${queryParams.toString()}`
-  );
+  const response = await getProfileListings(username, { page, limit });
+  const listings = response.data ?? [];
 
   return {
-    listings: response.data ?? [],
-    totalCount: response.meta?.totalCount ?? 0,
+    listings,
+    totalCount: response.meta?.totalCount ?? listings.length,
     pageCount: response.meta?.pageCount ?? 1,
   };
 }

@@ -75,7 +75,9 @@ export async function fetchStats(): Promise<StatsData | null> {
       getProfileWins(user.name),
     ]);
 
-    const myListings = listingsResponse.data.length;
+    // meta.totalCount, not the rows in hand — the profile hero reads the same figure.
+    const myListings =
+      listingsResponse.meta?.totalCount ?? listingsResponse.data.length;
     const myBids = bidsResponse.data.length;
     const totalWins = winsResponse.data?.length || 0;
     const auctionsBidOn = countAuctionsBidOn(bidsResponse.data);
