@@ -499,6 +499,15 @@ describe('listingQueries', () => {
       expect(urls()[0]).toContain('page=2');
     });
 
+    it('orders by endsAt desc so running lots come first', async () => {
+      respond([page([listing({ id: '1' })])]);
+
+      await profileListings('testuser');
+
+      expect(urls()[0]).toContain('sort=endsAt');
+      expect(urls()[0]).toContain('sortOrder=desc');
+    });
+
     it('asks for the page size the caller renders', async () => {
       respond([page([listing({ id: '1' })])]);
 

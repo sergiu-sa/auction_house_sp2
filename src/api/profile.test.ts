@@ -66,6 +66,18 @@ describe('profile paths encode the username', () => {
     expect(requestedUrl()).toContain('limit=6');
   });
 
+  it('passes a sort through only when given one', async () => {
+    await getProfileListings('Oltenks');
+
+    expect(requestedUrl()).not.toContain('sort');
+
+    fetchMock.mockClear();
+    await getProfileListings('Oltenks', { sort: 'endsAt', sortOrder: 'desc' });
+
+    expect(requestedUrl()).toContain('sort=endsAt');
+    expect(requestedUrl()).toContain('sortOrder=desc');
+  });
+
   it('leaves an ordinary username readable', async () => {
     await getProfile('Oltenks');
 

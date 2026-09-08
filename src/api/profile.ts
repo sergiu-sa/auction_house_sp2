@@ -27,11 +27,20 @@ export async function getProfile(
  */
 export async function getProfileListings(
   username: string,
-  params: { page?: number; limit?: number } = {}
+  params: {
+    page?: number;
+    limit?: number;
+    sort?: string;
+    sortOrder?: 'asc' | 'desc';
+  } = {}
 ): Promise<ApiResponse<Listing[]>> {
   const query = new URLSearchParams({ _bids: 'true', _seller: 'true' });
   if (params.page) query.set('page', String(params.page));
   if (params.limit) query.set('limit', String(params.limit));
+  // An unknown sort field is a 500 here, exactly as on /auction/listings;
+  //  measured, not assumed.
+  if (params.sort) query.set('sort', params.sort);
+  if (params.sortOrder) query.set('sortOrder', params.sortOrder);
 
   return api.get<ApiResponse<Listing[]>>(
     `/auction/profiles/${encodeURIComponent(username)}/listings?${query.toString()}`

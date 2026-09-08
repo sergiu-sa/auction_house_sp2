@@ -426,13 +426,21 @@ function paginate(
 /**
  * One page of a seller's listings, running and ended together.
  * The endpoint has no active-only mode, so the caller decides how a closed lot reads.
+ *
+ * Ordered by `endsAt` descending, which puts every future end date ahead of every past one:
+ * a seller's running lots fill the first page and their history follows, rather than live auctions being buried behind pages of closed ones.
  */
 export async function profileListings(
   username: string,
   page: number = 1,
   limit: number = DEFAULT_PAGE_SIZE
 ): Promise<CatalogResult> {
-  const response = await getProfileListings(username, { page, limit });
+  const response = await getProfileListings(username, {
+    page,
+    limit,
+    sort: 'endsAt',
+    sortOrder: 'desc',
+  });
   const listings = response.data ?? [];
 
   return {
