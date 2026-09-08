@@ -68,7 +68,7 @@ export default defineConfig<TestOptions>({
        * Safe to be this strict here in a way it would not be in CI: the renders are deterministic
        * (mocked fixtures, a frozen clock, animations off), and this project is excluded from CI
        * because Playwright keys snapshots by platform. Measured across two builds and a toolchain
-       * bump that moved esbuild three minors: 14/14 exact, a dozen runs, no false positive.
+       * bump that moved esbuild three minors: exact every run, a dozen runs, no false positive.
        *
        * When it does legitimately fail — a macOS font rasterisation change is the likely cause —
        * every baseline fails at once. Regenerate deliberately with
