@@ -2,20 +2,33 @@
  * Pagination Component
  */
 
+import { clampPage } from '../utils/clampPage';
+
 export interface PaginationConfig {
   containerId: string;
   currentPage: number;
   totalPages: number;
   maxVisiblePages?: number;
+  /**
+   * Turn the "Page N of M" text into a jump-to-page field. Opt-in: it earns its place on a
+   * 140-page catalog and not on a profile's two pages of lots.
+   */
+  editablePageNumber?: boolean;
   onPageChange: (page: number) => void;
 }
 
+/**
+ * The editable page number is the "Page N of M" text itself, so the surrounding words label it
+ * and it costs almost no width. `novalidate` is load-bearing: the field clamps rather than
+ * rejects, and with `max` alone the browser blocks the submit and the clamp never runs.
+ */
 export function renderPagination(config: PaginationConfig): void {
   const {
     containerId,
     currentPage,
     totalPages,
     maxVisiblePages = 5,
+    editablePageNumber = false,
     onPageChange,
   } = config;
 
@@ -43,9 +56,30 @@ export function renderPagination(config: PaginationConfig): void {
   let html = `
     <div class="flex items-center justify-between w-full gap-4 flex-wrap" role="navigation" aria-label="Pagination">
       <!-- Page Info -->
+      ${
+        editablePageNumber
+          ? `
+      <form data-page-jump novalidate class="flex items-center gap-1 text-xs md:text-sm text-slate-600 font-medium whitespace-nowrap">
+        <label for="${containerId}-page-number" class="sr-only">Page number, of ${totalPages}</label>
+        <span>Page</span>
+        <input
+          id="${containerId}-page-number"
+          data-page-jump-input
+          type="number"
+          inputmode="numeric"
+          min="1"
+          max="${totalPages}"
+          value="${currentPage}"
+          class="w-12 bg-white px-1 py-0.5 text-center text-sm font-bold text-slate-900 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
+          style="border: 2px solid var(--aucto-border-mid)"
+        />
+        <span>of <span class="font-bold text-slate-900">${totalPages}</span></span>
+      </form>`
+          : `
       <div class="text-xs md:text-sm text-slate-600 font-medium whitespace-nowrap">
         Page <span class="font-bold text-slate-900">${currentPage}</span> of <span class="font-bold text-slate-900">${totalPages}</span>
-      </div>
+      </div>`
+      }
 
       <!-- Navigation Buttons -->
       <div class="flex items-center gap-2 flex-wrap">
@@ -130,6 +164,30 @@ export function renderPagination(config: PaginationConfig): void {
   `;
 
   container.innerHTML = html;
+
+  const jumpInput = container.querySelector<HTMLInputElement>(
+    '[data-page-jump-input]'
+  );
+
+  // The form only exists to stop Enter reloading the page; the commit hangs off `change`.
+  container
+    .querySelector<HTMLFormElement>('[data-page-jump]')
+    ?.addEventListener('submit', (event) => event.preventDefault());
+
+  // `change`, not `submit`: on iOS the numeric keypad has no Return key, so a submit-only field
+  // can be typed into and never committed. `change` covers Enter, blur and the spinner.
+
+  jumpInput?.addEventListener('change', () => {
+    const page = clampPage(jumpInput.value, totalPages);
+
+    // The field displays the current page, so a value left in it would disagree with the grid.
+    if (page === null || page === currentPage) {
+      jumpInput.value = String(currentPage);
+      return;
+    }
+
+    onPageChange(page);
+  });
 
   // Attach event listeners
   const buttons =
