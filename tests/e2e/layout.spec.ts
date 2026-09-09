@@ -212,6 +212,176 @@ test.describe('320px', () => {
       expect(scrollWidth).toBe(clientWidth);
     });
   }
+
+  /**
+   * The panel stacks its whole control set into 320px of width once opened, and the visual baselines only ever photograph it collapsed.
+   */
+  for (const path of ['/index.html', '/collection.html']) {
+    test(`${path}'s expanded filter panel cannot scroll the catalog sideways`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      await page.locator('#catalog-filters-toggle').click();
+      await expect(page.locator('#catalog-sort-select')).toBeVisible();
+
+      const { scrollWidth, clientWidth } = await pageWidths(page);
+      expect(scrollWidth).toBe(clientWidth);
+    });
+  }
+});
+
+/**
+ * The bar is `position: sticky`, which travels only inside its *parent's* box.
+ * It first shipped inside a wrapper div the page module filled with innerHTML;
+ *   a wrapper exactly as tall as the bar, so it had zero room and scrolled away like static content while still computing to `position: sticky`.
+ * The page module now replaces that placeholder rather than filling it, which makes the bar a direct child of the tall catalog section.
+ *
+ * Scroll instantly:
+ *  `html { scroll-behavior: smooth }` means a plain scrollTo is still animating several frames later, and a mid-animation read looks exactly like a bar that did not stick.
+ */
+test.describe('the filter bar stays put', () => {
+  for (const path of ['/index.html', '/collection.html']) {
+    test(`${path} pins its filter bar to the top on scroll`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      await page.locator('#catalog-filter-bar').waitFor();
+      await expect(
+        page
+          .locator('#catalog-cards, #collection-cards-grid')
+          .first()
+          .locator('article')
+          .first()
+      ).toBeVisible();
+
+      const top = await page.evaluate(() => {
+        const bar = document.getElementById('catalog-filter-bar')!;
+        const docTop = bar.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: docTop + 600,
+          behavior: 'instant' as ScrollBehavior,
+        });
+        return bar.getBoundingClientRect().top;
+      });
+
+      expect(Math.round(top)).toBe(0);
+    });
+  }
+});
+
+/**
+ * The bar is sticky, so it covers the top of whatever scrolls under it.
+ * Paging scrolls the grid to `block: 'start'` and focuses it, which without a matching `scroll-margin-top` puts the whole first row, and the element that just took focus, behind the bar.
+ * Measured at 1440 before the fix: the grid landed at y=0 under a bar occupying 0-122.
+ */
+test.describe('paging does not scroll the grid under the bar', () => {
+  for (const [path, grid, pager] of [
+    ['/collection.html', '#collection-cards-grid', '#pagination'],
+    ['/index.html', '#catalog-cards', '#catalog-pagination'],
+  ] as const) {
+    for (const width of [375, 1440]) {
+      test(`${path} keeps the first row clear of the filter bar at ${width}px`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await page.goto(path);
+        await page.locator(`${grid} article`).first().waitFor();
+        await page.locator(pager).getByRole('button', { name: '2' }).click();
+
+        // Measured once, after the scroll settles,  never with expect.poll, which retries until it passes and so succeeds on any frame the smooth scroll happens to pass through.
+        const clearance = await page.evaluate(async (g) => {
+          await new Promise<void>((resolve) => {
+            let last = -1;
+            const settle = (): void => {
+              if (window.scrollY === last) return resolve();
+              last = window.scrollY;
+              setTimeout(settle, 100);
+            };
+            settle();
+          });
+          const bar = document
+            .getElementById('catalog-filter-bar')!
+            .getBoundingClientRect();
+          const card = document
+            .querySelector(`${g} article`)!
+            .getBoundingClientRect();
+          return Math.round(card.top - bar.bottom);
+        }, grid);
+
+        expect(clearance).toBeGreaterThanOrEqual(0);
+      });
+    }
+  }
+});
+
+/**
+ * `scroll-margin-top` is sized for the *collapsed* bar.
+ * With the panel open below `lg` the bar is roughly three times taller, so paging left the first row 107px behind it;
+ *  the same failure the rule exists to prevent, in the one state the collapsed-only test never entered.
+ * The page-change handler now closes the panel before it scrolls.
+ */
+test('paging with the filter panel open still clears the bar', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto('/collection.html');
+  await page.locator('#collection-cards-grid article').first().waitFor();
+
+  await page.locator('#catalog-filters-toggle').click();
+  await expect(page.locator('#catalog-sort-select')).toBeVisible();
+
+  await page.locator('#pagination').getByRole('button', { name: '2' }).click();
+
+  const clearance = await page.evaluate(async () => {
+    await new Promise<void>((resolve) => {
+      let last = -1;
+      const settle = (): void => {
+        if (window.scrollY === last) return resolve();
+        last = window.scrollY;
+        setTimeout(settle, 100);
+      };
+      settle();
+    });
+    const bar = document
+      .getElementById('catalog-filter-bar')!
+      .getBoundingClientRect();
+    const card = document
+      .querySelector('#collection-cards-grid article')!
+      .getBoundingClientRect();
+    return Math.round(card.top - bar.bottom);
+  });
+
+  expect(clearance).toBeGreaterThanOrEqual(0);
+});
+
+/**
+ * The placeholder the page module replaces carries no margin of its own, so reserving only the bar's box left the grid stepping up by the bar's `mb-8` when the module ran.
+ * Pins the reservation against what the bar actually occupies rather than against a written number.
+ */
+test.describe('the filter bar reservation matches what it occupies', () => {
+  for (const width of [375, 1440]) {
+    test(`at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/collection.html');
+      await page.locator('#catalog-filter-bar').waitFor();
+
+      const { reserved, occupied } = await page.evaluate(() => {
+        const probe = document.createElement('div');
+        probe.id = 'catalog-filter-bar-host';
+        document.body.appendChild(probe);
+        const reserved = Math.round(probe.getBoundingClientRect().height);
+        probe.remove();
+
+        const bar = document.getElementById('catalog-filter-bar')!;
+        const occupied =
+          Math.round(bar.getBoundingClientRect().height) +
+          Math.round(parseFloat(getComputedStyle(bar).marginBottom));
+        return { reserved, occupied };
+      });
+
+      expect(reserved).toBe(occupied);
+    });
+  }
 });
 
 test.describe('owner-facing pages', () => {

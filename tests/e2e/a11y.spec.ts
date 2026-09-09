@@ -157,7 +157,6 @@ test.describe('axe — logged in', () => {
     await expect(page.locator('#hero-mosaic')).toBeVisible();
     await page.waitForTimeout(700);
     await page.locator('#profile-menu-btn').click();
-    await page.locator('#toggle-advanced-filters').click();
     await page.waitForTimeout(300);
     expect(describe(await axeViolations(page)), 'home, menus open').toBe('');
 
@@ -167,6 +166,38 @@ test.describe('axe — logged in', () => {
     await page.locator('#deleteButton').click();
     await page.waitForTimeout(300);
     expect(describe(await axeViolations(page)), 'delete modal open').toBe('');
+  });
+
+  /**
+   * Choosing a category collapses the panel, which is display:none below `lg` , so the button that was just activated stops rendering while it still holds focus, and the browser drops focus to <body>.
+   * A keyboard reader picking a category was thrown back to the skip link.
+   */
+  test('choosing a category keeps focus in the bar', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/collection.html');
+
+    await page.locator('#catalog-filters-toggle').click();
+    await page.locator('[data-catalog-filter="tech"]').focus();
+    await page.keyboard.press('Enter');
+
+    await expect(page.locator('#catalog-filters-toggle')).toBeFocused();
+  });
+
+  /**
+   * Below `lg` the filter panel is display:none until the reader opens it, so the standing page scans only ever see it collapsed.
+   * This is the one scan that reaches it open.
+   */
+  test('the expanded filter panel has no violations', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+
+    for (const path of ['/index.html', '/collection.html']) {
+      await page.goto(path);
+      await page.locator('#catalog-filters-toggle').click();
+      await expect(page.locator('#catalog-sort-select')).toBeVisible();
+      expect(describe(await axeViolations(page)), `${path}, panel open`).toBe(
+        ''
+      );
+    }
   });
 });
 
@@ -263,59 +294,79 @@ test.describe('overlays and off-screen controls', () => {
   test.use({ auth: 'in' });
 
   /**
-   * The sticky catalog bar hides by sliding above the viewport.
-   * It is position:fixed, so a control left focusable there cannot be scrolled into view — you tab to nothing.
+   * The panel is display:none while collapsed, so its controls leave the tab order.
+   * The bar it replaced slid above the viewport instead, where a focusable control could not be scrolled back into view,  you tabbed to nothing.
    */
-  test('the hidden sticky filter bar holds no tab stops', async ({ page }) => {
-    await page.goto('/index.html');
-    await expect(page.locator('#hero-mosaic')).toBeVisible();
-    await page.waitForTimeout(800);
+  test('the collapsed filter panel holds no tab stops', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/collection.html');
+    await expect(page.locator('#catalog-filter-bar')).toBeVisible();
 
     for (let i = 0; i < 30; i++) {
       await page.keyboard.press('Tab');
       const inside = await page.evaluate(() => {
-        const bar = document.getElementById('sticky-catalog-filters');
-        return !!bar?.contains(document.activeElement);
+        const panel = document.getElementById('catalog-filters-panel');
+        return !!panel?.contains(document.activeElement);
       });
-      expect(inside, `Tab ${i + 1} landed in the hidden sticky bar`).toBe(
-        false
-      );
+      expect(inside, `Tab ${i + 1} landed in the collapsed panel`).toBe(false);
     }
   });
 
-  test('the sticky filter bar is operable once it slides in', async ({
+  test('the filter panel opens, is operable, and Escape returns focus', async ({
     page,
   }) => {
-    await page.goto('/index.html');
-    await expect(page.locator('#hero-mosaic')).toBeVisible();
-    await page.waitForTimeout(800);
-    // `scroll-behavior: smooth` makes scrollIntoView asynchronous, so wait on the bar itself
-    // rather than a fixed delay. toBeVisible() fails on visibility:hidden, which is the gate.
-    await page.evaluate(() =>
-      document.getElementById('catalog-cards')?.scrollIntoView()
-    );
-    await expect(page.locator('#sticky-catalog-filters')).toBeVisible();
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/collection.html');
 
-    await page.locator('#sticky-sort-select').focus();
-    await expect(page.locator('#sticky-sort-select')).toBeFocused();
+    const toggle = page.locator('#catalog-filters-toggle');
+    await toggle.click();
+    await expect(page.locator('#catalog-sort-select')).toBeVisible();
+
+    await page.locator('#catalog-sort-select').focus();
+    await expect(page.locator('#catalog-sort-select')).toBeFocused();
+
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#catalog-sort-select')).toBeHidden();
+    await expect(toggle).toBeFocused();
   });
 
-  /** Two selects driving the same catalog must not announce identically. */
-  test('the two sort selects have distinct accessible names', async ({
+  /**
+   * Escape closes the panel wherever the reader is, but must not take focus from them to do it.
+   * The handler is on `document`, so an unconditional `focus()` pulled focus off whatever else Escape had just closed, the profile menu focuses its own trigger on the same keypress.
+   */
+  test('Escape from the search field closes the panel without taking focus', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/collection.html');
+
+    await page.locator('#catalog-filters-toggle').click();
+    await expect(page.locator('#catalog-sort-select')).toBeVisible();
+
+    await page.locator('#catalog-search-input').focus();
+    await page.keyboard.press('Escape');
+
+    await expect(page.locator('#catalog-sort-select')).toBeHidden();
+    await expect(page.locator('#catalog-search-input')).toBeFocused();
+  });
+
+  /**
+   * There used to be two sort selects on Home:  the navbar's and the sticky bar's; and this asserted they announced differently.
+   * There is now one, and this asserts that.
+   */
+  test('the catalog has exactly one sort select, and it is named', async ({
     page,
   }) => {
     await page.goto('/index.html');
     await expect(page.locator('#hero-mosaic')).toBeVisible();
-    await page.waitForTimeout(800);
 
-    const navbar = await page
-      .locator('#sort-filter-select')
-      .getAttribute('aria-label');
-    const sticky = await page
-      .locator('#sticky-sort-select')
-      .getAttribute('aria-label');
-    expect(navbar).toBeTruthy();
-    expect(sticky).not.toBe(navbar);
+    // `sort-filter-select` was the navbar's, and is gone; matching only what exists keeps this from looking wider than it is.
+    const selects = page.locator('select[id$="sort-select"]');
+    await expect(selects).toHaveCount(1);
+    await expect(page.locator('#catalog-sort-select')).toHaveAttribute(
+      'aria-label',
+      /.+/
+    );
   });
 
   /**

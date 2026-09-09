@@ -7,6 +7,11 @@ import { renderFeaturedWin } from './FeaturedWin';
 import { renderBreadcrumb, BREADCRUMB_PRESETS } from './Breadcrumb';
 import { renderHeader } from './Navbar';
 import { renderAvatar } from './Avatar';
+import {
+  renderCatalogFilterBar,
+  syncCatalogFilterBar,
+} from './filters/CatalogFilterBar';
+import type { CatalogFilterState } from '../utils/catalogState';
 
 // Hostile listing catches escaping failures before production.
 // Payload breaks out of attributes AND injects scripts to exercise both contexts.
@@ -159,6 +164,37 @@ describe('components are inert against a hostile listing', () => {
     assertInert(
       renderBreadcrumb({ items: BREADCRUMB_PRESETS.listingDetail(PAYLOAD) })
     );
+  });
+
+  it('CatalogFilterBar, as rendered', () => {
+    assertInert(renderCatalogFilterBar());
+  });
+
+  /**
+   * The bar's markup carries no API data, so the static render above can only ever pass.
+   * Its one route for user data is the search term arriving through `syncCatalogFilterBar`, which reaches the field as a `value` property rather than markup;
+   *   assert that, so a rewrite of the setter into an `innerHTML` write is caught here.
+   */
+  it('CatalogFilterBar, syncing a hostile search term', () => {
+    document.body.innerHTML = renderCatalogFilterBar();
+    const state: CatalogFilterState = {
+      page: 1,
+      itemsPerPage: 23,
+      viewMode: 'grid',
+      category: 'all',
+      sort: 'created',
+      sortOrder: 'desc',
+      activeOnly: false,
+      search: PAYLOAD,
+    };
+
+    syncCatalogFilterBar(state, { ...state, search: '' });
+
+    const field = document.getElementById(
+      'catalog-search-input'
+    ) as HTMLInputElement;
+    expect(field.value).toBe(PAYLOAD);
+    assertInert(document.body.innerHTML);
   });
 
   it('Navbar, carrying a stored user name and avatar', async () => {

@@ -4,7 +4,7 @@
  */
 
 export interface CategoryFiltersConfig {
-  dataAttribute: string; // e.g., 'data-filter' or 'data-sticky-filter'
+  dataAttribute: string; // e.g., 'data-catalog-filter'
   activeCategory?: string;
   variant?: 'normal' | 'compact';
 }
