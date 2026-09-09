@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { renderHeader, isBrowsePage } from './Navbar';
+import { renderHeader, isBrowsePage, isCatalogPage } from './Navbar';
 import { invalidateProfileCache } from '../utils/profileCache';
 
 // Guards the mobile menu: closed = display:none (so it can't create horizontal
@@ -140,18 +140,6 @@ describe('document-level listeners across repeated renders', () => {
     expect(counts.keydown).toBe(1);
   });
 
-  it('binds the clearAllFilters listener once on a browse page', async () => {
-    document.body.setAttribute('data-page-type', 'browse');
-    const { renderHeader: render } = await freshNavbar();
-    countAddEventListener();
-
-    render();
-    expect(counts.clearAllFilters).toBe(1);
-
-    render();
-    expect(counts.clearAllFilters).toBe(1);
-  });
-
   it('still closes the dropdown after a re-render, on Escape and on an outside click', async () => {
     document.body.setAttribute('data-page-type', 'user-content');
     const { renderHeader: render } = await freshNavbar();
@@ -207,6 +195,32 @@ describe('isBrowsePage', () => {
   it('matches under a deploy-preview subpath, since the check is on the suffix', () => {
     expect(isBrowsePage('/deploy-preview/index.html')).toBe(true);
     expect(isBrowsePage('/deploy-preview/')).toBe(false);
+  });
+});
+
+describe('isCatalogPage', () => {
+  it('matches the catalog, which carries its own search', () => {
+    expect(isCatalogPage('/collection.html')).toBe(true);
+  });
+
+  it('does not match Home, which keeps the navbar search', () => {
+    expect(isCatalogPage('/')).toBe(false);
+    expect(isCatalogPage('/index.html')).toBe(false);
+  });
+
+  it('does not match the pages with no catalog at all', () => {
+    for (const path of [
+      '/listing.html',
+      '/profile.html',
+      '/login.html',
+      '/register.html',
+    ]) {
+      expect(isCatalogPage(path)).toBe(false);
+    }
+  });
+
+  it('matches under a deploy-preview subpath, since the check is on the suffix', () => {
+    expect(isCatalogPage('/deploy-preview/collection.html')).toBe(true);
   });
 });
 

@@ -4,17 +4,7 @@ import { trapFocus } from '../utils/focusTrap';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
 import { renderGuestBanner } from './GuestBanner';
-import {
-  renderCategoryFilters,
-  renderActiveOnlyCheckbox,
-  renderSortDropdown,
-  initCategoryFilters,
-  initActiveOnlyCheckbox,
-  initSortDropdown,
-  setActiveCategory,
-  setActiveOnlyState,
-  setSortValue,
-} from './filters';
+import { initSearchField } from './filters';
 import type { User } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
 import { initIdentityFallbacks } from '../utils/listingImage';
@@ -124,7 +114,11 @@ export function renderHeader(): void {
 
   if (pageType === 'auth') {
     navbarHTML = renderMinimalNavbar();
-  } else if (pageType === 'user-content') {
+  } else if (
+    pageType === 'user-content' ||
+    isCatalogPage(window.location.pathname)
+  ) {
+    // The catalog carries its own search, pinned above the grid, so it wants the same search-less navbar the profile and listing-form pages already use rather than a third variant of its own.
     navbarHTML = renderSimpleNavbar(isUserLoggedIn, user);
   } else {
     // Default: browse pages (index, collection, listing)
@@ -217,7 +211,7 @@ function renderSimpleNavbar(
   `;
 }
 
-// Full navbar for browse pages (index, collection, listing details)
+// Full navbar for browse pages that carry no catalog toolbar of their own (index, listing detail)
 function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
@@ -246,20 +240,6 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
                 <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
               </div>
             </form>
-
-            <!-- Filters pill -->
-            <button
-              id="toggle-advanced-filters"
-              type="button"
-              class="flex items-center gap-2 bg-white px-3 py-2 hover:bg-slate-50"
-              style="border: 2px solid var(--aucto-border-mid)"
-              aria-expanded="false"
-              aria-controls="advanced-filters-bar"
-              aria-label="Toggle advanced filters"
-            >
-              <i class="fa-solid fa-sliders text-sm" aria-hidden="true"></i>
-              <i class="fa-solid fa-chevron-down text-xs transition-transform" id="filters-chevron" aria-hidden="true"></i>
-            </button>
           </section>
 
           <!-- Spacer for mobile/tablet -->
@@ -305,39 +285,6 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
               <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
             </div>
           </form>
-
-          <!-- Filters button for mobile -->
-          <button
-            id="mobile-toggle-filters"
-            type="button"
-            class="mt-3 w-full flex items-center justify-center gap-2 bg-white px-4 py-2 hover:bg-slate-50"
-            style="border: 2px solid var(--aucto-border-mid)"
-            aria-expanded="false"
-            aria-controls="advanced-filters-bar"
-            aria-label="Toggle filters"
-          >
-            <i class="fa-solid fa-sliders text-sm" aria-hidden="true"></i>
-            <span class="text-[11px] font-bold tracking-[0.18em] uppercase">Filters</span>
-            <i class="fa-solid fa-chevron-down text-xs transition-transform" id="mobile-filters-chevron" aria-hidden="true"></i>
-          </button>
-        </div>
-
-        <!-- Advanced filter bar (hidden by default) -->
-        <div
-          id="advanced-filters-bar"
-          class="hidden px-4 py-4 md:px-6 md:py-4"
-          style="background-color: #f7f7f5; border-bottom: 3px solid #1e293b"
-        >
-          <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <!-- Tag filters -->
-            ${renderCategoryFilters({ dataAttribute: 'data-filter', variant: 'normal' })}
-
-            <!-- Filters + Sort -->
-            <div class="flex flex-wrap items-center gap-3 text-sm">
-              ${renderActiveOnlyCheckbox({ id: 'active-only-filter', variant: 'normal' })}
-              ${renderSortDropdown({ id: 'sort-filter-select', variant: 'normal', label: 'Sort listings' })}
-            </div>
-          </div>
         </div>
       </div>
     </nav>
@@ -618,7 +565,6 @@ function closeProfileMenu(returnFocus: boolean): void {
 // Document-level listeners are bound for the page's lifetime, not per render.
 //  ProfilePage calls renderHeader() again after a profile save, and binding these inside the init functions leaked one of each per call.
 let profileMenuDocumentEventsBound = false;
-let clearFiltersEventBound = false;
 
 function bindProfileMenuDocumentEvents(): void {
   if (profileMenuDocumentEventsBound) return;
@@ -741,6 +687,14 @@ export function isBrowsePage(path: string): boolean {
 }
 
 /**
+ * The catalog page carries its own search, pinned above the grid, so the navbar does not render a second one there.
+ * Suffix-matched like `isBrowsePage`, so deploy previews under a subpath work.
+ */
+export function isCatalogPage(path: string): boolean {
+  return path.endsWith('/collection.html');
+}
+
+/**
  * A page with a catalog filters in place; anywhere else the term travels to the home catalog as `?q=`, which `Home.ts` reads on load.
  */
 function submitSearch(searchTerm: string): void {
@@ -758,13 +712,6 @@ function submitSearch(searchTerm: string): void {
 
 // Search + filter events, only used on browse pages
 function initBrowsePageEvents(): void {
-  // Get filter elements
-  const filtersBar = document.getElementById('advanced-filters-bar');
-  const mobileToggleFilters = document.getElementById('mobile-toggle-filters');
-  const mobileFiltersChevron = document.getElementById(
-    'mobile-filters-chevron'
-  );
-
   // Mobile search toggle
   const mobileSearchBtn = document.getElementById('mobile-search-btn');
   const mobileSearchBar = document.getElementById('mobile-search-bar');
@@ -774,21 +721,6 @@ function initBrowsePageEvents(): void {
       mobileSearchBar.classList.toggle('hidden');
       const isExpanded = !mobileSearchBar.classList.contains('hidden');
       mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
-
-      // Close filters when closing search bar
-      if (
-        !isExpanded &&
-        filtersBar &&
-        !filtersBar.classList.contains('hidden')
-      ) {
-        filtersBar.classList.add('hidden');
-        if (mobileToggleFilters) {
-          mobileToggleFilters.setAttribute('aria-expanded', 'false');
-        }
-        if (mobileFiltersChevron) {
-          mobileFiltersChevron.classList.remove('rotate-180');
-        }
-      }
 
       if (isExpanded) {
         const mobileSearchInput = document.getElementById(
@@ -813,38 +745,6 @@ function initBrowsePageEvents(): void {
     });
   }
 
-  // Desktop advanced filters toggle
-  const toggleFiltersBtn = document.getElementById('toggle-advanced-filters');
-  const filtersChevron = document.getElementById('filters-chevron');
-
-  if (toggleFiltersBtn && filtersBar) {
-    toggleFiltersBtn.addEventListener('click', () => {
-      const isOpen = !filtersBar.classList.contains('hidden');
-      filtersBar.classList.toggle('hidden');
-      toggleFiltersBtn.setAttribute('aria-expanded', String(!isOpen));
-
-      if (filtersChevron) {
-        filtersChevron.classList.toggle('rotate-180');
-      }
-    });
-  }
-
-  // Mobile filter toggle
-  if (mobileToggleFilters && filtersBar) {
-    mobileToggleFilters.addEventListener('click', () => {
-      const isOpen = !filtersBar.classList.contains('hidden');
-      filtersBar.classList.toggle('hidden');
-      mobileToggleFilters.setAttribute('aria-expanded', String(!isOpen));
-
-      if (mobileFiltersChevron) {
-        mobileFiltersChevron.classList.toggle('rotate-180');
-      }
-    });
-  }
-
-  // Initialize category filters using component
-  initCategoryFilters('data-filter');
-
   // Desktop search form submission
   const headerSearchForm = document.getElementById('header-search-form');
   const globalSearchInput = document.getElementById(
@@ -861,46 +761,12 @@ function initBrowsePageEvents(): void {
     });
   }
 
-  // Real-time search input for instant filtering
+  // Real-time search input for instant filtering.
+  //
+  // Through `initSearchField` rather than a second copy of the same debounce:
+  //  the field has to mark itself while keystrokes are undispatched, and a hand-rolled timer here does not.
+  //  Without that mark a filter clicked mid-word repaints this box from stale state and the term is lost.
   if (globalSearchInput) {
-    let searchTimeout: ReturnType<typeof setTimeout>;
-    globalSearchInput.addEventListener('input', () => {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        const searchTerm = globalSearchInput.value.trim();
-        document.dispatchEvent(
-          new CustomEvent('globalSearchInput', {
-            detail: { query: searchTerm },
-          })
-        );
-      }, 300); // Debounce
-    });
-  }
-
-  // Initialize active-only checkbox using component
-  initActiveOnlyCheckbox('active-only-filter');
-
-  // Initialize sort dropdown using component
-  initSortDropdown('sort-filter-select');
-
-  // A page clearing its filters resets this bar back to its defaults.
-  // These setters only touch the UI, so they cannot loop back into the page.
-  // Bound once, and the input is resolved inside the handler:
-  //  a re-render replaces it, so the one captured above would be detached by the time this fires.
-  if (!clearFiltersEventBound) {
-    clearFiltersEventBound = true;
-
-    document.addEventListener('clearAllFilters', () => {
-      setActiveCategory('data-filter', 'all');
-      setActiveOnlyState('active-only-filter', false);
-      setSortValue('sort-filter-select', 'created', 'desc');
-
-      const searchInput = document.getElementById(
-        'global-search-input'
-      ) as HTMLInputElement | null;
-      if (searchInput) {
-        searchInput.value = '';
-      }
-    });
+    initSearchField('global-search-input', 300);
   }
 }
