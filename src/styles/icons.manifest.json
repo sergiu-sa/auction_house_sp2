@@ -2,8 +2,8 @@
   "source": "Font Awesome Free 6.5.1 Solid",
   "license": "CC BY 4.0",
   "generatedBy": "scripts/build-icon-font.mjs",
-  "glyphs": 62,
-  "fontSha256": "33f87290a6f3188c836045a7b8a5454b03744031c3825e5c410977b4e3fd9850",
+  "glyphs": 63,
+  "fontSha256": "90a35dfdfa4492779f3f96b29ce7fbab193300fb25fce97e5f8b17a189eb5ca2",
   "icons": {
     "fa-arrow-left": "f060",
     "fa-arrow-right": "f061",
@@ -37,6 +37,7 @@
     "fa-file-contract": "f56c",
     "fa-filter-circle-xmark": "e17b",
     "fa-fire": "f06d",
+    "fa-flag-checkered": "f11e",
     "fa-floppy-disk": "f0c7",
     "fa-gavel": "f0e3",
     "fa-headset": "f590",

@@ -59,7 +59,10 @@ describe('icon font coverage', () => {
     const free = faCodepoints();
     const wrong = Object.entries(manifest.icons)
       .filter(([name, cp]) => free.get(name) !== cp)
-      .map(([name, cp]) => `${name} -> ${cp} (Free says ${free.get(name) ?? 'no such icon'})`);
+      .map(
+        ([name, cp]) =>
+          `${name} -> ${cp} (Free says ${free.get(name) ?? 'no such icon'})`
+      );
 
     expect(wrong).toEqual([]);
   });
@@ -86,7 +89,7 @@ describe('icon font coverage', () => {
   });
 
   it('counts the glyphs the aliases collapse onto', () => {
-    // 67 class names, fewer glyphs: the codebase spells five icons both the v5 and the v6 way.
+    // 68 class names, 63 glyphs: the codebase spells five icons both the v5 and the v6 way.
     const { resolved, glyphs } = resolveIcons();
     expect(resolved.size).toBe(Object.keys(manifest.icons).length);
     expect(glyphs.length).toBe(manifest.glyphs);
@@ -94,7 +97,9 @@ describe('icon font coverage', () => {
   });
 
   it('declares a self-hosted woff2 and no third-party origin', () => {
-    expect(css).toContain("src: url('./fonts/aucto-icons.woff2') format('woff2')");
+    expect(css).toContain(
+      "src: url('./fonts/aucto-icons.woff2') format('woff2')"
+    );
     expect(css).not.toContain('cdnjs');
     // block, not swap: private-use codepoints have no fallback glyph, so swap paints .notdef.
     expect(css).toContain('font-display: block');
