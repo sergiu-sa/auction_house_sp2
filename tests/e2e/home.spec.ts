@@ -42,7 +42,7 @@ test('home applies a search handed to it in the URL', async ({ page }) => {
   await page.goto('/index.html?q=vintage');
 
   await expect(page.locator('#global-search-input')).toHaveValue('vintage');
-  await expect(page.locator('#sticky-search-input')).toHaveValue('vintage');
+  await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
   await expect(page.locator('#catalog-cards article')).toHaveCount(12);
   await expect(
     page.locator('#catalog-cards article h3').first()
@@ -71,4 +71,22 @@ test.describe('listings endpoint returns 500', () => {
       /unable|error|failed|try again/i
     );
   });
+});
+
+/**
+ * Home is the one page with two search boxes: the navbar's and the catalog bar's;
+ *   so a term typed in either has to appear in the other, or the one the reader did not touch keeps a stale term and contradicts the results.
+ * The repaint that does this is skipped while a field still holds undispatched keystrokes, so this also pins that the pending mark gets cleared again.
+ */
+test('typing in the navbar search fills the catalog bar, and vice versa', async ({
+  page,
+}) => {
+  await page.goto('/index.html');
+  await expect(page.locator('#catalog-cards article').first()).toBeVisible();
+
+  await page.locator('#global-search-input').fill('vintage');
+  await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
+
+  await page.locator('#catalog-search-input').fill('vase');
+  await expect(page.locator('#global-search-input')).toHaveValue('vase');
 });
