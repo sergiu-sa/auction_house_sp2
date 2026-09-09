@@ -101,20 +101,6 @@
     <!-- Header (rendered by JavaScript) -->
     <header id="header"></header>
 
-    <!-- Sticky Catalog Filter Bar (appears on scroll, rendered by JavaScript) -->
-    <section
-      id="sticky-catalog-filters"
-      aria-label="Catalog filters"
-      class="fixed left-0 right-0 top-0 z-30 -translate-y-full transition-transform duration-300"
-      style="
-        background-color: #f7f7f5;
-        border-bottom: 3px solid #1e293b;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      "
-    >
-      <!-- Content will be rendered by JavaScript using filter components -->
-    </section>
-
     <!-- Main Content -->
     <main id="main-content" tabindex="-1">
       <!-- ========================================
@@ -328,10 +314,13 @@
             </a>
           </div>
           <p class="max-w-2xl text-slate-600">
-            Browse all active listings. Use the search and filters above to find
+            Browse all active listings. Use the search and filters below to find
             exactly what you're looking for.
           </p>
         </div>
+
+        <!-- Catalog filter bar (rendered by JavaScript) -->
+        <div id="catalog-filter-bar-host"></div>
 
         <!-- Catalog Grid (4 columns) -->
         <div

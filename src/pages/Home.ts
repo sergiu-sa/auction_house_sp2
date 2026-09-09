@@ -37,18 +37,12 @@ import {
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import {
-  renderSearchField,
-  renderCategoryFilters,
-  renderActiveOnlyCheckbox,
-  renderSortDropdown,
-  initSearchField,
-  initCategoryFilters,
-  initActiveOnlyCheckbox,
-  initSortDropdown,
   setSearchFieldValue,
-  setActiveCategory,
-  setActiveOnlyState,
-  setSortValue,
+  renderCatalogFilterBar,
+  initCatalogFilterBar,
+  syncCatalogFilterBar,
+  collapseCatalogFilterBar,
+  CATALOG_FILTER_IDS,
 } from '../components/filters';
 import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 import { escapeHtml } from '../utils/escapeHtml';
@@ -67,143 +61,12 @@ const catalogManager = new CatalogStateManager(
   { sort: 'endsAt', sortOrder: 'asc' },
   loadCatalogListings
 );
+
+/** The filters this page starts on, for counting how many the reader has since changed. */
+const CATALOG_DEFAULTS = catalogManager.getState();
 let catalogRequestId = 0;
-function initStickyFilterBar(): void {
-  const stickyBar = document.getElementById('sticky-catalog-filters');
-  const catalogSection =
-    document.querySelector('#catalog-cards')?.parentElement;
-
-  if (!stickyBar || !catalogSection) return;
-
-  stickyBar.innerHTML = `
-    <div class="mx-auto max-w-7xl px-6 py-4 md:px-8">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <!-- Left: Label + Search -->
-        <div class="flex items-center gap-3 flex-1">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-layer-group text-slate-700" aria-hidden="true"></i>
-            <span class="text-sm font-bold text-slate-900">Catalog Filters</span>
-          </div>
-          <div class="max-w-md">
-            ${renderSearchField({ id: 'sticky-search-input', placeholder: 'Search catalog...', variant: 'compact' })}
-          </div>
-        </div>
-
-        <!-- Right: Category Filters + Active Only + Sort -->
-        <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
-          ${renderCategoryFilters({ dataAttribute: 'data-sticky-filter', variant: 'compact' })}
-
-          <div class="flex flex-wrap items-center gap-3 text-sm">
-            ${renderActiveOnlyCheckbox({ id: 'sticky-active-only', variant: 'compact' })}
-            ${renderSortDropdown({ id: 'sticky-sort-select', variant: 'compact', label: 'Sort listings, sticky filter bar' })}
-
-            <!-- Close button -->
-            <button
-              id="sticky-close-btn"
-              type="button"
-              class="lg:hidden text-slate-500 hover:text-slate-900 px-2"
-              aria-label="Close filters"
-            >
-              <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  let isSticky = false;
-
-  // Scroll handler to show/hide sticky bar
-  function handleScroll() {
-    if (!stickyBar || !catalogSection) return;
-
-    const catalogRect = catalogSection.getBoundingClientRect();
-    const shouldShow = catalogRect.top <= 100; // Show when catalog section is near top
-
-    if (shouldShow && !isSticky) {
-      // Show sticky bar
-      stickyBar.classList.remove('-translate-y-full');
-      stickyBar.classList.add('translate-y-0');
-      isSticky = true;
-    } else if (!shouldShow && isSticky) {
-      // Hide sticky bar
-      stickyBar.classList.remove('translate-y-0');
-      stickyBar.classList.add('-translate-y-full');
-      isSticky = false;
-    }
-  }
-
-  // Throttle the scroll handler:
-  //  run on the leading edge, then ignore events until the window passes.
-  // Clearing and re-arming instead would be a debounce, and scroll events arrive about once a frame;
-  //  — on a 120Hz display that is every 8ms, so the timer would be cleared before it ever fired and the sticky bar would only appear once the user stopped scrolling.
-  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
-  window.addEventListener('scroll', () => {
-    if (scrollTimeout !== null) return;
-    scrollTimeout = setTimeout(() => {
-      scrollTimeout = null;
-      window.requestAnimationFrame(handleScroll);
-    }, 10);
-  });
-
-  // Initialize sticky filter event listeners using components
-  initStickyFilterEvents();
-}
-
-function initStickyFilterEvents(): void {
-  // Initialize search field using component
-  initSearchField('sticky-search-input', 300);
-
-  // Also sync with navbar search when user types in sticky search
-  const stickySearchInput = document.getElementById(
-    'sticky-search-input'
-  ) as HTMLInputElement;
-  if (stickySearchInput) {
-    stickySearchInput.addEventListener('input', () => {
-      const navbarSearch = document.getElementById(
-        'global-search-input'
-      ) as HTMLInputElement;
-      if (navbarSearch) navbarSearch.value = stickySearchInput.value;
-    });
-  }
-
-  // Initialize category filters using component
-  initCategoryFilters('data-sticky-filter');
-
-  // Initialize active-only checkbox using component
-  initActiveOnlyCheckbox('sticky-active-only');
-
-  // Initialize sort dropdown using component
-  initSortDropdown('sticky-sort-select');
-
-  // Sticky close button
-  const stickyCloseBtn = document.getElementById('sticky-close-btn');
-  if (stickyCloseBtn) {
-    stickyCloseBtn.addEventListener('click', () => {
-      const stickyBar = document.getElementById('sticky-catalog-filters');
-      if (stickyBar) {
-        stickyBar.classList.remove('translate-y-0');
-        stickyBar.classList.add('-translate-y-full');
-      }
-    });
-  }
-}
-
-function syncFilterBarsWithState(): void {
-  const state = catalogManager.getState();
-
-  setSearchFieldValue('sticky-search-input', state.search);
-  setActiveCategory('data-sticky-filter', state.category);
-  setActiveOnlyState('sticky-active-only', state.activeOnly);
-  setSortValue('sticky-sort-select', state.sort, state.sortOrder);
-
-  // The navbar renders its own copy of these controls with its own defaults, so without this the two visible filter bars disagree;
-  //  from first paint for sort, and after any sticky-bar change for the rest.
-  // Search is deliberately not synced here: the input is debounced, and writing to it mid-type would clobber keystrokes made while a load was in flight.
-  setActiveCategory('data-filter', state.category);
-  setActiveOnlyState('active-only-filter', state.activeOnly);
-  setSortValue('sort-filter-select', state.sort, state.sortOrder);
+function syncFilterBarsWithState(total?: number): void {
+  syncCatalogFilterBar(catalogManager.getState(), CATALOG_DEFAULTS, total);
 }
 
 async function initHomePage(): Promise<void> {
@@ -221,8 +84,11 @@ async function initHomePage(): Promise<void> {
   // Listen to navbar filter events
   catalogManager.listenToNavbarFilters();
 
-  // Initialize sticky catalog filters
-  initStickyFilterBar();
+  const host = document.getElementById('catalog-filter-bar-host');
+  if (host) {
+    host.outerHTML = renderCatalogFilterBar();
+    initCatalogFilterBar();
+  }
 
   applyInitialSearchFromUrl();
 
@@ -239,7 +105,7 @@ function applyInitialSearchFromUrl(): void {
   if (!query) return;
 
   catalogManager.seedState({ search: query });
-  setSearchFieldValue('sticky-search-input', query);
+  setSearchFieldValue(CATALOG_FILTER_IDS.search, query);
   setSearchFieldValue('global-search-input', query);
   setSearchFieldValue('mobile-search-input', query);
 }
@@ -317,6 +183,7 @@ async function loadCatalogListings(): Promise<void> {
 
     renderCollectionCards(result.listings, 'catalog-cards');
     renderCatalogPagination(result.pageCount);
+    syncFilterBarsWithState(result.totalCount);
 
     // The catalog swaps out without a page load, so nothing here is otherwise announced.
     const total = new Intl.NumberFormat('en-US').format(result.totalCount);
@@ -341,6 +208,7 @@ function renderCatalogPagination(totalPages: number): void {
     totalPages,
     onPageChange: (page: number) => {
       catalogManager.updatePage(page);
+      collapseCatalogFilterBar();
 
       // Scroll to catalog section, and take focus with it — see Collection.ts.
       const catalogSection = document.getElementById('catalog-cards');

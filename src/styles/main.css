@@ -88,23 +88,37 @@ html {
 }
 
 /*
- * The sticky catalog bar hides by sliding above the viewport, which leaves its controls focusable and unreachable;
- * you cannot scroll a position:fixed element into view.
- * visibility:hidden takes them out of the tab order; the 300ms delay lets the slide finish before it applies, so hiding still animates.
- * Showing is immediate.
+ * The catalog filter bar is collapsed below `lg` and always open above it.
+ *
+ * Driven from `data-expanded` rather than the `hidden` attribute:
+ *  `[hidden]` and a Tailwind `lg:flex` utility have the same specificity, so the utility wins at `lg` and the attribute becomes a lie that assistive tech still reads.
+ * One attribute, two rules, no contradiction.
  */
-#sticky-catalog-filters {
-  visibility: hidden;
-  transition:
-    transform 300ms,
-    visibility 0s 300ms;
+#catalog-filters-panel {
+  display: none;
 }
 
-#sticky-catalog-filters.translate-y-0 {
-  visibility: visible;
-  transition:
-    transform 300ms,
-    visibility 0s 0s;
+#catalog-filter-bar[data-expanded='true'] #catalog-filters-panel {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  #catalog-filters-panel {
+    display: flex;
+  }
+
+  /* Above `lg` the whole set fits one row, so there is nothing to toggle. */
+  #catalog-filters-toggle {
+    display: none;
+  }
+}
+
+/*
+ * The count badge carries `inline-flex`, and `[hidden]` is only a UA rule, so the utility won and an empty badge rendered a literal "0" beside the Filters button at every width below `lg`.
+ * An id outranks the class, which makes the attribute honest again.
+ */
+#catalog-filters-count[hidden] {
+  display: none;
 }
 
 /* Disabled-control affordance */
@@ -188,6 +202,47 @@ body[data-page-type='auth'] #header {
 @media (min-width: 1024px) {
   [data-auth='in'] #header {
     min-height: 91px;
+  }
+}
+
+/*
+ * Reserve the filter bar's height before it exists, for the same reason as `#header` above.
+ *
+ * `<div id="catalog-filter-bar-host">` ships empty and the page module replaces it after its module script runs, so the catalog grid below it dropped by the bar's height at first paint.
+ *
+ * Values are measured on the built site with getBoundingClientRect after forcing this min-height to 0 — the reservation clamps the reading, so measuring without that gives back the number already written here rather than the real one.
+ *
+ * Swept every pixel from 320 to 1440: the bar takes exactly two heights and changes at `lg`, where the toggle button leaves and the control set becomes one row.
+ *
+ * These reserve the bar's box **plus its own `mb-8`** — 70+32 and 122+32. The placeholder carries no margin of its own, so reserving only the box left the grid stepping up 32px when the module ran.
+ *Reserving the height alone is the mistake to avoid here.
+ * If you change the bar's padding, its border, its margin or the toggle's size, re-measure.
+ */
+#catalog-filter-bar-host {
+  min-height: 102px;
+}
+
+@media (min-width: 1024px) {
+  #catalog-filter-bar-host {
+    min-height: 154px;
+  }
+}
+
+/*
+ * The bar is `position: sticky`, so it covers the top of whatever scrolls under it.
+ * Paging calls `scrollIntoView({ block: 'start' })` on the grid and then focuses it, which without this puts the whole first row;
+ *  and the element that just took focus — behind the bar.
+ * Same two numbers as the reservation: clear the bar and its margin.
+ */
+#collection-cards-grid,
+#catalog-cards {
+  scroll-margin-top: 102px;
+}
+
+@media (min-width: 1024px) {
+  #collection-cards-grid,
+  #catalog-cards {
+    scroll-margin-top: 154px;
   }
 }
 

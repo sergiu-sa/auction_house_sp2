@@ -7,6 +7,13 @@ import {
   showCollectionCardSkeletons,
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
+import {
+  renderCatalogFilterBar,
+  initCatalogFilterBar,
+  syncCatalogFilterBar,
+  collapseCatalogFilterBar,
+  cancelCatalogSearchDebounce,
+} from '../components/filters';
 import { activeStats, catalogPage } from '../api/listingQueries';
 import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
@@ -17,6 +24,9 @@ const catalogManager = new CatalogStateManager(
   { itemsPerPage: 24 },
   loadListings
 );
+
+/** The filters this page starts on, for counting how many the reader has since changed. */
+const CATALOG_DEFAULTS = catalogManager.getState();
 
 // The page the server last returned, kept so a view-mode toggle can re-render it without spending a round trip.
 let currentPageListings: Listing[] = [];
@@ -88,11 +98,11 @@ function initializeFilters(): void {
   const clearFiltersBtn = document.getElementById('clear-filters-btn');
   if (clearFiltersBtn) {
     clearFiltersBtn.addEventListener('click', () => {
-      // Reset filters to default
+      // Before the reset: a search typed within the last debounce window is stale now, and letting it fire afterwards puts the term back after the reader cleared it.
+      cancelCatalogSearchDebounce();
+      // resetFilters() runs the page's own change handler, which reloads and repaints the bar from state.
+      // There is nothing else on this page holding filter UI to tell.
       catalogManager.resetFilters();
-
-      // Dispatch events to update navbar UI
-      document.dispatchEvent(new CustomEvent('clearAllFilters'));
     });
   }
 }
@@ -101,6 +111,12 @@ export function initCollectionPage(): void {
   // Render header and footer
   renderHeader();
   renderFooter();
+
+  const host = document.getElementById('catalog-filter-bar-host');
+  if (host) {
+    host.outerHTML = renderCatalogFilterBar();
+    initCatalogFilterBar();
+  }
 
   // Initialize view toggle filters
   initializeFilters();
@@ -121,6 +137,10 @@ export function initCollectionPage(): void {
 async function loadListings(): Promise<void> {
   const requestId = ++loadRequestId;
   const state = catalogManager.getState();
+
+  // Repainted before the request, not only after a successful render:
+  //   a failed load skips renderCurrentPage entirely, and the bar would keep showing the filters the reader just changed away from while the state behind it had already moved.
+  syncCatalogFilterBar(state, CATALOG_DEFAULTS);
 
   try {
     applyViewMode(state.viewMode);
@@ -174,6 +194,8 @@ function renderCurrentPage(): void {
     totalPages: resultTotals.pageCount,
     onPageChange: (page: number) => {
       catalogManager.updatePage(page);
+      // Before the scroll below: an open panel makes the bar far taller than the `scroll-margin-top` sized for its collapsed height, and the first row lands behind it.
+      collapseCatalogFilterBar();
 
       // Scroll to top of results, and take focus with it;
       //  the pagination button that was focused gets replaced by the re-render, which otherwise drops focus to <body>.
@@ -190,6 +212,7 @@ function renderCurrentPage(): void {
   });
 
   updateResultsInfo();
+  syncCatalogFilterBar(state, CATALOG_DEFAULTS, resultTotals.totalCount);
 }
 
 function updateResultsInfo(): void {
