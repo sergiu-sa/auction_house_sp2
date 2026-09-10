@@ -64,7 +64,10 @@ export function initProfilePage(): void {
     // Load current user's profile data
     loadProfileData(currentUser.name, true);
   } else {
-    // Viewing another user's profile (no login required)
+    // Viewing another user's profile. Not public, whatever this used to say: every
+    // /auction/profiles/* route is 401 without a bearer token (measured 2026-09-10), so a
+    // logged-out visitor following a seller link lands on the session-expired path instead.
+
     const currentUser = getCurrentUser();
     const isOwnProfile = currentUser?.name === username;
 
@@ -152,7 +155,7 @@ function renderProfile(
       ${renderProfileHero(profile, listings.totalCount, wins.length, totalBidsPlaced, isOwnProfile)}
       ${renderAboutAndSettings(profile, isOwnProfile)}
       ${renderListingsSection(listings, isOwnProfile, 1)}
-      ${renderWinsAndBids(wins, bids)}
+      ${renderWinsAndBids(wins, bids, isOwnProfile)}
     </div>
   `;
 
@@ -679,7 +682,19 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
   `;
 }
 
-function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
+/**
+ * Written twice, once for the owner and once for a visitor, like the listings panel above it.
+ * It was not, so a stranger's profile read "You have won 2 auctions" about somebody else.
+ *
+ * The hero's "Credits available" tile is still unguarded — a visitor sees that seller's balance
+ * under a label that reads as their own. That one is a decision about what a profile publishes,
+ * not a copy fix, so it is not made here.
+ */
+function renderWinsAndBids(
+  wins: Listing[],
+  bids: Bid[],
+  isOwnProfile: boolean
+): string {
   return `
     <section>
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -687,13 +702,19 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
         <div class="bg-white p-8 md:p-10" style="border: 3px solid var(--aucto-border-dark)">
           <h2 class="mb-4 text-2xl font-bold text-slate-900">Recent wins</h2>
           <p class="mb-6 text-sm text-slate-600">
-            ${wins.length === 0 ? "You haven't won any auctions yet" : `You have won ${wins.length} ${wins.length === 1 ? 'auction' : 'auctions'}`}
+            ${
+              wins.length === 0
+                ? isOwnProfile
+                  ? "You haven't won any auctions yet"
+                  : "This seller hasn't won any auctions yet"
+                : `${isOwnProfile ? 'You have' : 'This seller has'} won ${wins.length} ${wins.length === 1 ? 'auction' : 'auctions'}`
+            }
           </p>
           ${
             wins.length === 0
               ? `<div class="text-center py-8">
               <i class="fa-solid fa-trophy text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
-              <p class="text-slate-600">Your won items will appear here</p>
+              <p class="text-slate-600">${isOwnProfile ? 'Your won items will appear here' : 'No wins to display'}</p>
             </div>`
               : `<div class="space-y-4 text-sm text-slate-700">
               ${wins
@@ -710,13 +731,19 @@ function renderWinsAndBids(wins: Listing[], bids: Bid[]): string {
             Recent bid activity
           </h2>
           <p class="mb-6 text-sm text-slate-600">
-            ${bids.length === 0 ? "You haven't placed any bids yet" : `You have placed ${bids.length} ${bids.length === 1 ? 'bid' : 'bids'}`}
+            ${
+              bids.length === 0
+                ? isOwnProfile
+                  ? "You haven't placed any bids yet"
+                  : "This seller hasn't placed any bids yet"
+                : `${isOwnProfile ? 'You have' : 'This seller has'} placed ${bids.length} ${bids.length === 1 ? 'bid' : 'bids'}`
+            }
           </p>
           ${
             bids.length === 0
               ? `<div class="text-center py-8">
               <i class="fa-solid fa-gavel text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
-              <p class="text-slate-600">Your bids will appear here</p>
+              <p class="text-slate-600">${isOwnProfile ? 'Your bids will appear here' : 'No bid activity to display'}</p>
             </div>`
               : `<div class="space-y-4 text-sm text-slate-700">
               ${bids
