@@ -13,6 +13,7 @@ import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
+import { setButtonBusy } from '../utils/busyButton';
 
 export function initLoginPage(): void {
   // Returns true once it has started the navigation.
@@ -119,11 +120,7 @@ async function handleLoginSubmit(e: Event): Promise<void> {
   ) as HTMLButtonElement;
   if (!submitBtn) return;
 
-  // Disable button and show loading state
-  const originalBtnText = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Logging in...';
+  const restore = setButtonBusy(submitBtn, 'Logging in...');
 
   try {
     // Call login API
@@ -162,9 +159,7 @@ async function handleLoginSubmit(e: Event): Promise<void> {
       toast.error('An error occurred during login. Please try again.');
     }
 
-    // Reset button
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalBtnText;
+    restore();
   }
 }
 

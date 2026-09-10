@@ -32,6 +32,7 @@ import {
 } from '../utils/seo';
 import { APP_BASE_URL } from '../utils/constants';
 import { logError } from '../utils/logger';
+import { setButtonBusy } from '../utils/busyButton';
 import { getErrorMessage } from '../utils/errorHandling';
 import { isWatched, toggleWatched } from '../utils/storage';
 import type { Listing } from '../types/api';
@@ -594,12 +595,7 @@ function initBidForm() {
       return;
     }
 
-    // Disable button
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `
-      <i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i>
-      <span>Placing Bid...</span>
-    `;
+    const restore = setButtonBusy(submitBtn, 'Placing Bid...');
 
     try {
       await placeBid(listingId, { amount: bidAmount });
@@ -641,12 +637,7 @@ function initBidForm() {
       );
       showToast(errorMessage, 'error');
 
-      // Re-enable button
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = `
-        <i class="fa-solid fa-gavel text-base" aria-hidden="true"></i>
-        <span>Place Bid</span>
-      `;
+      restore();
     }
   });
 }

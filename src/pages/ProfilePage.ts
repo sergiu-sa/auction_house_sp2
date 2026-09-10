@@ -22,6 +22,7 @@ import { isValidUrl } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import { setUser } from '../utils/storage';
 import { logError } from '../utils/logger';
+import { setButtonBusy } from '../utils/busyButton';
 import { getErrorMessage } from '../utils/errorHandling';
 import { escapeHtml } from '../utils/escapeHtml';
 import { formatCredits, formatCurrency } from '../utils/formatCurrency';
@@ -870,11 +871,7 @@ async function handleProfileUpdate(username: string): Promise<void> {
     updateData.banner = { url: bannerUrl };
   }
 
-  // Disable button and show loading state
-  const originalBtnContent = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i> <span>Saving...</span>';
+  const restore = setButtonBusy(submitBtn, 'Saving...');
 
   try {
     const response = await updateProfile(username, updateData);
@@ -906,9 +903,7 @@ async function handleProfileUpdate(username: string): Promise<void> {
     logError('Failed to update profile', error, { username });
     showToast(getErrorMessage(error, 'Failed to update profile'), 'error');
 
-    // Re-enable button
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalBtnContent;
+    restore();
   }
 }
 
