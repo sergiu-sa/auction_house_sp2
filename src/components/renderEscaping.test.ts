@@ -7,6 +7,7 @@ import { renderFeaturedWin } from './FeaturedWin';
 import { renderBreadcrumb, BREADCRUMB_PRESETS } from './Breadcrumb';
 import { renderHeader } from './Navbar';
 import { renderAvatar } from './Avatar';
+import { mountNextPageCell } from './NextPageCell';
 import {
   renderCatalogFilterBar,
   syncCatalogFilterBar,
@@ -195,6 +196,34 @@ describe('components are inert against a hostile listing', () => {
     ) as HTMLInputElement;
     expect(field.value).toBe(PAYLOAD);
     assertInert(document.body.innerHTML);
+  });
+
+  /**
+   * The cell renders no listing data, its only interpolations are page numbers and the container id it was handed.
+   * Asserted anyway, because the container id reaches an `id` and a `for` attribute, and a component that grows a data-carrying field later should fail here.
+   */
+  it('NextPageCell, mounted mid-catalog', () => {
+    document.body.innerHTML = '<div id="grid"></div>';
+    mountNextPageCell({
+      containerId: 'grid',
+      currentPage: 2,
+      totalPages: 140,
+      cardCount: 23,
+      onPageChange: () => {},
+    });
+    assertInert(document.getElementById('grid')!.innerHTML);
+  });
+
+  it('NextPageCell, on the last page', () => {
+    document.body.innerHTML = '<div id="grid"></div>';
+    mountNextPageCell({
+      containerId: 'grid',
+      currentPage: 140,
+      totalPages: 140,
+      cardCount: 23,
+      onPageChange: () => {},
+    });
+    assertInert(document.getElementById('grid')!.innerHTML);
   });
 
   it('Navbar, carrying a stored user name and avatar', async () => {

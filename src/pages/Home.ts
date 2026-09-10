@@ -1,6 +1,5 @@
 import { CatalogStateManager } from '../utils/catalogState';
 import { announce } from '../utils/announce';
-import { prefersReducedMotion } from '../utils/motion';
 import { highestBid } from '../utils/biddingStats';
 import {
   activePool,
@@ -25,6 +24,8 @@ import {
   showCollectionCardSkeletons,
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
+import { mountNextPageCell } from '../components/NextPageCell';
+import { focusResultsGrid } from '../utils/focusResultsGrid';
 import { toast } from '../components/Toast';
 import { isLoggedIn } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
@@ -57,8 +58,9 @@ const HERO_TILE_SIZES =
 const HERO_TILE_COUNT = 3;
 
 // State management for catalog section
+// 11, not 12: the 12th grid cell is the next-page control. See Collection.ts.
 const catalogManager = new CatalogStateManager(
-  { sort: 'endsAt', sortOrder: 'asc' },
+  { sort: 'endsAt', sortOrder: 'asc', itemsPerPage: 11 },
   loadCatalogListings
 );
 
@@ -166,7 +168,11 @@ async function loadCatalogListings(): Promise<void> {
   const state = catalogManager.getState();
 
   try {
-    showCollectionCardSkeletons(state.itemsPerPage, 'catalog-cards');
+    showCollectionCardSkeletons(
+      // +1 for the next-page cell — see Collection.ts.
+      state.itemsPerPage + 1,
+      'catalog-cards'
+    );
 
     const result = await catalogPage({
       page: state.page,
@@ -182,6 +188,14 @@ async function loadCatalogListings(): Promise<void> {
     if (requestId !== catalogRequestId) return;
 
     renderCollectionCards(result.listings, 'catalog-cards');
+
+    mountNextPageCell({
+      containerId: 'catalog-cards',
+      currentPage: state.page,
+      totalPages: result.pageCount,
+      cardCount: result.listings.length,
+      onPageChange: goToCatalogPage,
+    });
     renderCatalogPagination(result.pageCount);
     syncFilterBarsWithState(result.totalCount);
 
@@ -201,26 +215,20 @@ async function loadCatalogListings(): Promise<void> {
   }
 }
 
+/** One definition of what paging does — see Collection.ts for why the collapse comes first. */
+function goToCatalogPage(page: number): void {
+  catalogManager.updatePage(page);
+  collapseCatalogFilterBar();
+  focusResultsGrid('catalog-cards');
+}
+
 function renderCatalogPagination(totalPages: number): void {
   renderPagination({
     containerId: 'catalog-pagination',
+    editablePageNumber: true,
     currentPage: catalogManager.getState().page,
     totalPages,
-    onPageChange: (page: number) => {
-      catalogManager.updatePage(page);
-      collapseCatalogFilterBar();
-
-      // Scroll to catalog section, and take focus with it — see Collection.ts.
-      const catalogSection = document.getElementById('catalog-cards');
-      if (catalogSection) {
-        catalogSection.scrollIntoView({
-          behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-          block: 'start',
-        });
-        catalogSection.setAttribute('tabindex', '-1');
-        catalogSection.focus({ preventScroll: true });
-      }
-    },
+    onPageChange: goToCatalogPage,
   });
 }
 
