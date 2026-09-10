@@ -1,7 +1,27 @@
 import { describe, it, expect } from 'vitest';
-import { formatCurrency } from './formatCurrency';
+import { formatCredits, formatCurrency } from './formatCurrency';
 
 describe('Currency Formatting', () => {
+  describe('formatCredits', () => {
+    it('groups thousands, and prints no unit', () => {
+      expect(formatCredits(1000)).toBe('1,000');
+      expect(formatCredits(1002)).toBe('1,002');
+      expect(formatCredits(999999999)).toBe('999,999,999');
+    });
+
+    it('leaves small numbers alone', () => {
+      expect(formatCredits(0)).toBe('0');
+      expect(formatCredits(52)).toBe('52');
+      expect(formatCredits(999)).toBe('999');
+    });
+
+    // The locale is pinned rather than the reader's, so a figure printed beside one that formatCurrency produced cannot use a different separator.
+    it('agrees with formatCurrency on the figure', () => {
+      expect(formatCurrency(1002)).toBe(`${formatCredits(1002)} credits`);
+      expect(formatCurrency(1002, true)).toBe(`${formatCredits(1002)} cr`);
+    });
+  });
+
   describe('formatCurrency', () => {
     it('should format numbers with comma separators', () => {
       expect(formatCurrency(1000)).toBe('1,000 credits');
