@@ -52,7 +52,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/icon_only_v2.svg" />
   </head>
-  <body class="antialiased bg-aucto-bg" data-page-type="auth">
+  <body class="bg-aucto-bg antialiased" data-page-type="auth">
     <!-- Skip Navigation Link -->
     <a
       href="#main-content"
@@ -66,9 +66,9 @@
 
     <main id="main-content" tabindex="-1">
       <!-- BENTO REGISTER LAYOUT -->
-      <section class="px-4 py-10 mx-auto max-w-7xl md:px-8 md:py-14">
+      <section class="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-14">
         <div
-          class="p-4 bg-white md:p-8 lg:p-10"
+          class="bg-white p-4 md:p-8 lg:p-10"
           style="border: 3px solid var(--aucto-border-dark)"
         >
           <div
@@ -77,12 +77,12 @@
             <!-- LEFT: REGISTER TILE -->
             <section
               aria-label="Create Aucto account"
-              class="flex flex-col justify-between p-4 bg-slate-50 md:p-8"
+              class="flex flex-col justify-between bg-slate-50 p-4 md:p-8"
               style="border: 3px solid var(--aucto-border-dark)"
             >
               <!-- Label + status -->
               <div class="mb-6">
-                <div class="flex items-center justify-between gap-4 mb-4">
+                <div class="mb-4 flex items-center justify-between gap-4">
                   <div class="flex items-center gap-3">
                     <div class="h-0.5 w-12 bg-aucto-red"></div>
                     <span
@@ -129,7 +129,7 @@
                     for="name"
                     class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                   >
-                    <i class="text-xs fa-solid fa-user" aria-hidden="true"></i>
+                    <i class="fa-solid fa-user text-xs" aria-hidden="true"></i>
                     <span>Full name</span>
                   </label>
                   <input
@@ -145,7 +145,7 @@
                   <div
                     id="name-error"
                     role="alert"
-                    class="hidden mt-2 text-xs text-red-700"
+                    class="mt-2 hidden text-xs text-red-700"
                   ></div>
                 </div>
 
@@ -155,7 +155,7 @@
                     class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                   >
                     <i
-                      class="text-xs fa-solid fa-envelope"
+                      class="fa-solid fa-envelope text-xs"
                       aria-hidden="true"
                     ></i>
                     <span>Noroff email</span>
@@ -176,7 +176,7 @@
                   <div
                     id="email-error"
                     role="alert"
-                    class="hidden mt-2 text-xs text-red-700"
+                    class="mt-2 hidden text-xs text-red-700"
                   ></div>
                 </div>
 
@@ -187,7 +187,7 @@
                       class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                     >
                       <i
-                        class="text-xs fa-solid fa-lock"
+                        class="fa-solid fa-lock text-xs"
                         aria-hidden="true"
                       ></i>
                       <span>Password</span>
@@ -208,7 +208,7 @@
                     <div
                       id="password-error"
                       role="alert"
-                      class="hidden mt-2 text-xs text-red-700"
+                      class="mt-2 hidden text-xs text-red-700"
                     ></div>
                   </div>
                   <div>
@@ -217,7 +217,7 @@
                       class="mb-2 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
                     >
                       <i
-                        class="text-xs fa-solid fa-check-double"
+                        class="fa-solid fa-check-double text-xs"
                         aria-hidden="true"
                       ></i>
                       <span>Confirm password</span>
@@ -235,12 +235,12 @@
                     <div
                       id="confirm-password-error"
                       role="alert"
-                      class="hidden mt-2 text-xs text-red-700"
+                      class="mt-2 hidden text-xs text-red-700"
                     ></div>
                   </div>
                 </div>
 
-                <div class="pt-2 space-y-3">
+                <div class="space-y-3 pt-2">
                   <button
                     type="submit"
                     class="inline-flex w-full items-center justify-center gap-2 bg-slate-900 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white hover:bg-slate-800"
@@ -255,7 +255,7 @@
                     style="border: 3px solid var(--aucto-border-mid)"
                   >
                     <i
-                      class="text-xs fa-solid fa-sign-in-alt"
+                      class="fa-solid fa-sign-in-alt text-xs"
                       aria-hidden="true"
                     ></i>
                     Already registered? Log in
@@ -267,7 +267,7 @@
                     style="border: 1px dashed #cbd5e1"
                   >
                     <i
-                      class="text-xs fa-solid fa-arrow-right-to-bracket"
+                      class="fa-solid fa-arrow-right-to-bracket text-xs"
                       aria-hidden="true"
                     ></i>
                     Continue as guest
@@ -312,7 +312,7 @@
                   <img
                     src="/images/placeholder_v2.svg"
                     alt=""
-                    class="object-cover w-full h-full"
+                    class="h-full w-full object-cover"
                     aria-hidden="true"
                   />
                   <div
@@ -321,7 +321,7 @@
                     List your item
                   </div>
                   <div
-                    class="absolute px-3 py-1 text-xs font-semibold bg-white bottom-3 right-3 text-slate-900"
+                    class="absolute bottom-3 right-3 bg-white px-3 py-1 text-xs font-semibold text-slate-900"
                     style="border: 3px solid var(--aucto-border-dark)"
                   >
                     <span id="starter-credits">1000</span> starter credits
@@ -357,7 +357,7 @@
                     <img
                       src="/images/placeholder_v2.svg"
                       alt=""
-                      class="object-cover w-full h-full"
+                      class="h-full w-full object-cover"
                       aria-hidden="true"
                     />
                   </div>
@@ -400,7 +400,7 @@
                     <img
                       src="/images/placeholder_v2.svg"
                       alt=""
-                      class="object-cover w-full h-full"
+                      class="h-full w-full object-cover"
                       aria-hidden="true"
                     />
                   </div>

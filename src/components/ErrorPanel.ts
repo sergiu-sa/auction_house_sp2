@@ -74,7 +74,7 @@ export function renderErrorPanel({
  * Write the panel into `container` and wire its action.
  *
  * The handler is bound here rather than left to the caller because the button only exists once this has run.
- * 
+ *
  */
 export function mountErrorPanel(
   container: HTMLElement | null,

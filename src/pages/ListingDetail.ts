@@ -252,7 +252,7 @@ function renderThumbnail(
  * Over text it composites both colours — axe measured slate-600 on the tile as #75808f on #f5f8fb, 3.75:1.
  * - The label is slate-600, not the slate-500 it wore while it was inert.
  * 12px bold is not large text, so it needs 4.5:1, and slate-500 on a slate-100 ground is 4.34:1.
- * 
+ *
  */
 function renderOverflowControl(overflow: number): string {
   return `
