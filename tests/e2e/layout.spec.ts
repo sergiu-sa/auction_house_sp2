@@ -275,6 +275,13 @@ test.describe('the filter bar stays put', () => {
  * Paging scrolls the grid to `block: 'start'` and focuses it, which without a matching `scroll-margin-top` puts the whole first row, and the element that just took focus, behind the bar.
  * Measured at 1440 before the fix: the grid landed at y=0 under a bar occupying 0-122.
  */
+/**
+ * `emulateMedia({ reducedMotion: 'reduce' })` is what makes these deterministic: the app reads
+ * `prefers-reduced-motion` and scrolls with `behavior: 'auto'`, so the scroll is finished before
+ * the click resolves. Waiting for a smooth scroll to "settle" cannot work — a poll cannot tell a
+ * scroll that has finished from one that has not started, and on a slower runner it measured
+ * before the page had moved at all.
+ */
 test.describe('paging does not scroll the grid under the bar', () => {
   for (const [path, grid, pager] of [
     ['/collection.html', '#collection-cards-grid', '#pagination'],
@@ -284,22 +291,19 @@ test.describe('paging does not scroll the grid under the bar', () => {
       test(`${path} keeps the first row clear of the filter bar at ${width}px`, async ({
         page,
       }) => {
+        await page.emulateMedia({ reducedMotion: 'reduce' });
         await page.setViewportSize({ width, height: 800 });
         await page.goto(path);
         await page.locator(`${grid} article`).first().waitFor();
         await page.locator(pager).getByRole('button', { name: '2' }).click();
 
-        // Measured once, after the scroll settles,  never with expect.poll, which retries until it passes and so succeeds on any frame the smooth scroll happens to pass through.
-        const clearance = await page.evaluate(async (g) => {
-          await new Promise<void>((resolve) => {
-            let last = -1;
-            const settle = (): void => {
-              if (window.scrollY === last) return resolve();
-              last = window.scrollY;
-              setTimeout(settle, 100);
-            };
-            settle();
-          });
+        // The new page has rendered only once the pager marks 2 as current; before that the grid
+        // holds skeleton <div>s and `article` is null.
+        await expect(page.locator(`${pager} [aria-current="page"]`)).toHaveText(
+          '2'
+        );
+
+        const clearance = await page.evaluate((g) => {
           const bar = document
             .getElementById('catalog-filter-bar')!
             .getBoundingClientRect();
@@ -322,6 +326,8 @@ test.describe('paging does not scroll the grid under the bar', () => {
 test('paging with the filter panel open still clears the bar', async ({
   page,
 }) => {
+  // Same reason as the describe above: reduced motion makes the scroll synchronous.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto('/collection.html');
   await page.locator('#collection-cards-grid article').first().waitFor();
@@ -330,17 +336,11 @@ test('paging with the filter panel open still clears the bar', async ({
   await expect(page.locator('#catalog-sort-select')).toBeVisible();
 
   await page.locator('#pagination').getByRole('button', { name: '2' }).click();
+  await expect(page.locator('#pagination [aria-current="page"]')).toHaveText(
+    '2'
+  );
 
-  const clearance = await page.evaluate(async () => {
-    await new Promise<void>((resolve) => {
-      let last = -1;
-      const settle = (): void => {
-        if (window.scrollY === last) return resolve();
-        last = window.scrollY;
-        setTimeout(settle, 100);
-      };
-      settle();
-    });
+  const clearance = await page.evaluate(() => {
     const bar = document
       .getElementById('catalog-filter-bar')!
       .getBoundingClientRect();
