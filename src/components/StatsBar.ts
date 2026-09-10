@@ -1,9 +1,6 @@
 import { getCurrentUser } from '../utils/auth';
-import {
-  getProfileListings,
-  getProfileBids,
-  getProfileWins,
-} from '../api/profile';
+import { getProfileBids, getProfileWins } from '../api/profile';
+import { profileListings } from '../api/listingQueries';
 import { formatCurrency } from '../utils/formatCurrency';
 import { logError } from '../utils/logger';
 import {
@@ -69,15 +66,20 @@ export async function fetchStats(): Promise<StatsData | null> {
     }
 
     // Fetch listings, bids and wins in parallel
-    const [listingsResponse, bidsResponse, winsResponse] = await Promise.all([
-      getProfileListings(user.name),
+    const [listings, bidsResponse, winsResponse] = await Promise.all([
+      // Through the named-query layer, like every other listings request in the app.
+      // Calling `getProfileListings` straight was the last surface still building its own, which is the shape F-001/F-002 were about.
+      //
+      // One row, because only the count is wanted:
+      //  the tile reads `totalCount` off the envelope and throws the rows away, and each row carries its bids and its seller.
+      // On the recorded profile a row is ~1.6 kB.
+      profileListings(user.name, 1, 1),
       getProfileBids(user.name),
       getProfileWins(user.name),
     ]);
 
-    // meta.totalCount, not the rows in hand — the profile hero reads the same figure.
-    const myListings =
-      listingsResponse.meta?.totalCount ?? listingsResponse.data.length;
+    // totalCount, not the rows in hand — the profile hero reads the same figure.
+    const myListings = listings.totalCount;
     const myBids = bidsResponse.data.length;
     const totalWins = winsResponse.data?.length || 0;
     const auctionsBidOn = countAuctionsBidOn(bidsResponse.data);
