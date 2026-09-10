@@ -362,16 +362,27 @@
                     />
                   </div>
                   <div class="p-2.5 sm:p-3">
+                    <!--
+                    The eyebrow below is permanent.
+                    The title and the line under it are placeholders:
+                    ProductShowcase matches those two by class and repaints them from the newest live lot, so whatever is written there shows for under a second and survives only if that fetch fails.
+                    
+                    Put no id inside either of them.
+                    One lived in the title and carried a 4-second interval;
+                     the repaint destroyed the span before its first tick, leaving a timer writing to a detached node and a figure no visitor ever saw.
+                    The wording it used cannot be quoted here;
+                     Vite copies comments into the build, and tests/e2e/showcase.spec.ts asserts against the served HTML.
+                    -->
                     <div
                       class="mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"
                     >
-                      Active now
+                      Just listed
                     </div>
                     <p class="text-xs font-semibold text-slate-900">
-                      <span id="active-users">2,744</span> members online
+                      A live lot from the catalogue
                     </p>
                     <p class="mt-1 text-[11px] text-slate-600">
-                      Join the bidding community.
+                      Bids and time left, as they stand.
                     </p>
                   </div>
                 </article>

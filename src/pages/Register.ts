@@ -15,6 +15,7 @@ import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
+import { formatCredits } from '../utils/formatCurrency';
 
 export function initRegisterPage(): void {
   // Returns true once it has started the navigation.
@@ -85,7 +86,6 @@ export function initRegisterPage(): void {
 
 async function initShowcase(): Promise<void> {
   animateStarterCreditsCounter();
-  simulateActiveUsersCounter();
 
   await initProductShowcase({
     pageName: 'register',
@@ -99,6 +99,11 @@ async function initShowcase(): Promise<void> {
   });
 }
 
+/**
+ * The starter balance counts up on the featured tile's badge.
+ *
+ * Safe where the "members online" counter beside it was not: the showcase repaints tile-a and tile-b by presentation class, and this badge is neither of those slots.
+ */
 function animateStarterCreditsCounter(): void {
   const starterCredits = document.getElementById('starter-credits');
   if (!starterCredits) return;
@@ -107,26 +112,11 @@ function animateStarterCreditsCounter(): void {
   const targetCredits = 1000;
   const interval = setInterval(() => {
     credits += 10;
-    starterCredits.textContent = credits.toString();
+    starterCredits.textContent = formatCredits(credits);
     if (credits >= targetCredits) {
       clearInterval(interval);
     }
   }, 50);
-}
-
-function simulateActiveUsersCounter(): void {
-  const activeUsers = document.getElementById('active-users');
-  if (!activeUsers) return;
-
-  let users = 2744;
-  setInterval(() => {
-    const change =
-      Math.random() > 0.5
-        ? Math.floor(Math.random() * 5)
-        : -Math.floor(Math.random() * 3);
-    users = Math.max(2700, Math.min(2800, users + change));
-    activeUsers.textContent = users.toLocaleString();
-  }, 4000);
 }
 
 function validateNameField(input: HTMLInputElement): boolean {

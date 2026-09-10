@@ -443,3 +443,31 @@ test.describe('form errors', () => {
     );
   });
 });
+
+/**
+ * The gallery's overflow control, before and after it is pressed.
+ *
+ * The sweep above visits `listing.html` only at `IDS.otherSeller`, which has four photographs;
+ * one short of the control rendering at all.
+ * So neither the button nor the revealed-thumbnail state had ever been swept, which is the fixture-width trap.
+ * 
+ */
+test('axe — the lot gallery with more photographs than it shows', async ({
+  page,
+}) => {
+  await page.goto(`/listing.html?id=${IDS.manyMedia}`);
+  await expect(page.locator('#media-gallery')).toBeVisible();
+
+  const control = page.locator('[data-show-all-thumbnails]');
+  await expect(control).toBeVisible();
+
+  const collapsed = await axeViolations(page);
+  expect(collapsed, describe(collapsed)).toEqual([]);
+
+  await control.click();
+  // The revealed thumbnails are the state no fixture used to produce.
+  await expect(page.locator('.thumbnail-btn').nth(6)).toBeVisible();
+
+  const expanded = await axeViolations(page);
+  expect(expanded, describe(expanded)).toEqual([]);
+});

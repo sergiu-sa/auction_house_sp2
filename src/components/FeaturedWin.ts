@@ -5,6 +5,7 @@ import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import { highestBid } from '../utils/biddingStats';
 import { escapeHtml } from '../utils/escapeHtml';
+import { formatCredits } from '../utils/formatCurrency';
 import { initIdentityFallbacks } from '../utils/listingImage';
 import { renderAvatar } from './Avatar';
 
@@ -79,7 +80,7 @@ export function renderFeaturedWin(data: FeaturedWinData): string {
 
       <div class="mb-6 flex items-baseline gap-4">
         <div class="text-4xl font-bold text-white">
-          ${new Intl.NumberFormat('en-US').format(data.finalPrice)}
+          ${formatCredits(data.finalPrice)}
         </div>
         <div class="text-sm text-slate-400">
           Credits · ${data.bidCount} bids

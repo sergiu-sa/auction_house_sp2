@@ -14,8 +14,14 @@ const VIEWPORTS = [
   { name: '1440', width: 1440, height: 900 },
 ];
 
-/** #active-users is Math.random() on an interval; nothing else is masked. */
-const MASKS = { register: ['#active-users'] };
+/*
+ * Nothing is masked, and there is no masking machinery left to suggest otherwise.
+ *
+ * `register: ['#active-users']` stood here for a `Math.random()` interval, and had been a no-op
+ * for as long as it existed: the showcase's first repaint destroys that span, so by the time the
+ * screenshot is taken the locator matches zero elements and the region it was meant to hide is
+ * captured unmasked. The counter is gone; every render in these baselines is deterministic.
+ */
 
 /**
  * networkidle and fonts.ready are not enough:
@@ -97,9 +103,6 @@ for (const viewport of VIEWPORTS) {
           `${target.name}-${viewport.name}.png`,
           {
             fullPage: true,
-            mask: (MASKS[target.name as keyof typeof MASKS] ?? []).map((s) =>
-              page.locator(s)
-            ),
           }
         );
       });

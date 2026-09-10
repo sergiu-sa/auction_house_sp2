@@ -5,6 +5,7 @@ import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { isWatched, toggleWatched } from '../utils/storage';
 import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
+import { formatCredits } from '../utils/formatCurrency';
 import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 
 function renderFavoriteButton(listingId: string, borderStyle: string): string {
@@ -177,7 +178,7 @@ export function createCollectionCard(
           <div class="flex items-center justify-between gap-4 mt-4">
             <!-- Price -->
             <div class="flex items-baseline gap-2">
-              <span class="text-3xl font-bold text-slate-900">${currentHighest}</span>
+              <span class="text-3xl font-bold text-slate-900">${formatCredits(currentHighest)}</span>
               <span class="text-sm text-slate-500 uppercase tracking-wider">Credits</span>
             </div>
 
@@ -276,7 +277,7 @@ export function createCollectionCard(
 
         <!-- Price -->
         <div class="mb-4 flex items-baseline gap-2">
-          <span class="text-3xl font-bold text-slate-900">${currentHighest}</span>
+          <span class="text-3xl font-bold text-slate-900">${formatCredits(currentHighest)}</span>
           <span class="text-sm text-slate-500 uppercase tracking-wider">Credits</span>
         </div>
 
