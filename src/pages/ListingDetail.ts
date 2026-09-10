@@ -10,7 +10,7 @@ import {
 } from '../components/Breadcrumb';
 import { getListing } from '../api/listings';
 import { placeBid } from '../api/bids';
-import { isLoggedIn, getCurrentUser } from '../utils/auth';
+import { isLoggedIn, getCurrentUser, profileHref } from '../utils/auth';
 import {
   formatTimeRemaining,
   formatTimeAgo,
@@ -879,7 +879,7 @@ function renderSellerProfile(listing: Listing) {
       <div>
         <div class="text-base font-bold text-slate-900 mb-1 inline-flex max-w-full items-center gap-1.5">
           <i class="fa-solid fa-user text-sm" aria-hidden="true"></i>
-          <a href="/profile.html?user=${encodeURIComponent(seller.name)}" class="hover:text-slate-700 transition-colors break-all">@${escapeHtml(seller.name)}</a>
+          <a href="${profileHref(seller.name)}" class="hover:text-slate-700 transition-colors break-all"${isLoggedIn() ? '' : ` aria-label="@${escapeHtml(seller.name)} (login required)"`}>@${escapeHtml(seller.name)}</a>
         </div>
         ${
           seller._count
@@ -905,12 +905,17 @@ function renderSellerProfile(listing: Listing) {
     }
 
     <div class="pt-6" style="border-top: 2px solid var(--aucto-border-light)">
+      <!--
+        The label changes rather than carrying the hint in aria-label alone: a sighted guest
+        clicking "View Seller Profile" would land on a login form with no explanation, and a
+        promise only screen readers can hear is still a promise the page is not keeping.
+      -->
       <a
-        href="/profile.html?user=${encodeURIComponent(seller.name)}"
+        href="${profileHref(seller.name)}"
         class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 hover:text-slate-700 transition-colors"
       >
         <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
-        <span>View Seller Profile</span>
+        <span>${isLoggedIn() ? 'View Seller Profile' : 'Log in to view profile'}</span>
       </a>
     </div>
   `;

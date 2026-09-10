@@ -98,3 +98,36 @@ test.describe('logged in', () => {
     expect(mock.consoleErrors).toEqual([]);
   });
 });
+
+/**
+ * The claims this site no longer makes.
+ *
+ * All of these rendered on every page or on the catalog, and every one was invented:
+ * a support window, an average response time, a satisfaction rate, a phone number, a membership count.
+ * They are pinned here because removed copy leaves nothing behind to fail;
+ *   the footer half in particular was regenerated straight into the baselines.
+ */
+test.describe('logged out', () => {
+  test('no page claims a figure nobody can stand behind', async ({ page }) => {
+    for (const url of ['/index.html', '/collection.html', '/login.html']) {
+      await page.goto(url);
+
+      // A positive anchor first. Every string below lives in the JS-rendered footer, and a
+      // negated matcher passes on its first poll, so without this the test would go green if
+      // `renderFooter()` ever threw, went async, or lost its mount, while asserting nothing.
+      const body = page.locator('body');
+      await expect(page.locator('#footer a[href^="mailto:"]')).toHaveCount(1);
+
+      for (const invented of [
+        '24/7 Support Active',
+        'Available 24/7',
+        'support@aucto.app',
+        '+47 123 45 678',
+        '8,921 collectors',
+        'Unsubscribe anytime',
+      ]) {
+        await expect(body, `${invented} on ${url}`).not.toContainText(invented);
+      }
+    }
+  });
+});

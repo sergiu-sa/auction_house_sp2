@@ -450,7 +450,7 @@ test.describe('form errors', () => {
  * The sweep above visits `listing.html` only at `IDS.otherSeller`, which has four photographs;
  * one short of the control rendering at all.
  * So neither the button nor the revealed-thumbnail state had ever been swept, which is the fixture-width trap.
- * 
+ *
  */
 test('axe — the lot gallery with more photographs than it shows', async ({
   page,
@@ -470,4 +470,22 @@ test('axe — the lot gallery with more photographs than it shows', async ({
 
   const expanded = await axeViolations(page);
   expect(expanded, describe(expanded)).toEqual([]);
+});
+
+/**
+ * The visitor's profile hero, which is a different shape from the owner's.
+ *
+ * The sweep above visits `/profile.html` with no `?user=`, so it only ever sees the owner's four-tile row.
+ * Guarding the credits tile made a three-tile branch that nothing was checking.
+ */
+test.describe('axe — a profile that is not mine', () => {
+  test.use({ auth: 'in' });
+
+  test('the three-tile visitor hero has no violations', async ({ page }) => {
+    await page.goto('/profile.html?user=Seller13');
+    await expect(page.locator('#profile-content')).toContainText('This seller');
+
+    const violations = await axeViolations(page);
+    expect(violations, describe(violations)).toEqual([]);
+  });
 });

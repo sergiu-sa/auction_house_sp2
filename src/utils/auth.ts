@@ -68,3 +68,20 @@ export function requireOwnership(
 
   return true;
 }
+
+/**
+ * Where a link to `username`'s profile should point.
+ *
+ * Every `/auction/profiles/*` route is 401 without a bearer token so sending a guest to the profile page lands them on the session-expired toast and a redirect they did not ask for.
+ * They go straight to login instead, with the profile as the return url:
+ *  the same shape the navbar already uses for its Create and Profile links.
+ *
+ * The return url is encoded where the navbar's are not, and has to be:
+ *  this one carries a query string of its own, and an unencoded `?user=` would be read as a second parameter of the *login* url and dropped.
+ */
+export function profileHref(username: string): string {
+  const profile = `/profile.html?user=${encodeURIComponent(username)}`;
+  return isLoggedIn()
+    ? profile
+    : `/login.html?redirect=${encodeURIComponent(profile)}`;
+}

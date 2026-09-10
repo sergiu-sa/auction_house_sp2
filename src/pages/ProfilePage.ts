@@ -69,6 +69,12 @@ export function initProfilePage(): void {
     // /auction/profiles/* route is 401 without a bearer token (measured 2026-09-10), so a
     // logged-out visitor following a seller link lands on the session-expired path instead.
 
+    // Guarded like the branch above, and for the same reason. `profileHref` sends guests to log from a link, but a shared url, a bookmark, Back after signing out, or the canonical this page declares all arrive here directly;
+    //  and without this they got a spinner, a 401, then a "session expired" toast that is false for someone who never had one.
+    if (!protectedRoute()) {
+      return;
+    }
+
     const currentUser = getCurrentUser();
     const isOwnProfile = currentUser?.name === username;
 
@@ -295,9 +301,13 @@ function renderProfileHero(
         </div>
       </div>
 
-      <!-- Stats bar -->
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div
+      <!-- Stats bar. Three tiles for a visitor, four for the owner: the balance is theirs alone. -->
+      <div
+        class="grid grid-cols-1 gap-4 sm:grid-cols-2 ${isOwnProfile ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}"
+      >
+        ${
+          isOwnProfile
+            ? `<div
           class="bg-white px-6 py-5 text-center"
           style="border: 3px solid var(--aucto-border-dark)"
         >
@@ -308,7 +318,9 @@ function renderProfileHero(
             <span>Credits available</span>
           </div>
           <div class="text-3xl font-bold text-slate-900">${formatCredits(credits)}</div>
-        </div>
+        </div>`
+            : ''
+        }
         <div
           class="bg-white px-6 py-5 text-center"
           style="border: 3px solid var(--aucto-border-dark)"
@@ -686,10 +698,6 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
 /**
  * Written twice, once for the owner and once for a visitor, like the listings panel above it.
  * It was not, so a stranger's profile read "You have won 2 auctions" about somebody else.
- *
- * The hero's "Credits available" tile is still unguarded — a visitor sees that seller's balance
- * under a label that reads as their own. That one is a decision about what a profile publishes,
- * not a copy fix, so it is not made here.
  */
 function renderWinsAndBids(
   wins: Listing[],

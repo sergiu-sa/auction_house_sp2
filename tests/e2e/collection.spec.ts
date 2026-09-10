@@ -501,3 +501,46 @@ test('the loading skeleton reserves the cell as well as the cards', async ({
 
   expect(skeletonCells).toBe(rendered);
 });
+
+/**
+ * The "Can't Find What You're Looking For?" panel.
+ *
+ * It carried two `<button>` elements with no listener in either auth state; 
+ * focusable, announced as buttons, and inert when pressed. axe could not see it: both had perfectly good accessible names.
+ * "Create Alert" had no honest counterpart and is gone; "Contact Support" now reaches the address the footer already publishes.
+ */
+test('the catalog panel offers only a control that works', async ({ page }) => {
+  await page.goto('/collection.html');
+
+  await expect(page.getByRole('button', { name: 'Create Alert' })).toHaveCount(
+    0
+  );
+
+  // A reachable address, and specifically not the invented aucto.app one it used to carry.
+  const support = page.getByRole('link', { name: 'Contact Support' });
+  await expect(support).toHaveAttribute('href', /^mailto:[^@]+@[^@]+\.[a-z]+$/);
+  await expect(support).not.toHaveAttribute('href', /aucto\.app/);
+});
+
+/**
+ * The panel also carried three figures nobody could stand behind;
+ *  an average response time, a support window and a satisfaction rate.
+ * There is no true version of any of them for this platform, so they are gone rather than restated, and the paragraph above
+ * them no longer promises an alerts feature that does not exist.
+ */
+test('the catalog claims no figure it cannot stand behind', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+
+  const main = page.locator('#main-content');
+  for (const invented of [
+    'AVG RESPONSE TIME',
+    'SATISFACTION RATE',
+    'SUPPORT AVAILABLE',
+    '98%',
+  ]) {
+    await expect(main, invented).not.toContainText(invented);
+  }
+  await expect(main).not.toContainText('personalized alerts');
+});
