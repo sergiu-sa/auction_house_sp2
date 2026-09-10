@@ -383,3 +383,61 @@ test('a revealed thumbnail swaps the main image like any other', async ({
 
   expect(mock.consoleErrors).toEqual([]);
 });
+
+// listing-edit.html is behind protectedRoute(), so this one needs a session; the rest of
+// this file is deliberately logged out.
+test.describe('logged in', () => {
+  test.use({ auth: 'in' });
+
+  /**
+   * The edit form's preview pane, on a lot whose saved photographs are dead.
+   *
+   * `initListingFormPreview` used to arm only the images it wrote itself, so the pane's *first*
+   * render — the listing's saved media, painted by `ListingEdit` — was left unarmed. A dead saved
+   * URL showed as alt text on grey, directly beside a preview that handles the identical failure
+   * correctly the moment the author touches the field.
+   *
+   * The route is overridden rather than a fixture added: the owner's recorded lot has three working
+   * photographs, and `requireOwnership` means the broken-image fixture (another seller's) cannot
+   * reach this page at all.
+   */
+  test('the edit form flags a saved photograph that no longer loads', async ({
+    page,
+    mock,
+  }) => {
+    const own = loadFixture<{ data: { media: { url: string }[] } }>(
+      'listing-own'
+    );
+    own.data.media = [
+      { url: BROKEN_IMAGE_URL },
+      { url: BROKEN_IMAGE_URL },
+      { url: BROKEN_IMAGE_URL },
+    ];
+
+    await page.route(`**/auction/listings/${IDS.own}?**`, (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(own),
+      })
+    );
+
+    await page.goto(`/listing-edit.html?id=${IDS.own}`);
+
+    // The pane's own answer, not the lot placeholder: here the URL is something the author can
+    // still correct, so it says so rather than standing in for a photograph.
+    await expect(page.locator('#mainPreview')).toContainText(
+      'Invalid image URL'
+    );
+    // The thumbnails beneath it, which were the second unarmed sink — asserted by counting the
+    // notices that replaced them, not by counting the images that are gone. `toHaveCount(0)` on
+    // the images was satisfied just as well by a regression that stopped rendering thumbnails at
+    // all, which is the "never loosen one to non-zero" trap in reverse.
+    // Three saved photographs, so slice(1, 4) paints two thumbnails.
+    await expect(
+      page.locator('#additionalImages .fa-circle-xmark')
+    ).toHaveCount(2);
+
+    expect(mock.consoleErrors).toEqual([]);
+  });
+});
