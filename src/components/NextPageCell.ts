@@ -13,8 +13,7 @@ export interface NextPageCellConfig {
   containerId: string;
   currentPage: number;
   totalPages: number;
-  /** How many lots the caller just rendered. 
-   * Zero means the empty state is on screen. */
+  /** How many lots the caller just rendered. Zero means the empty state is on screen. */
   cardCount: number;
   viewMode?: 'grid' | 'list';
   onPageChange: (page: number) => void;
