@@ -23,6 +23,8 @@ export const IDS = {
   brokenImage: 'deadbeef-2222-4333-8444-555566667777',
   /** `media: []`. Derived fixture. */
   noMedia: 'deadbeef-3333-4444-8555-666677778888',
+  /** Seven images, so the gallery's overflow control renders. Derived fixture. */
+  manyMedia: 'deadbeef-4444-4666-8777-888899990000',
 };
 
 // 200 with HTML body (not 404) to match real failures; Chromium logs nothing for 200.
@@ -261,5 +263,6 @@ function listingById(id: string): unknown | null {
   if (id === IDS.own) return json('listing-own');
   if (id === IDS.brokenImage) return json('listing-broken-image');
   if (id === IDS.noMedia) return json('listing-no-media');
+  if (id === IDS.manyMedia) return json('listing-many-media');
   return null;
 }

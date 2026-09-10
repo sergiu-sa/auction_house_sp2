@@ -332,3 +332,54 @@ test('every box that can show the placeholder leaves it its safe zone', async ({
     `${narrowestSaid} crops to x>=${crop.xMin.toFixed(1)}, above SAFE.xMin ${SAFE.xMin} — ${remeasure}`
   ).toBeLessThanOrEqual(SAFE.xMin);
 });
+
+/**
+ * F-130: the gallery's "+N more" overflow control.
+ *
+ * It rendered as a bare `<button>` with neither `.thumbnail-btn` nor `data-image-url`, so `initGallery` had nothing to bind and pressing it did nothing.
+ * It survived twelve audit phases because it draws only above four images and **no fixture had more than four**;
+ * the branch had never rendered under any test.
+ * `listing-many-media.json` exists to make it render.
+ */
+test('the gallery overflow control reveals the rest of the photographs', async ({
+  page,
+  mock,
+}) => {
+  await page.goto(`/listing.html?id=${IDS.manyMedia}`);
+
+  const thumbs = page.locator('.thumbnail-btn');
+  const overflow = page.locator('[data-show-all-thumbnails]');
+
+  // Seven photographs: four in the first row, three behind the control.
+  // Every one of them is a real thumbnail button from the start, that is what makes revealing them enough.
+  await expect(thumbs).toHaveCount(7);
+  await expect(thumbs.nth(4)).toBeHidden();
+  await expect(overflow).toHaveText(/\+3 more/);
+
+  await overflow.click();
+
+  await expect(overflow).toHaveCount(0);
+  for (let i = 0; i < 7; i++) await expect(thumbs.nth(i)).toBeVisible();
+  // The control removed itself from under the reader's hands, so focus goes to what it revealed rather than falling to <body>.
+  await expect(thumbs.nth(4)).toBeFocused();
+
+  expect(mock.consoleErrors).toEqual([]);
+});
+
+test('a revealed thumbnail swaps the main image like any other', async ({
+  page,
+  mock,
+}) => {
+  await page.goto(`/listing.html?id=${IDS.manyMedia}`);
+
+  const sixth = page.locator('.thumbnail-btn').nth(5);
+  const url = await sixth.getAttribute('data-image-url');
+  expect(url).toBeTruthy();
+
+  await page.locator('[data-show-all-thumbnails]').click();
+  await sixth.click();
+
+  await expect(page.locator('#main-image')).toHaveAttribute('src', url!);
+
+  expect(mock.consoleErrors).toEqual([]);
+});

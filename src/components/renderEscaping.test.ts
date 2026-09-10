@@ -7,6 +7,7 @@ import { renderFeaturedWin } from './FeaturedWin';
 import { renderBreadcrumb, BREADCRUMB_PRESETS } from './Breadcrumb';
 import { renderHeader } from './Navbar';
 import { renderAvatar } from './Avatar';
+import { renderErrorPanel } from './ErrorPanel';
 import { mountNextPageCell } from './NextPageCell';
 import {
   renderCatalogFilterBar,
@@ -252,6 +253,25 @@ describe('components are inert against a hostile listing', () => {
     expect(markup).toContain('Lot&quot;');
     assertInert(markup);
     localStorage.clear();
+  });
+
+  // PAYLOAD and URL_PAYLOAD, not a payload written for this case:
+  //  they carry `data-pwned`, and that attribute is what `assertInert` can actually see.
+  // The `__XSS` check cannot fail here, jsdom compiles an inline handler into a function but never runs its body without `runScripts:
+  //  'dangerously'`, which this suite does not set.
+  it('ErrorPanel, with a hostile message', () => {
+    // Server-controlled text:
+    // the message is whatever came back in the API's `errors[]`, landing in innerHTML on four pages.
+    assertInert(renderErrorPanel({ message: PAYLOAD }));
+  });
+
+  it('ErrorPanel, with a hostile action label and destination', () => {
+    assertInert(
+      renderErrorPanel({
+        message: PAYLOAD,
+        action: { label: PAYLOAD, href: URL_PAYLOAD },
+      })
+    );
   });
 });
 
