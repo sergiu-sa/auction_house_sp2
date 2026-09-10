@@ -7,6 +7,7 @@ import { renderGuestBanner } from './GuestBanner';
 import { initSearchField } from './filters';
 import type { User } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
+import { formatCredits, formatCurrency } from '../utils/formatCurrency';
 import { initIdentityFallbacks } from '../utils/listingImage';
 import { renderAvatar } from './Avatar';
 
@@ -298,16 +299,16 @@ function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
  * Re-rendering the whole header instead would re-bind its document-level listeners on every call.
  */
 export function updateHeaderCredits(credits: number): void {
-  const formatted = new Intl.NumberFormat('en-US').format(credits);
-
+  // The same two calls renderUserSection makes, so a repaint cannot drift from the first paint.
+  // The compact box prints the unit as a separate styled label; the drawer line does not.
   for (const [id, text] of [
-    ['navbar-credits', formatted],
-    ['navbar-menu-credits', `${formatted} credits`],
+    ['navbar-credits', formatCredits(credits)],
+    ['navbar-menu-credits', formatCurrency(credits)],
   ]) {
     const el = document.getElementById(id);
     if (!el) continue;
     el.textContent = text;
-    el.setAttribute('aria-label', `${formatted} credits`);
+    el.setAttribute('aria-label', formatCurrency(credits));
   }
 }
 
@@ -322,7 +323,7 @@ function renderUserSection(isUserLoggedIn: boolean, user: User | null): string {
         <!-- Credits Box -->
         <div class="hidden items-center gap-2 bg-slate-50 px-4 py-2 sm:flex" style="border: 3px solid var(--aucto-border-dark)" aria-label="User credits">
           <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">Credits</span>
-          <span id="navbar-credits" class="text-base font-bold text-slate-900" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)}</span>
+          <span id="navbar-credits" class="text-base font-bold text-slate-900" aria-label="${formatCurrency(user.credits || 0)}">${formatCredits(user.credits || 0)}</span>
         </div>
 
         <!-- DESKTOP: Profile Button  -->
@@ -469,7 +470,7 @@ function renderMobileMenu(isUserLoggedIn: boolean, user: User | null): string {
           })}
           <div>
             <div class="text-sm font-bold text-slate-900">${escapeHtml(user.name)}</div>
-            <div id="navbar-menu-credits" class="text-xs text-slate-600" aria-label="${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits">${new Intl.NumberFormat('en-US').format(user.credits || 0)} credits</div>
+            <div id="navbar-menu-credits" class="text-xs text-slate-600" aria-label="${formatCurrency(user.credits || 0)}">${formatCurrency(user.credits || 0)}</div>
           </div>
         </div>
         <button

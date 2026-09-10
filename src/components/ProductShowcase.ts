@@ -11,6 +11,7 @@ import { formatTimeRemaining } from '../utils/formatDate';
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import { highestBid } from '../utils/biddingStats';
+import { formatCredits } from '../utils/formatCurrency';
 import { lotImageSource, setLotImageSource } from '../utils/listingImage';
 
 const REFRESH_INTERVAL_MS = 15000;
@@ -119,7 +120,7 @@ function updateFeaturedTile(
       '#featured-bid'
     ) as HTMLElement | null;
     if (bidElement && listing.bids && listing.bids.length > 0) {
-      bidElement.textContent = highestBid(listing.bids).toString();
+      bidElement.textContent = formatCredits(highestBid(listing.bids));
     }
   }
 }

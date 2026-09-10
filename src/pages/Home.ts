@@ -47,6 +47,7 @@ import {
 } from '../components/filters';
 import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 import { escapeHtml } from '../utils/escapeHtml';
+import { formatCurrency } from '../utils/formatCurrency';
 
 // Hero mosaic sizes: tiles are third of column, not full-width card presets.
 const HERO_MAIN_SIZES =
@@ -297,7 +298,9 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
 
   // Both stats describe the platform, so they count the whole active pool.
   if (heroActiveCount) {
-    heroActiveCount.textContent = pool.length.toLocaleString();
+    // 'en-US' for the same reason formatCredits pins it: without a locale this follows the
+    // reader's machine, so a Norwegian browser renders "3 200" beside a pinned "1,002 credits".
+    heroActiveCount.textContent = pool.length.toLocaleString('en-US');
   }
 
   if (heroBidsCount) {
@@ -305,7 +308,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
       (sum, listing) => sum + (listing._count?.bids || 0),
       0
     );
-    heroBidsCount.textContent = totalBids.toLocaleString();
+    heroBidsCount.textContent = totalBids.toLocaleString('en-US');
   }
 
   const featured = await featuredWithImages(HERO_TILE_COUNT, pool);
@@ -371,7 +374,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
           Current bid
           <span class="font-semibold text-slate-900 inline-flex items-center gap-1">
             <i class="fa-solid fa-coins text-xs" aria-hidden="true"></i>
-            <span>${mainHighestBid} credits</span>
+            <span>${formatCurrency(mainHighestBid)}</span>
           </span>
           ·
           <span class="inline-flex items-center gap-1">
@@ -424,7 +427,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
                 ${escapeHtml(listing.title.length > 30 ? listing.title.substring(0, 30) + '...' : listing.title)}
               </a>
             </h4>
-            <p class="text-[11px] text-slate-600">${currentHighest} credits</p>
+            <p class="text-[11px] text-slate-600">${formatCurrency(currentHighest)}</p>
           </div>
         </article>
       `;
