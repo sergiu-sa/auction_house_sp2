@@ -30,17 +30,13 @@ const SOCIAL_ICONS = {
   },
 } as const;
 
-function renderSocialLink(
-  icon: keyof typeof SOCIAL_ICONS,
-  label: string
-): string {
+function renderSocialLink(icon: keyof typeof SOCIAL_ICONS): string {
   const { viewBox, path } = SOCIAL_ICONS[icon];
 
   return `
-          <a
-            class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white transition-colors hover:bg-slate-700"
+          <span
+            class="flex h-10 w-10 items-center justify-center bg-slate-800 text-white"
             style="border: 2px solid #475569"
-            title="Follow us on ${label}"
           >
             <svg
               class="h-3.5 w-auto"
@@ -51,7 +47,7 @@ function renderSocialLink(
             >
               <path d="${path}" />
             </svg>
-          </a>`;
+          </span>`;
 }
 
 export function renderFooter(): void {
@@ -93,13 +89,9 @@ export function renderFooter(): void {
             <span class="text-3xl font-bold text-white">AUCTO</span>
           </div>
         </a>
-        <p class="mb-6 text-sm leading-relaxed text-slate-400">
-          Professional auction infrastructure for serious collectors.
+        <p class="text-sm leading-relaxed text-slate-400">
+          Professional auction infrastructure.
         </p>
-        <div class="flex items-center gap-3">
-          <div class="h-2 w-2 bg-green-500"></div>
-          <span class="text-xs text-slate-400">24/7 Support Active</span>
-        </div>
       </div>
 
       <!-- Platform -->
@@ -160,7 +152,7 @@ export function renderFooter(): void {
         <ul class="space-y-3 text-sm">
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-circle-question text-xs text-slate-500" aria-hidden="true"></i
               >How Bidding Works
@@ -168,7 +160,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-book text-xs text-slate-500" aria-hidden="true"></i>Seller's
               Guide
@@ -176,7 +168,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-shield text-xs text-slate-500" aria-hidden="true"></i
               >Authentication
@@ -184,7 +176,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-headset text-xs text-slate-500" aria-hidden="true"></i>Help
               Center
@@ -203,7 +195,7 @@ export function renderFooter(): void {
         <ul class="space-y-3 text-sm mb-6">
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-file-contract text-xs text-slate-500" aria-hidden="true"></i
               >Terms of Service
@@ -211,7 +203,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-lock text-xs text-slate-500" aria-hidden="true"></i>Privacy
               Policy
@@ -219,7 +211,7 @@ export function renderFooter(): void {
           </li>
           <li>
             <a
-              class="transition-colors hover:text-white inline-flex items-center gap-2"
+              class="transition-colors inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-cookie text-xs text-slate-500" aria-hidden="true"></i>Cookie
               Policy
@@ -234,18 +226,11 @@ export function renderFooter(): void {
             Contact
           </div>
           <a
-            href="mailto:support@aucto.app"
+            href="mailto:sergiudsarbu+aucto@gmail.com"
             class="block text-white transition-colors hover:text-slate-300"
           >
-            support@aucto.app
+            sergiudsarbu+aucto@gmail.com
           </a>
-          <a
-            href="tel:+4712345678"
-            class="block text-white transition-colors hover:text-slate-300"
-          >
-            +47 123 45 678
-          </a>
-          <div class="text-slate-400">Available 24/7</div>
         </div>
 
         <div
@@ -253,13 +238,7 @@ export function renderFooter(): void {
         >
           Follow
         </div>
-        <div class="flex gap-3">${renderSocialLink('twitter', 'Twitter')}${renderSocialLink(
-          'instagram',
-          'Instagram'
-        )}${renderSocialLink('linkedin', 'LinkedIn')}${renderSocialLink(
-          'facebook',
-          'Facebook'
-        )}
+        <div class="flex gap-3">${renderSocialLink('twitter')}${renderSocialLink('instagram')}${renderSocialLink('linkedin')}${renderSocialLink('facebook')}
         </div>
       </div>
     </div>

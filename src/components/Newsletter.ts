@@ -14,7 +14,7 @@ export function renderNewsletter(): string {
         Get notified of new premium lots
       </h2>
       <p class="mb-8 max-w-2xl text-sm leading-relaxed text-slate-300">
-        Join 8,921 collectors receiving weekly curated auction alerts.
+        Weekly alerts on new lots, once they are running.
       </p>
       <form id="newsletter-form" novalidate>
         <div class="mb-4">
@@ -41,7 +41,7 @@ export function renderNewsletter(): string {
         </button>
       </form>
       <p class="mt-4 text-xs text-slate-400">
-        Unsubscribe anytime. We respect your privacy.
+        A design placeholder. No address is stored and no mail is sent.
       </p>
     </div>
   `;
@@ -87,13 +87,14 @@ export function initNewsletter(): void {
     const restore = setButtonBusy(submitBtn, 'Subscribing...');
 
     try {
-      // Simulated subscription — no backend wired up yet
+      // No backend, and the copy above says so rather than implying one. The delay and the
+      // button states stay because the block exists to show the design, not to collect anything.
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Success state
+      // Not "Subscribed!": nothing was sent anywhere, and saying so is the whole point.
       submitBtn.innerHTML = `
         <i class="fa-solid fa-check text-sm" aria-hidden="true"></i>
-        Subscribed!
+        Noted
       `;
       submitBtn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
       submitBtn.classList.add('bg-green-600');
@@ -101,7 +102,7 @@ export function initNewsletter(): void {
       emailInput.value = '';
 
       // Show success message
-      showSuccess('Thank you for subscribing! Check your email to confirm.');
+      showSuccess('Alerts are not live yet. Nothing has been sent or stored.');
 
       // Reset button after 3 seconds
       setTimeout(() => {
