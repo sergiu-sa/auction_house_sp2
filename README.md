@@ -30,7 +30,7 @@ The other goal was to ship a real-world front-end without leaning on a framework
 
 **Named queries, not hand-built parameters.** No page calls `getListings` directly. They call `src/api/listingQueries.ts`, which names the intent — `activePool`, `endingSoon`, `trending`, `catalogPage`. Every surface used to fetch the newest 50 listings and filter them in the browser, and only about 2% of the pool is active, so each one was wrong in its own way: Trending rendered 2 cards, and the hero told visitors the platform had 3 live auctions. The layer exists to encode four API behaviours that are measured rather than assumed — `_active=false` is silently ignored, an unknown `sort` field is a 500, the search endpoint ignores `_active` and `_tag`, and the whole active pool fits in one request.
 
-**A test suite shaped like the risks.** 446 unit tests over `utils/` and `api/`, plus a 121-test Playwright suite that serves every request from recorded fixtures with the page clock frozen, so a red run always means this code changed and never that a shared third-party API was slow. It asserts zero axe violations on 8 pages in both auth states, that no page scrolls sideways when every user-controlled field holds a 108-character word, and exact card counts — each carrying a comment recording what the number was when the surface was broken.
+**A test suite shaped like the risks.** 450 unit tests over `utils/` and `api/`, plus a 127-test Playwright suite that serves every request from recorded fixtures with the page clock frozen, so a red run always means this code changed and never that a shared third-party API was slow. It asserts zero axe violations on 8 pages in both auth states, that no page scrolls sideways when every user-controlled field holds a 108-character word, and exact card counts — each carrying a comment recording what the number was when the surface was broken.
 
 **Iterative, not waterfall.** I built a high-fidelity Figma prototype but treated it as a starting point. Reproducing layouts in code against real API data exposed limitations the static mockups couldn't predict — descriptions were often shorter than expected, leaving awkward space; the bento layout on the listing-detail page was a direct response. The brand identity, including the logo, evolved alongside the implementation rather than being locked first.
 
@@ -63,8 +63,8 @@ The other goal was to ship a real-world front-end without leaning on a framework
 | Bundler  | Vite v7                                          | Multi-page entries via `rollupOptions.input`; ES2020 target, no legacy polyfills.              |
 | Styling  | Tailwind v3                                      | Custom palette (`aucto.*`, `warm-white`), 3px border utility, Cormorant + Source Sans 3 fonts. |
 | API      | [Noroff API v2](https://docs.noroff.dev/docs/v2) | JWT auth + API-key authorisation.                                                              |
-| Testing  | Vitest + jsdom                                   | 446 unit tests across `utils/` and `api/`.                                                     |
-| E2E      | Playwright                                       | 121 fully mocked smoke tests + 16 screenshot baselines. No network, frozen clock.              |
+| Testing  | Vitest + jsdom                                   | 450 unit tests across `utils/` and `api/`.                                                     |
+| E2E      | Playwright                                       | 127 fully mocked smoke tests + 16 screenshot baselines. No network, frozen clock.              |
 | Linting  | ESLint v9 (flat config) + Prettier               | `npm run lint` enforced in CI.                                                                 |
 | CI       | GitHub Actions                                   | Type-check + lint + test + build on every PR and push to `main`.                               |
 | Hosting  | Netlify                                          | Catch-all 404 redirect, security headers, asset caching.                                       |
@@ -155,7 +155,7 @@ tests/e2e/              # Playwright. Every request served from fixtures/
 Two suites with different jobs. The unit suite asserts logic; the Playwright suite answers
 "did we break the app?".
 
-**446 unit tests across 33 files** (Vitest + jsdom), concentrated where a silent bug would be
+**450 unit tests across 34 files** (Vitest + jsdom), concentrated where a silent bug would be
 worst:
 
 | Area                                              | Tests | What it pins                                                                         |
@@ -182,9 +182,10 @@ worst:
 | `src/components/StatsBar.test.ts`                 | 5     | the footer count read through the query layer, and what it does with no meta         |
 | `src/components/cardGrid.test.ts`                 | 10    | one driver behind every lot grid: the write, the empty state, the skeletons          |
 | `src/utils/busyButton.test.ts`                    | 5     | a submit button's working state, and the restore it hands back                       |
+| `src/utils/auth.test.ts`                          | 4     | where a link to a profile points, for a reader who is not signed in                  |
 | the rest                                          | 88    | icons and CSP, image probing and fallbacks, profile path encoding, currency, parity  |
 
-**121 Playwright smoke tests + 16 screenshot baselines.** Every request is served from
+**127 Playwright smoke tests + 16 screenshot baselines.** Every request is served from
 `tests/e2e/fixtures/` and the page clock is frozen at the instant they were recorded, so
 countdowns render constant text and a red run always means this code changed. Prove the
 mocking is still complete with `E2E_OFFLINE=1 npm run test:e2e`, which makes every host but
