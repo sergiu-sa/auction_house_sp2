@@ -18,7 +18,7 @@ test('home renders every section at its measured card count', async ({
   await expect(page.locator('#trending-cards article')).toHaveCount(3);
   await expect(page.locator('#new-listings-cards article')).toHaveCount(3);
   await expect(page.locator('#ending-soon-cards article')).toHaveCount(4);
-  await expect(page.locator('#catalog-cards article')).toHaveCount(12);
+  await expect(page.locator('#catalog-cards article')).toHaveCount(11);
 
   // The stats describe the platform, not the fetched window.
   await expect(page.locator('#hero-active-count')).toHaveText('53');
@@ -32,6 +32,7 @@ test('home renders every section at its measured card count', async ({
  * Both halves matter and the card count alone proves neither:
  *  the term has to reach the query (a filtered page is a different set of lots, not a smaller one), and the catalog's own reload must not overwrite the field the term landed in.
  */
+/** 11 lots, not 12: the 12th grid cell is the next-page control. See collection.spec.ts. */
 test('home applies a search handed to it in the URL', async ({ page }) => {
   await page.goto('/index.html');
   const unfiltered = await page
@@ -43,7 +44,7 @@ test('home applies a search handed to it in the URL', async ({ page }) => {
 
   await expect(page.locator('#global-search-input')).toHaveValue('vintage');
   await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
-  await expect(page.locator('#catalog-cards article')).toHaveCount(12);
+  await expect(page.locator('#catalog-cards article')).toHaveCount(11);
   await expect(
     page.locator('#catalog-cards article h3').first()
   ).not.toHaveText(unfiltered ?? '');

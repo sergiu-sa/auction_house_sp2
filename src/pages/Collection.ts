@@ -1,5 +1,4 @@
 import { CatalogStateManager } from '../utils/catalogState';
-import { prefersReducedMotion } from '../utils/motion';
 import { renderHeader } from '../components/Navbar';
 import { renderFooter } from '../components/Footer';
 import {
@@ -7,6 +6,8 @@ import {
   showCollectionCardSkeletons,
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
+import { mountNextPageCell } from '../components/NextPageCell';
+import { focusResultsGrid } from '../utils/focusResultsGrid';
 import {
   renderCatalogFilterBar,
   initCatalogFilterBar,
@@ -20,8 +21,10 @@ import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
 import type { Listing } from '../types/api';
 
+// 23, not 24: the 24th grid cell is the next-page control, and the fetch limit moves with the display count, so no lot falls between pages.
+// 24 cells divide exactly by 1, 2, 3 and 4 columns.
 const catalogManager = new CatalogStateManager(
-  { itemsPerPage: 24 },
+  { itemsPerPage: 23 },
   loadListings
 );
 
@@ -145,7 +148,9 @@ async function loadListings(): Promise<void> {
   try {
     applyViewMode(state.viewMode);
     showCollectionCardSkeletons(
-      state.itemsPerPage,
+      // +1 for the next-page cell:
+      //  the finished grid holds one more box than it holds lots, and one cell short grew the grid 687px at 375 when the cards landed.
+      state.itemsPerPage + 1,
       'collection-cards-grid',
       state.viewMode
     );
@@ -177,6 +182,17 @@ async function loadListings(): Promise<void> {
   }
 }
 
+/**
+ * One definition of what paging does, for the numbered pager and the in-grid cell alike.
+ * The collapse comes first:
+ *  an open panel is far taller than the `scroll-margin-top` sized for the collapsed bar, and the first row lands behind it.
+ */
+function goToPage(page: number): void {
+  catalogManager.updatePage(page);
+  collapseCatalogFilterBar();
+  focusResultsGrid('collection-cards-grid');
+}
+
 /** Draw the page already in hand. No query — the view toggle uses this too. */
 function renderCurrentPage(): void {
   const state = catalogManager.getState();
@@ -188,27 +204,21 @@ function renderCurrentPage(): void {
     state.viewMode
   );
 
-  renderPagination({
-    containerId: 'pagination',
+  mountNextPageCell({
+    containerId: 'collection-cards-grid',
     currentPage: state.page,
     totalPages: resultTotals.pageCount,
-    onPageChange: (page: number) => {
-      catalogManager.updatePage(page);
-      // Before the scroll below: an open panel makes the bar far taller than the `scroll-margin-top` sized for its collapsed height, and the first row lands behind it.
-      collapseCatalogFilterBar();
+    cardCount: currentPageListings.length,
+    viewMode: state.viewMode,
+    onPageChange: goToPage,
+  });
 
-      // Scroll to top of results, and take focus with it;
-      //  the pagination button that was focused gets replaced by the re-render, which otherwise drops focus to <body>.
-      const resultsHeader = document.getElementById('collection-cards-grid');
-      if (resultsHeader) {
-        resultsHeader.scrollIntoView({
-          behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-          block: 'start',
-        });
-        resultsHeader.setAttribute('tabindex', '-1');
-        resultsHeader.focus({ preventScroll: true });
-      }
-    },
+  renderPagination({
+    containerId: 'pagination',
+    editablePageNumber: true,
+    currentPage: state.page,
+    totalPages: resultTotals.pageCount,
+    onPageChange: goToPage,
   });
 
   updateResultsInfo();

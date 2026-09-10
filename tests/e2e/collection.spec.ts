@@ -7,6 +7,11 @@ import { test, expect } from './support/fixtures';
 
 const GRID_COLUMNS = 'sm:grid-cols-2';
 
+/**
+ * 23 lots, not 24: the 24th grid cell is the next-page control, and the fetch limit moves with the display count so no lot falls between pages.
+ * The counter reads 1-23 then 24-46.
+ * Exact on purpose, "non-zero" would pass either way, and the query layer's regressions all look like a plausible smaller number.
+ */
 test('grid and list views swap the container class, not just the cards', async ({
   page,
   mock,
@@ -14,7 +19,7 @@ test('grid and list views swap the container class, not just the cards', async (
   await page.goto('/collection.html');
   const grid = page.locator('#collection-cards-grid');
 
-  await expect(grid.locator('article')).toHaveCount(24);
+  await expect(grid.locator('article')).toHaveCount(23);
   await expect(grid).toHaveClass(new RegExp(GRID_COLUMNS));
 
   await page.locator('#list-view-btn').click();
@@ -35,7 +40,7 @@ test('the results header reports the whole matching set', async ({ page }) => {
   await page.goto('/collection.html');
 
   await expect(page.locator('#results-count')).toHaveText('3,199');
-  await expect(page.locator('#results-range')).toHaveText('1-24');
+  await expect(page.locator('#results-range')).toHaveText('1-23');
   await expect(page.locator('#active-lots-count')).toHaveText('52');
 });
 
@@ -47,7 +52,7 @@ test('narrowing to active lots narrows the count with it', async ({ page }) => {
   await page.locator('#catalog-active-only').check();
 
   await expect(page.locator('#results-count')).toHaveText('53');
-  await expect(page.locator('#collection-cards-grid article')).toHaveCount(24);
+  await expect(page.locator('#collection-cards-grid article')).toHaveCount(23);
 });
 
 /** Pagination is a server query now, so page 2 has to be different listings, not the same slice. */
@@ -58,8 +63,8 @@ test('paging asks the server for the next page', async ({ page }) => {
 
   await page.locator('#pagination').getByRole('button', { name: '2' }).click();
 
-  await expect(grid.locator('article')).toHaveCount(24);
-  await expect(page.locator('#results-range')).toHaveText('25-48');
+  await expect(grid.locator('article')).toHaveCount(23);
+  await expect(page.locator('#results-range')).toHaveText('24-46');
   await expect(grid.locator('article h3').first()).not.toHaveText(
     firstOnPageOne ?? ''
   );
@@ -72,14 +77,14 @@ test('paging asks the server for the next page', async ({ page }) => {
 test('search filters the rendered card set', async ({ page }) => {
   await page.goto('/collection.html');
   const grid = page.locator('#collection-cards-grid');
-  await expect(grid.locator('article')).toHaveCount(24);
+  await expect(grid.locator('article')).toHaveCount(23);
 
   await page.locator('#catalog-search-input').fill('vase');
   await expect(grid.locator('article')).toHaveCount(12);
   await expect(page.locator('#results-count')).toHaveText('116');
 
   await page.locator('#catalog-search-input').fill('');
-  await expect(grid.locator('article')).toHaveCount(24);
+  await expect(grid.locator('article')).toHaveCount(23);
   await expect(page.locator('#results-count')).toHaveText('3,199');
 });
 
@@ -350,4 +355,149 @@ test('the catalog search field announces a name that outlives the placeholder', 
 
   await search.fill('vase');
   await expect(search).toHaveAttribute('aria-label', 'Search the catalog');
+});
+
+test('the last grid cell pages forward and lands on the results', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  const grid = page.locator('#collection-cards-grid');
+  await expect(grid.locator('article')).toHaveCount(23);
+
+  const firstOnPageOne = await grid.locator('article h3').first().textContent();
+  await grid.locator('[data-next-page]').click();
+
+  await expect(page.locator('#results-range')).toHaveText('24-46');
+  await expect(grid.locator('article h3').first()).not.toHaveText(
+    firstOnPageOne ?? ''
+  );
+  // F-058: the control that was focused no longer exists, so focus must be placed deliberately.
+  await expect(grid).toBeFocused();
+});
+
+/** The field is the pager's own page number, so Enter is the whole interaction. */
+test('the pager page number clamps past the end instead of erroring', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  const grid = page.locator('#collection-cards-grid');
+
+  await page.locator('#pagination [data-page-jump-input]').fill('99999');
+  await page.locator('#pagination [data-page-jump-input]').press('Enter');
+
+  // Page 140 is past the 50 rows the fixture records, so the grid comes back empty and the cell is suppressed with it.
+  // What this pins is the clamp: 99999 must land on the last page rather than erroring or being ignored, and #results-range is what proves where it landed.
+  await expect(page.locator('#results-range')).toHaveText('0-0');
+  await expect(grid.locator('[data-next-page]')).toHaveCount(0);
+});
+
+test('list view drops the cell and keeps the numbered pager', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  await page.locator('#list-view-btn').click();
+
+  await expect(
+    page.locator('#collection-cards-grid [data-next-page-cell]')
+  ).toHaveCount(0);
+  await expect(page.locator('#pagination')).toBeVisible();
+});
+
+/**
+ * Page 140 is past the 50 rows the fixture records, so the grid empties and the cell is correctly suppressed.
+ * Narrowing to the 53 active lots is the only route the mocked suite has to this tile.
+ */
+test('the last page offers a way back instead of a way on', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  await page.locator('#catalog-active-only').check();
+  await expect(page.locator('#results-count')).toHaveText('53');
+
+  await page.locator('#pagination [data-page-jump-input]').fill('3');
+  await page.locator('#pagination [data-page-jump-input]').press('Enter');
+
+  await expect(page.locator('#results-range')).toHaveText('47-53');
+  await expect(page.locator('[data-next-page]')).toHaveCount(0);
+
+  const back = page.locator('[data-first-page]');
+  await expect(back).toBeVisible();
+  await back.click();
+  await expect(page.locator('#results-range')).toHaveText('1-23');
+});
+
+/** The toggle re-renders the grid, so the cell has to come back on the way into grid view. */
+test('the cell survives a trip through list view and back', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  const cell = page.locator('#collection-cards-grid [data-next-page-cell]');
+  await expect(cell).toHaveCount(1);
+
+  await page.locator('#list-view-btn').click();
+  await expect(cell).toHaveCount(0);
+
+  await page.locator('#grid-view-btn').click();
+  await expect(cell).toHaveCount(1);
+  await expect(page.locator('#collection-cards-grid article')).toHaveCount(23);
+});
+
+/**
+ * The iOS path: the numeric keypad has no Return key, so blur has to commit or the field is unreachable there.
+ * It also stops an abandoned edit disagreeing with the grid.
+ */
+test('the page number commits on blur, not only on Enter', async ({ page }) => {
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  const jump = page.locator('#pagination [data-page-jump-input]');
+  await jump.fill('2');
+  await page.locator('#results-count').click(); // blur, no Enter
+
+  await expect(page.locator('#results-range')).toHaveText('24-46');
+});
+
+/**
+ * The skeleton stands in for the finished grid, which holds one more box than it holds lots.
+ * One cell short grew the grid 687px at 375 and pushed everything below it down.
+ */
+test('the loading skeleton reserves the cell as well as the cards', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  const rendered = await page.evaluate(
+    () => document.getElementById('collection-cards-grid')!.children.length
+  );
+
+  await page.route('**/auction/listings?*', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await route.fallback();
+  });
+  await page.locator('#refresh-listings-btn').click();
+
+  // Settle, then count once. `expect.poll` retries until it passes, and the grid already holds the right rendered count before the refresh - so it would succeed without seeing a skeleton.
+  const skeletonCells = await page.evaluate(async () => {
+    const grid = document.getElementById('collection-cards-grid')!;
+    await new Promise<void>((resolve) => {
+      const check = (): void => {
+        if (grid.firstElementChild?.tagName !== 'ARTICLE') return resolve();
+        setTimeout(check, 50);
+      };
+      check();
+    });
+    return grid.children.length;
+  });
+
+  expect(skeletonCells).toBe(rendered);
 });

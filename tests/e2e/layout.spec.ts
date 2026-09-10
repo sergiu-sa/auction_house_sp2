@@ -66,6 +66,7 @@ async function skeletonFrame(page: Page): Promise<{
   });
 }
 
+/** These wait on a full page first, so they carry the page size: 23 lots plus the cell. */
 test.describe('list view', () => {
   test.use({ viewport: { width: 768, height: 812 } });
 
@@ -79,7 +80,7 @@ test.describe('list view', () => {
   }) => {
     await page.goto('/collection.html');
     const grid = page.locator('#collection-cards-grid');
-    await expect(grid.locator('article')).toHaveCount(24);
+    await expect(grid.locator('article')).toHaveCount(23);
 
     await page.locator('#list-view-btn').click();
     await expect(grid).not.toHaveClass(/sm:grid-cols-2/);
@@ -109,7 +110,7 @@ test.describe('list view', () => {
   test('loading skeletons follow the view mode', async ({ page }) => {
     await page.goto('/collection.html');
     await expect(page.locator('#collection-cards-grid article')).toHaveCount(
-      24
+      23
     );
     await page.locator('#list-view-btn').click();
 
@@ -315,10 +316,8 @@ test.describe('paging does not scroll the grid under the bar', () => {
 });
 
 /**
- * `scroll-margin-top` is sized for the *collapsed* bar.
- * With the panel open below `lg` the bar is roughly three times taller, so paging left the first row 107px behind it;
- *  the same failure the rule exists to prevent, in the one state the collapsed-only test never entered.
- * The page-change handler now closes the panel before it scrolls.
+ * `scroll-margin-top` is sized for the collapsed bar, so an open panel would leave the first row
+ * behind it - measured at 107px. The page-change handler closes the panel before it scrolls.
  */
 test('paging with the filter panel open still clears the bar', async ({
   page,
@@ -449,7 +448,7 @@ test.describe('list skeleton below the sm breakpoint', () => {
   }) => {
     await page.goto('/collection.html');
     await expect(page.locator('#collection-cards-grid article')).toHaveCount(
-      24
+      23
     );
     await page.locator('#list-view-btn').click();
     await page.setViewportSize({ width: 375, height: 812 });
