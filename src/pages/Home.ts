@@ -27,7 +27,7 @@ import { renderPagination } from '../components/PaginationComponent';
 import { mountNextPageCell } from '../components/NextPageCell';
 import { focusResultsGrid } from '../utils/focusResultsGrid';
 import { toast } from '../components/Toast';
-import { isLoggedIn } from '../utils/auth';
+import { isLoggedIn, profileHref } from '../utils/auth';
 import { formatTimeRemaining } from '../utils/formatDate';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import {
@@ -381,7 +381,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
           </span>
         </p>
         <div class="flex items-center justify-between text-xs text-slate-500">
-          ${main.seller?.name ? `<a href="/profile.html?user=${encodeURIComponent(main.seller.name)}" class="hover:text-slate-900 transition-colors">@${escapeHtml(main.seller.name)}</a>` : '<span>@Unknown</span>'}
+          ${main.seller?.name ? `<a href="${profileHref(main.seller.name)}" class="hover:text-slate-900 transition-colors"${isLoggedIn() ? '' : ` aria-label="@${escapeHtml(main.seller.name)} (login required)"`}>@${escapeHtml(main.seller.name)}</a>` : '<span>@Unknown</span>'}
         </div>
       </div>
     </article>
