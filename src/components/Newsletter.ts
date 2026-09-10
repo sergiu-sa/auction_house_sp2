@@ -1,4 +1,5 @@
 import { isValidEmail } from '../utils/validation';
+import { setButtonBusy } from '../utils/busyButton';
 
 export function renderNewsletter(): string {
   return `
@@ -80,12 +81,10 @@ export function initNewsletter(): void {
     const submitBtn = form.querySelector(
       'button[type="submit"]'
     ) as HTMLButtonElement;
+    // Captured as well as the restore: the success branch paints its own state and puts the
+    // original back on a timer, which `restore` alone cannot express.
     const originalBtnContent = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `
-      <i class="fa-solid fa-spinner fa-spin text-sm" aria-hidden="true"></i>
-      Subscribing...
-    `;
+    const restore = setButtonBusy(submitBtn, 'Subscribing...');
 
     try {
       // Simulated subscription — no backend wired up yet
@@ -112,9 +111,7 @@ export function initNewsletter(): void {
         submitBtn.classList.add('bg-slate-900', 'hover:bg-slate-800');
       }, 3000);
     } catch {
-      // Error state
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnContent;
+      restore();
       showError('Something went wrong. Please try again.');
     }
   });

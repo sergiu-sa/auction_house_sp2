@@ -10,6 +10,7 @@ import { trapFocus } from '../utils/focusTrap';
 import { getListing, updateListing, deleteListing } from '../api/listings';
 import { toast } from '../components/Toast';
 import { logError } from '../utils/logger';
+import { setButtonBusy } from '../utils/busyButton';
 import { getErrorMessage } from '../utils/errorHandling';
 import {
   formatMediaUrls,
@@ -430,15 +431,14 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       updateData.title = titleInput.value.trim();
     }
 
-    try {
-      // Show loading state
-      const submitButton = form.querySelector(
-        'button[type="submit"]'
-      ) as HTMLButtonElement;
-      submitButton.disabled = true;
-      submitButton.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i><span>Saving...</span>';
+    // Outside the try, so the catch can undo it without re-finding the button and retyping its
+    // label — which is what it used to do, in markup that had to be kept in step by hand.
+    const submitButton = form.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement;
+    const restore = setButtonBusy(submitButton, 'Saving...');
 
+    try {
       // Update listing via API
       await updateListing(listingId, updateData);
 
@@ -450,13 +450,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
         window.location.href = `/listing.html?id=${listingId}`;
       }, 1500);
     } catch (error: unknown) {
-      // Restore button state
-      const submitButton = form.querySelector(
-        'button[type="submit"]'
-      ) as HTMLButtonElement;
-      submitButton.disabled = false;
-      submitButton.innerHTML =
-        '<i class="fa-solid fa-floppy-disk text-base" aria-hidden="true"></i><span>Save changes</span>';
+      restore();
 
       logError('Failed to update listing', error, { listingId });
       const errorMessage = getErrorMessage(
@@ -506,13 +500,12 @@ function initializeDeleteModal(listingId: string): void {
 
   // Confirm deletion
   confirmDelete.addEventListener('click', async () => {
-    try {
-      // Show loading state
-      const deleteBtn = confirmDelete as HTMLButtonElement;
-      deleteBtn.disabled = true;
-      deleteBtn.innerHTML =
-        '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Deleting...';
+    const restore = setButtonBusy(
+      confirmDelete as HTMLButtonElement,
+      'Deleting...'
+    );
 
+    try {
       // Delete listing via API
       await deleteListing(listingId);
 
@@ -529,10 +522,7 @@ function initializeDeleteModal(listingId: string): void {
         window.location.href = '/profile.html';
       }, 1500);
     } catch (error: unknown) {
-      // Restore button state
-      const deleteBtn = confirmDelete as HTMLButtonElement;
-      deleteBtn.disabled = false;
-      deleteBtn.innerHTML = 'Delete Forever';
+      restore();
 
       logError('Failed to delete listing', error, { listingId });
       const errorMessage = getErrorMessage(

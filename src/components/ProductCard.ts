@@ -2,12 +2,14 @@ import type { Listing } from '../types/api';
 import { highestBid } from '../utils/biddingStats';
 import { formatTimeRemaining, isAuctionActive } from '../utils/formatDate';
 import { formatCurrency } from '../utils/formatCurrency';
-import { isLoggedIn } from '../utils/auth';
-import { toast } from './Toast';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
-import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
-import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
+import { lotImageSource } from '../utils/listingImage';
+import {
+  bindPlaceBidButtons,
+  renderCardGrid,
+  showCardSkeletons,
+} from './cardGrid';
 
 // Product Card — use for featured sections, trending auctions, highlighted items.
 export function createProductCard(listing: Listing): string {
@@ -153,65 +155,18 @@ export function renderProductCards(
   listings: Listing[],
   containerId: string = 'product-cards-grid'
 ): void {
-  const container = document.getElementById(containerId);
-  if (!container) {
-    logError(`Container with id "${containerId}" not found`);
-    return;
-  }
-
-  if (listings.length === 0) {
-    container.innerHTML = `
+  renderCardGrid({
+    containerId,
+    listings,
+    card: createProductCard,
+    bind: bindPlaceBidButtons,
+    empty: `
       <div class="col-span-full text-center py-12">
         <i class="fa-solid fa-box-open text-6xl text-slate-300 mb-4" aria-hidden="true"></i>
         <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">No Listings Found</h3>
         <p class="text-slate-600">Check back soon for new featured auctions.</p>
       </div>
-    `;
-    return;
-  }
-
-  // Render all cards
-  container.innerHTML = listings
-    .map((listing) => createProductCard(listing))
-    .join('');
-
-  // Attach event listeners for Place Bid buttons
-  attachProductCardEvents(containerId);
-}
-
-export function attachProductCardEvents(
-  containerId: string = 'product-cards-grid'
-): void {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  initLotImageFallbacks(container);
-
-  // Place Bid buttons
-  const bidButtons = container.querySelectorAll<HTMLButtonElement>(
-    '[data-action="place-bid"]'
-  );
-
-  bidButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      const listingId = button.getAttribute('data-listing-id');
-
-      if (!listingId) {
-        logError('Product card button missing data-listing-id');
-        return;
-      }
-
-      if (!isLoggedIn()) {
-        toast.error('Please log in to place a bid');
-        setTimeout(() => {
-          window.location.href = `/login.html?redirect=/listing.html?id=${listingId}`;
-        }, 1500);
-        return;
-      }
-
-      window.location.href = `/listing.html?id=${listingId}`;
-    });
+    `,
   });
 }
 
@@ -246,16 +201,5 @@ export function showProductCardSkeletons(
   count: number = 3,
   containerId: string = 'product-cards-grid'
 ): void {
-  const container = document.getElementById(containerId);
-  if (!container) {
-    logError(`Container with id "${containerId}" not found`);
-    return;
-  }
-
-  const skeletons = Array(count)
-    .fill(null)
-    .map(() => createProductCardSkeleton())
-    .join('');
-
-  container.innerHTML = skeletons;
+  showCardSkeletons(containerId, count, createProductCardSkeleton);
 }

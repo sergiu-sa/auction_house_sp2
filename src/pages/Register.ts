@@ -15,6 +15,7 @@ import { renderFooter } from '../components/Footer';
 import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
+import { setButtonBusy } from '../utils/busyButton';
 import { formatCredits } from '../utils/formatCurrency';
 
 export function initRegisterPage(): void {
@@ -248,10 +249,7 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
   ) as HTMLButtonElement;
   if (!submitBtn) return;
 
-  const originalBtnText = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML =
-    '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Creating Account...';
+  const restore = setButtonBusy(submitBtn, 'Creating Account...');
 
   try {
     await register({ name, email, password });
@@ -287,9 +285,7 @@ async function handleRegisterSubmit(e: Event): Promise<void> {
       toast.error('An error occurred during registration. Please try again.');
     }
 
-    // Reset button
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalBtnText;
+    restore();
   }
 }
 

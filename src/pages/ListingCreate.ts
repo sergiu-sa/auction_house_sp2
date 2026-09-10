@@ -9,6 +9,7 @@ import { createListing } from '../api/listings';
 import { protectedRoute } from '../utils/auth';
 import { toast } from '../components/Toast';
 import { logError } from '../utils/logger';
+import { setButtonBusy } from '../utils/busyButton';
 import { getErrorMessage } from '../utils/errorHandling';
 import {
   parseMediaUrls,
@@ -254,12 +255,7 @@ async function handleFormSubmit(event: Event): Promise<void> {
     'button[type="submit"]'
   ) as HTMLButtonElement;
 
-  // Disable submit button
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = `
-    <i class="fa-solid fa-spinner fa-spin text-base" aria-hidden="true"></i>
-    <span>Creating...</span>
-  `;
+  const restore = setButtonBusy(submitBtn, 'Creating...');
 
   try {
     // Get form data
@@ -299,12 +295,7 @@ async function handleFormSubmit(event: Event): Promise<void> {
       getErrorMessage(error, 'Failed to create listing. Please try again.')
     );
 
-    // Re-enable submit button
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = `
-      <i class="fa-solid fa-paper-plane text-base" aria-hidden="true"></i>
-      <span>Publish listing</span>
-    `;
+    restore();
   }
 }
 

@@ -47,7 +47,7 @@ import {
 } from '../components/filters';
 import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 import { escapeHtml } from '../utils/escapeHtml';
-import { formatCurrency } from '../utils/formatCurrency';
+import { formatCount, formatCurrency } from '../utils/formatCurrency';
 
 // Hero mosaic sizes: tiles are third of column, not full-width card presets.
 const HERO_MAIN_SIZES =
@@ -201,7 +201,7 @@ async function loadCatalogListings(): Promise<void> {
     syncFilterBarsWithState(result.totalCount);
 
     // The catalog swaps out without a page load, so nothing here is otherwise announced.
-    const total = new Intl.NumberFormat('en-US').format(result.totalCount);
+    const total = formatCount(result.totalCount);
     announce(
       `${total} ${result.totalCount === 1 ? 'listing' : 'listings'} found. Page ${state.page} of ${result.pageCount || 1}.`
     );
@@ -298,9 +298,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
 
   // Both stats describe the platform, so they count the whole active pool.
   if (heroActiveCount) {
-    // 'en-US' for the same reason formatCredits pins it: without a locale this follows the
-    // reader's machine, so a Norwegian browser renders "3 200" beside a pinned "1,002 credits".
-    heroActiveCount.textContent = pool.length.toLocaleString('en-US');
+    heroActiveCount.textContent = formatCount(pool.length);
   }
 
   if (heroBidsCount) {
@@ -308,7 +306,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
       (sum, listing) => sum + (listing._count?.bids || 0),
       0
     );
-    heroBidsCount.textContent = totalBids.toLocaleString('en-US');
+    heroBidsCount.textContent = formatCount(totalBids);
   }
 
   const featured = await featuredWithImages(HERO_TILE_COUNT, pool);

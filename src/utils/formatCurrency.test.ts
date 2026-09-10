@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatCredits, formatCurrency } from './formatCurrency';
+import { formatCount, formatCredits, formatCurrency } from './formatCurrency';
 
 describe('Currency Formatting', () => {
   describe('formatCredits', () => {
@@ -19,6 +19,26 @@ describe('Currency Formatting', () => {
     it('agrees with formatCurrency on the figure', () => {
       expect(formatCurrency(1002)).toBe(`${formatCredits(1002)} credits`);
       expect(formatCurrency(1002, true)).toBe(`${formatCredits(1002)} cr`);
+    });
+  });
+
+  describe('formatCount', () => {
+    it('groups a quantity the same way', () => {
+      expect(formatCount(3200)).toBe('3,200');
+      expect(formatCount(0)).toBe('0');
+    });
+
+    /**
+     * Its own expectations, not parity with `formatCredits`.
+     *
+     * Pinning the two equal for every input would foreclose the reason this function exists —
+     * that counts may one day read differently from credits — and it guards against nothing:
+     * both delegate to the one module-level `Intl` instance, so a second one cannot drift in.
+     */
+    it("pins the locale, whatever the reader's machine is set to", () => {
+      expect(formatCount(1000)).toBe('1,000');
+      expect(formatCount(3200)).toBe('3,200');
+      expect(formatCount(999999999)).toBe('999,999,999');
     });
   });
 

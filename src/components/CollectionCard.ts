@@ -6,7 +6,8 @@ import { isWatched, toggleWatched } from '../utils/storage';
 import { logError } from '../utils/logger';
 import { escapeHtml } from '../utils/escapeHtml';
 import { formatCredits } from '../utils/formatCurrency';
-import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
+import { lotImageSource } from '../utils/listingImage';
+import { renderCardGrid, showCardSkeletons } from './cardGrid';
 
 function renderFavoriteButton(listingId: string, borderStyle: string): string {
   const watched = isWatched(listingId);
@@ -302,14 +303,12 @@ export function renderCollectionCards(
   containerId: string = 'collection-cards-grid',
   viewMode: 'grid' | 'list' = 'grid'
 ): void {
-  const container = document.getElementById(containerId);
-  if (!container) {
-    logError(`Container with id "${containerId}" not found`);
-    return;
-  }
-
-  if (listings.length === 0) {
-    container.innerHTML = `
+  renderCardGrid({
+    containerId,
+    listings,
+    card: (listing) => createCollectionCard(listing, viewMode),
+    bind: bindCollectionCardActions,
+    empty: `
       <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid var(--aucto-border-dark)">
         <div class="max-w-md mx-auto">
           <svg class="w-24 h-24 mx-auto mb-6 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -321,25 +320,17 @@ export function renderCollectionCards(
           </p>
         </div>
       </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = listings
-    .map((listing) => createCollectionCard(listing, viewMode))
-    .join('');
-
-  attachCollectionCardEvents(containerId);
+    `,
+  });
 }
 
-export function attachCollectionCardEvents(
-  containerId: string = 'collection-cards-grid'
-): void {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  initLotImageFallbacks(container);
-
+/**
+ * The catalog card carries three controls where the featured and compact cards carry one, so it
+ * binds its own rather than sharing `bindPlaceBidButtons`. Note "View & Bid" navigates straight to
+ * the lot with no login check, where "Place Bid" on the other two sends a guest to log in first —
+ * preserved as it was, not endorsed.
+ */
+function bindCollectionCardActions(container: HTMLElement): void {
   // View & Bid buttons
   const viewBidButtons = container.querySelectorAll<HTMLButtonElement>(
     '[data-action="view-bid"]'
@@ -471,16 +462,7 @@ export function showCollectionCardSkeletons(
   containerId: string = 'collection-cards-grid',
   viewMode: 'grid' | 'list' = 'grid'
 ): void {
-  const container = document.getElementById(containerId);
-  if (!container) {
-    logError(`Container with id "${containerId}" not found`);
-    return;
-  }
-
-  const skeletons = Array(count)
-    .fill(null)
-    .map(() => createCollectionCardSkeleton(viewMode))
-    .join('');
-
-  container.innerHTML = skeletons;
+  showCardSkeletons(containerId, count, () =>
+    createCollectionCardSkeleton(viewMode)
+  );
 }
