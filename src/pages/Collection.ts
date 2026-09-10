@@ -19,6 +19,7 @@ import {
 import { activeStats, catalogPage } from '../api/listingQueries';
 import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
+import { formatCount } from '../utils/formatCurrency';
 import type { Listing } from '../types/api';
 
 // 23, not 24: the 24th grid cell is the next-page control, and the fetch limit moves with the display count, so no lot falls between pages.
@@ -233,11 +234,11 @@ function updateResultsInfo(): void {
   const total = resultTotals.totalCount;
 
   if (resultsCount) {
-    resultsCount.textContent = new Intl.NumberFormat('en-US').format(total);
+    resultsCount.textContent = formatCount(total);
   }
 
   if (resultsTotal) {
-    resultsTotal.textContent = new Intl.NumberFormat('en-US').format(total);
+    resultsTotal.textContent = formatCount(total);
   }
 
   if (resultsRange) {
@@ -259,9 +260,7 @@ async function loadStats(): Promise<void> {
 
     const activeLotsCount = document.getElementById('active-lots-count');
     if (activeLotsCount) {
-      activeLotsCount.textContent = new Intl.NumberFormat('en-US').format(
-        totalActive
-      );
+      activeLotsCount.textContent = formatCount(totalActive);
     }
 
     // Time until the next close, rather than a count inside a fixed window that sits at zero whenever nothing is closing.

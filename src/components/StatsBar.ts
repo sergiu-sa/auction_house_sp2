@@ -1,7 +1,7 @@
 import { getCurrentUser } from '../utils/auth';
 import { getProfileBids, getProfileWins } from '../api/profile';
 import { profileListings } from '../api/listingQueries';
-import { formatCurrency } from '../utils/formatCurrency';
+import { formatCount, formatCurrency } from '../utils/formatCurrency';
 import { logError } from '../utils/logger';
 import {
   calculateWinRate,
@@ -21,7 +21,7 @@ export function renderStatsBar(data: StatsData): string {
     <div class="mb-20 grid grid-cols-2 gap-6 md:grid-cols-4">
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="myListings">
-          ${new Intl.NumberFormat('en-US').format(data.myListings)}
+          ${formatCount(data.myListings)}
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
           My Listings
@@ -30,7 +30,7 @@ export function renderStatsBar(data: StatsData): string {
 
       <div class="bg-slate-800 p-6 text-center" style="border: 3px solid var(--aucto-border-mid)">
         <div class="mb-2 text-4xl font-bold text-white" data-stat="myBids">
-          ${new Intl.NumberFormat('en-US').format(data.myBids)}
+          ${formatCount(data.myBids)}
         </div>
         <div class="text-xs font-bold tracking-widest text-slate-400 uppercase">
           My Bids
@@ -118,9 +118,7 @@ function animateNumber(
     if (isCurrency) {
       element.textContent = formatCurrency(Math.floor(current), true);
     } else {
-      element.textContent = new Intl.NumberFormat('en-US').format(
-        Math.floor(current)
-      );
+      element.textContent = formatCount(Math.floor(current));
     }
   }, 16);
 }

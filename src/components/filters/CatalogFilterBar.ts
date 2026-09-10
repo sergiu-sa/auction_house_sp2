@@ -24,6 +24,7 @@ import {
   setSortValue,
 } from './index';
 import type { CatalogFilterState } from '../../utils/catalogState';
+import { formatCount } from '../../utils/formatCurrency';
 
 export const CATALOG_FILTER_IDS = {
   search: 'catalog-search-input',
@@ -226,8 +227,6 @@ export function syncCatalogFilterBar(
   const summary = document.getElementById('catalog-filters-summary');
   if (summary) {
     summary.textContent =
-      typeof total === 'number'
-        ? `${new Intl.NumberFormat('en-US').format(total)} lots`
-        : '';
+      typeof total === 'number' ? `${formatCount(total)} lots` : '';
   }
 }
