@@ -45,6 +45,24 @@ export function initListingFormPreview(
   const mainPreview = document.getElementById('mainPreview');
   const additionalImages = document.getElementById('additionalImages');
 
+  // Arm whatever the page painted before this ran.
+  //
+  // The handler below arms only the images it writes itself, so the edit form's first render —
+  // which paints the listing's *saved* photographs straight into this pane — was left unarmed. A
+  // dead saved URL showed as alt text on grey, beside a preview that handles the identical
+  // failure correctly the moment the author touches the field. Create has nothing here yet, so
+  // this is a no-op there.
+  if (mainPreview) {
+    initImageFallbacks(mainPreview, (img) =>
+      replaceWithBrokenImageNotice(img, 'main')
+    );
+  }
+  if (additionalImages) {
+    initImageFallbacks(additionalImages, (img) =>
+      replaceWithBrokenImageNotice(img, 'thumb')
+    );
+  }
+
   if (titleInput && previewTitle) {
     titleInput.addEventListener('input', () => {
       previewTitle.textContent = titleInput.value || DEFAULT_TITLE;

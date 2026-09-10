@@ -274,6 +274,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                 loading="lazy"
                 decoding="async"
                 referrerpolicy="no-referrer"
+                data-fallback
               />
             `
                 : `
@@ -330,6 +331,7 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
                   loading="lazy"
                   decoding="async"
                   referrerpolicy="no-referrer"
+                  data-fallback
                 />
               </div>
             `

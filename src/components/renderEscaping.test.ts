@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import type { Listing } from '../types/api';
 import { createCollectionCard } from './CollectionCard';
 import { createQuickCard } from './QuickCard';
@@ -23,10 +23,6 @@ const PAYLOAD =
 // A URL-shaped payload, for the sinks that take media[].url rather than a title.
 const URL_PAYLOAD =
   'https://example.invalid/a.jpg" onload="window.__XSS=1" data-pwned="1';
-
-declare global {
-  var __XSS: number | undefined;
-}
 
 function hostileListing(): Listing {
   return {
@@ -65,8 +61,18 @@ function hostileListing(): Listing {
 }
 
 /**
- * Parse the markup, then actively try to fire anything the payload could have attached.
- * Checking the attribute list alone would miss a handler bound under a name the assertion did not think to look for.
+ * Parse the markup and assert nothing the payload carried survived as structure.
+ *
+ * This used to end by dispatching `error` and `load` at every element and checking a global the
+ * payloads set, on the stated grounds that it "actively tries to fire anything the payload could
+ * have attached". **That assertion could not fail.** jsdom compiles an inline `onerror` from
+ * `innerHTML` into a real function — `typeof img.onerror === 'function'` — but never runs its body
+ * without `runScripts: 'dangerously'`, which this suite does not set. Measured 2026-09-10.
+ *
+ * So the handler check is structural now: no element may carry *any* `on*` attribute. That is
+ * strictly wider than the old one, and it does not depend on the payload naming a global or
+ * carrying `data-pwned` — a case written with its own payload used to pass over a sink that was
+ * deliberately left unescaped.
  */
 function assertInert(markup: string): void {
   const host = document.createElement('div');
@@ -76,23 +82,15 @@ function assertInert(markup: string): void {
   expect(host.querySelector('script')).toBeNull();
   expect(host.querySelector('iframe')).toBeNull();
 
-  for (const el of Array.from(host.querySelectorAll('*'))) {
-    el.dispatchEvent(new Event('error'));
-    el.dispatchEvent(new Event('load'));
-  }
-
-  expect(globalThis.__XSS).toBeUndefined();
+  const handlers = Array.from(host.querySelectorAll('*')).flatMap((el) =>
+    Array.from(el.attributes)
+      .filter((attr) => attr.name.startsWith('on'))
+      .map((attr) => `<${el.tagName.toLowerCase()} ${attr.name}>`)
+  );
+  expect(handlers).toEqual([]);
 }
 
 describe('components are inert against a hostile listing', () => {
-  beforeEach(() => {
-    globalThis.__XSS = undefined;
-  });
-
-  afterEach(() => {
-    globalThis.__XSS = undefined;
-  });
-
   it('Avatar, with a hostile picture url and name', () => {
     // Every identity surface routes through this now, so it is the one sink for all of them.
     assertInert(
@@ -255,10 +253,9 @@ describe('components are inert against a hostile listing', () => {
     localStorage.clear();
   });
 
-  // PAYLOAD and URL_PAYLOAD, not a payload written for this case:
-  //  they carry `data-pwned`, and that attribute is what `assertInert` can actually see.
-  // The `__XSS` check cannot fail here, jsdom compiles an inline handler into a function but never runs its body without `runScripts:
-  //  'dangerously'`, which this suite does not set.
+  // PAYLOAD and URL_PAYLOAD, not a payload written for this case.
+  // Every other case here uses them, and a case that invents its own is how the gap in the old
+  // `assertInert` was found: it depended on the payload carrying `data-pwned`.
   it('ErrorPanel, with a hostile message', () => {
     // Server-controlled text:
     // the message is whatever came back in the API's `errors[]`, landing in innerHTML on four pages.

@@ -80,3 +80,44 @@ test('a seller with two pages of lots can reach the second', async ({
   ).toBeVisible();
   expect(pagesRequested).toEqual(['1', '2']);
 });
+
+/**
+ * Whose profile the copy thinks it is describing.
+ *
+ * Every section of this page is written twice — once for the owner, once for a visitor — except
+ * the wins and bids panels, which took no `isOwnProfile` at all. A stranger's profile therefore
+ * read "You have won 2 auctions" and "You have placed 18 bids" about somebody else, under a
+ * heading that correctly said "Seller13's Profile".
+ *
+ * Nothing else could catch it: the markup is valid, axe is clean, and the fixture answers every
+ * profile route as the same user, so the *numbers* look right either way. Only the pronoun is
+ * wrong.
+ */
+test.describe('logged in', () => {
+  test.use({ auth: 'in' });
+
+  test("another seller's profile does not address the visitor as its owner", async ({
+    page,
+  }) => {
+    await page.goto('/profile.html?user=Seller13');
+
+    const content = page.locator('#profile-content');
+    await expect(page.locator('#page-title')).toHaveText("Seller13's Profile");
+
+    await expect(content).toContainText('This seller has won');
+    await expect(content).toContainText('This seller has placed');
+    await expect(content).not.toContainText('You have won');
+    await expect(content).not.toContainText('You have placed');
+    await expect(content).not.toContainText('Your won items');
+    await expect(content).not.toContainText('Your bids will appear');
+  });
+
+  test('my own profile still speaks to me', async ({ page }) => {
+    await page.goto('/profile.html');
+
+    const content = page.locator('#profile-content');
+    await expect(content).toContainText('You have won');
+    await expect(content).toContainText('You have placed');
+    await expect(content).not.toContainText('This seller has');
+  });
+});
