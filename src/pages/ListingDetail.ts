@@ -37,7 +37,9 @@ import { isWatched, toggleWatched } from '../utils/storage';
 import type { Listing } from '../types/api';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 import { escapeHtml } from '../utils/escapeHtml';
+import { formatCredits, formatCurrency } from '../utils/formatCurrency';
 import { renderAvatar } from '../components/Avatar';
+import { renderErrorPanel } from '../components/ErrorPanel';
 import {
   LISTING_PLACEHOLDER,
   initIdentityFallbacks,
@@ -122,22 +124,22 @@ function updateDynamicSEO(listing: Listing) {
 
 function showError(message: string) {
   const main = document.querySelector('main');
-  if (main) {
-    main.innerHTML = `
+  if (!main) return;
+
+  // The page chrome stays at the call site:
+  //  this is the only one of the four that replaces the whole of `main`, so it is the only one that has to supply the padding and the width its container would otherwise give it.
+  // `h1` for the same reason — there is no other heading left.
+  main.innerHTML = `
       <div class="bg-warm-white py-16">
         <div class="mx-auto max-w-7xl px-6 md:px-8">
-          <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
-            <i class="fa-solid fa-exclamation-triangle text-4xl text-red-700 mb-4" aria-hidden="true"></i>
-            <h1 class="text-2xl font-bold text-slate-900 mb-2">Error</h1>
-            <p class="text-slate-600">${escapeHtml(message)}</p>
-            <a href="/index.html" class="inline-block mt-6 bg-slate-900 px-6 py-3 text-sm font-bold tracking-[0.18em] uppercase text-white hover:bg-slate-800">
-              Back to Listings
-            </a>
-          </div>
+          ${renderErrorPanel({
+            message,
+            as: 'h1',
+            action: { label: 'Back to Listings', href: '/index.html' },
+          })}
         </div>
       </div>
     `;
-  }
 }
 
 function renderBreadcrumb(listing: Listing) {
@@ -196,6 +198,78 @@ function renderListingHeader(listing: Listing) {
   `;
 }
 
+/**
+ * How many thumbnails the grid shows before the overflow control.
+ * Four fills one row of `grid-cols-4`; the control takes the next cell.
+ */
+const THUMBNAILS_SHOWN = 4;
+
+/**
+ * One thumbnail, whether it is in the first row or behind the overflow control.
+ *
+ * Both cases go through here because the hidden ones become real controls the moment that button is pressed:
+ *   rendering them any other way is how the old markup ended up with a "+N more" button carrying neither `.thumbnail-btn` nor `data-image-url`, so `initGallery` could not bind it and pressing it did nothing.
+ */
+function renderThumbnail(
+  img: { url: string; alt?: string },
+  index: number,
+  listingTitle: string,
+  hidden = false
+): string {
+  const source = lotImageSource([img], `View ${index + 1}`);
+  const attrs = generateResponsiveImageAttrs(source.src, source.alt, 'square');
+
+  return `
+        <button
+          type="button"
+          class="aspect-square bg-slate-100 thumbnail-btn ${hidden ? 'hidden ' : ''}${index === 0 ? 'opacity-100' : 'opacity-75'} hover:opacity-100 transition"
+          style="border: ${index === 0 ? '3px' : '2px'} solid ${index === 0 ? '#1e293b' : '#475569'}"
+          data-image-url="${escapeHtml(img.url)}"
+          data-image-alt="${escapeHtml(img.alt || listingTitle)}"
+          data-index="${index}"
+        >
+          <img
+            src="${escapeHtml(attrs.src)}"
+            alt="${escapeHtml(attrs.alt)}"
+            width="${attrs.width}"
+            height="${attrs.height}"
+            loading="lazy"
+            decoding="${attrs.decoding}"
+            class="h-full w-full object-cover"
+            data-lot-image
+          />
+        </button>
+      `;
+}
+
+/**
+ * The control that reveals the thumbnails past the first row.
+ *
+ * Two things here are measured rather than chosen, and axe only started reporting either once a fixture with more than four photographs existed to render this at all:
+ *
+ * - It carries no `opacity-75`.
+ * That came from the thumbnails, where it marks the image that is not currently shown and sits over a photograph.
+ * Over text it composites both colours — axe measured slate-600 on the tile as #75808f on #f5f8fb, 3.75:1.
+ * - The label is slate-600, not the slate-500 it wore while it was inert.
+ * 12px bold is not large text, so it needs 4.5:1, and slate-500 on a slate-100 ground is 4.34:1.
+ * 
+ */
+function renderOverflowControl(overflow: number): string {
+  return `
+        <button
+          type="button"
+          data-show-all-thumbnails
+          class="aspect-square bg-slate-100 hover:bg-slate-200 transition"
+          style="border: 2px solid #475569"
+          aria-label="Show ${overflow} more ${overflow === 1 ? 'image' : 'images'} of this lot"
+        >
+          <span class="flex h-full w-full items-center justify-center text-xs font-bold tracking-[0.18em] text-slate-600 uppercase">
+            +${overflow} more
+          </span>
+        </button>
+      `;
+}
+
 function renderMediaGallery(listing: Listing) {
   const gallery = document.getElementById('media-gallery');
   if (!gallery) return;
@@ -211,7 +285,7 @@ function renderMediaGallery(listing: Listing) {
       ? listing.media
       : [{ url: LISTING_PLACEHOLDER }];
 
-  const thumbnails = media.slice(0, 4);
+  const overflow = media.length - THUMBNAILS_SHOWN;
 
   const mainSource = lotImageSource(media, listing.title);
   const mainImgAttrs = generateResponsiveImageAttrs(
@@ -237,52 +311,19 @@ function renderMediaGallery(listing: Listing) {
       />
     </div>
 
-    <!-- Thumbnails -->
+    <!-- Thumbnails: the first row, then the overflow control, then the rest of them hidden -->
     <div class="grid grid-cols-4 gap-3">
-      ${thumbnails
-        .map((img, index) => {
-          const thumbSource = lotImageSource([img], `View ${index + 1}`);
-          const thumbAttrs = generateResponsiveImageAttrs(
-            thumbSource.src,
-            thumbSource.alt,
-            'square'
-          );
-          return `
-        <button
-          class="aspect-square bg-slate-100 thumbnail-btn ${index === 0 ? 'opacity-100' : 'opacity-75'} hover:opacity-100 transition"
-          style="border: ${index === 0 ? '3px' : '2px'} solid ${index === 0 ? '#1e293b' : '#475569'}"
-          data-image-url="${escapeHtml(img.url)}"
-          data-image-alt="${escapeHtml(img.alt || listing.title)}"
-          data-index="${index}"
-        >
-          <img
-            src="${escapeHtml(thumbAttrs.src)}"
-            alt="${escapeHtml(thumbAttrs.alt)}"
-            width="${thumbAttrs.width}"
-            height="${thumbAttrs.height}"
-            loading="lazy"
-            decoding="${thumbAttrs.decoding}"
-            class="h-full w-full object-cover"
-            data-lot-image
-          />
-        </button>
-      `;
-        })
+      ${media
+        .slice(0, THUMBNAILS_SHOWN)
+        .map((img, index) => renderThumbnail(img, index, listing.title))
         .join('')}
-      ${
-        media.length > 4
-          ? `
-        <button
-          class="aspect-square bg-slate-100 opacity-75 hover:opacity-100 transition"
-          style="border: 2px solid #475569"
-        >
-          <span class="flex h-full w-full items-center justify-center text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">
-            +${media.length - 4} more
-          </span>
-        </button>
-      `
-          : ''
-      }
+      ${overflow > 0 ? renderOverflowControl(overflow) : ''}
+      ${media
+        .slice(THUMBNAILS_SHOWN)
+        .map((img, index) =>
+          renderThumbnail(img, index + THUMBNAILS_SHOWN, listing.title, true)
+        )
+        .join('')}
     </div>
   `;
 
@@ -295,6 +336,23 @@ function renderMediaGallery(listing: Listing) {
 function initGallery() {
   const thumbnails = document.querySelectorAll('.thumbnail-btn');
   const mainImage = document.getElementById('main-image') as HTMLImageElement;
+
+  // Reveal the thumbnails past the first row.
+  //
+  // Focus moves to the first of them because this button removes itself, and a control that vanishes under the reader's hands drops focus to <body> and sends a keyboard user back to the top of the page.
+  const showAll = document.querySelector<HTMLButtonElement>(
+    '[data-show-all-thumbnails]'
+  );
+  if (showAll) {
+    showAll.addEventListener('click', () => {
+      const revealed = Array.from(thumbnails).filter((btn) =>
+        btn.classList.contains('hidden')
+      );
+      revealed.forEach((btn) => btn.classList.remove('hidden'));
+      showAll.remove();
+      (revealed[0] as HTMLElement | undefined)?.focus();
+    });
+  }
 
   thumbnails.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -392,7 +450,7 @@ function renderBidPanel(listing: Listing) {
       <div class="mb-3 text-xs font-bold tracking-[0.18em] uppercase text-slate-500">
         Current ${currentHighest > 0 ? 'Bid' : 'Starting Price'}
       </div>
-      <div class="text-4xl font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(currentHighest)}</div>
+      <div class="text-4xl font-bold text-slate-900">${formatCredits(currentHighest)}</div>
       <div class="text-xs text-slate-500 mt-2">Credits</div>
       ${
         isUserHighestBidder
@@ -435,13 +493,13 @@ function renderBidPanel(listing: Listing) {
             required
           />
           <div class="mt-3 text-xs text-slate-500">
-            Minimum bid: ${new Intl.NumberFormat('en-US').format(minimumBid)} credits
+            Minimum bid: ${formatCurrency(minimumBid)}
           </div>
           ${
             user && user.credits !== undefined
               ? `
             <div class="mt-2 text-xs text-slate-600">
-              Your credits: ${new Intl.NumberFormat('en-US').format(user.credits)}
+              Your credits: ${formatCredits(user.credits)}
             </div>
           `
               : ''
@@ -523,7 +581,7 @@ function initBidForm() {
         showToast('Please enter a valid bid amount', 'error');
       } else {
         showToast(
-          `Bid must be higher than current bid (${new Intl.NumberFormat('en-US').format(currentHighest)} credits)`,
+          `Bid must be higher than current bid (${formatCurrency(currentHighest)})`,
           'error'
         );
       }
@@ -777,7 +835,7 @@ function renderBidHistory(listing: Listing) {
           <div class="flex items-start justify-between gap-4 py-4 ${index < sortedBids.length - 1 ? 'border-b-2' : ''}" style="border-color: var(--aucto-border-light)">
             <div>
               <div class="text-base font-bold text-slate-900 mb-1">
-                ${new Intl.NumberFormat('en-US').format(bid.amount)} Credits
+                ${formatCredits(bid.amount)} Credits
               </div>
               <div class="text-xs text-slate-500">
                 ${isUserBid ? '@you' : `@${escapeHtml(bid.bidder?.name || 'Anonymous')}`} · ${formatTimeAgo(bid.created)}

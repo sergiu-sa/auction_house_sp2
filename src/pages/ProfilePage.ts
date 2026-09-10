@@ -24,6 +24,7 @@ import { setUser } from '../utils/storage';
 import { logError } from '../utils/logger';
 import { getErrorMessage } from '../utils/errorHandling';
 import { escapeHtml } from '../utils/escapeHtml';
+import { formatCredits, formatCurrency } from '../utils/formatCurrency';
 import {
   initIdentityFallbacks,
   initLotImageFallbacks,
@@ -31,6 +32,7 @@ import {
 } from '../utils/listingImage';
 import { renderAvatar } from '../components/Avatar';
 import { renderPagination } from '../components/PaginationComponent';
+import { mountErrorPanel } from '../components/ErrorPanel';
 import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
 const LISTINGS_PER_PAGE = 6;
@@ -301,7 +303,7 @@ function renderProfileHero(
             <i class="fa-solid fa-coins text-xs" aria-hidden="true"></i>
             <span>Credits available</span>
           </div>
-          <div class="text-3xl font-bold text-slate-900">${new Intl.NumberFormat('en-US').format(credits)}</div>
+          <div class="text-3xl font-bold text-slate-900">${formatCredits(credits)}</div>
         </div>
         <div
           class="bg-white px-6 py-5 text-center"
@@ -648,7 +650,7 @@ function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
           ${isActive ? `Ends ${timeRemaining}` : 'Ended'}
         </div>
         <div class="mb-4 text-2xl font-bold text-slate-900">
-          ${currentHighest > 0 ? `${currentHighest} Credits` : 'No bids yet'}
+          ${currentHighest > 0 ? `${formatCredits(currentHighest)} Credits` : 'No bids yet'}
         </div>
         <div class="flex gap-2">
           <a
@@ -740,7 +742,7 @@ function renderWinItem(win: Listing): string {
           ${escapeHtml(win.title)}
         </a>
         <div class="text-xs text-slate-500">
-          Won for ${currentHighest} credits · ${timeAgo}
+          Won for ${formatCurrency(currentHighest)} · ${timeAgo}
         </div>
       </div>
       <div
@@ -762,7 +764,7 @@ function renderBidItem(bid: Bid): string {
           Bid placed
         </div>
         <div class="text-xs text-slate-500">
-          ${bid.amount} credits · ${timeAgo}
+          ${formatCurrency(bid.amount)} · ${timeAgo}
         </div>
       </div>
     </div>
@@ -884,23 +886,10 @@ async function handleProfileUpdate(username: string): Promise<void> {
 }
 
 function showError(message: string): void {
-  const container = document.getElementById('profile-content');
-  if (!container) return;
-
-  container.innerHTML = `
-    <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
-      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
-      <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
-      <p class="text-slate-600 mb-4">${escapeHtml(message)}</p>
-      <a
-        href="/index.html"
-        class="inline-block bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid var(--aucto-border-dark)"
-      >
-        Go to Home
-      </a>
-    </div>
-  `;
+  mountErrorPanel(document.getElementById('profile-content'), {
+    message,
+    action: { label: 'Go to Home', href: '/index.html' },
+  });
 }
 
 // Initialize when DOM is ready

@@ -20,6 +20,7 @@ import {
 } from '../utils/listingForm';
 import type { Listing, UpdateListingData } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
+import { mountErrorPanel } from '../components/ErrorPanel';
 
 let currentListing: Listing | null = null;
 
@@ -550,27 +551,10 @@ function initializeDeleteModal(listingId: string): void {
 }
 
 function showError(message: string): void {
-  const container = document.getElementById('edit-listing-content');
-  if (!container) return;
-
-  container.innerHTML = `
-    <div class="bg-white p-8 text-center" style="border: 3px solid var(--aucto-border-dark)">
-      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
-      <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
-      <p class="text-slate-600 mb-4">${escapeHtml(message)}</p>
-      <button
-        data-error-back
-        class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid var(--aucto-border-dark)"
-      >
-        Go Back
-      </button>
-    </div>
-  `;
-
-  container
-    .querySelector('[data-error-back]')
-    ?.addEventListener('click', () => window.history.back());
+  mountErrorPanel(document.getElementById('edit-listing-content'), {
+    message,
+    action: { label: 'Go Back', onClick: () => window.history.back() },
+  });
 }
 
 // Initialize when DOM is ready

@@ -7,6 +7,7 @@ import {
 } from '../components/CollectionCard';
 import { renderPagination } from '../components/PaginationComponent';
 import { mountNextPageCell } from '../components/NextPageCell';
+import { mountErrorPanel } from '../components/ErrorPanel';
 import { focusResultsGrid } from '../utils/focusResultsGrid';
 import {
   renderCatalogFilterBar,
@@ -18,7 +19,6 @@ import {
 import { activeStats, catalogPage } from '../api/listingQueries';
 import { formatTimeRemainingCompact } from '../utils/formatDate';
 import { logError } from '../utils/logger';
-import { escapeHtml } from '../utils/escapeHtml';
 import type { Listing } from '../types/api';
 
 // 23, not 24: the 24th grid cell is the next-page control, and the fetch limit moves with the display count, so no lot falls between pages.
@@ -307,27 +307,12 @@ function startNextCloseCountdown(endsAt?: string): void {
 }
 
 function showError(message: string): void {
-  const container = document.getElementById('collection-cards-grid');
-  if (!container) return;
-
-  container.innerHTML = `
-    <div class="col-span-full bg-white p-12 text-center" style="border: 3px solid var(--aucto-border-dark)">
-      <i class="fa-solid fa-exclamation-circle text-6xl text-red-300 mb-4" aria-hidden="true"></i>
-      <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">Error</h3>
-      <p class="text-slate-600 mb-4">${escapeHtml(message)}</p>
-      <button
-        data-error-reload
-        class="bg-slate-900 text-white px-6 py-3 hover:bg-slate-800 transition-colors"
-        style="border: 2px solid var(--aucto-border-dark)"
-      >
-        Reload Page
-      </button>
-    </div>
-  `;
-
-  container
-    .querySelector('[data-error-reload]')
-    ?.addEventListener('click', () => window.location.reload());
+  // fullWidth: the grid is the container, so the panel has to span the row rather than sit in a cell.
+  mountErrorPanel(document.getElementById('collection-cards-grid'), {
+    message,
+    fullWidth: true,
+    action: { label: 'Reload Page', onClick: () => window.location.reload() },
+  });
 }
 
 // Initialize when DOM is ready
