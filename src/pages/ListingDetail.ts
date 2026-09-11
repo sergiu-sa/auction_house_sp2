@@ -111,7 +111,7 @@ function updateDynamicSEO(listing: Listing) {
 
   // Update OG image
   // Only when the lot has a real photograph.
-  // A share card with no picture keeps the branded og-cover.svg the page ships, which reads better than "NO IMAGE" in a social preview.
+  // A share card with no picture keeps the branded og-cover_v2.svg the page ships, which reads better than "NO IMAGE" in a social preview.
   if (listing.media && listing.media.length > 0) {
     updateOgImage(listing.media[0].url);
   }

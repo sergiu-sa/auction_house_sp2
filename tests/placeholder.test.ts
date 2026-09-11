@@ -39,6 +39,31 @@ function attr(tag: string, name: string): string {
   return new RegExp(`(?:^|\\s)${name}="([^"]*)"`).exec(tag)?.[1] ?? '';
 }
 
+/**
+ * `letter-spacing` in user units, whatever unit it was written in.
+ *
+ * `Number('-0.04em')` is NaN, and NaN fails every comparison;
+ *   safe, but it reports as "expected NaN to be >= 164" and refuses a value the wordmark legitimately copies from the logo.
+ * Throws on a unit it does not know rather than guessing, so an unhandled one fails loudly.
+ */
+function spacingUserUnits(tag: string, fontSize: number): number {
+  const raw = attr(tag, 'letter-spacing').trim();
+  if (!raw) return 0;
+
+  // The CSS initial value, and what someone writes to undo the wordmark's -0.04em.
+  if (raw === 'normal') return 0;
+
+  // One decimal point, not `[\d.]+`, which accepts "1.2.3" and hands Number() a NaN that then passes every bound silently.
+  // Units it cannot convert — rem, %, ex — still throw.
+  const match = /^(-?\d+(?:\.\d+)?)(em|px)?$/.exec(raw);
+  if (!match) {
+    throw new Error(
+      `letter-spacing "${raw}" is not \`normal\` or a unitless, em or px length`
+    );
+  }
+  return Number(match[1]) * (match[2] === 'em' ? fontSize : 1);
+}
+
 // Only #rrggbb: anything else parses to NaN and would report "below AA" for an unreadable fill.
 function relativeLuminance(hex: string): number {
   if (!/^#[0-9a-fA-F]{6}$/.test(hex)) {
@@ -94,11 +119,114 @@ describe('the placeholder asset', () => {
   });
 });
 
+/**
+ * Every hand-written path to a `public/` file resolves to something that exists.
+ *
+ * These are the files that cannot be content-hashed, because something references them by a literal or absolute path:
+ *  `public/404.html` is copied verbatim and is also `netlify.toml`'s catch-all redirect target, `robots.txt` names the sitemap by absolute URL, and the share card is named as an absolute `https://` URL in six `og:image`/`twitter:image` tags that Vite does not rewrite.
+ * So the filename is the only cache-busting mechanism they have, which makes a rename a hand edit across every reference, and `og-cover.svg` carried no version suffix at all until it was given one, with no guard that would have caught a missed tag.
+ *
+ * Nothing else can see any of this:
+ *  a stale path is a 404 at runtime, not a type error, and the surfaces that would show it are a social preview, a 404 page and a search crawler.
+ *
+ * The two config files are scanned by their specific directives rather than by a path pattern.
+ * A blanket "any /path.ext" sweep over HTML would also pick up `/src/pages/Home.ts`, which is a Vite
+ * entry and deliberately absent from `public/`, and `netlify.toml` is mostly `for = "/*"` globs.
+ */
+describe('hand-written paths to public/ files', () => {
+  const PUBLIC_DIR = join(REPO_ROOT, 'public');
+
+  const paths = new Set<string>();
+
+  // Assets, from every HTML entry. Both forms: root-relative, and absolute from the og tags.
+  for (const entry of HTML_ENTRIES) {
+    for (const match of read(entry).matchAll(
+      /(?:https?:\/\/[^"'\s]+?)?(\/(?:images|fonts)\/[A-Za-z0-9._-]+)/g
+    )) {
+      paths.add(match[1]);
+    }
+  }
+
+  /**
+   * Guarded like `svgPath` above, and for the same reason: these run during collection, so an unguarded `readFileSync` on a renamed config turns a missing file into an ENOENT that kills every assertion in this file.
+   * The geometry, the contrast check, the dot pitch, instead of failing the one check written for it.
+   * Verified by renaming `netlify.toml`: the suite reported "no tests" rather than one failure.
+   */
+  const SOURCES = ['netlify.toml', 'public/robots.txt'] as const;
+  const readIfPresent = (file: string): string =>
+    existsSync(join(REPO_ROOT, file)) ? read(file) : '';
+
+  // The redirect target: every unknown URL lands here, and nothing else points at it.
+  for (const match of readIfPresent('netlify.toml').matchAll(
+    /to\s*=\s*"(\/[A-Za-z0-9._-]+\.[A-Za-z0-9]+)"/g
+  )) {
+    paths.add(match[1]);
+  }
+
+  // The sitemap, named by absolute URL where no build step can rewrite it.
+  for (const match of readIfPresent('public/robots.txt').matchAll(
+    /Sitemap:\s*https?:\/\/[^/\s]+(\/[A-Za-z0-9._-]+)/g
+  )) {
+    paths.add(match[1]);
+  }
+
+  it('can still read the files it scans', () => {
+    // Without this, a renamed source silently contributes no paths and the scan below passes by having nothing left to check.
+    const unreadable = SOURCES.filter(
+      (file) => !existsSync(join(REPO_ROOT, file))
+    );
+    expect(unreadable, `cannot read: ${unreadable.join(', ')}`).toEqual([]);
+  });
+
+  it('found the paths it expects, so a clean run cannot mean it scanned nothing', () => {
+    // Every path, named.
+    // This replaced a `size >= 7` floor, which only fails when the *total* drops;
+    //   so an unrelated `/images/*` addition masks a path disappearing, and the set that is supposed to be watched stops being watched without the count moving.
+    //
+    // How many files carry each, measured, because it decides what a mutation has to remove before this can fail:
+    //   the two fonts and the icon are in all 9 HTML entries, og-cover in 3, the placeholder in 2, and /404.html and /sitemap.xml have exactly one source each;
+    //  netlify.toml and robots.txt, which is why those two are the ones a single-file mutation proves.
+    // A path only leaves this set when nothing references it anywhere, which is precisely the regression worth failing on.
+    //
+    // logo_v2.svg is deliberately absent:
+    // the navbar writes it from JS, so it is not hand-written.
+    for (const expected of [
+      '/fonts/cormorant-latin.woff2',
+      '/fonts/source-sans-3-latin.woff2',
+      '/images/icon_only_v2.svg',
+      '/images/og-cover_v2.svg',
+      '/images/placeholder_v3.svg',
+      '/404.html',
+      '/sitemap.xml',
+    ]) {
+      expect([...paths], expected).toContain(expected);
+    }
+  });
+
+  it('resolves every one of them to a file on disk', () => {
+    const missing = [...paths].filter(
+      (p) => !existsSync(join(PUBLIC_DIR, p.replace(/^\//, '')))
+    );
+    expect(
+      missing,
+      `referenced but absent from public/: ${missing.join(', ')}`
+    ).toEqual([]);
+  });
+});
+
 describe.skipIf(!svgExists)('the placeholder artwork', () => {
   // Captured together: `indexOf(tag)` would find the first element with that open tag.
   const texts = [...svg.matchAll(/<text([^>]*)>([^<]*)</g)].map((m) => ({
     tag: m[1],
-    content: m[2],
+    // Collapsed in the order SVG collapses it, with xml:space at its default: newlines are *removed*, tabs become spaces, then leading/trailing spaces go, then runs fold to one.
+    // So `NO\nIMAGE` paints as `NOIMAGE`, seven glyphs;
+    //   turning the newline into a space instead would over-count by one.
+    // Counting the raw capture read `AUCTO` as 11 characters and failed a mark measuring 146 units against a 272-unit band.
+    content: m[2]
+      .replace(/[\r\n]/g, '')
+      .replace(/\t/g, ' ')
+      .trim()
+      .replace(/ +/g, ' '),
   }));
   const ground = attr(
     /<rect width="600" height="600" fill="[^"]*"\/>/.exec(svg)?.[0] ?? '',
@@ -143,8 +271,8 @@ describe.skipIf(!svgExists)('the placeholder artwork', () => {
       expect(baseline - size * 1.2).toBeGreaterThanOrEqual(SAFE.yMin);
       expect(baseline + size * 0.3).toBeLessThanOrEqual(SAFE.yMax);
 
-      const spacing = Number(attr(tag, 'letter-spacing') || '0');
-      const halfWidth = (content.length * (size * 0.75 + spacing)) / 2;
+      const halfWidth =
+        (content.length * (size * 0.75 + spacingUserUnits(tag, size))) / 2;
       expect(300 - halfWidth).toBeGreaterThanOrEqual(SAFE.xMin);
       expect(300 + halfWidth).toBeLessThanOrEqual(SAFE.xMax);
     }

@@ -1,5 +1,6 @@
 import { test, expect } from './support/fixtures';
 import { SAFE } from '../placeholderGeometry';
+import { LISTING_PLACEHOLDER } from '../../src/utils/listingImage';
 import type { Page } from '@playwright/test';
 import { BROKEN_IMAGE_URL, IDS, loadFixture } from './support/mock';
 
@@ -9,7 +10,10 @@ import { BROKEN_IMAGE_URL, IDS, loadFixture } from './support/mock';
  * The mock answers BROKEN_IMAGE_URL with 200 and an HTML body, which fires the image's `error` event exactly as a 404 does without logging a console error.
  */
 
-const PLACEHOLDER = '/images/placeholder_v2.svg';
+// From the constant, not a fourth hand-written copy:
+//  this path carries a version suffix that moves, and the `hand-written paths` scan in placeholder.test.ts walks HTML and config, never specs.
+// So a stale literal here would navigate to a 404 and fail as "no <text> found in the placeholder", pointing at the drawing rather than at the literal that caused it.
+const PLACEHOLDER = LISTING_PLACEHOLDER;
 
 interface ActivePool {
   data: Array<Record<string, unknown>>;
@@ -440,4 +444,59 @@ test.describe('logged in', () => {
 
     expect(mock.consoleErrors).toEqual([]);
   });
+});
+
+/**
+ * The third of the safe-zone guarantee, and the only one that measures rather than estimates.
+ *
+ * `placeholder.test.ts` runs in jsdom, which has no layout, so it approximates each mark's width at 0.75em per character.
+ * That is deliberately pessimistic but it is still arithmetic on a string;
+ * it read a pretty-printed `AUCTO` as 11 characters and failed a mark that measures 146 units.
+ * Navigating to the .svg gives a real layout *and* reproduces the `<img src>` font context exactly, because a standalone SVG document cannot reach the page's @font-face rules either.
+ *
+ * **It measures the runner's UI font as well as the drawing**, and it runs in CI. `'Source Sans 3'` never resolves inside an SVG, so the wordmark draws in `system-ui`, which differs by platform, and `font-weight="800"` is synthesized where the UI face has no real 800.
+ * Measured headroom against SAFE today:
+ *  AUCTO would have to render **1.98x wider** to breach the x band, and the tightest bound anywhere is `NO IMAGE`'s bottom edge at **10.7 units**, about one em of an 11px mark.
+ * So a failure here is far more likely to be the drawing than the font;
+ *  but the messages below carry the measured number so a red CI run can be told apart from a real regression without opening the file.
+ */
+test('every mark measures inside its safe zone, not just estimates to', async ({
+  page,
+}) => {
+  await page.goto(PLACEHOLDER);
+  await page.evaluate(() => document.fonts.ready);
+
+  const marks = await page.evaluate(() =>
+    [...document.querySelectorAll('text')].map((node) => {
+      const box = (node as unknown as SVGGraphicsElement).getBBox();
+      return {
+        label: (node.textContent ?? '').trim(),
+        xMin: +box.x.toFixed(1),
+        xMax: +(box.x + box.width).toFixed(1),
+        yMin: +box.y.toFixed(1),
+        yMax: +(box.y + box.height).toFixed(1),
+      };
+    })
+  );
+
+  // So "measured nothing" cannot pass as "measured and clean".
+  expect(marks.length, 'no <text> found in the placeholder').toBeGreaterThan(0);
+
+  for (const mark of marks) {
+    // Each message carries the box that was measured, so a failure says how far out it is and on which axis;
+    //  the difference between a moved mark and a wider UI font.
+    const where = `${mark.label} measured x ${mark.xMin}-${mark.xMax}, y ${mark.yMin}-${mark.yMax}`;
+
+    expect(mark.xMin, `${where} — left`).toBeGreaterThanOrEqual(SAFE.xMin);
+    expect(mark.xMax, `${where} — right`).toBeLessThanOrEqual(SAFE.xMax);
+    expect(mark.yMin, `${where} — top`).toBeGreaterThanOrEqual(SAFE.yMin);
+    expect(mark.yMax, `${where} — bottom`).toBeLessThanOrEqual(SAFE.yMax);
+
+    // text-anchor="middle" is what keeps the crop symmetric;
+    //  whitespace in the element's content does not shift it, and this is what says so rather than assuming it.
+    expect(
+      +((mark.xMin + mark.xMax) / 2).toFixed(0),
+      `${mark.label} is not centred on the viewBox`
+    ).toBe(300);
+  }
 });
