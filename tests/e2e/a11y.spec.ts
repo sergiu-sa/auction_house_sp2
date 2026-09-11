@@ -489,3 +489,32 @@ test.describe('axe — a profile that is not mine', () => {
     expect(violations, describe(violations)).toEqual([]);
   });
 });
+
+/**
+ * The search landmark's accessible name.
+ *
+ * The *count* is asserted in `pages.spec.ts`, on all eight pages in both auth states, inside loads that were already happening.
+ * This covers the half a count cannot:
+ *  that the region is named.
+ * An unnamed `role="search"` announces only as "search", and a second one appearing anywhere would be an axe `landmark-unique` violation rather than a wrong number.
+ *
+ * Nothing else in this suite can see any of it:
+ *  a *missing* landmark is not an axe violation, so the zero-violation assertion above stays green either way, and the input keeps its own `aria-label` so the `label` rule passes too.
+ * Two `role="search"` landmarks were deleted with the navbar variant that carried them and the count went to zero app-wide before any of this was asserted.
+ */
+test('the catalog search region is named, not just present', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  await expect(page.locator('#catalog-filter-bar')).toBeVisible();
+
+  const landmark = page.getByRole('search');
+  await expect(landmark).toHaveCount(1);
+  await expect(landmark).toHaveAttribute(
+    'aria-label',
+    'Search and filter the catalog'
+  );
+
+  // The field it contains, so the region is not a named empty box.
+  await expect(landmark.locator('#catalog-search-input')).toHaveCount(1);
+});

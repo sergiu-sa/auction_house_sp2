@@ -13,7 +13,8 @@ export interface CatalogFilterState {
 }
 
 /**
- * The filter state behind Home's catalog section and the Collection page, both driven by the same navbar events.
+ * The filter state behind Home's catalog section and the Collection page, both driven by the same events;
+ *    dispatched by the catalog filter bar on `document`, not by the navbar, which carried a search box until that variant was retired.
  * It owns the filters only — each page keeps its own listings and decides how to render them.
  *
  * Every filter here is part of the API query, so each change is a refetch rather than a re-slice of what was already loaded.
@@ -53,6 +54,25 @@ export class CatalogStateManager {
     this.state = { ...this.state, ...updates };
   }
 
+  /**
+   * Apply a search handed to the page in its query string, without fetching.
+   *
+   * `Home` had this and `Collection` did not, so reading `?q=` on the catalog is a **new capability**, not a pure extraction;
+   *   the catalog previously dropped the term and fetched the whole pool.
+   * It lives here because `src/pages/**` is excluded from coverage, so Home's copy had never been tested and a second copy would have made that two.
+   * Seeding is the whole job:
+   *  each page's first load repaints the filter bar from state before it fetches, which is what fills the search box.
+   * Writing the field here as well reads as necessary and is not, and measured, the write *without* the seed does nothing because that repaint blanks it straight back out.
+   *
+   * Takes the query string rather than reading `location`, so it can be tested without a browser.
+   */
+  public seedSearchFromUrl(search: string = window.location.search): void {
+    const query = new URLSearchParams(search).get('q')?.trim();
+    if (!query) return;
+
+    this.seedState({ search: query });
+  }
+
   /** Back to the filters this page started on — which are not the class defaults if the page passed its own. */
   public resetFilters(): void {
     const { viewMode, itemsPerPage } = this.state;
@@ -70,7 +90,7 @@ export class CatalogStateManager {
     this.state.viewMode = viewMode;
   }
 
-  public listenToNavbarFilters(): void {
+  public listenToFilterEvents(): void {
     // Re-binding would orphan the previous set — unremovable, and every filter change would fetch twice.
     this.cleanup();
 
@@ -102,7 +122,7 @@ export class CatalogStateManager {
 
     this.listeners = [
       { type: 'categoryFilterChange', listener: handleCategory },
-      { type: 'globalSearchInput', listener: handleSearch },
+      { type: 'catalogSearchInput', listener: handleSearch },
       { type: 'activeOnlyChange', listener: handleActiveOnly },
       { type: 'sortChange', listener: handleSort },
     ];

@@ -42,7 +42,6 @@ test('home applies a search handed to it in the URL', async ({ page }) => {
 
   await page.goto('/index.html?q=vintage');
 
-  await expect(page.locator('#global-search-input')).toHaveValue('vintage');
   await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
   await expect(page.locator('#catalog-cards article')).toHaveCount(11);
   await expect(
@@ -75,19 +74,28 @@ test.describe('listings endpoint returns 500', () => {
 });
 
 /**
- * Home is the one page with two search boxes: the navbar's and the catalog bar's;
- *   so a term typed in either has to appear in the other, or the one the reader did not touch keeps a stale term and contradicts the results.
- * The repaint that does this is skipped while a field still holds undispatched keystrokes, so this also pins that the pending mark gets cleared again.
+ * Home used to carry two search boxes, and this pinned the term being mirrored between them.
+ * There is one now, so what needs pinning is that it filters the catalog it sits above.
+ *
+ * On the title, not the count:
+ *  the search fixture returns 12 rows and the page asks for 11, so a filtered page holds the same 11 cards as an unfiltered one and a count assertion passes either way.
+ *
+ * And asserted **positively**, against the first row of `listings-search-hit.json`, rather than as `not.toHaveText(theUnfilteredTitle)`.
+ * Every refetch replaces the grid with skeletons that contain no `article` and no `h3`, and a negated matcher is satisfied by a locator that matches nothing;
+ *   so the negated form goes green on any poll that lands inside the skeleton window.
+ * Naming the row the filtered query must return cannot pass on an empty grid.
+ *
+ * The debounce's pending mark is covered by unit tests in `SearchField.test.ts`;
+ *  set, cleared, and cancelled, which is where that behaviour is observable without a page around it.
  */
-test('typing in the navbar search fills the catalog bar, and vice versa', async ({
-  page,
-}) => {
+test('typing in the catalog search filters the catalog', async ({ page }) => {
   await page.goto('/index.html');
-  await expect(page.locator('#catalog-cards article').first()).toBeVisible();
+  await expect(page.locator('#catalog-cards article')).toHaveCount(11);
 
-  await page.locator('#global-search-input').fill('vintage');
+  await page.locator('#catalog-search-input').fill('vintage');
+
+  await expect(
+    page.locator('#catalog-cards article h3').first()
+  ).toHaveText('Yoann Siloine Polaroid Camera');
   await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
-
-  await page.locator('#catalog-search-input').fill('vase');
-  await expect(page.locator('#global-search-input')).toHaveValue('vase');
 });

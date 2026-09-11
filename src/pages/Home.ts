@@ -38,12 +38,10 @@ import {
 import { logError } from '../utils/logger';
 import type { Listing } from '../types/api';
 import {
-  setSearchFieldValue,
   renderCatalogFilterBar,
   initCatalogFilterBar,
   syncCatalogFilterBar,
   collapseCatalogFilterBar,
-  CATALOG_FILTER_IDS,
 } from '../components/filters';
 import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
 import { escapeHtml } from '../utils/escapeHtml';
@@ -68,7 +66,7 @@ const catalogManager = new CatalogStateManager(
 /** The filters this page starts on, for counting how many the reader has since changed. */
 const CATALOG_DEFAULTS = catalogManager.getState();
 let catalogRequestId = 0;
-function syncFilterBarsWithState(total?: number): void {
+function syncFilterBarWithState(total?: number): void {
   syncCatalogFilterBar(catalogManager.getState(), CATALOG_DEFAULTS, total);
 }
 
@@ -84,8 +82,8 @@ async function initHomePage(): Promise<void> {
   // Show login required message for create listing button if not logged in
   setupCreateListingButton();
 
-  // Listen to navbar filter events
-  catalogManager.listenToNavbarFilters();
+  // Listen for the catalog bar's filter events
+  catalogManager.listenToFilterEvents();
 
   const host = document.getElementById('catalog-filter-bar-host');
   if (host) {
@@ -93,24 +91,11 @@ async function initHomePage(): Promise<void> {
     initCatalogFilterBar();
   }
 
-  applyInitialSearchFromUrl();
+  // Before the first load, so the term is part of the query rather than a second fetch after it.
+  catalogManager.seedSearchFromUrl();
 
   // Load all data
   await loadAllData();
-}
-
-/**
- * A search started on another page arrives as `?q=`.
- * Without this the navigation lands here, the term is dropped and the catalog renders unfiltered.
- */
-function applyInitialSearchFromUrl(): void {
-  const query = new URLSearchParams(window.location.search).get('q')?.trim();
-  if (!query) return;
-
-  catalogManager.seedState({ search: query });
-  setSearchFieldValue(CATALOG_FILTER_IDS.search, query);
-  setSearchFieldValue('global-search-input', query);
-  setSearchFieldValue('mobile-search-input', query);
 }
 
 function setupCreateListingButton(): void {
@@ -164,7 +149,7 @@ async function loadAllData(): Promise<void> {
  * Every filter is part of the query now, so each change is a round trip rather than a re-slice of whatever happened to be fetched first.
  */
 async function loadCatalogListings(): Promise<void> {
-  syncFilterBarsWithState();
+  syncFilterBarWithState();
   const requestId = ++catalogRequestId;
   const state = catalogManager.getState();
 
@@ -198,7 +183,7 @@ async function loadCatalogListings(): Promise<void> {
       onPageChange: goToCatalogPage,
     });
     renderCatalogPagination(result.pageCount);
-    syncFilterBarsWithState(result.totalCount);
+    syncFilterBarWithState(result.totalCount);
 
     // The catalog swaps out without a page load, so nothing here is otherwise announced.
     const total = formatCount(result.totalCount);

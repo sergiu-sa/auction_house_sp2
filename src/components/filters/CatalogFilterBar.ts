@@ -47,9 +47,25 @@ export function countActiveFilters(
   return count;
 }
 
+/**
+ * `role="search"` sits on the whole bar, not on the input.
+ *
+ * The app's two search landmarks were deleted with the navbar variant that carried them, and this bar never had one, so no page had a search region a reader could jump to.
+ * ARIA's search landmark is the set of controls that together make a search facility:
+ *  the field, the toggle, and the category/active-only/sort controls in the panel;
+ *  so marking the bare field would land the reader beside them, and would make a landmark of every future call site of a reusable component.
+ *
+ * `role="search"` rather than `<search>`: that element shipped in Safari 17 and Chrome 118, well past this build's Safari 14 / Chrome 90 target.
+ */
 export function renderCatalogFilterBar(): string {
   return `
-    <div id="catalog-filter-bar" data-expanded="false" class="sticky top-0 z-30 mb-8">
+    <div
+      id="catalog-filter-bar"
+      data-expanded="false"
+      role="search"
+      aria-label="Search and filter the catalog"
+      class="sticky top-0 z-30 mb-8"
+    >
       <div class="bg-warm-white px-4 py-3 md:px-6" style="border: 3px solid var(--aucto-border-dark)">
         <div class="flex items-center gap-3">
           <!--
@@ -186,24 +202,17 @@ export function syncCatalogFilterBar(
   setActiveOnlyState(CATALOG_FILTER_IDS.activeOnly, state.activeOnly);
   setSortValue(CATALOG_FILTER_IDS.sort, state.sort, state.sortOrder);
 
-  // On Home the navbar renders its own search alongside this one, so both are repainted from state or the field the reader did not type in keeps a stale term.
-  // The catalog page has only this bar, where the two navbar ids simply miss.
+  // Repainted from state, which is also what fills the box for a search arriving as `?q=`.
   //
   // Skipped for a field that is focused *or* still holding an undispatched keystroke.
   // Focus alone is not enough: clicking a filter moves focus off the field while its debounce is pending, the reload repaints the old term over what was typed, and the debounce then fires reading the overwritten value, the search is lost twice over.
-  for (const id of [
-    CATALOG_FILTER_IDS.search,
-    'global-search-input',
-    'mobile-search-input',
-  ]) {
-    const field = document.getElementById(id);
-    if (
-      field &&
-      document.activeElement !== field &&
-      field.dataset.searchPending !== 'true'
-    ) {
-      setSearchFieldValue(id, state.search);
-    }
+  const field = document.getElementById(CATALOG_FILTER_IDS.search);
+  if (
+    field &&
+    document.activeElement !== field &&
+    field.dataset.searchPending !== 'true'
+  ) {
+    setSearchFieldValue(CATALOG_FILTER_IDS.search, state.search);
   }
 
   const count = countActiveFilters(state, defaults);

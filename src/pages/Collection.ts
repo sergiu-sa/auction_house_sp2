@@ -125,8 +125,11 @@ export function initCollectionPage(): void {
   // Initialize view toggle filters
   initializeFilters();
 
-  // Listen to navbar filter events
-  catalogManager.listenToNavbarFilters();
+  // Listen for the catalog bar's filter events
+  catalogManager.listenToFilterEvents();
+
+  // Before the first load, so the term is part of the query rather than a second fetch after it.
+  catalogManager.seedSearchFromUrl();
 
   // Load listings
   loadListings();

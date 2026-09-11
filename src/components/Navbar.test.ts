@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { renderHeader, isBrowsePage, isCatalogPage } from './Navbar';
+import { renderHeader } from './Navbar';
 import { invalidateProfileCache } from '../utils/profileCache';
 
 // Guards the mobile menu: closed = display:none (so it can't create horizontal
@@ -168,59 +168,101 @@ describe('document-level listeners across repeated renders', () => {
   });
 });
 
-// Which paths hold a catalog listener decides whether a header search filters in place or navigates to /index.html?q=.
-describe('isBrowsePage', () => {
-  it('matches both URLs Home is served from', () => {
-    expect(isBrowsePage('/')).toBe(true);
-    expect(isBrowsePage('/index.html')).toBe(true);
+/**
+ * The one routing decision `renderHeader` still makes.
+ *
+ * It used to pick between three variants and `isBrowsePage`/`isCatalogPage` were unit-tested;
+ *  those went with the search-carrying variant, and this replaces that coverage rather than leaving the surviving branch to the visual project, which `playwright.config.ts` keeps out of CI.
+ *
+ * It matters beyond the markup: `body[data-page-type='auth'] #header` reserves 101px against a non-auth header measured at 191px, so an auth page rendering the main navbar would ship exactly the first-paint shift that reservation exists to prevent.
+ *
+ * Asserted on what each variant uniquely renders, not on a count of navs, both render one.
+ */
+/** The banner's own sentence.
+ * "Browsing as Guest" is one letter off the auth navbar's "Browse as Guest" link, so matching on that would pass on the wrong element. */
+const GUEST_BANNER = 'You can explore auctions, but you need an account';
+
+describe('which navbar a page gets', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    document.body.innerHTML = '<div id="header"></div>';
+    // Removed, not set:
+    //  every test below supplies its own, and leaving the last one's value on <body> makes the following describe depend on happening to overwrite it.
+    document.body.removeAttribute('data-page-type');
   });
 
-  it('matches the catalog', () => {
-    expect(isBrowsePage('/collection.html')).toBe(true);
+  it('gives the auth pages the minimal navbar, with no nav links', () => {
+    document.body.setAttribute('data-page-type', 'auth');
+    renderHeader();
+
+    const header = document.getElementById('header')!;
+    expect(header.textContent).toContain('Browse as Guest');
+    expect(header.querySelector('a[href="/collection.html"]')).toBeNull();
+    expect(header.querySelector('#mobile-menu-drawer')).toBeNull();
   });
 
-  it('does not match the other pages, which have no catalog to filter', () => {
-    for (const path of [
-      '/listing.html',
-      '/listing-create.html',
-      '/listing-edit.html',
-      '/profile.html',
-      '/login.html',
-      '/register.html',
-    ]) {
-      expect(isBrowsePage(path)).toBe(false);
+  /**
+   * The other half of the same branch, and it was asserted nowhere.
+   *
+   * Mutation-checked: dropping `&& !isAuthPage` from the banner's condition left all 445 unit and 140 smoke tests green.
+   * A guest on login.html would then get the banner inside a header reserved at 101px, shipping the first-paint shift that reservation exists to prevent.
+   */
+  it('suppresses the guest banner on an auth page, logged out', () => {
+    document.body.setAttribute('data-page-type', 'auth');
+    renderHeader();
+
+    expect(document.getElementById('header')!.textContent).not.toContain(
+      GUEST_BANNER
+    );
+  });
+
+  it('still shows it to a guest anywhere else, so the check above cannot pass vacuously', () => {
+    document.body.setAttribute('data-page-type', 'browse');
+    renderHeader();
+
+    expect(document.getElementById('header')!.textContent).toContain(
+      GUEST_BANNER
+    );
+  });
+
+  it('gives every other page type the same main navbar', () => {
+    for (const pageType of ['browse', 'user-content']) {
+      document.body.setAttribute('data-page-type', pageType);
+      document.body.innerHTML = '<div id="header"></div>';
+      renderHeader();
+
+      const header = document.getElementById('header')!;
+      expect(
+        header.querySelector('a[href="/collection.html"]'),
+        pageType
+      ).not.toBeNull();
+      expect(
+        header.querySelector('#mobile-menu-drawer'),
+        pageType
+      ).not.toBeNull();
+      expect(header.textContent, pageType).not.toContain('Browse as Guest');
     }
   });
 
-  it('matches under a deploy-preview subpath, since the check is on the suffix', () => {
-    expect(isBrowsePage('/deploy-preview/index.html')).toBe(true);
-    expect(isBrowsePage('/deploy-preview/')).toBe(false);
-  });
-});
+  it('renders no search field on any of them', () => {
+    for (const pageType of ['auth', 'browse', 'user-content']) {
+      document.body.setAttribute('data-page-type', pageType);
+      document.body.innerHTML = '<div id="header"></div>';
+      renderHeader();
 
-describe('isCatalogPage', () => {
-  it('matches the catalog, which carries its own search', () => {
-    expect(isCatalogPage('/collection.html')).toBe(true);
-  });
+      // A positive anchor first.
+      // A count of zero is satisfied just as well by a header that rendered nothing at all — an early return, a renamed #header, a throw before the innerHTML write;
+      //   and the test would report "no search field" when the truth is "no navbar".
+      expect(
+        document.querySelectorAll('#header nav').length,
+        pageType
+      ).toBeGreaterThan(0);
 
-  it('does not match Home, which keeps the navbar search', () => {
-    expect(isCatalogPage('/')).toBe(false);
-    expect(isCatalogPage('/index.html')).toBe(false);
-  });
-
-  it('does not match the pages with no catalog at all', () => {
-    for (const path of [
-      '/listing.html',
-      '/profile.html',
-      '/login.html',
-      '/register.html',
-    ]) {
-      expect(isCatalogPage(path)).toBe(false);
+      expect(
+        document.querySelectorAll('#header input[type="search"]').length,
+        pageType
+      ).toBe(0);
     }
-  });
-
-  it('matches under a deploy-preview subpath, since the check is on the suffix', () => {
-    expect(isCatalogPage('/deploy-preview/collection.html')).toBe(true);
   });
 });
 

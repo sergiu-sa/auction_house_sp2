@@ -1,6 +1,6 @@
 /**
  * SearchField Component
- * Reusable search input field that dispatches globalSearchInput event
+ * Reusable search input field that dispatches the catalogSearchInput event
  */
 
 import { escapeHtml } from '../../utils/escapeHtml';
@@ -89,7 +89,7 @@ export function initSearchField(id: string, debounceMs: number = 300): void {
         delete searchInput.dataset.searchPending;
         const query = searchInput.value.trim();
         document.dispatchEvent(
-          new CustomEvent('globalSearchInput', {
+          new CustomEvent('catalogSearchInput', {
             detail: { query },
           })
         );
