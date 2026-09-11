@@ -4,7 +4,6 @@ import { trapFocus } from '../utils/focusTrap';
 import { isLoggedIn, getCurrentUser } from '../utils/auth';
 import { logout } from '../api/auth';
 import { renderGuestBanner } from './GuestBanner';
-import { initSearchField } from './filters';
 import type { User } from '../types/api';
 import { escapeHtml } from '../utils/escapeHtml';
 import { formatCredits, formatCurrency } from '../utils/formatCurrency';
@@ -60,7 +59,7 @@ function getNavLinks(
   ];
 }
 
-/** Desktop nav-link row used inside both `renderSimpleNavbar` and `renderFullNavbar`. */
+/** Desktop nav-link row. Paired with `renderMobileNavLinks` below: same links, different chrome. */
 function renderDesktopNavLinks(isLoggedIn: boolean): string {
   return getNavLinks(isLoggedIn)
     .map(
@@ -100,8 +99,9 @@ export function renderHeader(): void {
   const header = document.getElementById('header');
   if (!header) return;
 
-  // Detect page type from body attribute
-  const pageType = document.body.getAttribute('data-page-type') || 'browse';
+  // Only 'auth' still changes anything, here or anywhere:
+  //  'browse' and 'user-content' now render the same navbar, and main.css matches only `[data-page-type='auth']`. The other two values are inert.
+  const isAuthPage = document.body.dataset.pageType === 'auth';
 
   const isUserLoggedIn = isLoggedIn();
   const user = getCurrentUser();
@@ -110,35 +110,26 @@ export function renderHeader(): void {
   //   main.css reserves the header's height from this  attribute, and leaving it unset until the markup lands holds the page on the guest reservation and then collapses it, which is a bigger shift than the one being avoided.
   document.documentElement.dataset.auth = isUserLoggedIn ? 'in' : 'out';
 
-  // Render appropriate navbar variant based on page type
-  let navbarHTML = '';
-
-  if (pageType === 'auth') {
-    navbarHTML = renderMinimalNavbar();
-  } else if (
-    pageType === 'user-content' ||
-    isCatalogPage(window.location.pathname)
-  ) {
-    // The catalog carries its own search, pinned above the grid, so it wants the same search-less navbar the profile and listing-form pages already use rather than a third variant of its own.
-    navbarHTML = renderSimpleNavbar(isUserLoggedIn, user);
-  } else {
-    // Default: browse pages (index, collection, listing)
-    navbarHTML = renderFullNavbar(isUserLoggedIn, user);
-  }
+  // A third variant carried a search box here for Home and the lot pages.
+  //  Search now lives only in the catalog filter bar, on the two pages that have one;
+  //   a lot page has  no search of its own and reaches the catalog through the Catalog nav link.
+  const navbarHTML = isAuthPage
+    ? renderMinimalNavbar()
+    : renderMainNavbar(isUserLoggedIn, user);
 
   header.innerHTML = `
-    ${!isUserLoggedIn && pageType !== 'auth' ? renderGuestBanner() : ''}
+    ${!isUserLoggedIn && !isAuthPage ? renderGuestBanner() : ''}
     ${navbarHTML}
   `;
 
   initIdentityFallbacks(header);
 
   // Initialize event listeners
-  initHeaderEvents(pageType);
+  initHeaderEvents();
 
   // Not on auth pages:
   //  renderMinimalNavbar draws no credit figures, so the response would have nowhere to land.
-  if (isUserLoggedIn && user && pageType !== 'auth') {
+  if (isUserLoggedIn && user && !isAuthPage) {
     void refreshHeaderCredits();
   }
 }
@@ -183,11 +174,8 @@ function renderMinimalNavbar(): string {
   `;
 }
 
-// Simple navbar for user content pages (profile, create/edit listing)
-function renderSimpleNavbar(
-  isUserLoggedIn: boolean,
-  user: User | null
-): string {
+// The navbar for every page but the auth pages. Logo, nav links, user section, mobile drawer.
+function renderMainNavbar(isUserLoggedIn: boolean, user: User | null): string {
   return `
     <nav aria-label="Main navigation" style="background-color: #f7f7f5">
       <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
@@ -204,88 +192,6 @@ function renderSimpleNavbar(
           </div>
 
           ${renderUserSection(isUserLoggedIn, user)}
-        </div>
-      </div>
-    </nav>
-
-    ${renderMobileMenu(isUserLoggedIn, user)}
-  `;
-}
-
-// Full navbar for browse pages that carry no catalog toolbar of their own (index, listing detail)
-function renderFullNavbar(isUserLoggedIn: boolean, user: User | null): string {
-  return `
-    <nav aria-label="Main navigation" style="background-color: #f7f7f5">
-      <div class="mx-auto max-w-7xl px-6 md:px-8 pt-5">
-        <!-- Top row: brand + search + nav + credits -->
-        <div class="flex items-center gap-3 pb-4" style="border-bottom: 1px solid var(--aucto-border-light)">
-
-          <!-- Brand Logo - Always visible -->
-          <a href="/index.html" class="inline-flex items-center text-slate-900 hover:text-slate-700 transition-colors whitespace-nowrap flex-shrink-0" aria-label="Aucto home">
-            <img src="/images/logo_v2.svg" alt="Aucto logo" class="h-9" width="120" height="36" />
-          </a>
-
-          <!-- DESKTOP: Inline search (grows to fill available space) -->
-          <section aria-label="Global auction search" class="hidden lg:flex flex-1 items-center gap-2">
-            <form class="flex-1" role="search" aria-label="Search auctions" id="header-search-form">
-              <label for="global-search-input" class="sr-only">Search auctions</label>
-              <div class="relative">
-                <input
-                  id="global-search-input"
-                  name="q"
-                  type="search"
-                  placeholder="Search by title, description, or lot number..."
-                  class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
-                  style="border: 2px solid var(--aucto-border-mid)"
-                />
-                <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
-              </div>
-            </form>
-          </section>
-
-          <!-- Spacer for mobile/tablet -->
-          <div class="flex-1 lg:hidden"></div>
-
-          <!-- MOBILE/TABLET: Search icon button (< 1024px) -->
-          <button
-            id="mobile-search-btn"
-            type="button"
-            class="lg:hidden flex items-center justify-center bg-white px-3 py-2 hover:bg-slate-50"
-            style="border: 2px solid var(--aucto-border-mid)"
-            aria-label="Toggle search"
-            aria-expanded="false"
-          >
-            <i class="fa-solid fa-magnifying-glass text-sm" aria-hidden="true"></i>
-          </button>
-
-          <!-- DESKTOP: Primary nav links (≥1024px) -->
-          <div class="hidden items-center gap-6 text-sm font-bold text-slate-700 lg:flex">
-            ${renderDesktopNavLinks(isUserLoggedIn)}
-          </div>
-
-          ${renderUserSection(isUserLoggedIn, user)}
-        </div>
-
-        <!-- MOBILE SEARCH BAR (expandable, hidden by default) -->
-        <div
-          id="mobile-search-bar"
-          class="hidden lg:hidden px-2 py-4"
-          style="border-bottom: 1px solid var(--aucto-border-light)"
-        >
-          <form role="search" aria-label="Search auctions" id="mobile-search-form">
-            <label for="mobile-search-input" class="sr-only">Search auctions</label>
-            <div class="relative">
-              <input
-                id="mobile-search-input"
-                name="q"
-                type="search"
-                placeholder="Search auctions..."
-                class="w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2"
-                style="border: 2px solid var(--aucto-border-mid)"
-              />
-              <i class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 fa-solid fa-magnifying-glass text-sm text-slate-400" aria-hidden="true"></i>
-            </div>
-          </form>
         </div>
       </div>
     </nav>
@@ -578,7 +484,7 @@ function bindProfileMenuDocumentEvents(): void {
   });
 }
 
-function initHeaderEvents(pageType: string): void {
+function initHeaderEvents(): void {
   // Mobile menu drawer
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
@@ -665,109 +571,5 @@ function initHeaderEvents(pageType: string): void {
     mobileLogoutBtn.addEventListener('click', () => {
       logout();
     });
-  }
-
-  // Only attach search/filter events on browse pages
-  if (pageType === 'browse') {
-    initBrowsePageEvents();
-  }
-}
-
-/**
- * Whether `path` is a page that holds a catalog listener, so a search term can be applied in place instead of navigating.
- *
- * Home is served from both `/` and `/index.html`; matching only one of them strands the search.
- * Takes the path rather than reading `location` so it can be tested without a stubbed browser.
- */
-export function isBrowsePage(path: string): boolean {
-  return (
-    path === '/' ||
-    path.endsWith('/index.html') ||
-    path.endsWith('/collection.html')
-  );
-}
-
-/**
- * The catalog page carries its own search, pinned above the grid, so the navbar does not render a second one there.
- * Suffix-matched like `isBrowsePage`, so deploy previews under a subpath work.
- */
-export function isCatalogPage(path: string): boolean {
-  return path.endsWith('/collection.html');
-}
-
-/**
- * A page with a catalog filters in place; anywhere else the term travels to the home catalog as `?q=`, which `Home.ts` reads on load.
- */
-function submitSearch(searchTerm: string): void {
-  if (isBrowsePage(window.location.pathname)) {
-    document.dispatchEvent(
-      new CustomEvent('globalSearchInput', { detail: { query: searchTerm } })
-    );
-    return;
-  }
-
-  if (searchTerm) {
-    window.location.href = `/index.html?q=${encodeURIComponent(searchTerm)}`;
-  }
-}
-
-// Search + filter events, only used on browse pages
-function initBrowsePageEvents(): void {
-  // Mobile search toggle
-  const mobileSearchBtn = document.getElementById('mobile-search-btn');
-  const mobileSearchBar = document.getElementById('mobile-search-bar');
-
-  if (mobileSearchBtn && mobileSearchBar) {
-    mobileSearchBtn.addEventListener('click', () => {
-      mobileSearchBar.classList.toggle('hidden');
-      const isExpanded = !mobileSearchBar.classList.contains('hidden');
-      mobileSearchBtn.setAttribute('aria-expanded', String(isExpanded));
-
-      if (isExpanded) {
-        const mobileSearchInput = document.getElementById(
-          'mobile-search-input'
-        ) as HTMLInputElement;
-        if (mobileSearchInput) {
-          mobileSearchInput.focus();
-        }
-      }
-    });
-  }
-
-  // Mobile search form submission
-  const mobileSearchForm = document.getElementById('mobile-search-form');
-  if (mobileSearchForm) {
-    mobileSearchForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = mobileSearchForm.querySelector(
-        'input[name="q"]'
-      ) as HTMLInputElement;
-      submitSearch(input.value.trim());
-    });
-  }
-
-  // Desktop search form submission
-  const headerSearchForm = document.getElementById('header-search-form');
-  const globalSearchInput = document.getElementById(
-    'global-search-input'
-  ) as HTMLInputElement;
-
-  if (headerSearchForm) {
-    headerSearchForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = headerSearchForm.querySelector(
-        'input[name="q"]'
-      ) as HTMLInputElement;
-      submitSearch(input.value.trim());
-    });
-  }
-
-  // Real-time search input for instant filtering.
-  //
-  // Through `initSearchField` rather than a second copy of the same debounce:
-  //  the field has to mark itself while keystrokes are undispatched, and a hand-rolled timer here does not.
-  //  Without that mark a filter clicked mid-word repaints this box from stale state and the term is lost.
-  if (globalSearchInput) {
-    initSearchField('global-search-input', 300);
   }
 }

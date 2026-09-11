@@ -7,7 +7,7 @@ import { onImageError } from './imageFallback';
 
 // Versioned because /images/* is served immutable for a year: a redrawn placeholder under the
 // old name never reaches anyone who has already loaded the site.
-export const LISTING_PLACEHOLDER = '/images/placeholder_v2.svg';
+export const LISTING_PLACEHOLDER = '/images/placeholder_v3.svg';
 
 interface MediaLike {
   url?: string;

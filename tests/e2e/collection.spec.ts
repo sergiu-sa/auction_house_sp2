@@ -1,4 +1,5 @@
 import { test, expect } from './support/fixtures';
+import { IDS } from './support/mock';
 
 /**
  * The container class is what matters, not the card class:
@@ -144,41 +145,104 @@ test('the filter count badge is absent until something is filtered', async ({
 });
 
 /**
- * The catalog owns its search, in the bar pinned above the grid.
- * The navbar rendered a second field directly above it, same event, same state, mirrored value; so the two stacked and read as one control repeated.
- * Home keeps its navbar field: there the catalog is one section among several, and the field is the way into it rather than a duplicate of it.
+ * A search term handed to the catalog in the URL used to be dropped on the floor.
+ *
+ * Measured before the fix:
+ *  `?q=` produced a request to `/auction/listings` carrying no `q` at all;
+ *  not a filtered set, the whole catalog, so the page rendered 23 cards against a total of 3,199 with an empty search box.
+ * The catalog could not be linked to, bookmarked at, or arrived at with a term, which is why nothing could send it one.
+ *
+ * **`#results-count` and the field value are what prove filtering happened**; the card count does not.
+ * 12 is how many rows `listings-search-hit.json` holds, and the mock slices to `limit`, so 12 is the fixture's shape rather than evidence of a narrower set;
+ *  against the live API a filtered first page holds 23 cards exactly like an unfiltered one.
+ * It is asserted anyway because a change in the fixture's shape should fail loudly rather than quietly weaken the test around it.
  */
-test('the catalog page has exactly one search field, and it is the bar’s', async ({
+/**
+ * The seed has to land before the first fetch, not after it.
+ *
+ * Both catalog pages do render bar → init → listen → seed → load, and nothing but a comment holds that order: move `seedSearchFromUrl()` below the load on either page and the unit suite stays green, because `src/pages/**` is excluded from coverage.
+ * The visible symptom is two requests where there should be one, the first of them unfiltered;
+ *  so count the requests rather than the cards, which look the same either way once the second lands.
+ */
+test('a URL term is in the first request, not a second one after it', async ({
   page,
 }) => {
-  await page.goto('/collection.html');
-  await expect(page.locator('#catalog-filter-bar')).toBeVisible();
+  const listingRequests: string[] = [];
+  page.on('request', (r) => {
+    if (r.url().includes('/auction/listings')) listingRequests.push(r.url());
+  });
 
-  await expect(page.locator('input[type="search"]')).toHaveCount(1);
-  await expect(page.locator('#catalog-search-input')).toBeVisible();
-  await expect(page.locator('#header-search-form')).toHaveCount(0);
-  await expect(page.locator('#mobile-search-btn')).toHaveCount(0);
-  await expect(page.locator('#mobile-search-bar')).toHaveCount(0);
+  await page.goto('/collection.html?q=vintage');
+  await expect(page.locator('#results-count')).toHaveText('116');
+
+  const grid = listingRequests.filter((u) => !u.includes('_active=true'));
+  expect(grid, grid.join('\n')).toHaveLength(1);
+  expect(grid[0]).toContain('/auction/listings/search');
+  expect(grid[0]).toContain('q=vintage');
 });
 
-test('home keeps its navbar search alongside the catalog bar', async ({
+test('the catalog applies a search handed to it in the URL', async ({
   page,
 }) => {
-  await page.goto('/index.html');
-  await expect(page.locator('#catalog-filter-bar')).toBeVisible();
+  await page.goto('/collection.html?q=vintage');
 
-  await expect(page.locator('#header-search-form')).toHaveCount(1);
-  await expect(page.locator('#catalog-search-input')).toHaveCount(1);
+  await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
+  await expect(page.locator('#collection-cards-grid article')).toHaveCount(12);
+  await expect(page.locator('#results-count')).toHaveText('116');
+  await expect(page.locator('#results-range')).toHaveText('1-12');
+
+  // A term arriving in the URL is a filter the reader did not set, so the badge has to own up to it.
+  // Read through getComputedStyle: `[hidden]` is a UA rule and loses to the badge's own `inline-flex`, which is how it once shipped showing a literal 0.
+  const badge = page.locator('#catalog-filters-count');
+  await expect(badge).toHaveText('1');
+  expect(await badge.evaluate((el) => getComputedStyle(el).display)).toBe(
+    'inline-flex'
+  );
+
+  await page.locator('#clear-filters-btn').click();
+
+  await expect(page.locator('#results-count')).toHaveText('3,199');
+  await expect(page.locator('#catalog-search-input')).toHaveValue('');
+  expect(await badge.evaluate((el) => getComputedStyle(el).display)).toBe(
+    'none'
+  );
 });
 
 /**
- * The catalog renders the same search-less navbar as the profile and listing-form pages rather than a variant of its own - one component, not a third arrangement to keep in step.
- * Pinned against profile, so a change to that shared navbar has to move both or neither.
+ * The catalog owns its search, in the bar pinned above the grid.
+ * The navbar rendered a second field directly above it, same event, same state, mirrored value; so the two stacked and read as one control repeated.
+ *
+ * Home is the same shape now, and for the reason the navbar variant was retired:
+ *  its field was above the fold and the grid it filtered was 4,204 px below, so typing changed 4,577 px of a 1440x900 viewport and every one of them was inside the input.
+ * The per-page counts live in `pages.spec.ts`;
+ *  these pin that no trace of the retired variant's markup came back.
+ */
+test('neither catalog surface renders the retired navbar search', async ({
+  page,
+}) => {
+  for (const url of ['/collection.html', '/index.html']) {
+    await page.goto(url);
+    await expect(page.locator('#catalog-filter-bar')).toBeVisible();
+    await expect(page.locator('#catalog-search-input')).toBeVisible();
+
+    await expect(page.locator('#header-search-form')).toHaveCount(0);
+    await expect(page.locator('#mobile-search-form')).toHaveCount(0);
+    await expect(page.locator('#mobile-search-btn')).toHaveCount(0);
+    await expect(page.locator('#mobile-search-bar')).toHaveCount(0);
+    await expect(page.locator('#global-search-input')).toHaveCount(0);
+    await expect(page.locator('#mobile-search-input')).toHaveCount(0);
+  }
+});
+
+/**
+ * Every page but the auth pages renders one navbar,  one component, not a set of arrangements to keep in step.
+ * Home and the lot pages joined this when the search-carrying variant was retired:
+ * measured, their nav links sat at x 804 and now sit at 561, which is where the catalog and the profile already had them.
  *
  * Measured on the *right* edge of the nav links, not the logo:
  *  the logo is first in the row, so it sits at the same x whatever the rest of the row does, and a check anchored to it passes over exactly the collapses it is meant to catch.
  */
-test.describe('the catalog shares the profile navbar', () => {
+test.describe('every page shares one navbar', () => {
   test.use({ auth: 'in' });
 
   test('same geometry, not a variant of its own', async ({ page }) => {
@@ -187,6 +251,13 @@ test.describe('the catalog shares the profile navbar', () => {
     ): Promise<{ h: number; linksRight: number; logoLeft: number }> => {
       await page.goto(path);
       await page.locator('#header nav').first().waitFor();
+      // main.css reserves #header's height, and that reservation clamps getBoundingClientRect, so `h` reads back the reserved number rather than the navbar's.
+      // Measured: a navbar shrunk to 55px still reports 91.
+      // Zero it first, exactly as main.css's own comment instructs.
+      await page.addStyleTag({
+        content: '#header { min-height: 0 !important }',
+      });
+      await page.evaluate(() => document.fonts.ready);
       return page.evaluate(() => {
         const header = document.getElementById('header')!;
         const nav = document.querySelector('#header nav')!;
@@ -203,9 +274,16 @@ test.describe('the catalog shares the profile navbar', () => {
     };
 
     const collection = await measure('/collection.html');
-    const profile = await measure('/profile.html');
 
-    expect(collection).toEqual(profile);
+    for (const path of [
+      '/profile.html',
+      '/index.html',
+      `/listing.html?id=${IDS.otherSeller}`,
+      '/listing-create.html',
+    ]) {
+      expect(await measure(path), path).toEqual(collection);
+    }
+
     // Spread across the row, not packed against the logo.
     expect(collection.linksRight).toBeGreaterThan(400);
   });

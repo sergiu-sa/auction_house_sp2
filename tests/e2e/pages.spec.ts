@@ -11,46 +11,120 @@ interface PageCase {
   url: string;
   /** Something only that page renders, proving it got past its data load. */
   ready: string;
+  /**
+   * How many `input[type=search]` this page must carry.
+   * A field rather than a lookup table: `tsconfig` has no `noUncheckedIndexedAccess`, so a name-keyed map types as `number` even when the key is missing, and a rename would quietly assert `toHaveCount(undefined)` instead of failing to compile.
+   */
+  searchFields: number;
 }
 
 const PUBLIC_PAGES: PageCase[] = [
-  { name: 'home', url: '/index.html', ready: '#hero-mosaic' },
+  { name: 'home', url: '/index.html', ready: '#hero-mosaic', searchFields: 1 },
   {
     name: 'collection',
     url: '/collection.html',
     ready: '#collection-cards-grid',
+    searchFields: 1,
   },
   {
     name: 'listing detail',
     url: `/listing.html?id=${IDS.otherSeller}`,
     ready: '#listing-details',
+    searchFields: 0,
   },
-  { name: 'login', url: '/login.html', ready: '#login-form' },
-  { name: 'register', url: '/register.html', ready: '#register-form' },
+  {
+    name: 'login',
+    url: '/login.html',
+    ready: '#login-form',
+    searchFields: 0,
+  },
+  {
+    name: 'register',
+    url: '/register.html',
+    ready: '#register-form',
+    searchFields: 0,
+  },
 ];
 
+/**
+ * Signed in, login and register redirect to index.html, so including them would silently measure Home twice rather than the auth pages.
+ * Named rather than sliced positionally:
+ *  a sixth public page inserted above would move the boundary and quietly change what both signed-in loops cover.
+ */
+const PUBLIC_PAGES_WHEN_SIGNED_IN = PUBLIC_PAGES.filter(
+  (page_) => !['login', 'register'].includes(page_.name)
+);
+
 const GATED_PAGES: PageCase[] = [
-  { name: 'profile', url: '/profile.html', ready: '#profile-content' },
+  {
+    name: 'profile',
+    url: '/profile.html',
+    ready: '#profile-content',
+    searchFields: 0,
+  },
   {
     name: 'listing create',
     url: '/listing-create.html',
     ready: '#create-listing-content',
+    searchFields: 0,
   },
   {
     name: 'listing edit',
     url: `/listing-edit.html?id=${IDS.own}`,
     ready: '#edit-listing-content',
+    searchFields: 0,
   },
 ];
 
+/**
+ * One search field per surface, and it is always the catalog bar's.
+ *
+ * This is the assertion the suite was missing.
+ * A navbar variant carried a second search box on Home and a third on the lot pages, and nothing could express the problem:
+ *  all three rendered, were named, passed axe and sat inside the visual baselines.
+ * Measured before the fix:
+ *  3 inputs on `index.html` with 2 visible at desktop, 2 on `listing.html` where nothing listened at all.
+ *
+ * Exact counts from `PageCase.searchFields`, never a ceiling:
+ *  a page that rendered no navbar at all would satisfy "at most one".
+ * The callers assert `ready` first for the same reason;
+ *  establish that the page painted before counting what it did not paint.
+ *
+ * The landmark count rides along because it is the same number:
+ *  the bar *is* the `role="search"` region, so one bar means one field and one landmark, and zero means zero.
+ * Asserting it here rather than in its own pass covers all eight pages in both auth states instead of the five public ones, and costs no extra navigation;
+ *   these loads were already happening.
+ */
+async function expectSearchSurface(
+  page: import('@playwright/test').Page,
+  page_: PageCase
+): Promise<void> {
+  await expect(
+    page.locator('#header nav[aria-label="Main navigation"]')
+  ).toBeVisible();
+
+  await expect(
+    page.locator('input[type="search"]'),
+    page_.name
+  ).toHaveCount(page_.searchFields);
+  await expect(
+    page.locator('#catalog-search-input'),
+    page_.name
+  ).toHaveCount(page_.searchFields);
+  await expect(page.locator('[role="search"]'), page_.name).toHaveCount(
+    page_.searchFields
+  );
+}
+
 test.describe('logged out', () => {
   for (const page_ of PUBLIC_PAGES) {
-    test(`${page_.name} loads with no console errors`, async ({
+    test(`${page_.name} loads clean, with the search surface it should have`, async ({
       page,
       mock,
     }) => {
       await page.goto(page_.url);
       await expect(page.locator(page_.ready)).toBeVisible();
+      await expectSearchSurface(page, page_);
       expect(mock.consoleErrors).toEqual([]);
     });
   }
@@ -76,13 +150,14 @@ test.describe('logged out', () => {
 test.describe('logged in', () => {
   test.use({ auth: 'in' });
 
-  for (const page_ of [...PUBLIC_PAGES.slice(0, 3), ...GATED_PAGES]) {
-    test(`${page_.name} loads with no console errors`, async ({
+  for (const page_ of [...PUBLIC_PAGES_WHEN_SIGNED_IN, ...GATED_PAGES]) {
+    test(`${page_.name} loads clean, with the search surface it should have`, async ({
       page,
       mock,
     }) => {
       await page.goto(page_.url);
       await expect(page.locator(page_.ready)).toBeVisible();
+      await expectSearchSurface(page, page_);
       expect(mock.consoleErrors).toEqual([]);
     });
   }

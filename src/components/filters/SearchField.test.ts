@@ -37,7 +37,7 @@ describe('the search debounce', () => {
 
   it('clears the mark once the term is dispatched', () => {
     const seen: string[] = [];
-    document.addEventListener('globalSearchInput', ((e: CustomEvent) => {
+    document.addEventListener('catalogSearchInput', ((e: CustomEvent) => {
       seen.push(e.detail.query);
     }) as EventListener);
 
@@ -50,7 +50,7 @@ describe('the search debounce', () => {
 
   it('dispatches once for a burst of keystrokes', () => {
     let count = 0;
-    document.addEventListener('globalSearchInput', () => {
+    document.addEventListener('catalogSearchInput', () => {
       count += 1;
     });
 
@@ -70,7 +70,7 @@ describe('the search debounce', () => {
    */
   it('cancelling drops the pending term without dispatching it', () => {
     let count = 0;
-    document.addEventListener('globalSearchInput', () => {
+    document.addEventListener('catalogSearchInput', () => {
       count += 1;
     });
 
