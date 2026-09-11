@@ -1,3 +1,5 @@
+import type { CategoryKey } from '../../api/listingQueries';
+
 /**
  * CategoryFilters Component
  * Reusable category filter buttons that dispatch categoryFilterChange event
@@ -10,12 +12,13 @@ export interface CategoryFiltersConfig {
 }
 
 export interface Category {
-  value: string;
+  value: CategoryKey;
   label: string;
   icon: string;
 }
 
-const CATEGORIES: Category[] = [
+/** Exported so `CategoryFilters.test.ts` can pin it against `CATEGORY_KEYS`, which the URL parses against. */
+export const CATEGORIES: Category[] = [
   { value: 'all', label: 'All Items', icon: 'fa-check' },
   { value: 'tech', label: 'Tech', icon: 'fa-microchip' },
   { value: 'fashion', label: 'Fashion', icon: 'fa-shirt' },
