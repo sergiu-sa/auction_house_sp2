@@ -143,6 +143,28 @@ describe('the pager', () => {
     expect(onPageChange).toHaveBeenCalledWith(3);
   });
 
+  /**
+   * NEXT has to be off for a page *past* the end as well as on it.
+   *
+   * `currentPage === totalPages` left it enabled and pointing one further out, so each click walked
+   * further past the last page. The catalog now clamps before it renders, which makes this
+   * unreachable from there — but `ProfilePage.ts:565` is a third caller with no clamp of its own,
+   * and an out-of-range page is a legitimate state for any caller to hand a component.
+   */
+  it('disables NEXT on the last page and past it', () => {
+    const next = (): HTMLButtonElement =>
+      document.querySelector('[aria-label="Next page"]') as HTMLButtonElement;
+
+    render(139, 140);
+    expect(next().disabled, 'inside the set').toBe(false);
+
+    render(140, 140);
+    expect(next().disabled, 'on the last page').toBe(true);
+
+    render(9999, 140);
+    expect(next().disabled, 'past the last page').toBe(true);
+  });
+
   it('does not fire for the page already shown', () => {
     render(3, 10, true);
     document.querySelector<HTMLButtonElement>('button[data-page="3"]')!.click();

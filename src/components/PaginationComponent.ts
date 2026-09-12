@@ -50,7 +50,9 @@ export function renderPagination(config: PaginationConfig): void {
   }
 
   const isPrevDisabled = currentPage === 1;
-  const isNextDisabled = currentPage === totalPages;
+  // `>=`, not `===`: a page past the end would otherwise leave NEXT enabled pointing further out
+  // still, so each click walked further past the last page.
+  const isNextDisabled = currentPage >= totalPages;
 
   // Build HTML with inline styles for consistency
   let html = `
