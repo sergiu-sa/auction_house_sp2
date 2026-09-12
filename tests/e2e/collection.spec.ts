@@ -160,7 +160,7 @@ test('the filter count badge is absent until something is filtered', async ({
 /**
  * The seed has to land before the first fetch, not after it.
  *
- * Both catalog pages do render bar → init → listen → seed → load, and nothing but a comment holds that order: move `seedSearchFromUrl()` below the load on either page and the unit suite stays green, because `src/pages/**` is excluded from coverage.
+ * Both catalog pages do render bar → init → listen → seed → load, and nothing but a comment holds that order: move `seedFromUrl()` below the load on either page and the unit suite stays green, because `src/pages/**` is excluded from coverage.
  * The visible symptom is two requests where there should be one, the first of them unfiltered;
  *  so count the requests rather than the cards, which look the same either way once the second lands.
  */
@@ -206,6 +206,153 @@ test('the catalog applies a search handed to it in the URL', async ({
   expect(await badge.evaluate((el) => getComputedStyle(el).display)).toBe(
     'none'
   );
+
+  // The term used to stay in the address bar after Clear, so the next reload put it straight back.
+  // Asserted after the count, which is what proves the reset actually ran.
+  expect(new URL(page.url()).search).toBe('');
+});
+
+/**
+ * The other half of the same contract: the catalog reads the URL, so it has to write it.
+ *
+ * Typing filtered the grid and left the address bar at `/collection.html`, so the link a reader
+ * copied and the bookmark they saved both lost the term, and Back from a lot returned the whole
+ * 3,199-lot pool. `grep -rn 'pushState\|replaceState' src/` found nothing in the app.
+ *
+ * Every assertion here is anchored on `#results-count` first: the URL is only meaningful once the
+ * page has actually repainted, and 116-vs-3,199 is what says which set is on screen.
+ */
+test('a term typed into the catalog reaches the address bar', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  await expect(page.locator('#results-count')).toHaveText('3,199');
+  expect(new URL(page.url()).search).toBe('');
+
+  await page.locator('#catalog-search-input').fill('vintage');
+  await expect(page.locator('#results-count')).toHaveText('116');
+
+  expect(new URL(page.url()).search).toBe('?q=vintage');
+});
+
+test('the whole filter set reaches the address bar, and only what was changed', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  await expect(page.locator('#results-count')).toHaveText('3,199');
+
+  await page.locator('#catalog-active-only').check();
+  await expect(page.locator('#results-count')).toHaveText('53');
+  expect(new URL(page.url()).search).toBe('?active=true');
+
+  await page.locator('#catalog-sort-select').selectOption('endsAt-asc');
+  await expect(page.locator('#results-count')).toHaveText('53');
+  expect(new URL(page.url()).search).toBe('?active=true&sort=endsAt&order=asc');
+
+  // Back to the page's own resting filters: the URL empties rather than spelling the defaults out.
+  await page.locator('#clear-filters-btn').click();
+  await expect(page.locator('#results-count')).toHaveText('3,199');
+  expect(new URL(page.url()).search).toBe('');
+});
+
+/**
+ * The reported symptom, end to end.
+ *
+ * Measured on `main` before the fix: type `vintage` (116), open a lot, press Back, and the catalog
+ * came back as `/collection.html` with an empty box and 3,199 lots. No history entry had ever been
+ * created, so there was nothing to go back *to*.
+ */
+test('Back from a lot returns to the filtered catalog', async ({ page }) => {
+  await page.goto('/collection.html');
+  await page.locator('#catalog-search-input').fill('vintage');
+  await expect(page.locator('#results-count')).toHaveText('116');
+
+  await page
+    .locator('#collection-cards-grid article a[href*="listing.html"]')
+    .first()
+    .click({ force: true });
+  await page.waitForURL(/listing\.html/);
+
+  await page.goBack();
+
+  // 116 rather than "not 3,199": a page that failed to render has neither, and toHaveText waits
+  // for the surface to produce the number rather than passing on the absence of the other one.
+  await expect(page.locator('#results-count')).toHaveText('116');
+  await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
+  expect(new URL(page.url()).search).toBe('?q=vintage');
+});
+
+/**
+ * A hand-edited address is the one input to the filter state that no control produced.
+ *
+ * `sort=endsAt&order=desc` is two individually valid halves that the dropdown does not offer
+ * together, so trusting the pair would set the select to a value none of its options carry: it
+ * drops to `selectedIndex` -1 and renders blank while the grid shows a sorted set.
+ */
+test('a sort the dropdown cannot show is not taken from the URL', async ({
+  page,
+}) => {
+  await page.goto('/collection.html?q=vintage&sort=endsAt&order=desc');
+
+  await expect(page.locator('#results-count')).toHaveText('116');
+  await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
+  // The offered pairs only. Blank would be `''`.
+  await expect(page.locator('#catalog-sort-select')).toHaveValue('created-desc');
+  // Dropped from the state, so it is dropped from the address bar too.
+  expect(new URL(page.url()).search).toBe('?q=vintage');
+});
+
+test('a category the catalog does not offer is narrowed away', async ({
+  page,
+}) => {
+  await page.goto('/collection.html?category=xyz&utm_source=nl');
+
+  // Not an empty grid and a badge counting a filter no button shows: `_tag=xyz` matches nothing.
+  await expect(page.locator('#results-count')).toHaveText('3,199');
+  expect(
+    await page
+      .locator('#catalog-filters-count')
+      .evaluate((el) => getComputedStyle(el).display)
+  ).toBe('none');
+
+  // And the address bar is rewritten to what was applied, or the link the reader copies carries a
+  // filter that never was. The campaign tag survives, which is what says this rewrote rather than
+  // rebuilt.
+  expect(new URL(page.url()).search).toBe('?utm_source=nl');
+});
+
+/**
+ * A URL is the one way onto a page past the end of the set: `parseCatalogUrl` can clamp the floor,
+ * but the ceiling arrives with the fetch. Measured before the clamp: `?page=9999` rendered an empty
+ * grid reading "3,199 lots" beside a pager saying "Page 9999 of 140", with NEXT still *enabled*
+ * pointing at 10000, so each click walked further out.
+ *
+ * Asserted on the `?category=` route on purpose. `listingsPage` in the mock takes `totalCount` from
+ * the fixture's meta (3,199) but slices a `data` array holding **50 rows**, so the untagged page 140
+ * is empty whether the clamp works or not and the cards would prove nothing. With a tag,
+ * `totalCount` is the real row count, so the last page has lots on it.
+ */
+test('a page past the end of the set falls back to the last one', async ({
+  page,
+}) => {
+  await page.goto('/collection.html?category=art&page=9999');
+
+  await expect(page.locator('#collection-cards-grid article')).toHaveCount(2);
+  await expect(page.locator('#results-count')).toHaveText('2');
+  await expect(page.locator('#results-range')).toHaveText('1-2');
+  // Page 1 is the default, so the key drops out rather than being spelt back.
+  expect(new URL(page.url()).search).toBe('?category=art');
+});
+
+test('the pager cannot walk past the last page', async ({ page }) => {
+  await page.goto('/collection.html?page=9999');
+
+  // The untagged route's last page is empty by fixture, so the anchor here is the pager, which is
+  // what was broken: it read "of 140" with NEXT enabled and pointing at 10000.
+  await expect.poll(() => new URL(page.url()).search).toBe('?page=140');
+  const next = page.locator('#pagination [data-page]').last();
+  await expect(next).toBeDisabled();
+  await expect(next).toHaveAttribute('data-page', '141');
 });
 
 /**
