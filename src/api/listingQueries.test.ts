@@ -9,8 +9,7 @@ import {
   recentlyEnded,
   catalogPage,
   profileListings,
-  toSortKey,
-  toSortOrder,
+  toSortPreset,
 } from './listingQueries';
 import type { Listing } from '../types/api';
 
@@ -431,26 +430,40 @@ describe('listingQueries', () => {
   });
 
   describe('sort vocabulary', () => {
-    it('falls back to a known key rather than letting the API 500', () => {
-      // F-046: an unknown sort field is a 500, not a silent ignore.
-      expect(toSortKey('created')).toBe('created');
-      expect(toSortKey('endsAt')).toBe('endsAt');
-      expect(toSortKey('title')).toBe('title');
-      expect(toSortKey('_count.bids')).toBe('created');
-      expect(toSortKey(undefined)).toBe('created');
+    it('names the pair for a field and direction the catalog offers', () => {
+      expect(toSortPreset('created', 'desc')).toEqual({
+        sort: 'created',
+        order: 'desc',
+      });
+      expect(toSortPreset('title', 'asc')).toEqual({
+        sort: 'title',
+        order: 'asc',
+      });
     });
 
-    it('falls back to a known order', () => {
-      expect(toSortOrder('asc')).toBe('asc');
-      expect(toSortOrder('desc')).toBe('desc');
-      expect(toSortOrder('sideways')).toBe('desc');
+    it('takes the only direction offered when none is given', () => {
+      expect(toSortPreset('endsAt')).toEqual({ sort: 'endsAt', order: 'asc' });
+    });
+
+    it('refuses a field the catalog does not sort by', () => {
+      // An unknown sort field is a 500 from the API, not a silent ignore.
+      expect(toSortPreset('_count.bids', 'desc')).toBeNull();
+      expect(toSortPreset(undefined)).toBeNull();
+    });
+
+    it('refuses a pair that is valid on both halves and offered on neither', () => {
+      expect(toSortPreset('endsAt', 'desc')).toBeNull();
+    });
+
+    it('refuses a direction that is neither asc nor desc', () => {
+      expect(toSortPreset('title', 'sideways')).toBeNull();
     });
 
     it('keeps an unknown sort out of the request', async () => {
-      await catalogPage({
-        sort: toSortKey('nonsense'),
-        sortOrder: toSortOrder('nonsense'),
-      });
+      const preset = toSortPreset('nonsense', 'nonsense');
+      expect(preset).toBeNull();
+
+      await catalogPage({ sort: preset?.sort, sortOrder: preset?.order });
 
       expect(urls()[0]).toContain('sort=created');
       expect(urls()[0]).not.toContain('nonsense');

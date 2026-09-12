@@ -15,8 +15,40 @@ const DEFAULT_PAGE_SIZE = 24;
 
 export type SortKey = 'created' | 'endsAt' | 'title';
 export type SortOrder = 'asc' | 'desc';
+export type CategoryKey = 'all' | 'tech' | 'fashion' | 'home' | 'art';
 
 const SORT_KEYS: readonly SortKey[] = ['created', 'endsAt', 'title'];
+
+const CATEGORY_KEYS: readonly CategoryKey[] = [
+  'all',
+  'tech',
+  'fashion',
+  'home',
+  'art',
+];
+
+/**
+ * The sort pairs the catalog offers, in the order the dropdown lists them.
+ *
+ * The vocabulary lives here rather than in the control because the URL now speaks it too, and a
+ * pair the control cannot show is reachable from a hand-edited address: `sort=endsAt&order=desc`
+ * is a perfectly valid query, but there is no such option, so `setSortValue` would set a value none
+ * of the options carry and the select would go to `selectedIndex` -1 and render blank while the
+ * grid showed a filtered set. `SortDropdown` keeps the labels; `SortDropdown.test.ts` pins the two
+ * lists equal.
+ */
+export interface SortPreset {
+  sort: SortKey;
+  order: SortOrder;
+}
+
+export const SORT_PRESETS: readonly SortPreset[] = [
+  { sort: 'created', order: 'desc' },
+  { sort: 'created', order: 'asc' },
+  { sort: 'endsAt', order: 'asc' },
+  { sort: 'title', order: 'asc' },
+  { sort: 'title', order: 'desc' },
+];
 
 export interface CatalogQuery {
   page?: number;
@@ -37,15 +69,50 @@ export interface CatalogResult {
 }
 
 /**
- * Narrow a sort field coming from a `<select>` to something the API accepts.
- * Anything else would come back as a 500.
+ * Narrow a category the same way, for the same reason one step removed.
+ * An unknown tag is not a 500 — it is a 200 with nothing in it, which is worse to debug: the grid
+ * empties, the filter badge counts one, and no category button is pressed, because the state holds
+ * a value the bar cannot show.
  */
-export function toSortKey(value: string | undefined): SortKey {
-  return SORT_KEYS.includes(value as SortKey) ? (value as SortKey) : 'created';
+export function toCategory(value: string | undefined): CategoryKey {
+  return CATEGORY_KEYS.includes(value as CategoryKey)
+    ? (value as CategoryKey)
+    : 'all';
 }
 
-export function toSortOrder(value: string | undefined): SortOrder {
-  return value === 'asc' ? 'asc' : 'desc';
+/**
+ * The offered pair for a sort field and direction, or `null` when the two do not name one.
+ *
+ * The only narrower for a sort, and it replaced a forgiving pair — `toSortKey`, which collapsed an
+ * unknown field to `created`, and `toSortOrder`, which collapsed an unknown direction to `desc`.
+ * Those were right for a `<select>`, whose value is always one of the options and only needs making
+ * safe for an API where an unknown field is a 500. They were wrong the moment a URL could carry a
+ * sort: collapsing there turns `?sort=price` into a real "Oldest first" nobody chose, and on Home —
+ * which rests on `endsAt asc`, not `created` — it overrides the page's own default and counts as an
+ * applied filter. Measured before this: `/index.html?sort=price&order=asc` selected `created-asc`
+ * and lit the filter badge at 1.
+ *
+ * Narrowing the two as a pair is the other half. Independently they admit `endsAt desc`, which is
+ * two valid values naming no option, so the writer could publish a sort the reader then dropped and
+ * `setSortValue` would leave the select blank over a sorted grid.
+ *
+ * An absent direction takes the only one offered for that field, so `?sort=endsAt` means "Ending
+ * soon" rather than nothing. A direction that is present but is neither `asc` nor `desc` is a
+ * malformed URL, not a request for the default.
+ */
+export function toSortPreset(
+  sort: string | undefined | null,
+  order?: string | null
+): SortPreset | null {
+  if (!SORT_KEYS.includes(sort as SortKey)) return null;
+  const key = sort as SortKey;
+
+  if (order === undefined || order === null) {
+    return SORT_PRESETS.find((p) => p.sort === key) ?? null;
+  }
+  if (order !== 'asc' && order !== 'desc') return null;
+
+  return SORT_PRESETS.find((p) => p.sort === key && p.order === order) ?? null;
 }
 
 // One request covers all active lots; small enough to rank in memory cheaply.

@@ -20,7 +20,8 @@ export interface SortOption {
   order: 'asc' | 'desc';
 }
 
-const SORT_OPTIONS: SortOption[] = [
+/** Exported so `SortDropdown.test.ts` can pin it against `SORT_PRESETS`, which the URL parses against. */
+export const SORT_OPTIONS: SortOption[] = [
   {
     value: 'created-desc',
     label: 'Newest first',

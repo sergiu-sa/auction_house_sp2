@@ -1,4 +1,9 @@
-import { CatalogStateManager } from '../utils/catalogState';
+import {
+  CATALOG_STATE_DEFAULTS,
+  CatalogStateManager,
+} from '../utils/catalogState';
+import type { CatalogFilterState } from '../utils/catalogState';
+import { serializeCatalogState } from '../utils/catalogUrl';
 import { announce } from '../utils/announce';
 import { highestBid } from '../utils/biddingStats';
 import {
@@ -67,7 +72,39 @@ const catalogManager = new CatalogStateManager(
 const CATALOG_DEFAULTS = catalogManager.getState();
 let catalogRequestId = 0;
 function syncFilterBarWithState(total?: number): void {
-  syncCatalogFilterBar(catalogManager.getState(), CATALOG_DEFAULTS, total);
+  const state = catalogManager.getState();
+  syncCatalogFilterBar(state, CATALOG_DEFAULTS, total);
+  updateFullCatalogLink(state);
+}
+
+/**
+ * Point "View Full Catalog" at the catalog the reader is actually looking at.
+ *
+ * It sits above the grid the filter bar drives, and as a bare `/collection.html` it threw away
+ * whatever had been typed: search on Home, follow the link, land on all 3,199 lots with an empty
+ * box. The three other `/collection.html` links in this page's own markup stay bare on purpose —
+ * they belong to the hero, Trending and New Listings, which this bar does not filter, so carrying
+ * the catalog's filters there would describe a set those sections never showed. The rendered page
+ * holds eight in all; the remaining four are the navbar's and the footer's, which are site chrome
+ * and belong to no page's filters.
+ *
+ * Two things it does differently from the address-bar writer:
+ *
+ * `page` is dropped. Home paginates 11 to a page and Collection 23, so Home's page 4 is lots 34-44
+ * and Collection's is 70-92; carrying the number over would land the reader on lots they never saw.
+ *
+ * The yardstick is the catalog's resting filters rather than Home's. Home rests on `endsAt asc`, so
+ * measuring against its own defaults would leave the sort out for a reader who never touched it and
+ * drop them onto a `created desc` grid in a different order from the one they were just reading.
+ */
+function updateFullCatalogLink(state: CatalogFilterState): void {
+  const link = document.getElementById('view-full-catalog');
+  if (!link) return;
+
+  link.setAttribute(
+    'href',
+    `/collection.html${serializeCatalogState({ ...state, page: 1 }, CATALOG_STATE_DEFAULTS)}`
+  );
 }
 
 async function initHomePage(): Promise<void> {
@@ -92,7 +129,7 @@ async function initHomePage(): Promise<void> {
   }
 
   // Before the first load, so the term is part of the query rather than a second fetch after it.
-  catalogManager.seedSearchFromUrl();
+  catalogManager.seedFromUrl();
 
   // Load all data
   await loadAllData();
@@ -172,6 +209,10 @@ async function loadCatalogListings(): Promise<void> {
 
     // A newer request started while this one was in flight
     if (requestId !== catalogRequestId) return;
+
+    // A URL is the one way onto a page past the end of the set, because the ceiling is not known
+    // until this answers. Moving refetches, so there is nothing to render here.
+    if (catalogManager.clampToPageCount(result.pageCount)) return;
 
     renderCollectionCards(result.listings, 'catalog-cards');
 

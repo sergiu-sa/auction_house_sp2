@@ -164,7 +164,9 @@ export function generateWebsiteStructuredData(): object {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${APP_BASE_URL}/collection.html?search={search_term_string}`,
+        // `q`, the key the catalog actually reads. This advertised `?search=`, which nothing reads,
+        // so a crawler following the site's own search entry point landed on the unfiltered pool.
+        urlTemplate: `${APP_BASE_URL}/collection.html?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },

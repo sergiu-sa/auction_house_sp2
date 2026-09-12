@@ -129,7 +129,7 @@ export function initCollectionPage(): void {
   catalogManager.listenToFilterEvents();
 
   // Before the first load, so the term is part of the query rather than a second fetch after it.
-  catalogManager.seedSearchFromUrl();
+  catalogManager.seedFromUrl();
 
   // Load listings
   loadListings();
@@ -171,6 +171,10 @@ async function loadListings(): Promise<void> {
 
     // A newer request started while this one was in flight
     if (requestId !== loadRequestId) return;
+
+    // A URL is the one way onto a page past the end of the set, because the ceiling is not known
+    // until this answers. Moving refetches, so there is nothing to render here.
+    if (catalogManager.clampToPageCount(result.pageCount)) return;
 
     currentPageListings = result.listings;
     resultTotals = {
