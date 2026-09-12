@@ -99,8 +99,8 @@ export function renderHeader(): void {
   const header = document.getElementById('header');
   if (!header) return;
 
-  // Only 'auth' still changes anything, here or anywhere:
-  //  'browse' and 'user-content' now render the same navbar, and main.css matches only `[data-page-type='auth']`. The other two values are inert.
+  // Absence is the signal for every other page: the attribute is written on login.html and register.html alone.
+  //  It carried 'browse' and 'user-content' too until the navbar variants that read them went, and main.css only ever matched 'auth'.
   const isAuthPage = document.body.dataset.pageType === 'auth';
 
   const isUserLoggedIn = isLoggedIn();

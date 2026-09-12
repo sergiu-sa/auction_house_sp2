@@ -1,6 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { test, expect } from './support/fixtures';
 import { IDS, loadFixture } from './support/mock';
+import {
+  GATED_PAGES,
+  PUBLIC_PAGES,
+  PUBLIC_PAGES_WHEN_SIGNED_IN,
+} from './support/pages';
 
 /**
  * The accessibility tripwire.
@@ -17,42 +22,6 @@ import { IDS, loadFixture } from './support/mock';
 const AXE = readFileSync('node_modules/axe-core/axe.min.js', 'utf8');
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'];
-
-interface PageCase {
-  name: string;
-  url: string;
-  ready: string;
-}
-
-const PUBLIC_PAGES: PageCase[] = [
-  { name: 'home', url: '/index.html', ready: '#hero-mosaic' },
-  {
-    name: 'collection',
-    url: '/collection.html',
-    ready: '#collection-cards-grid',
-  },
-  {
-    name: 'listing detail',
-    url: `/listing.html?id=${IDS.otherSeller}`,
-    ready: '#listing-details',
-  },
-  { name: 'login', url: '/login.html', ready: '#login-form' },
-  { name: 'register', url: '/register.html', ready: '#register-form' },
-];
-
-const GATED_PAGES: PageCase[] = [
-  { name: 'profile', url: '/profile.html', ready: '#profile-content' },
-  {
-    name: 'listing create',
-    url: '/listing-create.html',
-    ready: '#create-listing-content',
-  },
-  {
-    name: 'listing edit',
-    url: `/listing-edit.html?id=${IDS.own}`,
-    ready: '#edit-listing-content',
-  },
-];
 
 interface Violation {
   id: string;
@@ -140,7 +109,7 @@ test.describe('axe — the profile pager', () => {
 test.describe('axe — logged in', () => {
   test.use({ auth: 'in' });
 
-  for (const page_ of [...PUBLIC_PAGES.slice(0, 3), ...GATED_PAGES]) {
+  for (const page_ of [...PUBLIC_PAGES_WHEN_SIGNED_IN, ...GATED_PAGES]) {
     test(`${page_.name} has no violations`, async ({ page }) => {
       await page.goto(page_.url);
       await expect(page.locator(page_.ready)).toBeVisible();

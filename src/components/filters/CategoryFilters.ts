@@ -37,8 +37,6 @@ export function renderCategoryFilters(config: CategoryFiltersConfig): string {
       ? 'px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1.5'
       : 'px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-2';
 
-  const iconSize = variant === 'compact' ? 'text-xs' : 'text-xs';
-
   return `
     <div class="flex flex-wrap gap-2">
       ${CATEGORIES.map((category) => {
@@ -58,7 +56,7 @@ export function renderCategoryFilters(config: CategoryFiltersConfig): string {
             style="border: 2px solid ${borderColor}"
             aria-pressed="${isActive}"
           >
-            <i class="fa-solid ${showCheck ? 'fa-check' : category.icon} ${iconSize}" aria-hidden="true"></i>
+            <i class="fa-solid ${showCheck ? 'fa-check' : category.icon} text-xs" aria-hidden="true"></i>
             <span>${category.label}</span>
           </button>
         `;
