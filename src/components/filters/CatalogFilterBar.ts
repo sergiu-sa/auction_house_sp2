@@ -75,7 +75,7 @@ export function renderCatalogFilterBar(): string {
             refinement, so those are what go behind the button.
           -->
           <div class="min-w-0 flex-1 lg:max-w-md">
-            ${renderSearchField({ id: CATALOG_FILTER_IDS.search, placeholder: 'Search catalog...', variant: 'compact', label: 'Search the catalog' })}
+            ${renderSearchField({ id: CATALOG_FILTER_IDS.search, placeholder: 'Search catalog...', label: 'Search the catalog' })}
           </div>
 
           <button
