@@ -177,7 +177,11 @@ textarea:disabled {
   }
 }
 
-/* Auth pages render the minimal navbar and never the guest banner. */
+/*
+ * Auth pages render the minimal navbar and never the guest banner.
+ * `data-page-type` is written on login.html and register.html only, so every other page falls to the unqualified base above;
+ *  `tests/pageType.test.ts` fails if a third page starts carrying it.
+ */
 body[data-page-type='auth'] #header {
   min-height: 101px;
 }

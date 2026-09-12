@@ -241,7 +241,7 @@ describe('components are inert against a hostile listing', () => {
       })
     );
     document.body.innerHTML = '<div id="header"></div>';
-    document.body.setAttribute('data-page-type', 'browse');
+    document.body.removeAttribute('data-page-type');
 
     renderHeader();
 

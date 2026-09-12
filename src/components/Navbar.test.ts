@@ -8,7 +8,7 @@ describe('mobile menu', () => {
   beforeEach(() => {
     localStorage.clear();
     document.body.innerHTML = '<div id="header"></div>';
-    document.body.setAttribute('data-page-type', 'browse');
+    document.body.removeAttribute('data-page-type');
   });
 
   it('is fully hidden (out of layout) when closed', async () => {
@@ -122,7 +122,7 @@ describe('document-level listeners across repeated renders', () => {
   });
 
   it('binds click and keydown once, however many times the header renders', async () => {
-    document.body.setAttribute('data-page-type', 'user-content');
+    document.body.removeAttribute('data-page-type');
     const { renderHeader: render } = await freshNavbar();
     countAddEventListener();
 
@@ -141,7 +141,7 @@ describe('document-level listeners across repeated renders', () => {
   });
 
   it('still closes the dropdown after a re-render, on Escape and on an outside click', async () => {
-    document.body.setAttribute('data-page-type', 'user-content');
+    document.body.removeAttribute('data-page-type');
     const { renderHeader: render } = await freshNavbar();
 
     render();
@@ -217,7 +217,7 @@ describe('which navbar a page gets', () => {
   });
 
   it('still shows it to a guest anywhere else, so the check above cannot pass vacuously', () => {
-    document.body.setAttribute('data-page-type', 'browse');
+    document.body.removeAttribute('data-page-type');
     renderHeader();
 
     expect(document.getElementById('header')!.textContent).toContain(
@@ -225,28 +225,23 @@ describe('which navbar a page gets', () => {
     );
   });
 
-  it('gives every other page type the same main navbar', () => {
-    for (const pageType of ['browse', 'user-content']) {
-      document.body.setAttribute('data-page-type', pageType);
-      document.body.innerHTML = '<div id="header"></div>';
-      renderHeader();
+  /** The attribute is absent on the other six pages, so this is what they all get. */
+  it('gives a page with no page type the main navbar', () => {
+    document.body.innerHTML = '<div id="header"></div>';
+    renderHeader();
 
-      const header = document.getElementById('header')!;
-      expect(
-        header.querySelector('a[href="/collection.html"]'),
-        pageType
-      ).not.toBeNull();
-      expect(
-        header.querySelector('#mobile-menu-drawer'),
-        pageType
-      ).not.toBeNull();
-      expect(header.textContent, pageType).not.toContain('Browse as Guest');
-    }
+    const header = document.getElementById('header')!;
+    expect(header.querySelector('a[href="/collection.html"]')).not.toBeNull();
+    expect(header.querySelector('#mobile-menu-drawer')).not.toBeNull();
+    expect(header.textContent).not.toContain('Browse as Guest');
   });
 
-  it('renders no search field on any of them', () => {
-    for (const pageType of ['auth', 'browse', 'user-content']) {
-      document.body.setAttribute('data-page-type', pageType);
+  it('renders no search field on either of them', () => {
+    // The two states the attribute has: written as 'auth', or absent, which is every other page.
+    for (const pageType of ['auth', null]) {
+      if (pageType === null) document.body.removeAttribute('data-page-type');
+      else document.body.setAttribute('data-page-type', pageType);
+      const label = pageType ?? 'no page type';
       document.body.innerHTML = '<div id="header"></div>';
       renderHeader();
 
@@ -255,12 +250,12 @@ describe('which navbar a page gets', () => {
       //   and the test would report "no search field" when the truth is "no navbar".
       expect(
         document.querySelectorAll('#header nav').length,
-        pageType
+        label
       ).toBeGreaterThan(0);
 
       expect(
         document.querySelectorAll('#header input[type="search"]').length,
-        pageType
+        label
       ).toBe(0);
     }
   });
@@ -278,7 +273,7 @@ describe('the profile fetch does not block the navbar', () => {
     // The 30s cache is module state and survives between tests, so a warm entry from an earlier one is served without fetch being called at all.
     invalidateProfileCache();
     document.body.innerHTML = '<div id="header"></div>';
-    document.body.setAttribute('data-page-type', 'browse');
+    document.body.removeAttribute('data-page-type');
     localStorage.setItem('token', 'header.payload.signature');
     localStorage.setItem('tokenTimestamp', String(Date.now()));
     localStorage.setItem(
