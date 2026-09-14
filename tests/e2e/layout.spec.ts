@@ -295,13 +295,15 @@ test.describe('paging does not scroll the grid under the bar', () => {
         await page.setViewportSize({ width, height: 800 });
         await page.goto(path);
         await page.locator(`${grid} article`).first().waitFor();
-        await page.locator(pager).getByRole('button', { name: '2' }).click();
+        await page.locator(`${pager} [aria-label="Next page"]`).click();
 
-        // The new page has rendered only once the pager marks 2 as current; before that the grid
-        // holds skeleton <div>s and `article` is null.
-        await expect(page.locator(`${pager} [aria-current="page"]`)).toHaveText(
-          '2'
-        );
+        // The new page has rendered only once the pager's field reads 2;
+        //  before that the grid holds skeleton <div>s and `article` is null.
+        // The pager and the cards are written in one synchronous render, so the field cannot read 2 while the old cards are still up;
+        //  reordering the two calls was checked and changes nothing, which is why this is safe rather than merely correlated.
+        await expect(
+          page.locator(`${pager} [data-page-jump-input]`)
+        ).toHaveValue('2');
 
         const clearance = await page.evaluate((g) => {
           const bar = document
@@ -335,10 +337,10 @@ test('paging with the filter panel open still clears the bar', async ({
   await page.locator('#catalog-filters-toggle').click();
   await expect(page.locator('#catalog-sort-select')).toBeVisible();
 
-  await page.locator('#pagination').getByRole('button', { name: '2' }).click();
-  await expect(page.locator('#pagination [aria-current="page"]')).toHaveText(
-    '2'
-  );
+  await page.locator('#pagination [aria-label="Next page"]').click();
+  await expect(
+    page.locator('#pagination [data-page-jump-input]')
+  ).toHaveValue('2');
 
   const clearance = await page.evaluate(() => {
     const bar = document
@@ -464,4 +466,72 @@ test.describe('list skeleton below the sm breakpoint', () => {
 
     expect(Math.abs(skeleton.height - cardHeight)).toBeLessThan(60);
   });
+});
+
+/**
+ * Five controls in one row at 375px was the point of the narrower padding below md.
+ * flex-wrap is kept so the failure mode is a second row rather than overflow, but a second row is still a regression against what this replaced, so both are asserted.
+ */
+test('the catalog pager fits one row at 375px', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  const rows = await page.evaluate(() => {
+    const tops = [
+      ...document.querySelectorAll(
+        '#pagination button, #pagination [data-page-jump]'
+      ),
+    ].map((el) => Math.round(el.getBoundingClientRect().top));
+    return new Set(tops).size;
+  });
+
+  expect(rows, 'distinct rows the pager occupies').toBe(1);
+
+  const pager = await page.evaluate(() => {
+    const el = document.getElementById('pagination')!;
+    return { scroll: el.scrollWidth, client: el.clientWidth };
+  });
+  expect(pager.scroll).toBe(pager.client);
+
+  // 320 is a supported viewport here, and five controls do not fit it.
+  // The designed failure mode is the wrap, never a sideways scroll;
+  //  asserted because the wrap is what makes that safe.
+  await page.setViewportSize({ width: 320, height: 900 });
+  const narrow = await page.evaluate(() => ({
+    scroll: document.documentElement.scrollWidth,
+    client: document.documentElement.clientWidth,
+  }));
+  expect(narrow.scroll).toBe(narrow.client);
+});
+
+/**
+ * WCAG 2.2 SC 2.5.8.
+ * This is the standard the number input's ~12x8 spinners failed.
+ */
+test('every pager control clears the 24px target floor at 375px', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  const tooSmall = await page.evaluate(() =>
+    [...document.querySelectorAll('#pagination button, #pagination input')]
+      .map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          what: el.getAttribute('aria-label') ?? el.textContent?.trim() ?? '?',
+          w: Math.round(r.width),
+          h: Math.round(r.height),
+        };
+      })
+      .filter((m) => m.w < 24 || m.h < 24)
+  );
+
+  expect(tooSmall).toEqual([]);
 });
