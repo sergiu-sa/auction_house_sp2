@@ -89,7 +89,7 @@ describe('icon font coverage', () => {
   });
 
   it('counts the glyphs the aliases collapse onto', () => {
-    // 68 class names, 63 glyphs: the codebase spells five icons both the v5 and the v6 way.
+    // 70 class names, 65 glyphs: the codebase spells five icons both the v5 and the v6 way.
     const { resolved, glyphs } = resolveIcons();
     expect(resolved.size).toBe(Object.keys(manifest.icons).length);
     expect(glyphs.length).toBe(manifest.glyphs);

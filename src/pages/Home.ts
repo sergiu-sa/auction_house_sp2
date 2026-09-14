@@ -221,6 +221,8 @@ async function loadCatalogListings(): Promise<void> {
       currentPage: state.page,
       totalPages: result.pageCount,
       cardCount: result.listings.length,
+      itemsPerPage: state.itemsPerPage,
+      totalCount: result.totalCount,
       onPageChange: goToCatalogPage,
     });
     renderCatalogPagination(result.pageCount);
@@ -252,7 +254,7 @@ function goToCatalogPage(page: number): void {
 function renderCatalogPagination(totalPages: number): void {
   renderPagination({
     containerId: 'catalog-pagination',
-    editablePageNumber: true,
+    variant: 'positional',
     currentPage: catalogManager.getState().page,
     totalPages,
     onPageChange: goToCatalogPage,

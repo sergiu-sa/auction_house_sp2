@@ -62,7 +62,7 @@ test('paging asks the server for the next page', async ({ page }) => {
   const grid = page.locator('#collection-cards-grid');
   const firstOnPageOne = await grid.locator('article h3').first().textContent();
 
-  await page.locator('#pagination').getByRole('button', { name: '2' }).click();
+  await page.locator('#pagination [aria-label="Next page"]').click();
 
   await expect(grid.locator('article')).toHaveCount(23);
   await expect(page.locator('#results-range')).toHaveText('24-46');
@@ -350,9 +350,17 @@ test('the pager cannot walk past the last page', async ({ page }) => {
   // The untagged route's last page is empty by fixture, so the anchor here is the pager, which is
   // what was broken: it read "of 140" with NEXT enabled and pointing at 10000.
   await expect.poll(() => new URL(page.url()).search).toBe('?page=140');
-  const next = page.locator('#pagination [data-page]').last();
+
+  // Selected by label, not by DOM order: `[data-page]` last() is LAST now, so the old selector
+  // would have kept passing while testing a different button.
+  const next = page.locator('#pagination [aria-label="Next page"]');
   await expect(next).toBeDisabled();
   await expect(next).toHaveAttribute('data-page', '141');
+
+  // LAST needs the same guard: it points at the page we are already on.
+  await expect(
+    page.locator('#pagination [aria-label="Last page"]')
+  ).toBeDisabled();
 });
 
 /**
@@ -768,4 +776,109 @@ test('the catalog claims no figure it cannot stand behind', async ({
     await expect(main, invented).not.toContainText(invented);
   }
   await expect(main).not.toContainText('personalized alerts');
+});
+
+/**
+ * The field sits in a row of buttons, so it has to be their height.
+ * It cannot be computed from the classes:
+ *  the buttons contain icons, and icons.css loads before the Tailwind utilities, so line-height resolution depends on whether the icon is sized.
+ * Measure both, at rest.
+ */
+test('the page number field is exactly as tall as the buttons beside it', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  const heights = await page.evaluate(() => {
+    const h = (sel: string): number =>
+      Math.round(document.querySelector(sel)!.getBoundingClientRect().height);
+    return {
+      next: h('#pagination [aria-label="Next page"]'),
+      go: h('#pagination [data-page-jump-go]'),
+      field: h('#pagination [data-page-jump-input]'),
+    };
+  });
+
+  expect(heights.field, 'field vs NEXT').toBe(heights.next);
+  expect(heights.go, 'GO vs NEXT').toBe(heights.next);
+});
+
+/**
+ * The two traps a number input carried, neither visible in a screenshot:
+ * its spinners measured about 12x8 CSS px, under WCAG 2.2 SC 2.5.8's 24x24 floor, and it incremented on mouse-wheel while focused, so scrolling the page moved the reader.
+ */
+test('the page number field carries no spinner and no wheel behaviour', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  const field = page.locator('#pagination [data-page-jump-input]');
+  await expect(field).toHaveValue('1');
+  await expect(field).toHaveAttribute('type', 'text');
+  await expect(field).toHaveAttribute('inputmode', 'numeric');
+
+  await field.focus();
+  await page.mouse.wheel(0, -240);
+  await expect(field).toHaveValue('1');
+  await expect(page.locator('#results-range')).toHaveText('1-23');
+});
+
+/**
+ * Without spinners, GO is the only visible way to commit, so the gesture has to land the reader on the typed page.
+ * Mutation-checked: neutering the typed-page commit leaves this on 1-23.
+ *
+ * What it does *not* prove, measured rather than assumed:
+ *  - not GO's submit handler. The click blurs the field first, so `change` commits and the test still passes with the submit handler emptied. Enter is what the handler is for.
+ * 
+ *  - not which of the two commit paths fired. A GO press delivers `focusout` and `submit`, and which of them lands depends on whether the browser focuses a button on click:
+ *     — Chromium does, macOS Safari and Firefox do not, and both Playwright projects run Desktop Chrome.
+ *     - Both gestures are covered in PaginationComponent.test.ts instead.
+ * 
+ * Typed with the keyboard rather than `fill()`, which dispatches `change` itself and would commit before the button was ever pressed.
+ */
+test('GO commits the typed page', async ({ page }) => {
+  await page.goto('/collection.html');
+  await expect(
+    page.locator('#collection-cards-grid article').first()
+  ).toBeVisible();
+
+  const requests: string[] = [];
+  page.on('request', (r) => {
+    if (r.url().includes('/auction/listings')) requests.push(r.url());
+  });
+
+  // selectText, not a select-all chord: on macOS Control+A moves to line start, so the field
+  // would read "21" — a page the fixture has no rows for, which fails for the wrong reason.
+  const field = page.locator('#pagination [data-page-jump-input]');
+  await field.selectText();
+  await page.keyboard.type('2');
+  await page.locator('#pagination [data-page-jump-go]').click();
+
+  await expect(page.locator('#results-range')).toHaveText('24-46');
+  expect(
+    requests.filter((u) => u.includes('page=2')),
+    'one gesture, one fetch'
+  ).toHaveLength(1);
+  // Not evidence on its own that a duplicate is suppressed:
+  //  this browser's GO press scrolls the grid away between mousedown and mouseup.
+  // PaginationComponent.test.ts is where that is pinned.
+});
+
+/**
+ * The cell promises a range;
+ *  paging to it has to deliver exactly that range.
+ * Anchored on #results-range, which the page computes independently of the cell.
+ */
+test('the cell promises the range the next page actually holds', async ({
+  page,
+}) => {
+  await page.goto('/collection.html');
+  const cell = page.locator('#collection-cards-grid [data-next-page-cell]');
+  await expect(cell).toContainText('Lots 24–46');
+
+  await cell.locator('[data-next-page]').click();
+  await expect(page.locator('#results-range')).toHaveText('24-46');
+  await expect(cell).toContainText('Lots 47–69');
 });

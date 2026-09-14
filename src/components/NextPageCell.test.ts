@@ -12,13 +12,16 @@ describe('mountNextPageCell', () => {
   const mount = (
     currentPage: number,
     totalPages: number,
-    cardCount = 23
+    cardCount = 23,
+    totalCount = 3199
   ): void =>
     mountNextPageCell({
       containerId: 'grid',
       currentPage,
       totalPages,
       cardCount,
+      itemsPerPage: 23,
+      totalCount,
       onPageChange,
     });
 
@@ -74,6 +77,8 @@ describe('mountNextPageCell', () => {
       currentPage: 1,
       totalPages: 5,
       cardCount: 23,
+      itemsPerPage: 23,
+      totalCount: 3199,
       viewMode: 'list',
       onPageChange,
     });
@@ -98,6 +103,54 @@ describe('mountNextPageCell', () => {
   it('carries no form of its own; the pager owns jump-to-page', () => {
     mount(1, 140);
     expect(document.querySelector('#grid form')).toBeNull();
+  });
+
+  /**
+   * The range describes the page the button leads to, not the one on screen.
+   * It is the same arithmetic Collection's #results-range uses, shifted one page forward:
+   *  page 1 of 23 shows lots 1-23, so the cell beside it promises 24-46.
+   */
+  it('names the lots the next page holds', () => {
+    mount(1, 140);
+    expect(
+      document.querySelector('[data-next-page-cell]')!.textContent
+    ).toContain('Lots 24–46');
+  });
+
+  it('groups thousands the way every other count on the page does', () => {
+    mount(123, 140);
+    expect(
+      document.querySelector('[data-next-page-cell]')!.textContent
+    ).toContain('Lots 2,830–2,852');
+  });
+
+  /** The last page of a set rarely divides evenly; the range must not promise lots that do not exist. */
+  it('stops the range at the last lot', () => {
+    mount(139, 140, 23, 3199);
+    expect(
+      document.querySelector('[data-next-page-cell]')!.textContent
+    ).toContain('Lots 3,198–3,199');
+  });
+
+  /**
+   * cardCount and totalCount are different numbers from different places, so a zero in the one the cell already guards does not imply a zero in this one.
+   */
+  it('omits the range rather than printing an empty one', () => {
+    mount(1, 140, 23, 0);
+    const cell = document.querySelector('[data-next-page-cell]')!;
+    expect(cell.textContent).not.toContain('Lots');
+    expect(
+      cell.querySelector('[data-next-page]'),
+      'the button still renders'
+    ).not.toBeNull();
+  });
+
+  /** It restates "124 of 142" directly above it, so announcing it as well is noise. */
+  it('hides the progress bar from assistive tech', () => {
+    mount(70, 140);
+    const bar = document.querySelector('[data-catalog-progress]')!;
+    expect(bar.getAttribute('aria-hidden')).toBe('true');
+    expect(bar.querySelector('div')!.getAttribute('style')).toContain('50%');
   });
 
   /** Re-render mounts again; two cells in one grid would break the row arithmetic. */

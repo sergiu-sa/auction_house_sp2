@@ -93,7 +93,7 @@ test('the catalog link does not carry the page number across', async ({
   await page.goto('/index.html');
   await expect(page.locator('#catalog-cards article')).toHaveCount(11);
 
-  await page.locator('#catalog-pagination').getByRole('button', { name: '2' }).click();
+  await page.locator('#catalog-pagination [aria-label="Next page"]').click();
   // Anchored on the page having actually moved — the address bar is Home's own writer, and it does
   // publish the page, so this proves the state is on page 2 before the link is read.
   await expect.poll(() => new URL(page.url()).search).toBe('?page=2');

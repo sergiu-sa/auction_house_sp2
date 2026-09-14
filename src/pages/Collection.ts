@@ -217,13 +217,15 @@ function renderCurrentPage(): void {
     currentPage: state.page,
     totalPages: resultTotals.pageCount,
     cardCount: currentPageListings.length,
+    itemsPerPage: state.itemsPerPage,
+    totalCount: resultTotals.totalCount,
     viewMode: state.viewMode,
     onPageChange: goToPage,
   });
 
   renderPagination({
     containerId: 'pagination',
-    editablePageNumber: true,
+    variant: 'positional',
     currentPage: state.page,
     totalPages: resultTotals.pageCount,
     onPageChange: goToPage,
