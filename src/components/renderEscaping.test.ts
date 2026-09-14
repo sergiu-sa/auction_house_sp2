@@ -208,6 +208,8 @@ describe('components are inert against a hostile listing', () => {
       currentPage: 2,
       totalPages: 140,
       cardCount: 23,
+      itemsPerPage: 23,
+      totalCount: 3199,
       onPageChange: () => {},
     });
     assertInert(document.getElementById('grid')!.innerHTML);
@@ -220,6 +222,8 @@ describe('components are inert against a hostile listing', () => {
       currentPage: 140,
       totalPages: 140,
       cardCount: 23,
+      itemsPerPage: 23,
+      totalCount: 3199,
       onPageChange: () => {},
     });
     assertInert(document.getElementById('grid')!.innerHTML);
