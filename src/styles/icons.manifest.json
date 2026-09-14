@@ -2,9 +2,11 @@
   "source": "Font Awesome Free 6.5.1 Solid",
   "license": "CC BY 4.0",
   "generatedBy": "scripts/build-icon-font.mjs",
-  "glyphs": 63,
-  "fontSha256": "90a35dfdfa4492779f3f96b29ce7fbab193300fb25fce97e5f8b17a189eb5ca2",
+  "glyphs": 65,
+  "fontSha256": "0383944a07c9a82f9715bebe2a2c761e02f4757f3175e38f843dc662b992d7c7",
   "icons": {
+    "fa-angles-left": "f100",
+    "fa-angles-right": "f101",
     "fa-arrow-left": "f060",
     "fa-arrow-right": "f061",
     "fa-arrow-right-to-bracket": "f090",
