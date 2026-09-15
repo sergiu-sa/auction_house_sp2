@@ -28,8 +28,11 @@ export function renderSearchField(config: SearchFieldConfig): string {
     label = 'Search auctions',
   } = config;
 
+  // Chrome and Safari draw their own clear button on top of the glass, so it is hidden, with the prefixed property because Safari before 15.4 ignores plain `appearance`.
+  // Escape still clears the field.
+  // That button was also what kept typed text out from under the glass, which is why the right padding is wide enough to do it instead.
   const inputClasses =
-    'w-full bg-slate-50 px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2';
+    'w-full bg-slate-50 py-2 pl-4 pr-9 [&::-webkit-search-cancel-button]:[-webkit-appearance:none] text-sm text-slate-900 placeholder:text-slate-400 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2';
 
   return `
     <div class="relative flex-1">

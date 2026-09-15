@@ -466,6 +466,80 @@ test('search is usable on a narrow screen without opening anything', async ({
 });
 
 /**
+ * Chrome and Safari draw a native clear button inside a search field once the reader types;
+ *  setting the value from script drew nothing, which is why no other test ever saw it.
+ * Measured at this width, it sat on the glass with 16px of right padding and just left of it with 36px, so the two are held separately: no button beside a short term, no text under the glass behind a long one.
+ */
+test('typing a search draws nothing beside or under the magnifying glass', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/collection.html');
+
+  const search = page.locator('#catalog-search-input');
+  const glass = search.locator('xpath=following-sibling::i');
+
+  /** Pixels in a horizontal strip of the field that stand out from its background. */
+  const inkBetween = async (left: number, right: number): Promise<number> => {
+    const field = (await search.boundingBox())!;
+    const png = await page.screenshot({
+      clip: {
+        x: left,
+        y: field.y + 4,
+        width: right - left,
+        height: field.height - 8,
+      },
+    });
+    return page.evaluate(async (base64) => {
+      const img = new Image();
+      img.src = `data:image/png;base64,${base64}`;
+      await img.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const context = canvas.getContext('2d')!;
+      context.drawImage(img, 0, 0);
+      const { data } = context.getImageData(0, 0, img.width, img.height);
+      // bg-slate-50.
+      // A threshold rather than equality, because antialiasing moves a pixel or two by a level whenever the field repaints.
+      let count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        const delta = Math.max(
+          Math.abs(data[i] - 248),
+          Math.abs(data[i + 1] - 250),
+          Math.abs(data[i + 2] - 252)
+        );
+        if (delta > 32) count++;
+      }
+      return count;
+    }, png.toString('base64'));
+  };
+
+  await search.click();
+  await page.keyboard.type('vintage');
+  // The keystrokes reached the field's own handler, and the field has settled at its filtered width.
+  await expect(page).toHaveURL(/q=vintage$/);
+
+  let box = (await glass.boundingBox())!;
+  // The strip reads ink where ink is drawn, so the blank readings below are not a blind one.
+  expect(await inkBetween(box.x, box.x + box.width)).toBeGreaterThan(0);
+
+  await glass.evaluate((el: HTMLElement) => (el.style.visibility = 'hidden'));
+  expect(
+    await inkBetween(box.x - 32, box.x + box.width),
+    'a native clear button is drawn beside the glass'
+  ).toBe(0);
+
+  await page.keyboard.type('-rolex-submariner-chronograph');
+  await expect(page).toHaveURL(/q=vintage-rolex-submariner-chronograph/);
+  box = (await glass.boundingBox())!;
+  expect(
+    await inkBetween(box.x, box.x + box.width),
+    'typed text runs under the glass'
+  ).toBe(0);
+});
+
+/**
  * `aria-label` replaces the button's subtree as its accessible name, so the count badge inside it is never announced unless the name carries the number itself. axe cannot catch this, the button has a name either way, which is the same blind spot the placeholder's contrast hit.
  */
 test('the filter count reaches the accessible name, not just the badge', async ({
