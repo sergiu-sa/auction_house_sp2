@@ -7,7 +7,6 @@ export interface ActiveOnlyCheckboxConfig {
   id: string;
   checked?: boolean;
   label?: string;
-  variant?: 'normal' | 'compact';
 }
 
 /**
@@ -16,14 +15,7 @@ export interface ActiveOnlyCheckboxConfig {
 export function renderActiveOnlyCheckbox(
   config: ActiveOnlyCheckboxConfig
 ): string {
-  const {
-    id,
-    checked = false,
-    label = 'Active only',
-    variant = 'normal',
-  } = config;
-
-  const labelSize = variant === 'compact' ? 'text-xs' : 'text-sm';
+  const { id, checked = false, label = 'Active only' } = config;
 
   return `
     <label class="inline-flex items-center gap-2 text-slate-700 cursor-pointer">
@@ -34,7 +26,7 @@ export function renderActiveOnlyCheckbox(
         style="accent-color: #1e293b"
         ${checked ? 'checked' : ''}
       />
-      <span class="${labelSize}">${label}</span>
+      <span class="text-xs">${label}</span>
     </label>
   `;
 }
@@ -53,14 +45,6 @@ export function initActiveOnlyCheckbox(id: string): void {
       })
     );
   });
-}
-
-/**
- * Get checkbox state
- */
-export function getActiveOnlyState(id: string): boolean {
-  const checkbox = document.getElementById(id) as HTMLInputElement;
-  return checkbox ? checkbox.checked : false;
 }
 
 /**

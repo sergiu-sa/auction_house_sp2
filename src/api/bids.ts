@@ -15,15 +15,3 @@ export async function placeBid(
     bidData
   );
 }
-
-/**
- * Get all bids for a listing
- * @param listingId - Listing ID
- */
-export async function getListingBids(
-  listingId: string
-): Promise<ApiResponse<Bid[]>> {
-  return api.get<ApiResponse<Bid[]>>(
-    `/auction/listings/${listingId}/bids?_bidder=true`
-  );
-}

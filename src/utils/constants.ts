@@ -20,20 +20,3 @@ export const APP_META = {
   author: 'Aucto',
   themeColor: '#1e293b',
 } as const;
-
-/**
- * Social media metadata
- */
-export const SOCIAL_META = {
-  ogType: 'website',
-  twitterCard: 'summary_large_image',
-  locale: 'en_US',
-} as const;
-
-/**
- * API related constants
- */
-export const API_CONSTANTS = {
-  sessionExpiredMessage: 'Your session has expired. Please log in again.',
-  defaultErrorMessage: 'An error occurred. Please try again later.',
-} as const;

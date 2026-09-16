@@ -8,7 +8,6 @@ import { escapeHtml } from '../../utils/escapeHtml';
 export interface SortDropdownConfig {
   id: string;
   defaultValue?: string;
-  variant?: 'normal' | 'compact';
   /** Accessible name. The visible arrow is decorative, so the select has no visible label. */
   label?: string;
 }
@@ -43,24 +42,15 @@ export const SORT_OPTIONS: SortOption[] = [
  * Generate HTML for sort dropdown
  */
 export function renderSortDropdown(config: SortDropdownConfig): string {
-  const {
-    id,
-    defaultValue = 'created-desc',
-    variant = 'normal',
-    label = 'Sort listings',
-  } = config;
+  const { id, defaultValue = 'created-desc', label = 'Sort listings' } = config;
 
   const selectClasses =
-    variant === 'compact'
-      ? 'bg-white px-3 py-1.5 pr-7 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 appearance-none'
-      : 'bg-white px-4 py-2 pr-8 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 appearance-none';
+    'bg-white px-3 py-1.5 pr-7 text-[10px] font-bold tracking-[0.18em] uppercase text-slate-700 hover:bg-slate-50 focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 appearance-none';
 
   const arrowSize =
-    variant === 'compact'
-      ? 'border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 5px solid #64748b;'
-      : 'border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid #64748b;';
+    'border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 5px solid #64748b;';
 
-  const arrowPosition = variant === 'compact' ? 'right-2' : 'right-3';
+  const arrowPosition = 'right-2';
 
   return `
     <div class="relative">
@@ -102,17 +92,6 @@ export function initSortDropdown(id: string): void {
       })
     );
   });
-}
-
-/**
- * Get current sort value
- */
-export function getSortValue(id: string): { sort: string; order: string } {
-  const select = document.getElementById(id) as HTMLSelectElement;
-  if (!select) return { sort: 'created', order: 'desc' };
-
-  const [sort, order] = select.value.split('-');
-  return { sort, order };
 }
 
 /**

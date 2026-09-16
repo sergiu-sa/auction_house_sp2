@@ -100,10 +100,10 @@ export function renderCatalogFilterBar(): string {
 
         <div id="catalog-filters-panel" class="mt-4 flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
-            ${renderCategoryFilters({ dataAttribute: CATALOG_FILTER_IDS.category, variant: 'compact' })}
+            ${renderCategoryFilters({ dataAttribute: CATALOG_FILTER_IDS.category })}
             <div class="flex flex-wrap items-center gap-3 text-sm">
-              ${renderActiveOnlyCheckbox({ id: CATALOG_FILTER_IDS.activeOnly, variant: 'compact' })}
-              ${renderSortDropdown({ id: CATALOG_FILTER_IDS.sort, variant: 'compact', label: 'Sort listings' })}
+              ${renderActiveOnlyCheckbox({ id: CATALOG_FILTER_IDS.activeOnly })}
+              ${renderSortDropdown({ id: CATALOG_FILTER_IDS.sort, label: 'Sort listings' })}
             </div>
           </div>
         </div>
