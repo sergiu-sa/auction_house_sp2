@@ -98,14 +98,6 @@ export function initSearchField(id: string, debounceMs: number = 300): void {
 }
 
 /**
- * Get current value of search field
- */
-export function getSearchFieldValue(id: string): string {
-  const searchInput = document.getElementById(id) as HTMLInputElement;
-  return searchInput ? searchInput.value : '';
-}
-
-/**
  * Set value of search field
  */
 export function setSearchFieldValue(id: string, value: string): void {

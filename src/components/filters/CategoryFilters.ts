@@ -8,7 +8,6 @@ import type { CategoryKey } from '../../api/listingQueries';
 export interface CategoryFiltersConfig {
   dataAttribute: string; // e.g., 'data-catalog-filter'
   activeCategory?: string;
-  variant?: 'normal' | 'compact';
 }
 
 export interface Category {
@@ -30,12 +29,10 @@ export const CATEGORIES: Category[] = [
  * Generate HTML for category filter buttons
  */
 export function renderCategoryFilters(config: CategoryFiltersConfig): string {
-  const { dataAttribute, activeCategory = 'all', variant = 'normal' } = config;
+  const { dataAttribute, activeCategory = 'all' } = config;
 
   const buttonClasses =
-    variant === 'compact'
-      ? 'px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1.5'
-      : 'px-4 py-2 text-[11px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-2';
+    'px-3 py-1.5 text-[10px] font-bold tracking-[0.18em] uppercase inline-flex items-center gap-1.5';
 
   return `
     <div class="flex flex-wrap gap-2">

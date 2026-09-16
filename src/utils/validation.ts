@@ -27,18 +27,6 @@ export function isValidUrl(url: string): boolean {
 }
 
 /**
- * Validate image URL (checks for common image extensions)
- */
-export function isValidImageUrl(url: string): boolean {
-  if (!isValidUrl(url)) return false;
-
-  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-  const urlLower = url.toLowerCase();
-
-  return imageExtensions.some((ext) => urlLower.includes(ext));
-}
-
-/**
  * Validate password strength
  * At least 8 characters
  */
@@ -55,30 +43,6 @@ export function isValidBidAmount(
   currentHighestBid: number = 0
 ): boolean {
   return amount > 0 && amount > currentHighestBid;
-}
-
-/**
- * Validate date is in the future
- */
-export function isValidFutureDate(date: string | Date): boolean {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
-  return dateObj > new Date();
-}
-
-/**
- * Validate listing title
- * At least 3 characters, max 100
- */
-export function isValidTitle(title: string): boolean {
-  return title.length >= 3 && title.length <= 100;
-}
-
-/**
- * Validate listing description
- * Max 500 characters (optional)
- */
-export function isValidDescription(description: string): boolean {
-  return description.length <= 500;
 }
 
 /**

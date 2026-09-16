@@ -67,38 +67,7 @@ export function renderBreadcrumbInContainer(config: BreadcrumbConfig): void {
   container.innerHTML = renderBreadcrumb(config);
 }
 
-export function updateLastBreadcrumbItem(
-  containerId: string,
-  newLabel: string
-): void {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  const lastItem = container.querySelector('ol li:last-child span');
-  if (lastItem) {
-    lastItem.textContent = newLabel;
-  }
-}
-
 export const BREADCRUMB_PRESETS = {
-  home: (): BreadcrumbItem[] => [{ label: 'Home', href: '/index.html' }],
-
-  catalog: (): BreadcrumbItem[] => [
-    { label: 'Home', href: '/index.html' },
-    { label: 'Catalog' },
-  ],
-
-  profile: (username?: string): BreadcrumbItem[] => [
-    { label: 'Home', href: '/index.html' },
-    { label: username || 'Profile' },
-  ],
-
-  profileSettings: (): BreadcrumbItem[] => [
-    { label: 'Home', href: '/index.html' },
-    { label: 'Profile', href: '/profile.html' },
-    { label: 'Settings' },
-  ],
-
   listingDetail: (listingTitle: string): BreadcrumbItem[] => [
     { label: 'Home', href: '/index.html' },
     { label: 'Catalog', href: '/collection.html' },
