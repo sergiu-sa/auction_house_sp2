@@ -38,14 +38,12 @@ async function expectSearchSurface(
     page.locator('#header nav[aria-label="Main navigation"]')
   ).toBeVisible();
 
-  await expect(
-    page.locator('input[type="search"]'),
-    page_.name
-  ).toHaveCount(page_.searchFields);
-  await expect(
-    page.locator('#catalog-search-input'),
-    page_.name
-  ).toHaveCount(page_.searchFields);
+  await expect(page.locator('input[type="search"]'), page_.name).toHaveCount(
+    page_.searchFields
+  );
+  await expect(page.locator('#catalog-search-input'), page_.name).toHaveCount(
+    page_.searchFields
+  );
   await expect(page.locator('[role="search"]'), page_.name).toHaveCount(
     page_.searchFields
   );

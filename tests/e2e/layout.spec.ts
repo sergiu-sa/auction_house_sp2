@@ -338,9 +338,9 @@ test('paging with the filter panel open still clears the bar', async ({
   await expect(page.locator('#catalog-sort-select')).toBeVisible();
 
   await page.locator('#pagination [aria-label="Next page"]').click();
-  await expect(
-    page.locator('#pagination [data-page-jump-input]')
-  ).toHaveValue('2');
+  await expect(page.locator('#pagination [data-page-jump-input]')).toHaveValue(
+    '2'
+  );
 
   const clearance = await page.evaluate(() => {
     const bar = document

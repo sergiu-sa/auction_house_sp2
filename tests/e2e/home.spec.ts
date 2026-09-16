@@ -59,7 +59,9 @@ test('home applies a search handed to it in the URL', async ({ page }) => {
  * not Home's `endsAt asc`, or a reader who never touched it would arrive at a differently ordered
  * grid from the one they were reading.
  */
-test('the catalog link carries the filters the reader set', async ({ page }) => {
+test('the catalog link carries the filters the reader set', async ({
+  page,
+}) => {
   await page.goto('/index.html');
   const link = page.locator('#view-full-catalog');
 
@@ -135,7 +137,12 @@ test('only the link above the grid carries the filters', async ({ page }) => {
     await inMain.evaluateAll((els) =>
       els.map((el) => el.textContent?.trim().replace(/\s+/g, ' '))
     )
-  ).toEqual(['View live auctions', 'View All', 'View All', 'View Full Catalog']);
+  ).toEqual([
+    'View live auctions',
+    'View All',
+    'View All',
+    'View Full Catalog',
+  ]);
 
   await expect(
     page.locator(
@@ -218,8 +225,8 @@ test('typing in the catalog search filters the catalog', async ({ page }) => {
 
   await page.locator('#catalog-search-input').fill('vintage');
 
-  await expect(
-    page.locator('#catalog-cards article h3').first()
-  ).toHaveText('Yoann Siloine Polaroid Camera');
+  await expect(page.locator('#catalog-cards article h3').first()).toHaveText(
+    'Yoann Siloine Polaroid Camera'
+  );
   await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
 });

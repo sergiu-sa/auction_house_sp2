@@ -96,7 +96,9 @@ test.describe('logged in', () => {
     expect(Object.keys(body)).not.toContain('endsAt');
 
     // The media round trip survives being serialised into a textarea and parsed back.
-    expect((body.media as Array<{ url: string }>).map((m) => m.url)).toHaveLength(3);
+    expect(
+      (body.media as Array<{ url: string }>).map((m) => m.url)
+    ).toHaveLength(3);
     expect(body.title).toBe('Arceau watch, Large model, 36 mm');
   });
 

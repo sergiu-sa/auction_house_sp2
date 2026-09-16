@@ -297,7 +297,9 @@ test('a sort the dropdown cannot show is not taken from the URL', async ({
   await expect(page.locator('#results-count')).toHaveText('116');
   await expect(page.locator('#catalog-search-input')).toHaveValue('vintage');
   // The offered pairs only. Blank would be `''`.
-  await expect(page.locator('#catalog-sort-select')).toHaveValue('created-desc');
+  await expect(page.locator('#catalog-sort-select')).toHaveValue(
+    'created-desc'
+  );
   // Dropped from the state, so it is dropped from the address bar too.
   expect(new URL(page.url()).search).toBe('?q=vintage');
 });
@@ -812,7 +814,7 @@ test('the loading skeleton reserves the cell as well as the cards', async ({
 /**
  * The "Can't Find What You're Looking For?" panel.
  *
- * It carried two `<button>` elements with no listener in either auth state; 
+ * It carried two `<button>` elements with no listener in either auth state;
  * focusable, announced as buttons, and inert when pressed. axe could not see it: both had perfectly good accessible names.
  * "Create Alert" had no honest counterpart and is gone; "Contact Support" now reaches the address the footer already publishes.
  */
@@ -905,11 +907,11 @@ test('the page number field carries no spinner and no wheel behaviour', async ({
  *
  * What it does *not* prove, measured rather than assumed:
  *  - not GO's submit handler. The click blurs the field first, so `change` commits and the test still passes with the submit handler emptied. Enter is what the handler is for.
- * 
+ *
  *  - not which of the two commit paths fired. A GO press delivers `focusout` and `submit`, and which of them lands depends on whether the browser focuses a button on click:
  *     — Chromium does, macOS Safari and Firefox do not, and both Playwright projects run Desktop Chrome.
  *     - Both gestures are covered in PaginationComponent.test.ts instead.
- * 
+ *
  * Typed with the keyboard rather than `fill()`, which dispatches `change` itself and would commit before the button was ever pressed.
  */
 test('GO commits the typed page', async ({ page }) => {
