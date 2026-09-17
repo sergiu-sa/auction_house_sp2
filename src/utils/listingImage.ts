@@ -50,12 +50,18 @@ export function initLotImageFallbacks(root: ParentNode): void {
 }
 
 // Re-arm fallback when changing src (listener is one-shot).
+// srcset and sizes go on before src, so the browser never starts fetching an original it will not use.
 export function setLotImageSource(
   img: HTMLImageElement,
   url: string,
-  alt: string
+  alt: string,
+  responsive?: { srcset?: string; sizes: string }
 ): void {
   img.removeAttribute('srcset');
+  if (responsive) {
+    img.setAttribute('sizes', responsive.sizes);
+    if (responsive.srcset) img.setAttribute('srcset', responsive.srcset);
+  }
   img.setAttribute('src', url);
   img.setAttribute('alt', alt);
   armPlaceholder(img);

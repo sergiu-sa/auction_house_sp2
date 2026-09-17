@@ -166,6 +166,21 @@ describe('setLotImageSource', () => {
     setLotImageSource(el, 'https://x.test/b.jpg', 'Second view');
     expect(el.getAttribute('alt')).toBe('Second view');
   });
+
+  it('carries a srcset through, and still clears it when the photograph fails', () => {
+    // A srcset left behind outranks the placeholder's src and re-picks the dead URL.
+    const el = img('https://x.test/a.jpg');
+    setLotImageSource(el, 'https://x.test/b.jpg', 'A lot', {
+      srcset: 'https://x.test/b.jpg?w=400 400w',
+      sizes: '200px',
+    });
+    expect(el.getAttribute('srcset')).toBe('https://x.test/b.jpg?w=400 400w');
+    expect(el.getAttribute('sizes')).toBe('200px');
+
+    el.dispatchEvent(new Event('error'));
+    expect(el.getAttribute('src')).toBe(LISTING_PLACEHOLDER);
+    expect(el.hasAttribute('srcset')).toBe(false);
+  });
 });
 
 describe('initIdentityFallbacks', () => {
