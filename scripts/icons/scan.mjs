@@ -17,7 +17,9 @@ function findRepoRoot() {
     root = process.cwd();
   }
   if (!existsSync(join(root, 'package.json'))) {
-    throw new Error(`icon scan: no package.json at ${root}; run from the repo root`);
+    throw new Error(
+      `icon scan: no package.json at ${root}; run from the repo root`
+    );
   }
   return root;
 }
@@ -29,7 +31,10 @@ export const REPO_ROOT = findRepoRoot();
  * Reusing it means the icon set is pinned to the same release the fixtures record, and the repo carries one copy of Font Awesome rather than two.
  */
 export const FA_CSS = join(REPO_ROOT, 'tests/e2e/assets/fa-all.min.css');
-export const FA_SOLID_WOFF2 = join(REPO_ROOT, 'tests/e2e/assets/fa-solid-900.woff2');
+export const FA_SOLID_WOFF2 = join(
+  REPO_ROOT,
+  'tests/e2e/assets/fa-solid-900.woff2'
+);
 
 export const OUT_CSS = join(REPO_ROOT, 'src/styles/icons.css');
 export const OUT_FONT = join(REPO_ROOT, 'src/styles/fonts/aucto-icons.woff2');

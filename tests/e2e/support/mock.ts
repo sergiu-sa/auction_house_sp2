@@ -28,7 +28,8 @@ export const IDS = {
 };
 
 // 200 with HTML body (not 404) to match real failures; Chromium logs nothing for 200.
-export const BROKEN_IMAGE_URL = 'https://broken.invalid/lot-image-that-404s.jpg';
+export const BROKEN_IMAGE_URL =
+  'https://broken.invalid/lot-image-that-404s.jpg';
 
 /** One recorded fixture, parsed. Exported so a spec overriding a route reads from the same place this server does, rather than re-deriving the path. */
 export function loadFixture<T = unknown>(name: string): T {

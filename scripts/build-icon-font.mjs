@@ -35,7 +35,9 @@ if (missing.size > 0) {
 }
 
 const source = readFileSync(FA_SOLID_WOFF2);
-const text = glyphs.map((cp) => String.fromCodePoint(parseInt(cp, 16))).join('');
+const text = glyphs
+  .map((cp) => String.fromCodePoint(parseInt(cp, 16)))
+  .join('');
 
 const subset = await subsetFont(source, text, { targetFormat: 'woff2' });
 

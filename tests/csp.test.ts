@@ -18,7 +18,6 @@ import {
  *   adding one back would be blocked at load with no visible failure beyond a missing font.
  */
 
-
 const netlify = readFileSync(join(REPO_ROOT, 'netlify.toml'), 'utf8');
 const policy = /Content-Security-Policy = "([^"]+)"/.exec(netlify)?.[1] ?? '';
 
@@ -34,7 +33,9 @@ describe('the enforcing Content-Security-Policy', () => {
   });
 
   it('allows no third-party origin except the API', () => {
-    const origins = [...policy.matchAll(/https:\/\/[^\s;']+/g)].map((m) => m[0]);
+    const origins = [...policy.matchAll(/https:\/\/[^\s;']+/g)].map(
+      (m) => m[0]
+    );
     expect([...new Set(origins)]).toEqual(['https://v2.api.noroff.dev']);
   });
 
@@ -62,11 +63,15 @@ describe('nothing reintroduces what the policy forbids', () => {
       const withoutComments = html.replace(/<!--[\s\S]*?-->/g, '');
       const tags = withoutComments.match(/<[^>]+>/g) ?? [];
       // A scan that matches nothing produces the same empty list as a clean page.
-      expect(tags.length, `${file} parsed to no tags at all`).toBeGreaterThan(20);
+      expect(tags.length, `${file} parsed to no tags at all`).toBeGreaterThan(
+        20
+      );
       for (const tag of tags) {
         if (/\son[a-z]+\s*=/.test(tag)) {
           const line = html.slice(0, html.indexOf(tag)).split('\n').length;
-          offenders.push(`${file}:${line} ${tag.replace(/\s+/g, ' ').slice(0, 60)}`);
+          offenders.push(
+            `${file}:${line} ${tag.replace(/\s+/g, ' ').slice(0, 60)}`
+          );
         }
       }
     }
@@ -80,7 +85,10 @@ describe('nothing reintroduces what the policy forbids', () => {
     // Components build markup as strings, so the same hazard lives in src/ too.
     const offenders: string[] = [];
     const scanned = sourceFiles().filter((f) => f.endsWith('.ts'));
-    expect(scanned.length, 'the source scan found no .ts files').toBeGreaterThan(30);
+    expect(
+      scanned.length,
+      'the source scan found no .ts files'
+    ).toBeGreaterThan(30);
     for (const file of scanned) {
       readFileSync(file, 'utf8')
         .split('\n')
@@ -101,7 +109,8 @@ describe('nothing reintroduces what the policy forbids', () => {
       const html = readFileSync(join(REPO_ROOT, file), 'utf8');
       for (const m of html.matchAll(/https:\/\/[a-z0-9.-]+/gi)) {
         // og:url and canonical point at our own deployed origin; those are metadata, not loads.
-        if (/auctohouse\.netlify\.app|schema\.org|www\.w3\.org/.test(m[0])) continue;
+        if (/auctohouse\.netlify\.app|schema\.org|www\.w3\.org/.test(m[0]))
+          continue;
         offenders.push(`${file}: ${m[0]}`);
       }
     }
@@ -110,7 +119,10 @@ describe('nothing reintroduces what the policy forbids', () => {
 });
 
 describe('the self-hosted faces', () => {
-  const fontsCss = readFileSync(join(REPO_ROOT, 'src/styles/fonts.css'), 'utf8');
+  const fontsCss = readFileSync(
+    join(REPO_ROOT, 'src/styles/fonts.css'),
+    'utf8'
+  );
 
   it('resolves every url() to a file that ships', () => {
     const urls = [...fontsCss.matchAll(/url\('([^']+)'\)/g)].map((m) => m[1]);
@@ -126,8 +138,11 @@ describe('the self-hosted faces', () => {
   it('declares every weight the pages ask for', () => {
     // Both families are variable, so one file backs several weights;
     //   but each weight still needs its own @font-face or the browser synthesises a fake bold.
-    const declared = [...fontsCss.matchAll(/font-family: '([^']+)';[\s\S]*?font-weight: (\d+);/g)]
-      .map((m) => `${m[1]} ${m[2]}`);
+    const declared = [
+      ...fontsCss.matchAll(
+        /font-family: '([^']+)';[\s\S]*?font-weight: (\d+);/g
+      ),
+    ].map((m) => `${m[1]} ${m[2]}`);
     for (const want of [
       'Cormorant 600',
       'Cormorant 700',
@@ -152,8 +167,12 @@ describe('the self-hosted faces', () => {
     // what its unicode-range exists to avoid. Repeated by hand across nine files, so it drifts.
     for (const file of HTML) {
       const html = readFileSync(join(REPO_ROOT, file), 'utf8');
-      const preloaded = [...html.matchAll(/rel="preload"[^>]*?href="(\/fonts\/[^"]+)"/gs)]
-        .concat([...html.matchAll(/href="(\/fonts\/[^"]+)"[^>]*?rel="preload"/gs)])
+      const preloaded = [
+        ...html.matchAll(/rel="preload"[^>]*?href="(\/fonts\/[^"]+)"/gs),
+      ]
+        .concat([
+          ...html.matchAll(/href="(\/fonts\/[^"]+)"[^>]*?rel="preload"/gs),
+        ])
         .map((m) => m[1])
         .sort();
       expect(preloaded, `${file} preloads the wrong faces`).toEqual([
