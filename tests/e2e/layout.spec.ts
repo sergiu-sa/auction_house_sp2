@@ -232,6 +232,45 @@ test.describe('320px', () => {
 });
 
 /**
+ * The login and register showcase truncates a lot's title and seller name to one line, which needs `white-space: nowrap`.
+ * Nowrap text makes the min-content width of the box around it the whole word, and the featured tile sits in an `auto` grid track that honours it:
+ *  without `min-w-0` on that tile, one 108-character title widened a 320px page to 1,063px.
+ */
+test.describe('long lot text in the auth showcase', () => {
+  for (const width of [320, 1440]) {
+    test(`/login.html at ${width}px cannot scroll sideways`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 812 });
+      const rows = loadFixture<{
+        data: {
+          title: string;
+          description?: string;
+          seller?: { name: string };
+        }[];
+      }>('listings-active').data.slice(0, 20);
+      for (const row of rows) {
+        row.title = LONG_WORD;
+        row.description = LONG_WORD;
+        if (row.seller) row.seller.name = LONG_WORD;
+      }
+      await overrideJson(page, /\/auction\/listings\?/, {
+        data: rows,
+        meta: {},
+      });
+
+      await page.goto('/login.html');
+      await expect(
+        page.locator('[data-tile="featured"] [data-slot="title"]')
+      ).toHaveText(LONG_WORD);
+
+      const { scrollWidth, clientWidth } = await pageWidths(page);
+      expect(scrollWidth).toBe(clientWidth);
+    });
+  }
+});
+
+/**
  * The bar is `position: sticky`, which travels only inside its *parent's* box.
  * It first shipped inside a wrapper div the page module filled with innerHTML;
  *   a wrapper exactly as tall as the bar, so it had zero room and scrolled away like static content while still computing to `position: sticky`.

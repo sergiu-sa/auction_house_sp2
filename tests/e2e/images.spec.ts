@@ -262,8 +262,8 @@ test('every box that can show the placeholder leaves it its safe zone', async ({
 
   /**
    * Both surfaces that render this drawing at an extreme ratio. The hero holds both extremes
-   * today; the auth showcase is ~5% behind on the wide end and genuinely shows the placeholder,
-   * because `updateShowcase` overwrites a tile only when `listings[i]` exists.
+   * today; the auth showcase is ~5% behind on the wide end. Both choose lots whose photographs
+   * loaded when probed, and both still show the placeholder if one fails when the tile loads it.
    */
   const surfaces = [
     {

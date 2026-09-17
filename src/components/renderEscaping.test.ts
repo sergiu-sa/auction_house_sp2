@@ -9,6 +9,7 @@ import { renderHeader } from './Navbar';
 import { renderAvatar } from './Avatar';
 import { renderErrorPanel } from './ErrorPanel';
 import { mountNextPageCell } from './NextPageCell';
+import { mountProductShowcase } from './ProductShowcase';
 import {
   renderCatalogFilterBar,
   syncCatalogFilterBar,
@@ -273,6 +274,24 @@ describe('components are inert against a hostile listing', () => {
         action: { label: PAYLOAD, href: URL_PAYLOAD },
       })
     );
+  });
+
+  /**
+   * The showcase writes lot data with textContent and setAttribute rather than escaping it into markup.
+   * Asserted anyway, and on the serialised result, because a later edit that interpolates a field into the template would pass every other test in its file.
+   */
+  it('ProductShowcase, mounted with hostile lots', () => {
+    const section = document.createElement('section');
+    mountProductShowcase(section, [
+      hostileListing(),
+      hostileListing(),
+      hostileListing(),
+    ]);
+
+    expect(section.querySelector('[data-slot="title"]')?.textContent).toBe(
+      PAYLOAD
+    );
+    assertInert(section.innerHTML);
   });
 });
 

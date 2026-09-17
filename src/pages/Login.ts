@@ -54,17 +54,7 @@ export function initLoginPage(): void {
     passwordInput.addEventListener('input', () => clearFieldError('password'));
   }
 
-  // Initialize product showcase animations
-  initProductShowcase({
-    pageName: 'login',
-    featuredDescriptionLength: 60,
-    showFeaturedBid: true,
-    tileATitleMaxLength: 25,
-    tileBTitleMaxLength: 25,
-    showTileABidAndTime: true,
-    showTileBDescription: true,
-    tileBDescriptionLength: 40,
-  });
+  initProductShowcase();
 }
 
 function validateEmailField(input: HTMLInputElement): boolean {

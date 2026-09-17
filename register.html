@@ -117,8 +117,8 @@
                 </h1>
                 <p class="text-sm text-slate-600">
                   Use your <span class="font-semibold">@stud.noroff.no</span>
-                  email. New accounts receive starter credits so you can bid on
-                  your first lot.
+                  email. New accounts receive 1,000 starter credits so you can
+                  bid on your first lot.
                 </p>
               </div>
 
@@ -297,129 +297,10 @@
             </section>
 
             <!-- RIGHT: PRODUCT BENTO  -->
-            <section id="product-showcase" class="grid gap-4 lg:grid-rows-2">
-              <!-- Main listing  -->
-              <article
-                data-tile="featured"
-                class="bg-slate-50"
-                style="border: 3px solid var(--aucto-border-dark)"
-                aria-label="Example listing creation"
-              >
-                <div
-                  class="relative h-40 bg-slate-200 sm:h-48 md:h-56"
-                  style="border-bottom: 3px solid var(--aucto-border-dark)"
-                >
-                  <img
-                    src="/images/placeholder_v3.svg"
-                    alt=""
-                    class="h-full w-full object-cover"
-                    aria-hidden="true"
-                  />
-                  <div
-                    class="absolute left-3 top-3 bg-slate-900 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white"
-                  >
-                    List your item
-                  </div>
-                  <div
-                    class="absolute bottom-3 right-3 bg-white px-3 py-1 text-xs font-semibold text-slate-900"
-                    style="border: 3px solid var(--aucto-border-dark)"
-                  >
-                    <span id="starter-credits">1000</span> starter credits
-                  </div>
-                </div>
-                <div class="p-4">
-                  <div
-                    class="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500"
-                  >
-                    Seller tools
-                  </div>
-                  <h2 class="mb-1 font-serif text-xl font-bold text-slate-900">
-                    Turn your gear into credits
-                  </h2>
-                  <p class="text-xs text-slate-600">
-                    Create listings, add photos and track bids on your items.
-                  </p>
-                </div>
-              </article>
-
-              <!-- Two small tiles -->
-              <div class="grid grid-cols-2 gap-4">
-                <!-- Tile A -->
-                <article
-                  data-tile="tile-a"
-                  class="flex flex-col bg-slate-50"
-                  style="border: 3px solid var(--aucto-border-dark)"
-                >
-                  <div
-                    class="h-48 bg-slate-200 sm:h-52 md:h-56"
-                    style="border-bottom: 3px solid var(--aucto-border-dark)"
-                  >
-                    <img
-                      src="/images/placeholder_v3.svg"
-                      alt=""
-                      class="h-full w-full object-cover"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div class="p-2.5 sm:p-3">
-                    <!--
-                    The eyebrow below is permanent.
-                    The title and the line under it are placeholders:
-                    ProductShowcase matches those two by class and repaints them from the newest live lot, so whatever is written there shows for under a second and survives only if that fetch fails.
-                    
-                    Put no id inside either of them.
-                    One lived in the title and carried a 4-second interval;
-                     the repaint destroyed the span before its first tick, leaving a timer writing to a detached node and a figure no visitor ever saw.
-                    The wording it used cannot be quoted here;
-                     Vite copies comments into the build, and tests/e2e/showcase.spec.ts asserts against the served HTML.
-                    -->
-                    <div
-                      class="mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"
-                    >
-                      Just listed
-                    </div>
-                    <p class="text-xs font-semibold text-slate-900">
-                      A live lot from the catalogue
-                    </p>
-                    <p class="mt-1 text-[11px] text-slate-600">
-                      Bids and time left, as they stand.
-                    </p>
-                  </div>
-                </article>
-
-                <!-- Tile B -->
-                <article
-                  data-tile="tile-b"
-                  class="flex flex-col bg-slate-50"
-                  style="border: 3px solid var(--aucto-border-dark)"
-                >
-                  <div
-                    class="h-48 bg-slate-200 sm:h-52 md:h-56"
-                    style="border-bottom: 3px solid var(--aucto-border-dark)"
-                  >
-                    <img
-                      src="/images/placeholder_v3.svg"
-                      alt=""
-                      class="h-full w-full object-cover"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div class="p-2.5 sm:p-3">
-                    <div
-                      class="mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"
-                    >
-                      Easy start
-                    </div>
-                    <p class="text-xs font-semibold text-slate-900">
-                      Dashboard ready
-                    </p>
-                    <p class="mt-1 text-[11px] text-slate-600">
-                      List, bid, and win in minutes.
-                    </p>
-                  </div>
-                </article>
-              </div>
-            </section>
+            <section
+              id="product-showcase"
+              class="grid gap-4 lg:grid-rows-2"
+            ></section>
           </div>
         </div>
       </section>
