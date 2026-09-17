@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Listing } from '../types/api';
 import type { ImageProbe } from '../utils/imageProbe';
 
@@ -6,7 +6,9 @@ import type { ImageProbe } from '../utils/imageProbe';
 const { probeImages } = vi.hoisted(() => ({ probeImages: vi.fn() }));
 vi.mock('../utils/imageProbe', () => ({ probeImages }));
 
-const { featuredWithImages } = await import('./listingQueries');
+const { featuredWithImages, newestWithImages } = await import(
+  './listingQueries'
+);
 
 /** Only the fields the hero's ranking reads are real. */
 function lot(
@@ -275,5 +277,112 @@ describe('featuredWithImages — probing cost', () => {
 
     // 'small' is the only genuinely soft one, so it is the only one demoted.
     expect(featured.map((l) => l.id)).toEqual(['cdn', 'big', 'small']);
+  });
+});
+
+describe('newestWithImages', () => {
+  const fetchMock = vi.fn();
+
+  function serve(data: Listing[]): void {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ data, meta: { pageCount: 1 } }),
+    });
+    vi.stubGlobal('fetch', fetchMock);
+  }
+
+  function created(listing: Listing, at: string): Listing {
+    return { ...listing, created: at };
+  }
+
+  afterEach(() => {
+    fetchMock.mockReset();
+    vi.unstubAllGlobals();
+  });
+
+  it('asks for the newest active lots, deep enough to skip a run without photographs', async () => {
+    serve([]);
+    answering({});
+
+    await newestWithImages(3);
+
+    const url = fetchMock.mock.calls[0][0] as string;
+    expect(url).toContain('/auction/listings?');
+    expect(url).toContain('limit=20');
+    expect(url).toContain('sort=created');
+    expect(url).toContain('sortOrder=desc');
+    expect(url).toContain('_active=true');
+    expect(url).toContain('_seller=true');
+    expect(url).toContain('_bids=true');
+  });
+
+  it('passes over the newest lots when they have no photograph that loads', async () => {
+    // The live case on 2026-09-17: the two newest lots carried no media at all.
+    serve([
+      created(lot('bare1', 0, ''), '2026-09-15T18:39:00.000Z'),
+      created(lot('bare2', 0, ''), '2026-09-15T18:37:00.000Z'),
+      created(lot('dead', 0), '2026-09-14T00:00:00.000Z'),
+      created(lot('a', 0), '2026-09-13T18:25:00.000Z'),
+      created(lot('b', 0), '2026-09-13T18:24:00.000Z'),
+      created(lot('c', 0), '2026-09-13T18:21:00.000Z'),
+    ]);
+    answering({
+      'https://x.test/a.jpg': SQUARE,
+      'https://x.test/b.jpg': SQUARE,
+      'https://x.test/c.jpg': SQUARE,
+    });
+
+    expect((await newestWithImages(3)).map((l) => l.id)).toEqual([
+      'a',
+      'b',
+      'c',
+    ]);
+  });
+
+  it('never offers a lot with no photograph, even when the budget runs out and unchecked lots fill the rest', async () => {
+    // Slow 4G: the first wave times out, no second wave starts, and the fill tops up from the ranking.
+    // It skips lots it probed dead, but a photo-less lot past the first wave was never probed, so it used to get in and paint the placeholder.
+    serve([
+      created(lot('a', 0), '2026-09-17T06:00:00.000Z'),
+      created(lot('b', 0), '2026-09-17T05:00:00.000Z'),
+      created(lot('bare1', 0, ''), '2026-09-17T04:00:00.000Z'),
+      created(lot('bare2', 0, ''), '2026-09-17T03:00:00.000Z'),
+      created(lot('bare3', 0, ''), '2026-09-17T02:00:00.000Z'),
+      created(lot('bare4', 0, ''), '2026-09-17T01:00:00.000Z'),
+    ]);
+    const clock = vi.spyOn(Date, 'now');
+    let elapsed = 0;
+    clock.mockImplementation(() => elapsed);
+    probeImages.mockImplementation(async (urls: string[]) => {
+      elapsed += 3000;
+      return urls.map(
+        (url): ImageProbe => ({
+          url,
+          ok: false,
+          width: 0,
+          height: 0,
+          timedOut: url !== '',
+        })
+      );
+    });
+
+    const ids = (await newestWithImages(3)).map((l) => l.id);
+    clock.mockRestore();
+
+    // The two slow photographs still count; unknown is not dead.
+    expect(ids).toEqual(['a', 'b']);
+  });
+
+  it('returns fewer lots rather than falling back to ones it knows are broken', async () => {
+    // The hero shows its ranking when nothing verifies; the showcase must not, or it paints placeholders.
+    serve([
+      created(lot('a', 0), '2026-09-13T00:00:00.000Z'),
+      created(lot('dead', 0), '2026-09-12T00:00:00.000Z'),
+      created(lot('bare', 0, ''), '2026-09-11T00:00:00.000Z'),
+    ]);
+    answering({ 'https://x.test/a.jpg': SQUARE });
+
+    expect((await newestWithImages(3)).map((l) => l.id)).toEqual(['a']);
   });
 });
