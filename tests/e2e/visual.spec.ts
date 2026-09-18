@@ -110,21 +110,45 @@ for (const viewport of VIEWPORTS) {
   });
 }
 
+const GATED = [
+  { name: 'home-authed', url: '/index.html' },
+  { name: 'profile', url: '/profile.html' },
+  { name: 'listing-create', url: '/listing-create.html' },
+  { name: 'listing-edit', url: `/listing-edit.html?id=${IDS.own}` },
+];
+
 test.describe('logged in @ 1440', () => {
   test.use({ auth: 'in', viewport: { width: 1440, height: 900 } });
-
-  const GATED = [
-    { name: 'home-authed', url: '/index.html' },
-    { name: 'profile', url: '/profile.html' },
-    { name: 'listing-create', url: '/listing-create.html' },
-    { name: 'listing-edit', url: `/listing-edit.html?id=${IDS.own}` },
-  ];
 
   for (const target of GATED) {
     test(target.name, async ({ page }) => {
       await page.goto(target.url);
       await settle(page);
       await expect(page).toHaveScreenshot(`${target.name}-1440.png`, {
+        fullPage: true,
+      });
+    });
+  }
+});
+
+/*
+ * The two author-facing forms, at the width where they used to disagree.
+ *
+ * These were 1440-only while the create and edit pages hand-wrote the same markup separately,
+ * and only one of the two copies was responsive — so every difference between them below `md`
+ * sat outside the baselines entirely. One template renders both now, and this is what says so.
+ *
+ * `home-authed` and `profile` are deliberately not here: no branch has reviewed them at 375, and
+ * a baseline recorded now would pin whatever they do today rather than something anyone checked.
+ */
+test.describe('logged in @ 375', () => {
+  test.use({ auth: 'in', viewport: { width: 375, height: 812 } });
+
+  for (const target of GATED.filter((t) => t.name.startsWith('listing-'))) {
+    test(target.name, async ({ page }) => {
+      await page.goto(target.url);
+      await settle(page);
+      await expect(page).toHaveScreenshot(`${target.name}-375.png`, {
         fullPage: true,
       });
     });

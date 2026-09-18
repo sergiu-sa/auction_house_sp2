@@ -5,6 +5,7 @@ import {
   BREADCRUMB_PRESETS,
 } from '../components/Breadcrumb';
 import { initListingFormPreview } from '../components/ListingFormPreview';
+import { renderListingForm, LISTING_FORM_ID } from '../components/ListingForm';
 import { protectedRoute, requireOwnership } from '../utils/auth';
 import { trapFocus } from '../utils/focusTrap';
 import { getListing, updateListing, deleteListing } from '../api/listings';
@@ -20,7 +21,6 @@ import {
   toDateTimeLocal,
 } from '../utils/listingForm';
 import type { Listing, UpdateListingData } from '../types/api';
-import { escapeHtml } from '../utils/escapeHtml';
 import { mountErrorPanel } from '../components/ErrorPanel';
 
 let currentListing: Listing | null = null;
@@ -95,255 +95,53 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
 
   const endsAt = new Date(listing.endsAt);
   const endsAtIsValid = !Number.isNaN(endsAt.getTime());
-  const formattedDate = toDateTimeLocal(endsAt);
 
-  const imageUrls = formatMediaUrls(listing.media);
-  const tags = formatTags(listing.tags);
+  container.innerHTML = renderListingForm({
+    heading: 'Edit listing',
+    banner: {
+      icon: 'fa-pen-to-square',
+      title: 'Editing Your Listing',
+      body: `Update your listing details to attract more bidders. Any changes will be reflected immediately.
+             Preview your updates on the right before saving. ${hasBids ? '<strong class="text-red-700">Note: This listing has active bids. Some fields may be restricted.</strong>' : ''}`,
+    },
+    columns: 'lg:grid-cols-[2fr,1.4fr]',
+    title: {
+      value: listing.title,
+      disabled: hasBids,
+      note: hasBids ? 'Cannot edit title when listing has bids' : undefined,
+    },
+    description: { value: listing.description || '' },
+    media: { value: formatMediaUrls(listing.media) },
+    tags: {
+      value: formatTags(listing.tags),
+      placeholder: 'e.g., vintage, tech, collectible',
+    },
+    endsAt: {
+      value: toDateTimeLocal(endsAt),
+      readonly: true,
+      hint: 'Fixed when the listing was published and cannot be changed.',
+    },
+    submit: { icon: 'fa-floppy-disk', label: 'Save changes' },
+    preview: {
+      title: listing.title,
+      description: listing.description || 'No description provided.',
+      endDate: endsAtIsValid
+        ? endsAt.toLocaleString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+          })
+        : 'No end date set',
+      media: listing.media,
+    },
+    extra: renderDangerZone(listing, hasBids),
+  });
+}
 
-  container.innerHTML = `
-    <div class="bg-white p-10" style="border: 3px solid var(--aucto-border-dark)">
-      <!-- HEADER -->
-      <div class="mb-10 flex items-center justify-between">
-        <div class="flex items-center gap-4">
-          <div class="h-0.5 w-14 bg-aucto-red"></div>
-          <h1 class="text-[12px] font-bold tracking-[0.18em] uppercase text-slate-500">
-            Edit listing
-          </h1>
-        </div>
-
-        <a
-          href="/profile.html"
-          class="text-[12px] font-bold uppercase tracking-[0.18em] text-slate-700 hover:text-slate-900"
-        >
-          Back to profile
-        </a>
-      </div>
-
-      <!-- INFORMATIONAL BANNER -->
-      <div class="mb-10 bg-slate-50 border-2 border-slate-300 p-6">
-        <div class="flex items-start gap-4">
-          <i class="fa-solid fa-pen-to-square text-2xl text-blue-600 flex-shrink-0" aria-hidden="true"></i>
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 mb-2">
-              Editing Your Listing
-            </h2>
-            <p class="text-sm text-slate-700 leading-relaxed">
-              Update your listing details to attract more bidders. Any changes will be reflected immediately.
-              Preview your updates on the right before saving. ${hasBids ? '<strong class="text-red-700">Note: This listing has active bids. Some fields may be restricted.</strong>' : ''}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- GRID -->
-      <div class="grid grid-cols-1 lg:grid-cols-[2fr,1.4fr] gap-12">
-        <!-- FORM -->
-        <form id="editForm" class="space-y-8">
-          <!-- TITLE -->
-          <div>
-            <label
-              for="title"
-              class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
-            >
-              Title *
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value="${escapeHtml(listing.title)}"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-              required
-              ${hasBids ? 'disabled' : ''}
-            />
-            ${hasBids ? '<p class="mt-2 text-xs text-red-600">Cannot edit title when listing has bids</p>' : ''}
-          </div>
-
-          <!-- DESCRIPTION -->
-          <div>
-            <label
-              for="description"
-              class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
-            >
-              Description *
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              rows="6"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-              required
-            >${escapeHtml(listing.description || '')}</textarea>
-          </div>
-
-          <!-- IMAGES -->
-          <div>
-            <label
-              for="imageUrls"
-              class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
-            >
-              Image URLs
-            </label>
-            <textarea
-              id="imageUrls"
-              name="media"
-              rows="4"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-            >${escapeHtml(imageUrls)}</textarea>
-            <p class="mt-2 text-xs text-slate-500">
-              Enter one image URL per line. Images will preview on the right.
-            </p>
-          </div>
-
-          <!-- TAGS -->
-          <div>
-            <label
-              for="tags"
-              class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
-            >
-              Tags (Optional)
-            </label>
-            <input
-              type="text"
-              id="tags"
-              name="tags"
-              value="${escapeHtml(tags)}"
-              placeholder="e.g., vintage, tech, collectible"
-              class="w-full px-4 py-3 bg-white border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-            />
-            <p class="mt-2 text-xs text-slate-500">
-              Separate tags with commas
-            </p>
-          </div>
-
-          <!-- END DATE -->
-          <div>
-            <label
-              for="endDate"
-              class="block mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600"
-            >
-              End date
-            </label>
-            <input
-              type="datetime-local"
-              id="endDate"
-              name="endsAt"
-              value="${formattedDate}"
-              class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-800 text-sm focus:outline focus:outline-[3px] focus:outline-aucto-red focus:outline-offset-2 focus:border-red-700"
-              readonly
-              aria-describedby="endDateHint"
-            />
-            <p id="endDateHint" class="mt-2 text-xs text-slate-500">
-              Fixed when the listing was published and cannot be changed.
-            </p>
-          </div>
-
-          <!-- SAVE BUTTON -->
-          <button
-            type="submit"
-            class="w-full bg-slate-900 text-white py-3 font-bold tracking-[0.18em] uppercase border-2 border-slate-900 hover:bg-slate-800 transition-colors inline-flex items-center justify-center gap-2"
-          >
-            <i class="fa-solid fa-floppy-disk text-base" aria-hidden="true"></i>
-            <span>Save changes</span>
-          </button>
-        </form>
-
-        <!-- LIVE PREVIEW -->
-        <div class="space-y-6">
-          <div class="mb-4">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-0.5 w-10 bg-slate-400"></div>
-              <span class="text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500">
-                Live Preview
-              </span>
-            </div>
-          </div>
-
-          <!-- MAIN PREVIEW -->
-          <div
-            class="relative h-80 bg-slate-200 border-3 border-slate-900 overflow-hidden"
-            style="border: 3px solid var(--aucto-border-dark)"
-            id="mainPreview"
-          >
-            ${
-              listing.media?.[0]?.url
-                ? `
-              <img
-                src="${escapeHtml(listing.media[0].url)}"
-                class="w-full h-full object-cover"
-                alt="Preview"
-                loading="lazy"
-                decoding="async"
-                referrerpolicy="no-referrer"
-                data-fallback
-              />
-            `
-                : `
-              <div class="w-full h-full flex items-center justify-center text-slate-600">
-                <div class="text-center">
-                  <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400" aria-hidden="true"></i>
-                  <p class="text-sm">No image added yet</p>
-                </div>
-              </div>
-            `
-            }
-          </div>
-
-          <!-- PREVIEW INFO -->
-          <div class="bg-slate-50 border-2 border-slate-300 p-4">
-            <h3 id="previewTitle" class="font-bold text-slate-900 mb-2 text-lg break-words">
-              ${escapeHtml(listing.title)}
-            </h3>
-            <p id="previewDescription" class="text-sm text-slate-700 break-words">
-              ${escapeHtml(listing.description || 'No description provided.')}
-            </p>
-            <div class="mt-4 pt-4 border-t border-slate-300">
-              <p class="text-xs font-bold uppercase tracking-wider text-slate-500">
-                Ends
-              </p>
-              <p id="previewEndDate" class="text-sm text-slate-700 mt-1">
-                ${
-                  endsAtIsValid
-                    ? endsAt.toLocaleString('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: 'numeric',
-                        minute: '2-digit',
-                      })
-                    : 'No end date set'
-                }
-              </p>
-            </div>
-          </div>
-
-          <!-- ADDITIONAL IMAGES -->
-          <div id="additionalImages" class="grid grid-cols-3 gap-4${listing.media && listing.media.length > 1 ? '' : ' hidden'}">
-            ${
-              listing.media
-                ?.slice(1, 4)
-                .map(
-                  (media) => `
-              <div class="bg-white border-2 border-slate-900 overflow-hidden">
-                <img
-                  src="${escapeHtml(media.url)}"
-                  class="w-full h-24 object-cover"
-                  alt="Additional preview"
-                  loading="lazy"
-                  decoding="async"
-                  referrerpolicy="no-referrer"
-                  data-fallback
-                />
-              </div>
-            `
-                )
-                .join('') || ''
-            }
-          </div>
-        </div>
-      </div>
-
-      <!-- DANGER ZONE -->
+function renderDangerZone(listing: Listing, hasBids: boolean): string {
+  return `
       <div class="mt-16 pt-10 border-t-2 border-slate-200">
         <div class="flex items-center gap-4 mb-6">
           <div class="h-0.5 w-14 bg-aucto-red"></div>
@@ -388,12 +186,11 @@ function renderEditForm(listing: Listing, hasBids: boolean): void {
           </div>
         </div>
       </div>
-    </div>
   `;
 }
 
 function initializeFormListeners(listingId: string, hasBids: boolean): void {
-  const form = document.getElementById('editForm') as HTMLFormElement;
+  const form = document.getElementById(LISTING_FORM_ID) as HTMLFormElement;
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
@@ -403,9 +200,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
     const descriptionInput = document.getElementById(
       'description'
     ) as HTMLTextAreaElement;
-    const imageUrlsInput = document.getElementById(
-      'imageUrls'
-    ) as HTMLTextAreaElement;
+    const mediaInput = document.getElementById('media') as HTMLTextAreaElement;
     const tagsInput = document.getElementById('tags') as HTMLInputElement;
 
     // The end date is not here:
@@ -415,7 +210,7 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
       return;
     }
 
-    const imageUrls = parseMediaUrls(imageUrlsInput.value);
+    const imageUrls = parseMediaUrls(mediaInput.value);
     const tags = parseTags(tagsInput.value);
 
     // tags is sent even when empty, so clearing the field removes them.
@@ -463,9 +258,9 @@ function initializeFormListeners(listingId: string, hasBids: boolean): void {
 }
 
 function initializePreview(): void {
-  // No endDateInputId: the end date is read-only now, so it never fires `input` and the preview's listener for it could never run.
-  // #previewEndDate is painted at render time.
-  initListingFormPreview({ mediaInputId: 'imageUrls' });
+  // The end date is read-only here, so it never fires `input` and the preview's listener for it
+  // never runs. #previewEndDate is painted at render time instead.
+  initListingFormPreview();
 }
 
 function initializeDeleteModal(listingId: string): void {
