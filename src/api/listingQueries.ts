@@ -212,19 +212,25 @@ export async function featuredActive(
 }
 
 // Extra candidates to choose between; kept small to avoid wasted bandwidth.
-const HERO_PROBE_MARGIN = 2;
+const PROBE_MARGIN = 2;
 
 // Measured on slow 4G; tighter budget produced a one-tile hero (worse than placeholder).
-const HERO_PROBE_BUDGET_MS = 2500;
+const PROBE_BUDGET_MS = 2500;
 
 // Timeout is a macrotask; too little time left = all failures with no chance for hosts to answer.
-const HERO_MIN_WAVE_MS = 250;
+const MIN_WAVE_MS = 250;
 
 /** Under this a photograph is upscaled in any hero tile, so it is only used if nothing better verified. */
-const HERO_MIN_GOOD_WIDTH = 600;
+const MIN_GOOD_WIDTH = 600;
 
 /** The main tile is roughly 3:1, so it wants a wide photograph rather than merely a large one. */
-const HERO_MAIN_MIN_WIDTH = 800;
+const MAIN_MIN_WIDTH = 800;
+
+/**
+ * How far down the newest lots the auth showcase may look for three photographs.
+ * Photo-less lots arrive in runs and are dropped before probing, so the depth costs payload, not probes.
+ */
+const SHOWCASE_CANDIDATES = 20;
 
 // Lots verified to have working photos; unverified ones filled from plain ranking.
 // No placeholder here (unlike catalog); missing photo reads as page failure, not lot.
@@ -233,19 +239,41 @@ export async function featuredWithImages(
   pool?: Listing[]
 ): Promise<Listing[]> {
   const ranked = await featuredActive(MAX_PAGE_SIZE, pool);
-  const deadline = Date.now() + HERO_PROBE_BUDGET_MS;
+  const featured = await withVerifiedImages(ranked, limit);
 
-  const chosen: HeroCandidate[] = [];
+  // Empty hero would claim nothing's on; show ranking and let placeholder speak.
+  if (featured.length === 0) return ranked.slice(0, limit);
+
+  return featured;
+}
+
+// The login and register showcase: the hero's answer over the newest lots.
+// Unlike the hero it never falls back to lots it probed dead, so it can return fewer than `limit` and the caller shows something else.
+export async function newestWithImages(limit: number): Promise<Listing[]> {
+  // Filtered first: when the budget runs out, the fill takes lots nobody probed, and one with no photograph would paint the placeholder.
+  const withPhotos = (await newest(SHOWCASE_CANDIDATES)).filter(
+    (listing) => listing.media?.[0]?.url
+  );
+  return withVerifiedImages(withPhotos, limit);
+}
+
+async function withVerifiedImages(
+  ranked: Listing[],
+  limit: number
+): Promise<Listing[]> {
+  const deadline = Date.now() + PROBE_BUDGET_MS;
+
+  const chosen: PhotoCandidate[] = [];
   const dead = new Set<Listing>();
   let next = 0;
 
   while (
     chosen.length < limit &&
     next < ranked.length &&
-    deadline - Date.now() >= HERO_MIN_WAVE_MS
+    deadline - Date.now() >= MIN_WAVE_MS
   ) {
     const need = limit - chosen.length;
-    const wave = ranked.slice(next, next + need + HERO_PROBE_MARGIN);
+    const wave = ranked.slice(next, next + need + PROBE_MARGIN);
     next += wave.length;
 
     const variants = wave.map((listing) =>
@@ -256,7 +284,7 @@ export async function featuredWithImages(
       deadline - Date.now()
     );
 
-    const verified: HeroCandidate[] = [];
+    const verified: PhotoCandidate[] = [];
     wave.forEach((listing, index) => {
       if (!results[index].ok) {
         // Timeout means budget ran out, not missing photo; stay eligible for fill.
@@ -292,13 +320,10 @@ export async function featuredWithImages(
     featured.push(listing);
   }
 
-  // Empty hero would claim nothing's on; show ranking and let placeholder speak.
-  if (featured.length === 0) return ranked.slice(0, limit);
-
   return featured;
 }
 
-interface HeroCandidate {
+interface PhotoCandidate {
   listing: Listing;
   width: number;
   height: number;
@@ -306,18 +331,18 @@ interface HeroCandidate {
   resizable: boolean;
 }
 
-function isSharp(candidate: HeroCandidate): boolean {
-  return candidate.resizable || candidate.width >= HERO_MIN_GOOD_WIDTH;
+function isSharp(candidate: PhotoCandidate): boolean {
+  return candidate.resizable || candidate.width >= MIN_GOOD_WIDTH;
 }
 
 // Which candidate for the wide tile, or -1 to leave alone. Only arrangement changes.
-function widestIndex(candidates: HeroCandidate[]): number {
+function widestIndex(candidates: PhotoCandidate[]): number {
   let best = -1;
   let bestAspect = 0;
 
   candidates.forEach((candidate, index) => {
     // A resized variant keeps the source's aspect, which is the only thing being compared here.
-    if (!candidate.resizable && candidate.width < HERO_MAIN_MIN_WIDTH) return;
+    if (!candidate.resizable && candidate.width < MAIN_MIN_WIDTH) return;
     const aspect = candidate.width / candidate.height;
     if (aspect > bestAspect) {
       bestAspect = aspect;

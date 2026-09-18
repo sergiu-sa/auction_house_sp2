@@ -16,7 +16,6 @@ import { ApiErrorClass } from '../api/config';
 import { initProductShowcase } from '../components/ProductShowcase';
 import { logError } from '../utils/logger';
 import { setButtonBusy } from '../utils/busyButton';
-import { formatCredits } from '../utils/formatCurrency';
 
 export function initRegisterPage(): void {
   // Returns true once it has started the navigation.
@@ -81,43 +80,7 @@ export function initRegisterPage(): void {
     );
   }
 
-  // Initialize product showcase animations
-  initShowcase();
-}
-
-async function initShowcase(): Promise<void> {
-  animateStarterCreditsCounter();
-
-  await initProductShowcase({
-    pageName: 'register',
-    featuredDescriptionLength: 80,
-    showFeaturedBid: false,
-    tileATitleMaxLength: 30,
-    tileBTitleMaxLength: 30,
-    showTileABidAndTime: false,
-    showTileBDescription: false,
-    tileBDescriptionLength: 0,
-  });
-}
-
-/**
- * The starter balance counts up on the featured tile's badge.
- *
- * Safe where the "members online" counter beside it was not: the showcase repaints tile-a and tile-b by presentation class, and this badge is neither of those slots.
- */
-function animateStarterCreditsCounter(): void {
-  const starterCredits = document.getElementById('starter-credits');
-  if (!starterCredits) return;
-
-  let credits = 800;
-  const targetCredits = 1000;
-  const interval = setInterval(() => {
-    credits += 10;
-    starterCredits.textContent = formatCredits(credits);
-    if (credits >= targetCredits) {
-      clearInterval(interval);
-    }
-  }, 50);
+  initProductShowcase();
 }
 
 function validateNameField(input: HTMLInputElement): boolean {

@@ -6,8 +6,8 @@ import { LISTING_PLACEHOLDER } from '../src/utils/listingImage';
 import { SAFE } from './placeholderGeometry';
 
 /**
- * Nothing else can see this asset. Axe cannot read inside an <img>, a crop only shows at widths
- * no baseline visits, and the hand-written paths are overwritten by JS before any screenshot.
+ * Nothing else can see this asset. Axe cannot read inside an <img>, and a crop only shows at widths
+ * no baseline visits.
  */
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,9 +24,6 @@ const HTML_ENTRIES = [
     .filter((f) => f.endsWith('.html'))
     .map((f) => join('public', f)),
 ];
-
-/** So "scanned nothing" cannot pass as "scanned and clean". */
-const HTML_ENTRIES_WITH_PLACEHOLDER = ['login.html', 'register.html'];
 
 // Guarded: an unguarded module-scope read turns a missing asset into an ENOENT during collection,
 // killing every assertion below instead of failing the existence check written for it.
@@ -94,7 +91,11 @@ describe('the placeholder asset', () => {
     );
   });
 
-  /** ProductShowcase overwrites these before any screenshot, so no baseline records their value. */
+  /**
+   * No HTML entry names the placeholder today; the code reaches it through `LISTING_PLACEHOLDER`.
+   * This is for the next one that does, which a redraw's rename would otherwise miss.
+   * The named-path check below is what proves these entries were read at all.
+   */
   it('is the only placeholder path any HTML entry references', () => {
     for (const entry of HTML_ENTRIES) {
       const paths =
@@ -104,17 +105,6 @@ describe('the placeholder asset', () => {
           LISTING_PLACEHOLDER
         );
       }
-    }
-  });
-
-  it('still finds the hand-written paths it is meant to be watching', () => {
-    for (const entry of HTML_ENTRIES_WITH_PLACEHOLDER) {
-      const paths =
-        read(entry).match(/\/images\/placeholder[\w-]*\.svg/g) ?? [];
-      expect(
-        paths.length,
-        `${entry} references no placeholder`
-      ).toBeGreaterThan(0);
     }
   });
 });
@@ -184,18 +174,17 @@ describe('hand-written paths to public/ files', () => {
     //   so an unrelated `/images/*` addition masks a path disappearing, and the set that is supposed to be watched stops being watched without the count moving.
     //
     // How many files carry each, measured, because it decides what a mutation has to remove before this can fail:
-    //   the two fonts and the icon are in all 9 HTML entries, og-cover in 3, the placeholder in 2, and /404.html and /sitemap.xml have exactly one source each;
+    //   the two fonts and the icon are in all 9 HTML entries, og-cover in 3, and /404.html and /sitemap.xml have exactly one source each;
     //  netlify.toml and robots.txt, which is why those two are the ones a single-file mutation proves.
     // A path only leaves this set when nothing references it anywhere, which is precisely the regression worth failing on.
     //
-    // logo_v2.svg is deliberately absent:
-    // the navbar writes it from JS, so it is not hand-written.
+    // logo_v2.svg and placeholder_v3.svg are deliberately absent:
+    // both are written from JS, so neither is hand-written.
     for (const expected of [
       '/fonts/cormorant-latin.woff2',
       '/fonts/source-sans-3-latin.woff2',
       '/images/icon_only_v2.svg',
       '/images/og-cover_v2.svg',
-      '/images/placeholder_v3.svg',
       '/404.html',
       '/sitemap.xml',
     ]) {

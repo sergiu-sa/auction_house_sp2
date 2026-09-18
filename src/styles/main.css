@@ -280,3 +280,40 @@ body[data-page-type='auth'] #header {
     min-height: 696px;
   }
 }
+
+/*
+ * Reserve the login and register showcase, the same way.
+ *
+ * `#product-showcase` ships empty and `ProductShowcase.ts` fills it after a fetch and an image probe: 0.5s unthrottled against the live API, 1.6s on slow 4G.
+ * Below 1024px it stacks under the form, so arriving unreserved moves the footer by the whole column; at 1024px and up it sits beside the form,
+ *  and on login the tiles are taller than the form, so the form would drop by half the difference.
+ *
+ * Values are the natural height of the three lot tiles, swept at every width from 320 to 1440 with fixture lots and with 108-character titles:
+ *  the tiles truncate their text, so only the small tiles' bid-and-time line can wrap, and only below 640px (576px, up to 592.5px).
+ * The paddles drawing takes the same box, so the swap from waiting to drawing moves nothing either. `:empty` is why the section holds no whitespace in the HTML.
+ */
+#product-showcase:empty,
+#product-showcase[data-showcase='paddles'] {
+  min-height: 576px;
+}
+
+@media (min-width: 640px) {
+  #product-showcase:empty,
+  #product-showcase[data-showcase='paddles'] {
+    min-height: 628px;
+  }
+}
+
+@media (min-width: 768px) {
+  #product-showcase:empty,
+  #product-showcase[data-showcase='paddles'] {
+    min-height: 676px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #product-showcase:empty,
+  #product-showcase[data-showcase='paddles'] {
+    min-height: 717px;
+  }
+}
