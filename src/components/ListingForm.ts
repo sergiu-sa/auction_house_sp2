@@ -2,7 +2,7 @@
  * The listing author's form, one template behind both listing-create.html and listing-edit.html.
  *
  * The two pages rendered this markup twice, and the copies had drifted:
- * 
+ *
  *  only one was responsive, the empty-preview icon had two sizes, and the same five fields carried different ids on each page, which is the only reason the preview wiring ever needed a `mediaInputId`.
  *
  * Everything this takes as an option is content or behaviour the two pages genuinely disagree about;
