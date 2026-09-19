@@ -132,19 +132,30 @@ test.describe('logged in @ 1440', () => {
 });
 
 /*
- * The two author-facing forms, at the width where they used to disagree.
+ * The logged-in pages whose 375 rendering has actually been looked at.
  *
- * These were 1440-only while the create and edit pages hand-wrote the same markup separately,
- * and only one of the two copies was responsive — so every difference between them below `md`
- * sat outside the baselines entirely. One template renders both now, and this is what says so.
+ * The two forms were 1440-only while the create and edit pages hand-wrote the same markup
+ * separately, and only one of the two copies was responsive — so every difference between them
+ * below `md` sat outside the baselines entirely. One template renders both now.
  *
- * `home-authed` and `profile` are deliberately not here: no branch has reviewed them at 375, and
- * a baseline recorded now would pin whatever they do today rather than something anyone checked.
+ * `profile` joined them when its listing card moved into a component: the page was reviewed at
+ * 375 first (single column, `scrollWidth === clientWidth`, no card clipped), so this pins
+ * something someone checked rather than whatever it happened to do.
+ *
+ * `home-authed` is still deliberately absent — nobody has reviewed it at this width.
  */
+const GATED_375 = ['listing-create', 'listing-edit', 'profile'].map((name) => {
+  const target = GATED.find((t) => t.name === name);
+  // Resolved rather than filtered, because a name matching nothing drops a baseline silently:
+  //  measured, a one-letter typo here ran 18 tests instead of 19 and reported green, exit 0.
+  if (!target) throw new Error(`GATED_375 names "${name}", absent from GATED`);
+  return target;
+});
+
 test.describe('logged in @ 375', () => {
   test.use({ auth: 'in', viewport: { width: 375, height: 812 } });
 
-  for (const target of GATED.filter((t) => t.name.startsWith('listing-'))) {
+  for (const target of GATED_375) {
     test(target.name, async ({ page }) => {
       await page.goto(target.url);
       await settle(page);

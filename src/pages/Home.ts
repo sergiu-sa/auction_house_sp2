@@ -5,7 +5,6 @@ import {
 import type { CatalogFilterState } from '../utils/catalogState';
 import { serializeCatalogState } from '../utils/catalogUrl';
 import { announce } from '../utils/announce';
-import { highestBid } from '../utils/biddingStats';
 import {
   activePool,
   catalogPage,
@@ -32,9 +31,7 @@ import { renderPagination } from '../components/PaginationComponent';
 import { mountNextPageCell } from '../components/NextPageCell';
 import { focusResultsGrid } from '../utils/focusResultsGrid';
 import { toast } from '../components/Toast';
-import { isLoggedIn, profileHref } from '../utils/auth';
-import { formatTimeRemaining } from '../utils/formatDate';
-import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
+import { isLoggedIn } from '../utils/auth';
 import {
   addStructuredData,
   generateWebsiteStructuredData,
@@ -48,15 +45,9 @@ import {
   syncCatalogFilterBar,
   collapseCatalogFilterBar,
 } from '../components/filters';
-import { initLotImageFallbacks, lotImageSource } from '../utils/listingImage';
-import { escapeHtml } from '../utils/escapeHtml';
-import { formatCount, formatCurrency } from '../utils/formatCurrency';
-
-// Hero mosaic sizes: tiles are third of column, not full-width card presets.
-const HERO_MAIN_SIZES =
-  '(max-width: 1023px) 80vw, (max-width: 1279px) 32vw, 420px';
-const HERO_TILE_SIZES =
-  '(max-width: 1023px) 40vw, (max-width: 1279px) 15vw, 200px';
+import { initLotImageFallbacks } from '../utils/listingImage';
+import { formatCount } from '../utils/formatCurrency';
+import { renderHeroMosaic } from '../components/HeroMosaic';
 
 // One wide lot and two tiles beneath; height stays constant.
 const HERO_TILE_COUNT = 3;
@@ -339,130 +330,7 @@ async function renderHeroSection(pool: Listing[]): Promise<void> {
 
   const featured = await featuredWithImages(HERO_TILE_COUNT, pool);
 
-  if (featured.length === 0) {
-    heroMosaic.innerHTML = `
-      <div class="col-span-full flex items-center justify-center p-12 bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
-        <p class="text-slate-600">No featured listings available at this time.</p>
-      </div>
-    `;
-    return;
-  }
-
-  // Main featured listing
-  const main = featured[0];
-  const secondary = featured.slice(1);
-  const mainSource = lotImageSource(main.media, main.title);
-  const mainImgAttrs = generateResponsiveImageAttrs(
-    mainSource.src,
-    mainSource.alt,
-    'landscape',
-    HERO_MAIN_SIZES
-  );
-  const mainHighestBid = highestBid(main.bids);
-  const mainTimeRemaining = formatTimeRemaining(main.endsAt);
-
-  // The mosaic's card titles are h3, directly under the hero h1.
-  // Naming the group restores the level the outline was skipping;
-  //  it is sr-only because the hero already reads as one visually.
-  let mosaicHTML = `
-    <h2 class="sr-only">Featured auctions</h2>
-    <!-- Main featured lot -->
-    <article class="${secondary.length === 0 ? 'row-span-2' : 'row-span-1'} bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
-      <div class="relative h-40 sm:h-48 md:h-52 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
-        <a href="/listing.html?id=${main.id}" class="block h-full">
-          <img
-            src="${escapeHtml(mainImgAttrs.src)}"
-            ${mainImgAttrs.srcset ? `srcset="${escapeHtml(mainImgAttrs.srcset)}"` : ''}
-            alt="${escapeHtml(mainImgAttrs.alt)}"
-            sizes="${mainImgAttrs.sizes}"
-            loading="eager"
-            decoding="${mainImgAttrs.decoding}"
-            class="h-full w-full object-cover"
-            referrerpolicy="no-referrer"
-            data-lot-image
-          />
-        </a>
-        <div class="absolute left-4 top-4 bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-white inline-flex items-center gap-1.5">
-          <i class="fa-solid fa-fire text-amber-400" aria-hidden="true"></i>
-          <span>Hot</span>
-        </div>
-        <div class="absolute right-4 bottom-4 bg-white px-3 py-1 text-[11px] font-bold tracking-[0.18em] uppercase text-slate-900" style="border: 2px solid var(--aucto-border-dark)">
-          ${mainTimeRemaining}
-        </div>
-      </div>
-      <div class="p-5 md:p-6">
-        <h3 class="mb-1 text-xl font-bold leading-tight text-slate-900">
-          <a href="/listing.html?id=${main.id}" class="hover:underline">
-            ${escapeHtml(main.title)}
-          </a>
-        </h3>
-        <p class="mb-4 text-xs text-slate-600">
-          Current bid
-          <span class="font-semibold text-slate-900 inline-flex items-center gap-1">
-            <i class="fa-solid fa-coins text-xs" aria-hidden="true"></i>
-            <span>${formatCurrency(mainHighestBid)}</span>
-          </span>
-          ·
-          <span class="inline-flex items-center gap-1">
-            <i class="fa-solid fa-gavel text-xs" aria-hidden="true"></i>
-            <span>${main._count?.bids || 0} bids</span>
-          </span>
-        </p>
-        <div class="flex items-center justify-between text-xs text-slate-500">
-          ${main.seller?.name ? `<a href="${profileHref(main.seller.name)}" class="hover:text-slate-900 transition-colors"${isLoggedIn() ? '' : ` aria-label="@${escapeHtml(main.seller.name)} (login required)"`}>@${escapeHtml(main.seller.name)}</a>` : '<span>@Unknown</span>'}
-        </div>
-      </div>
-    </article>
-  `;
-
-  // The secondary tiles, however many came back. One of them must not sit in a two-column
-  //  track with a hole beside it, and none of them means the main lot takes both rows.
-  if (secondary.length > 0) {
-    mosaicHTML += `<div class="grid ${secondary.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-4">`;
-
-    for (const listing of secondary) {
-      const tileSource = lotImageSource(listing.media, listing.title);
-      const tileImgAttrs = generateResponsiveImageAttrs(
-        tileSource.src,
-        tileSource.alt,
-        'square',
-        HERO_TILE_SIZES
-      );
-      const currentHighest = highestBid(listing.bids);
-
-      mosaicHTML += `
-        <article class="bg-slate-50" style="border: 3px solid var(--aucto-border-dark)">
-          <div class="h-48 sm:h-52 md:h-56 bg-slate-200" style="border-bottom: 3px solid var(--aucto-border-dark)">
-            <a href="/listing.html?id=${listing.id}" class="block h-full">
-              <img
-                src="${escapeHtml(tileImgAttrs.src)}"
-                ${tileImgAttrs.srcset ? `srcset="${escapeHtml(tileImgAttrs.srcset)}"` : ''}
-                alt="${escapeHtml(tileImgAttrs.alt)}"
-                sizes="${tileImgAttrs.sizes}"
-                loading="${tileImgAttrs.loading}"
-                decoding="${tileImgAttrs.decoding}"
-                class="h-full w-full object-cover"
-                referrerpolicy="no-referrer"
-                data-lot-image
-              />
-            </a>
-          </div>
-          <div class="p-2.5 sm:p-3">
-            <h4 class="mb-1 text-sm font-bold text-slate-900 line-clamp-2">
-              <a href="/listing.html?id=${listing.id}" class="hover:underline">
-                ${escapeHtml(listing.title.length > 30 ? listing.title.substring(0, 30) + '...' : listing.title)}
-              </a>
-            </h4>
-            <p class="text-[11px] text-slate-600">${formatCurrency(currentHighest)}</p>
-          </div>
-        </article>
-      `;
-    }
-
-    mosaicHTML += `</div>`;
-  }
-
-  heroMosaic.innerHTML = mosaicHTML;
+  heroMosaic.innerHTML = renderHeroMosaic(featured);
   initLotImageFallbacks(heroMosaic);
 }
 

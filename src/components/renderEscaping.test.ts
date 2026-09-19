@@ -3,6 +3,8 @@ import type { Listing } from '../types/api';
 import { createCollectionCard } from './CollectionCard';
 import { createQuickCard } from './QuickCard';
 import { createProductCard } from './ProductCard';
+import { createProfileListingCard } from './ProfileListingCard';
+import { renderHeroMosaic } from './HeroMosaic';
 import { renderFeaturedWin } from './FeaturedWin';
 import { renderBreadcrumb, BREADCRUMB_PRESETS } from './Breadcrumb';
 import { renderHeader } from './Navbar';
@@ -145,6 +147,30 @@ describe('components are inert against a hostile listing', () => {
 
   it('ProductCard', () => {
     assertInert(createProductCard(hostileListing()));
+  });
+
+  it('ProfileListingCard, as the owner sees it', () => {
+    // The owner branch is the wider one: it renders the edit link the visitor branch omits.
+    assertInert(createProfileListingCard(hostileListing(), true));
+  });
+
+  it('ProfileListingCard, as a visitor sees it', () => {
+    assertInert(createProfileListingCard(hostileListing(), false));
+  });
+
+  /*
+   * Three lots, so the main tile and both secondary tiles render. With fewer the secondary
+   * branch is skipped entirely and the case passes over markup it never produced.
+   */
+  it('HeroMosaic, main tile and both secondary tiles', () => {
+    const markup = renderHeroMosaic([
+      hostileListing(),
+      hostileListing(),
+      hostileListing(),
+    ]);
+    // Anchor first: a hostile title that escaped correctly still has to reach the page.
+    expect(markup).toContain('<h4');
+    assertInert(markup);
   });
 
   it('FeaturedWin', () => {

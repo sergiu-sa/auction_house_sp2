@@ -13,11 +13,7 @@ import {
 import { profileListings } from '../api/listingQueries';
 import type { CatalogResult } from '../api/listingQueries';
 import type { Profile, Listing, Bid, UpdateProfileData } from '../types/api';
-import {
-  formatTimeAgo,
-  formatTimeRemaining,
-  isAuctionActive,
-} from '../utils/formatDate';
+import { formatTimeAgo } from '../utils/formatDate';
 import { isValidUrl } from '../utils/validation';
 import { showToast } from '../components/Toast';
 import { setUser } from '../utils/storage';
@@ -25,16 +21,15 @@ import { logError } from '../utils/logger';
 import { setButtonBusy } from '../utils/busyButton';
 import { getErrorMessage } from '../utils/errorHandling';
 import { escapeHtml } from '../utils/escapeHtml';
+import { createProfileListingCard } from '../components/ProfileListingCard';
 import { formatCredits, formatCurrency } from '../utils/formatCurrency';
 import {
   initIdentityFallbacks,
   initLotImageFallbacks,
-  lotImageSource,
 } from '../utils/listingImage';
 import { renderAvatar } from '../components/Avatar';
 import { renderPagination } from '../components/PaginationComponent';
 import { mountErrorPanel } from '../components/ErrorPanel';
-import { generateResponsiveImageAttrs } from '../utils/imageOptimization';
 
 const LISTINGS_PER_PAGE = 6;
 
@@ -527,7 +522,7 @@ function renderListingsPanel(
             <p class="text-slate-600">${isOwnProfile ? 'Start by creating your first listing' : 'No listings to display'}</p>
           </div>`
     : `<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            ${result.listings.map((listing) => renderListingCard(listing, isOwnProfile)).join('')}
+            ${result.listings.map((listing) => createProfileListingCard(listing, isOwnProfile)).join('')}
           </div>`;
 
   return `
@@ -609,90 +604,6 @@ async function goToListingsPage(
     logError('Failed to load profile listings page', error);
     showToast('Could not load that page of listings', 'error');
   }
-}
-
-function renderListingCard(listing: Listing, isOwnProfile: boolean): string {
-  const image = lotImageSource(listing.media, listing.title);
-  // Through the shared preset, not hand-written attributes: without it this grid emitted no
-  //  srcset or sizes, so every CDN-hosted lot downloaded its original into a 600px box.
-  const imgAttrs = generateResponsiveImageAttrs(image.src, image.alt, 'square');
-  const bidsCount = listing._count?.bids || 0;
-  const currentHighest = highestBid(listing.bids);
-  const tag = listing.tags?.[0] || 'General';
-  const timeRemaining = formatTimeRemaining(listing.endsAt);
-  const isActive = isAuctionActive(listing.endsAt);
-
-  return `
-    <article
-      class="bg-white transition-all hover:-translate-y-1"
-      style="border: 2px solid var(--aucto-border-dark)"
-    >
-      <div
-        class="relative aspect-square bg-slate-100"
-        style="border-bottom: 2px solid var(--aucto-border-dark)"
-      >
-        ${
-          isActive
-            ? ''
-            : `<div class="absolute top-3 left-3 bg-slate-600 px-3 py-1 text-xs font-bold text-white" style="border: 2px solid #475569">
-          ENDED
-        </div>`
-        }
-        <img
-          src="${escapeHtml(imgAttrs.src)}"
-          ${imgAttrs.srcset ? `srcset="${escapeHtml(imgAttrs.srcset)}"` : ''}
-          alt="${escapeHtml(imgAttrs.alt)}"
-          width="${imgAttrs.width}"
-          height="${imgAttrs.height}"
-          sizes="${imgAttrs.sizes}"
-          loading="${imgAttrs.loading}"
-          decoding="${imgAttrs.decoding}"
-          class="h-full w-full object-cover"
-          referrerpolicy="no-referrer"
-          data-lot-image
-        />
-      </div>
-      <div class="p-5">
-        <div
-          class="mb-2 flex items-center justify-between text-[11px] font-bold tracking-[0.18em] uppercase text-slate-500"
-        >
-          <span>${escapeHtml(tag)}</span>
-          <span>${bidsCount} ${bidsCount === 1 ? 'bid' : 'bids'}</span>
-        </div>
-        <h3 class="mb-2 text-xl font-bold leading-tight text-slate-900">
-          ${escapeHtml(listing.title)}
-        </h3>
-        <div class="mb-3 text-xs text-slate-600">
-          ${isActive ? `Ends ${timeRemaining}` : 'Ended'}
-        </div>
-        <div class="mb-4 text-2xl font-bold text-slate-900">
-          ${currentHighest > 0 ? `${formatCredits(currentHighest)} Credits` : 'No bids yet'}
-        </div>
-        <div class="flex gap-2">
-          <a
-            href="/listing.html?id=${listing.id}"
-            class="flex-1 bg-slate-900 py-3 text-xs font-bold tracking-wide text-white hover:bg-slate-800 inline-flex items-center justify-center gap-2"
-            style="border: 2px solid var(--aucto-border-dark)"
-          >
-            <i class="fa-solid fa-eye text-sm" aria-hidden="true"></i>
-            <span>View</span>
-          </a>
-          ${
-            isOwnProfile
-              ? `<a
-            href="/listing-edit.html?id=${listing.id}"
-            class="bg-white py-3 px-4 text-xs font-bold tracking-wide text-slate-900 hover:bg-slate-50 inline-flex items-center justify-center"
-            style="border: 2px solid var(--aucto-border-mid)"
-            title="Edit listing"
-          >
-            <i class="fa-solid fa-pen text-sm" aria-hidden="true"></i>
-          </a>`
-              : ''
-          }
-        </div>
-      </div>
-    </article>
-  `;
 }
 
 /**
