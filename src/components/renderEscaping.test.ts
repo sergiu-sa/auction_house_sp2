@@ -10,6 +10,7 @@ import { renderAvatar } from './Avatar';
 import { renderErrorPanel } from './ErrorPanel';
 import { mountNextPageCell } from './NextPageCell';
 import { mountProductShowcase } from './ProductShowcase';
+import { renderListingForm } from './ListingForm';
 import {
   renderCatalogFilterBar,
   syncCatalogFilterBar,
@@ -292,6 +293,31 @@ describe('components are inert against a hostile listing', () => {
       PAYLOAD
     );
     assertInert(section.innerHTML);
+  });
+
+  it('ListingForm, carrying a hostile listing into every field', () => {
+    // The edit page hands this a listing straight from the API, so the title, description,
+    // tags and media URLs all reach attribute context — `value=` twice and a textarea body.
+    const listing = hostileListing();
+    assertInert(
+      renderListingForm({
+        heading: 'Edit listing',
+        banner: { icon: 'fa-pen-to-square', title: 'Editing', body: 'Body' },
+        columns: 'lg:grid-cols-[2fr,1.4fr]',
+        title: { value: listing.title, note: PAYLOAD },
+        description: { value: listing.description },
+        media: { value: (listing.media ?? []).map((m) => m.url).join('\n') },
+        tags: { value: (listing.tags ?? []).join(', '), placeholder: PAYLOAD },
+        endsAt: { value: PAYLOAD, readonly: true, hint: PAYLOAD },
+        submit: { icon: 'fa-floppy-disk', label: 'Save changes' },
+        preview: {
+          title: listing.title,
+          description: listing.description ?? '',
+          endDate: 'February 21, 2026 at 3:43 PM',
+          media: listing.media,
+        },
+      })
+    );
   });
 });
 

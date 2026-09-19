@@ -1,31 +1,22 @@
 /**
  * Live preview wiring for the listing create / edit forms.
  *
- * Both pages render the same preview markup with these element IDs:
- *   #title, #description, #endDate (or #endsAt), #previewTitle,
- *   #previewDescription, #previewEndDate, #mainPreview, #additionalImages
+ * Both pages render `renderListingForm`'s markup, so the ids are fixed and identical on each:
+ *   #title, #description, #media, #endsAt, #previewTitle, #previewDescription,
+ *   #previewEndDate, #mainPreview, #additionalImages
  *
- * Only the media textarea ID differs: `media` on create, `imageUrls` on edit.
- * That one diff is passed via options.
+ * This took a `mediaInputId` for as long as the two pages hand-wrote the markup separately and
+ * disagreed about two of the five field ids. One template, one set of ids, no options.
  */
 
 import { escapeHtml } from '../utils/escapeHtml';
 import { initImageFallbacks } from '../utils/imageFallback';
 
-export interface ListingFormPreviewOptions {
-  /** ID of the textarea holding newline-separated image URLs. */
-  mediaInputId: string;
-  /** ID of the datetime-local input. Defaults to `endsAt`. */
-  endDateInputId?: string;
-}
-
 const DEFAULT_TITLE = 'Your listing title';
 const DEFAULT_DESCRIPTION = 'Your description will appear here…';
 const DEFAULT_END_DATE = 'No end date set';
 
-export function initListingFormPreview(
-  options: ListingFormPreviewOptions
-): void {
+export function initListingFormPreview(): void {
   const titleInput = document.getElementById(
     'title'
   ) as HTMLInputElement | null;
@@ -33,10 +24,10 @@ export function initListingFormPreview(
     'description'
   ) as HTMLTextAreaElement | null;
   const mediaInput = document.getElementById(
-    options.mediaInputId
+    'media'
   ) as HTMLTextAreaElement | null;
   const endDateInput = document.getElementById(
-    options.endDateInputId ?? 'endsAt'
+    'endsAt'
   ) as HTMLInputElement | null;
 
   const previewTitle = document.getElementById('previewTitle');
@@ -47,11 +38,9 @@ export function initListingFormPreview(
 
   // Arm whatever the page painted before this ran.
   //
-  // The handler below arms only the images it writes itself, so the edit form's first render —
-  // which paints the listing's *saved* photographs straight into this pane — was left unarmed. A
-  // dead saved URL showed as alt text on grey, beside a preview that handles the identical
-  // failure correctly the moment the author touches the field. Create has nothing here yet, so
-  // this is a no-op there.
+  // The handler below arms only the images it writes itself, so the edit form's first render  which paints the listing's *saved* photographs straight into this pane.
+  // A dead saved URL showed as alt text on grey, beside a preview that handles the identical failure correctly the moment the author touches the field.
+  // Create has nothing here yet, so this is a no-op there.
   if (mainPreview) {
     initImageFallbacks(mainPreview, (img) =>
       replaceWithBrokenImageNotice(img, 'main')
@@ -129,18 +118,18 @@ export function initListingFormPreview(
   }
 }
 
-function renderEmptyMainPreview(): string {
+export function renderEmptyMainPreview(): string {
   return `
     <div class="w-full h-full flex items-center justify-center text-slate-600">
       <div class="text-center">
-        <i class="fa-solid fa-image text-6xl mb-2 block text-slate-400" aria-hidden="true"></i>
+        <i class="fa-solid fa-image text-5xl md:text-6xl mb-2 block text-slate-400" aria-hidden="true"></i>
         <p class="text-sm">No image added yet</p>
       </div>
     </div>
   `;
 }
 
-function renderMainPreviewImage(url: string): string {
+export function renderMainPreviewImage(url: string): string {
   return `
     <img
       src="${escapeHtml(url)}"
@@ -190,7 +179,7 @@ function replaceWithBrokenImageNotice(
   parent.replaceChildren(box);
 }
 
-function renderAdditionalImage(url: string, index: number): string {
+export function renderAdditionalImage(url: string, index: number): string {
   return `
     <div class="bg-white border-2 border-slate-900 overflow-hidden">
       <img

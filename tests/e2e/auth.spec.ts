@@ -1,5 +1,5 @@
 import { test, expect } from './support/fixtures';
-import { IDS } from './support/mock';
+import { IDS, loadFixture } from './support/mock';
 
 test('logged out, the navbar offers log in and create account', async ({
   page,
@@ -42,19 +42,26 @@ test.describe('logged in', () => {
       /Steel watch, quartz movement/
     );
     // Local wall-clock time, not the fixture's UTC. endsAt is 14:43Z and the suite runs in Europe/Oslo, so 15:43 in February. It read 14:43 while the form formatted with toISOString(), which is the bug this pins.
-    await expect(page.locator('#endDate')).toHaveValue('2026-02-21T15:43');
+    await expect(page.locator('#endsAt')).toHaveValue('2026-02-21T15:43');
+
+    // The image field is the only one that can be dragged taller: four rows hide 40px of the
+    // recorded lot's three URLs at this width and 160px at 375. `vertical`, not `both` — a
+    // horizontal drag would push it past its grid column.
+    await expect(page.locator('#media')).toHaveCSS('resize', 'vertical');
+    await expect(page.locator('#description')).toHaveCSS('resize', 'none');
+
     expect(mock.consoleErrors).toEqual([]);
   });
 
   test('the end date is shown but cannot be edited', async ({ page }) => {
     await page.goto(`/listing-edit.html?id=${IDS.own}`);
 
-    const endDate = page.locator('#endDate');
+    const endDate = page.locator('#endsAt');
     await expect(endDate).toHaveAttribute('readonly', '');
     // The reason has to reach a screen reader, not just sighted users: the field went from
     // editable-and-required to read-only, so "read only" alone drops the explanation.
-    await expect(endDate).toHaveAttribute('aria-describedby', 'endDateHint');
-    await expect(page.locator('#endDateHint')).toContainText(
+    await expect(endDate).toHaveAttribute('aria-describedby', 'endsAtHint');
+    await expect(page.locator('#endsAtHint')).toContainText(
       'cannot be changed'
     );
   });
@@ -84,7 +91,7 @@ test.describe('logged in', () => {
     );
 
     await page.locator('#tags').fill('');
-    await page.locator('#editForm button[type="submit"]').click();
+    await page.locator('#listing-form button[type="submit"]').click();
 
     await expect.poll(() => putBody).not.toBeNull();
     const body = putBody as unknown as Record<string, unknown>;
@@ -138,5 +145,48 @@ test.describe('logged in', () => {
       page.locator('#toast-container').getByText('Insufficient credits')
     ).toBeVisible();
     expect(mock.apiWrites).toEqual([]);
+  });
+
+  /**
+   * The restricted-title branch, on a lot that has bids.
+   *
+   * Every recorded owner fixture has `_count.bids: 0`, so this whole branch — the disabled title,
+   * its note, and the banner's warning — rendered in no test at all while it lived in
+   * `ListingEdit`'s own markup. It is shared markup now, so a change made for the create page
+   * reaches it, and nothing would have said so.
+   *
+   * The route is overridden rather than a fixture added, following the broken-image test above:
+   * `requireOwnership` means only the owner's own lot can reach this page.
+   */
+  test('a listing with bids cannot have its title edited', async ({
+    page,
+    mock,
+  }) => {
+    const own = loadFixture<{ data: { _count: { bids: number } } }>(
+      'listing-own'
+    );
+    own.data._count = { bids: 4 };
+
+    await page.route(`**/auction/listings/${IDS.own}?**`, (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(own),
+      })
+    );
+
+    await page.goto(`/listing-edit.html?id=${IDS.own}`);
+
+    // Anchored on the form rendering first: `toBeDisabled` against markup that never painted
+    // would pass for the wrong reason.
+    await expect(page.locator('#previewTitle')).toBeVisible();
+    await expect(page.locator('#title')).toBeDisabled();
+    await expect(page.locator('#listing-form')).toContainText(
+      'Cannot edit title when listing has bids'
+    );
+    // The description stays editable — the restriction is the title alone.
+    await expect(page.locator('#description')).toBeEditable();
+
+    expect(mock.consoleErrors).toEqual([]);
   });
 });
