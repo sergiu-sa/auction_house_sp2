@@ -1,4 +1,5 @@
 import { test, expect } from './support/fixtures';
+import { measureHeader } from './support/header';
 import { IDS } from './support/mock';
 
 /**
@@ -408,26 +409,20 @@ test.describe('every page shares one navbar', () => {
     ): Promise<{ h: number; linksRight: number; logoLeft: number }> => {
       await page.goto(path);
       await page.locator('#header nav').first().waitFor();
-      // main.css reserves #header's height, and that reservation clamps getBoundingClientRect, so `h` reads back the reserved number rather than the navbar's.
-      // Measured: a navbar shrunk to 55px still reports 91.
-      // Zero it first, exactly as main.css's own comment instructs.
-      await page.addStyleTag({
-        content: '#header { min-height: 0 !important }',
-      });
-      await page.evaluate(() => document.fonts.ready);
-      return page.evaluate(() => {
-        const header = document.getElementById('header')!;
+      const row = await page.evaluate(async () => {
+        await document.fonts.ready;
         const nav = document.querySelector('#header nav')!;
         const catalogLink = [...nav.querySelectorAll('a')].find((a) =>
           a.textContent?.includes('Catalog')
         )!;
         const logo = nav.querySelector('a[aria-label="Aucto home"]')!;
         return {
-          h: Math.round(header.getBoundingClientRect().height),
           linksRight: Math.round(catalogLink.getBoundingClientRect().right),
           logoLeft: Math.round(logo.getBoundingClientRect().left),
         };
       });
+      const { real } = await measureHeader(page);
+      return { h: Math.round(real), ...row };
     };
 
     const collection = await measure('/collection.html');

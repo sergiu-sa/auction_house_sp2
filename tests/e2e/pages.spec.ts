@@ -1,4 +1,5 @@
 import { test, expect } from './support/fixtures';
+import { HEADER_CHANGES, measureHeader } from './support/header';
 import {
   GATED_PAGES,
   PUBLIC_PAGES,
@@ -49,6 +50,44 @@ async function expectSearchSurface(
   );
 }
 
+/**
+ * Both sides of each change, because a header that got shorter shows first at the widest width of a band, where its text wraps least:
+ *  changing the banner's "explore" to "browse" opened a 20px gap that only 325 and 563 caught.
+ */
+const HEADER_WIDTHS = [
+  320,
+  ...HEADER_CHANGES.flatMap((width) => [width - 1, width]),
+  1440,
+];
+
+/**
+ * `#header` reserves exactly the height its contents render at.
+ *
+ * `main.css` reserves it so the page does not drop when the navbar is written in, and every value there was measured by hand.
+ * The reservation clamps every ordinary reading of the header, so a navbar that got shorter would open a gap under itself with the whole suite green.
+ * Resizing one load, because it measured the same as a fresh load at every width, and `fonts.ready` still waited for a font only the new width needed.
+ * Soft, so one run names every width that drifted rather than the first.
+ */
+async function expectHeaderReservation(
+  page: import('@playwright/test').Page,
+  page_: PageCase
+): Promise<void> {
+  await page.goto(page_.url);
+  await expect(page.locator(page_.ready)).toBeVisible();
+  for (const width of HEADER_WIDTHS) {
+    await page.setViewportSize({ width, height: 800 });
+    // The banner wraps by content width and the breakpoints read the viewport, so a classic scrollbar between them fails 326 and 564 on unchanged code.
+    expect(
+      await page.evaluate(
+        () => window.innerWidth - document.documentElement.clientWidth
+      ),
+      'a classic scrollbar is taking layout width; run headless, where Playwright hides it'
+    ).toBe(0);
+    const { reserved, real } = await measureHeader(page);
+    expect.soft(real, `${page_.name} at ${width}px`).toBe(reserved);
+  }
+}
+
 test.describe('logged out', () => {
   for (const page_ of PUBLIC_PAGES) {
     test(`${page_.name} loads clean, with the search surface it should have`, async ({
@@ -59,6 +98,12 @@ test.describe('logged out', () => {
       await expect(page.locator(page_.ready)).toBeVisible();
       await expectSearchSurface(page, page_);
       expect(mock.consoleErrors).toEqual([]);
+    });
+
+    test(`${page_.name} reserves exactly its header's height`, async ({
+      page,
+    }) => {
+      await expectHeaderReservation(page, page_);
     });
   }
 
@@ -92,6 +137,12 @@ test.describe('logged in', () => {
       await expect(page.locator(page_.ready)).toBeVisible();
       await expectSearchSurface(page, page_);
       expect(mock.consoleErrors).toEqual([]);
+    });
+
+    test(`${page_.name} reserves exactly its header's height`, async ({
+      page,
+    }) => {
+      await expectHeaderReservation(page, page_);
     });
   }
 
