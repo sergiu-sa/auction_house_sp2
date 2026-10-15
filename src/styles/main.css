@@ -147,13 +147,16 @@ textarea:disabled {
  *    the width, the page type (auth pages get a minimal navbar), and whether the guest banner is present, which `renderHeader()` reports by stamping `data-auth` on <html> just before it writes the markup.
  * One frame later than a pre-paint script would, and worth it:
  *  any parser-blocking <script> in <head> measured ~450ms of FCP and two Lighthouse points here.
- * Under-reserving only leaves a smaller shift; over-reserving would open a visible gap, so where a value is uncertain the smaller one is the safe one.
+ * Under-reserving only leaves a smaller shift; over-reserving would open a visible gap. Neither needs guessing: the test named below fails on both and reports the real value.
  * 326, 355 and 564 are not Tailwind breakpoints: they are the widths where the banner's sentence rewraps, found by sweeping every pixel from 320 to 1440.
  *
  * Two things make these easy to measure wrong, and both have happened here:
- *  the icon font, which the values must be taken after, the navbar's icon buttons are 20px tall without their glyphs and 40px with them, so a pre-font reading is 8px short;
+ *  the web fonts, which the values must be taken after: read early, the header is 20px too tall at 326, 355 and 564, where the fallback text face wraps a line sooner,
+ *   and 20px short on login and register at 354 while the icon font is still loading;
  *  and the reservation itself, which clamps getBoundingClientRect, so an over-reserved band reads back as a perfect match and a wrong value can survive a full-width sweep.
  * Set min-height to 0 before measuring, or the number you get is the one you already wrote.
+ * `tests/e2e/pages.spec.ts` takes that reading either side of every breakpoint here and fails when a value below stops matching it;
+ *  a new breakpoint goes in `HEADER_CHANGES` in `tests/e2e/support/header.ts`.
  */
 #header {
   min-height: 191px;

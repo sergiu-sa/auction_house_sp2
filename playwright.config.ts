@@ -34,11 +34,18 @@ export default defineConfig<TestOptions>({
      */
     timezoneId: 'Europe/Oslo',
 
-    // E2E_OFFLINE=1 blackholes every host but localhost.
-    // Routing happens before DNS, so a green run under it proves the mocking is complete.
-    launchOptions: process.env.E2E_OFFLINE
-      ? { args: ['--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE localhost'] }
-      : {},
+    launchOptions: {
+      args: [
+        // Playwright's default headless Chromium hints fonts fully on Linux, which sets the guest banner 3.4% wider than macOS and moves the header's rewrap widths; without this, the `#header` reservation check in pages.spec.ts fails in CI.
+        // Global on purpose, so CI lays text out as macOS does.
+        '--font-render-hinting=none',
+        // E2E_OFFLINE=1 blackholes every host but localhost.
+        // Routing happens before DNS, so a green run under it proves the mocking is complete.
+        ...(process.env.E2E_OFFLINE
+          ? ['--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE localhost']
+          : []),
+      ],
+    },
   },
 
   projects: [
